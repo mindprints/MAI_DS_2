@@ -20,9 +20,9 @@ body {
     box-shadow: 0 8px 32px rgba(2, 8, 20, 0.4);
 }
 
-.feature-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+.feature-card {
+    opacity: 0;
+    transform: translateY(50px);
 }
 
 .model-bg {
@@ -99,8 +99,6 @@ body {
 
 .slide-in {
     animation: slideIn 1s ease-out forwards;
-    opacity: 0;
-    transform: translateY(50px);
 }
 
 @keyframes panImage {
@@ -125,4 +123,35 @@ body {
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+/* Slide states for slideshow */
+.slide-main {
+    opacity: 1 !important;
+    z-index: 30 !important;
+    transform: rotate(6deg) translate(20px, 20px) scale(1.05) !important;
+}
+
+.slide-under-1 {
+    opacity: 0.8 !important;
+    z-index: 20 !important;
+    transform: rotate(-3deg) translate(-10px, 10px) scale(0.95) !important;
+}
+
+.slide-under-2 {
+    opacity: 0.6 !important;
+    z-index: 15 !important;
+    transform: rotate(-6deg) translate(-20px, 5px) scale(0.9) !important;
+}
+
+.slide-under-3 {
+    opacity: 0.4 !important;
+    z-index: 10 !important;
+    transform: rotate(-9deg) translate(-30px, 0px) scale(0.85) !important;
+}
+
+.slide-hidden {
+    opacity: 0 !important;
+    z-index: 0 !important;
+    transform: rotate(-12deg) translate(-40px, -5px) scale(0.8) !important;
 }

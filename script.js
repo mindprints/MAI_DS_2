@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Configuration
     const config = {
         visibleSlides: 4, // Number of slides to show at once (1 main + 3 underneath)
-        rotationInterval: 4000, // Time between rotations in milliseconds
+        rotationInterval: 6000, // Time between rotations in milliseconds
         transitionDuration: 1000 // Transition duration in milliseconds
     };
 
@@ -70,8 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Create slide elements dynamically
     function createSlide(imageInfo, index) {
         const slide = document.createElement('div');
-        slide.className = 'glass-card rounded-xl overflow-hidden w-full h-full absolute transition-all duration-1000 ease-in-out z-0 opacity-0';
-        slide.style.transform = 'rotate(-6deg)';
+        slide.className = 'glass-card rounded-xl overflow-hidden w-full h-full absolute transition-all duration-1000 ease-in-out z-0 opacity-0 slide-hidden';
         slide.dataset.slideIndex = index;
 
         slide.innerHTML = `
@@ -113,39 +112,32 @@ document.addEventListener('DOMContentLoaded', () => {
                     const diff = (index - currentIndex + imageData.length) % imageData.length;
                     const img = slide.querySelector('img');
 
+                    // Remove all slide state classes first
+                    slide.classList.remove('slide-main', 'slide-under-1', 'slide-under-2', 'slide-under-3', 'slide-hidden');
+
                     if (diff === 0) {
                         // Main focused slide
-                        slide.style.opacity = '1';
-                        slide.style.zIndex = '30';
-                        slide.style.transform = 'rotate(6deg) translate(20px, 20px) scale(1.05)';
+                        slide.classList.add('slide-main');
                         // Add panning animation only to the main slide
                         img.style.animation = 'panImage 8s ease-in-out infinite alternate';
                     } else if (diff === 1) {
                         // First underneath slide
-                        slide.style.opacity = '0.8';
-                        slide.style.zIndex = '20';
-                        slide.style.transform = 'rotate(-3deg) translate(-10px, 10px) scale(0.95)';
+                        slide.classList.add('slide-under-1');
                         // Remove animation
                         img.style.animation = 'none';
                     } else if (diff === 2) {
                         // Second underneath slide
-                        slide.style.opacity = '0.6';
-                        slide.style.zIndex = '15';
-                        slide.style.transform = 'rotate(-6deg) translate(-20px, 5px) scale(0.9)';
+                        slide.classList.add('slide-under-2');
                         // Remove animation
                         img.style.animation = 'none';
                     } else if (diff === 3) {
                         // Third underneath slide
-                        slide.style.opacity = '0.4';
-                        slide.style.zIndex = '10';
-                        slide.style.transform = 'rotate(-9deg) translate(-30px, 0px) scale(0.85)';
+                        slide.classList.add('slide-under-3');
                         // Remove animation
                         img.style.animation = 'none';
                     } else {
                         // Hidden slides
-                        slide.style.opacity = '0';
-                        slide.style.zIndex = '0';
-                        slide.style.transform = 'rotate(-12deg) translate(-40px, -5px) scale(0.8)';
+                        slide.classList.add('slide-hidden');
                         // Remove animation
                         img.style.animation = 'none';
                     }
