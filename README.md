@@ -17,8 +17,9 @@ MAI_DS_2/
 ├── styles.css          # All CSS styles and animations
 ├── script.js           # JavaScript functionality
 ├── images/
-│   └── WEBP_images/   # 34+ museum images
-└── README.md           # This file
+│   └── WEBP_images/   # 34+ museum images (kebab-case ASCII)
+├── README.md           # This file
+└── FILENAME_MAPPING.md # Filename conversion guide
 ```
 
 ## Background Images
@@ -71,6 +72,14 @@ Then visit `http://localhost:3000`
 ## Customization
 
 - **Colors**: Modify CSS custom properties in `styles.css`
-- **Images**: Add/remove images from `images/WEBP_images/`
+- **Images**: Add/remove images from `images/WEBP_images/` (use kebab-case ASCII filenames)
 - **Animations**: Adjust timing in CSS animations and JavaScript intervals
 - **Content**: Update text and images in `index.html`
+
+## Filename Convention
+
+All image filenames use **kebab-case ASCII** format for maximum server compatibility:
+- ✅ `1-museums-logo.webp` (good)
+- ❌ `1_Museums logo.webp` (avoid spaces and special characters)
+
+See `FILENAME_MAPPING.md` for complete conversion guide and scripts.
