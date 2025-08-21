@@ -11,11 +11,7 @@ document.querySelectorAll('.feature-card').forEach(card => {
     observer.observe(card);
 });
 
-// Simple toggle for mobile menu (if added)
-function toggleMobileMenu() {
-    const menu = document.getElementById('mobile-menu');
-    menu.classList.toggle('hidden');
-}
+
 
 // Dynamic image slideshow system
 document.addEventListener('DOMContentLoaded', () => {
