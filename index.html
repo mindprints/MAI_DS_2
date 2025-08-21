@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Museum of Artificial Intelligence</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#6366f1",
+                        secondary: "#1e293b",
+                        gradientStart: "#0f172a",
+                        gradientEnd: "#1e40af",
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Exo 2', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0c4a6e 100%);
+            background-attachment: fixed;
+            color: #f1f5f9;
+            overflow-x: hidden;
+        }
+        
+        .hero-bg {
+            background: linear-gradient(125deg, rgba(30,41,59,0.8) 0%, rgba(30,58,138,0.85) 60%, rgba(30,58,138,0.7) 100%), 
+                        url('https://images.unsplash.com/photo-1677442135130-33d04794f4dc?q=80&w=2670') center/cover;
+        }
+        
+        .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(2, 8, 20, 0.4);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        
+        .model-bg {
+            background: linear-gradient(rgba(15,23,42,0.9), rgba(15,23,42,0.9)), 
+                        url('https://images.unsplash.com/photo-1677442135722-5f10fc4e9b23?q=80&w=2670') center/cover;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, #818cf8 0%, #60a5fa 50%, #38bdf8 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background: linear-gradient(90deg, #6366f1, #38bdf8);
+            transition: width 0.3s;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 2.5rem;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, #6366f1, #38bdf8);
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+        
+        .ai-neural {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            top: 50%;
+            right: -150px;
+            transform: translateY(-50%);
+            opacity: 0.2;
+            z-index: -1;
+            background: radial-gradient(circle, rgba(96,165,250,0.3) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(96, 165, 250, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(96, 165, 250, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(96, 165, 250, 0); }
+        }
+        
+        .slide-in {
+            animation: slideIn 1s ease-out forwards;
+            opacity: 0;
+            transform: translateY(50px);
+        }
+
+        @keyframes panImage {
+            0% { object-position: left center; }
+            100% { object-position: right center; }
+        }
+        
+        .slide-in:nth-child(2) {
+            animation-delay: 0.3s;
+        }
+        
+        .slide-in:nth-child(3) {
+            animation-delay: 0.6s;
+        }
+        
+        .slide-in:nth-child(4) {
+            animation-delay: 0.9s;
+        }
+        
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header class="fixed w-full z-50">
+        <div class="container mx-auto px-4 py-4">
+            <nav class="glass-card py-3 px-6 flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <div class="bg-indigo-500 rounded-lg p-1.5">
+                        <i class="fa-solid fa-brain fa-lg text-white"></i>
+                    </div>
+                    <span class="font-bold text-xl tracking-wide">MUSEUM OF ARTIFICIAL INTELLIGENCE</span>
+                </div>
+                
+                <div class="hidden md:flex space-x-8">
+                    <a href="#" class="nav-link font-medium text-gray-200 hover:text-white">Home</a>
+                    
+                    <a href="#" class="nav-link font-medium text-gray-200 hover:text-white">Events</a>
+                    <a href="#" class="nav-link font-medium text-gray-200 hover:text-white">Research</a>
+                    <a href="#" class="nav-link font-medium text-gray-200 hover:text-white">About</a>
+                </div>
+                
+                <button class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 rounded-full font-medium transition duration-300 flex items-center">
+                    <i class="fa-solid fa-ticket mr-2"></i>
+                    Book A Workshop
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-bg min-h-screen flex items-center pt-16">
+        <div class="container mx-auto px-4 py-20 flex flex-col items-center md:items-start md:flex-row">
+            <div class="flex-1 text-center md:text-left">
+                <span class="bg-indigo-900 text-indigo-300 text-sm font-semibold px-4 py-1 rounded-full">UNDERSTANDING MACHINE INTELLIGENCE</span>
+                <h1 class="text-5xl md:text-7xl font-black tracking-tighter mt-6 mb-6">
+                    <span class="gradient-text">In The Minds of Machines</span>
+                </h1>
+                <p class="text-xl text-slate-300 mb-10 max-w-3xl">
+                    Explore the evolution, capabilities, and future of artificial intelligence at the world's first museum dedicated to  AI  and its impact on society. Located in the center of Stockholm.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <button class="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-4 rounded-full font-bold text-lg transition duration-300 flex items-center justify-center">
+                        <i class="fa-solid fa-calendar mr-3"></i>
+                        Plan Your Visit
+                    </button>
+                    <button class="glass-card hover:border-indigo-500 px-8 py-4 rounded-full font-bold text-lg transition duration-300 flex items-center justify-center">
+                        <i class="fa-solid fa-flask mr-5"></i>
+                        Current Exhibits
+                    </button>
+                </div>
+            </div>
+            <!-- rotating image section -->
+            <div class="flex-1 flex justify-center mt-16 md:mt-0">
+                <div id="slideshow-container" class="relative w-64 h-96 md:w-80 md:h-[500px]">
+                    <!-- Slideshow cards will be dynamically generated here -->
+                </div>
+            </div>
+        </div>
+        
+        <div class="ai-neural"></div>
+    </section>
+
+    <!-- Featured Exhibits Section -->
+    <section class="py-20">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title text-4xl font-bold text-center mb-20">Workshops and Lectures</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Exhibit 1 -->
+                <div class="feature-card glass-card rounded-xl overflow-hidden transition duration-500 hover:shadow-xl slide-in">
+                    <div class="h-56 bg-gradient-to-br from-blue-500 to-indigo-700 relative">
+                        <div class="absolute inset-0 flex justify-center items-center">
+                            <i class="fa-solid fa-microchip text-white text-6xl"></i>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <span class="bg-cyan-900 text-cyan-300 text-xs font-semibold px-2 py-1 rounded">NEW</span>
+                        <h3 class="text-xl font-bold mt-4">The Evolution of Neural Networks</h3>
+                        <p class="text-slate-400 mt-2">Trace the journey from perceptrons to deep learning architectures that power modern AI.</p>
+                        <div class="mt-6 flex justify-between items-center">
+                            <span class="text-indigo-400 font-medium">
+                                <i class="fa-solid fa-clock mr-1"></i>
+                                35 min
+                            </span>
+                            <button class="text-cyan-400 hover:text-cyan-300 transition">
+                                Explore » 
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Exhibit 2 -->
+                <div class="feature-card glass-card rounded-xl overflow-hidden transition duration-500 hover:shadow-xl slide-in">
+                    <div class="h-56 bg-gradient-to-br from-purple-600 to-pink-600 relative">
+                        <div class="absolute inset-0 flex justify-center items-center">
+                            <i class="fa-solid fa-eye text-white text-6xl"></i>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <span class="bg-rose-900 text-rose-300 text-xs font-semibold px-2 py-1 rounded">INTERACTIVE</span>
+                        <h3 class="text-xl font-bold mt-4">Machine Vision Lab</h3>
+                        <p class="text-slate-400 mt-2">Experience how machines "see" and interpret the visual world around us.</p>
+                        <div class="mt-6 flex justify-between items-center">
+                            <span class="text-indigo-400 font-medium">
+                                <i class="fa-solid fa-clock mr-1"></i>
+                                45 min
+                            </span>
+                            <button class="text-cyan-400 hover:text-cyan-300 transition">
+                                Explore » 
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Exhibit 3 -->
+                <div class="feature-card glass-card rounded-xl overflow-hidden transition duration-500 hover:shadow-xl slide-in">
+                    <div class="h-56 bg-gradient-to-br from-amber-600 to-orange-600 relative">
+                        <div class="absolute inset-0 flex justify-center items-center">
+                            <i class="fa-solid fa-people-arrows text-white text-6xl"></i>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <span class="bg-amber-900 text-amber-300 text-xs font-semibold px-2 py-1 rounded">POPULAR</span>
+                        <h3 class="text-xl font-bold mt-4">Human-AI Collaboration</h3>
+                        <p class="text-slate-400 mt-2">Discover how AI is augmenting human abilities in art, medicine, and science.</p>
+                        <div class="mt-6 flex justify-between items-center">
+                            <span class="text-indigo-400 font-medium">
+                                <i class="fa-solid fa-clock mr-1"></i>
+                                60 min
+                            </span>
+                            <button class="text-cyan-400 hover:text-cyan-300 transition">
+                                Explore » 
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <button class="glass-card hover:border-indigo-500 px-8 py-4 rounded-full font-bold transition duration-300 inline-flex items-center">
+                    View All Exhibits
+                    <i class="fa-solid fa-arrow-right ml-3"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Model Showcase -->
+    <section class="py-20 model-bg">
+        <div class="container mx-auto px-4">
+            <div class="max-w-6xl mx-auto glass-card p-8 md:p-16">
+                <div class="flex flex-col md:flex-row items-center">
+                    <div class="flex-1">
+                        <h2 class="section-title text-4xl font-bold mb-8">AI in the Real World</h2>
+                        <p class="text-slate-300 text-lg mb-6">
+                            Our museum brings to life the algorithms that shape our modern world. Through interactive exhibits and real-world applications, understand how AI is transforming:
+                        </p>
+                        <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+                            <li class="flex items-center space-x-2">
+                                <i class="fa-solid fa-circle-check text-emerald-500"></i>
+                                <span>Healthcare Diagnostics</span>
+                            </li>
+                            <li class="flex items-center space-x-2">
+                                <i class="fa-solid fa-circle-check text-emerald-500"></i>
+                                <span>Climate Change Solutions</span>
+                            </li>
+                            <li class="flex items-center space-x-2">
+                                <i class="fa-solid fa-circle-check text-emerald-500"></i>
+                                <span>Natural Language Processing</span>
+                            </li>
+                            <li class="flex items-center space-x-2">
+                                <i class="fa-solid fa-circle-check text-emerald-500"></i>
+                                <span>Autonomous Systems</span>
+                            </li>
+                        </ul>
+                        <button class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-full font-medium transition duration-300 flex items-center">
+                            Learn More
+                            <i class="fa-solid fa-lightbulb ml-2"></i>
+                        </button>
+                    </div>
+                    <div class="flex-1 mt-8 md:mt-0 flex justify-center">
+                        <div class="relative">
+                            <div class="w-64 h-64 rounded-full bg-gradient-to-br from-indigo-700 to-cyan-600 flex items-center justify-center pulse">
+                                <div class="w-48 h-48 rounded-full bg-white/5 backdrop-blur flex items-center justify-center">
+                                    <i class="fa-solid fa-network-wired text-4xl text-cyan-400"></i>
+                                </div>
+                            </div>
+                            <div class="absolute -top-4 -right-4 bg-gradient-to-br from-purple-600 to-rose-600 w-24 h-24 rounded-2xl flex items-center justify-center">
+                                <i class="fa-solid fa-brain text-3xl text-white"></i>
+                            </div>
+                            <div class="absolute -bottom-4 left-0 bg-gradient-to-br from-emerald-600 to-teal-500 w-24 h-24 rounded-2xl flex items-center justify-center">
+                                <i class="fa-solid fa-code text-3xl text-white"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Upcoming Events -->
+    <section class="py-20">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title text-4xl font-bold text-center mb-4">Upcoming Events</h2>
+            <p class="text-center text-xl text-slate-400 max-w-2xl mx-auto mb-16">Join our talks, workshops, and special exhibitions to dive deeper into the world of artificial intelligence.</p>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <!-- Event 1 -->
+                <div class="glass-card p-6 rounded-xl border-l-4 border-indigo-500">
+                    <div class="flex">
+                        <div class="mr-5">
+                            <div class="text-3xl font-bold text-indigo-300">18</div>
+                            <div class="text-slate-300 font-medium">SEP</div>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-lg font-bold">AI Ethics Symposium</h3>
+                            <p class="text-slate-400 mt-1">Navigating the moral challenges of autonomous systems</p>
+                            <div class="flex items-center text-slate-400 mt-4">
+                                <i class="fa-solid fa-clock mr-2"></i>
+                                <span>4:00 PM - 7:00 PM</span>
+                                <i class="fa-solid fa-location-dot mx-4"></i>
+                                <span>Grand Auditorium</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Event 2 -->
+                <div class="glass-card p-6 rounded-xl border-l-4 border-cyan-500">
+                    <div class="flex">
+                        <div class="mr-5">
+                            <div class="text-3xl font-bold text-cyan-300">22</div>
+                            <div class="text-slate-300 font-medium">SEP</div>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-lg font-bold">Robotics Workshop</h3>
+                            <p class="text-slate-400 mt-1">Hands-on session with autonomous robotic systems</p>
+                            <div class="flex items-center text-slate-400 mt-4">
+                                <i class="fa-solid fa-clock mr-2"></i>
+                                <span>10:00 AM - 1:00 PM</span>
+                                <i class="fa-solid fa-location-dot mx-4"></i>
+                                <span>Innovation Lab</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Event 3 -->
+                <div class="glass-card p-6 rounded-xl border-l-4 border-violet-500">
+                    <div class="flex">
+                        <div class="mr-5">
+                            <div class="text-3xl font-bold text-violet-300">27</div>
+                            <div class="text-slate-300 font-medium">SEP</div>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-lg font-bold">Future of Creative AI</h3>
+                            <p class="text-slate-400 mt-1">How generative models are transforming arts and design</p>
+                            <div class="flex items-center text-slate-400 mt-4">
+                                <i class="fa-solid fa-clock mr-2"></i>
+                                <span>6:00 PM - 8:30 PM</span>
+                                <i class="fa-solid fa-location-dot mx-4"></i>
+                                <span>Digital Gallery</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Event 4 -->
+                <div class="glass-card p-6 rounded-xl border-l-4 border-pink-500">
+                    <div class="flex">
+                        <div class="mr-5">
+                            <div class="text-3xl font-bold text-pink-300">03</div>
+                            <div class="text-slate-300 font-medium">OCT</div>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-lg font-bold">AI in Medicine</h3>
+                            <p class="text-slate-400 mt-1">Breakthroughs in disease diagnosis and treatment</p>
+                            <div class="flex items-center text-slate-400 mt-4">
+                                <i class="fa-solid fa-clock mr-2"></i>
+                                <span>3:00 PM - 5:00 PM</span>
+                                <i class="fa-solid fa-location-dot mx-4"></i>
+                                <span>Health Tech Pavilion</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <button class="glass-card hover:border-indigo-400 px-6 py-3 rounded-full font-medium transition duration-300">
+                    View All Events
+                    <i class="fa-solid fa-calendar ml-2"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Membership Section -->
+    <section class="py-20">
+        <div class="container mx-auto px-4">
+            <div class="glass-card p-10 md:p-16 rounded-2xl bg-gradient-to-br from-slate-800/70 to-indigo-900/40 relative overflow-hidden">
+                <div class="absolute -right-20 -top-20 w-80 h-80 bg-gradient-to-br from-cyan-500/5 to-indigo-500/10 rounded-full blur-xl"></div>
+                <div class="absolute -left-20 -bottom-20 w-80 h-80 bg-gradient-to-br from-purple-500/5 to-indigo-500/10 rounded-full blur-xl"></div>
+                
+                <div class="flex flex-col md:flex-row items-center">
+                    <div class="flex-1 mb-10 md:mb-0">
+                        <h2 class="text-4xl font-bold mb-6">Become a Member</h2>
+                        <p class="text-slate-300 text-lg mb-6 max-w-2xl">
+                            Join our community and enjoy unlimited access to exhibitions, priority booking for events, special members-only previews, and discounts at our store and café.
+                        </p>
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-center">
+                                <div class="w-8 h-8 rounded-full bg-indigo-900 flex items-center justify-center mr-3">
+                                    <i class="fa-solid fa-check text-indigo-400"></i>
+                                </div>
+                                <span>Unlimited entry to all permanent exhibits</span>
+                            </li>
+                            <li class="flex items-center">
+                                <div class="w-8 h-8 rounded-full bg-indigo-900 flex items-center justify-center mr-3">
+                                    <i class="fa-solid fa-check text-indigo-400"></i>
+                                </div>
+                                <span>20% discount on temporary exhibitions</span>
+                            </li>
+                            <li class="flex items-center">
+                                <div class="w-8 h-8 rounded-full bg-indigo-900 flex items-center justify-center mr-3">
+                                    <i class="fa-solid fa-check text-indigo-400"></i>
+                                </div>
+                                <span>Priority booking & discounts for events</span>
+                            </li>
+                        </ul>
+                        <button class="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white px-8 py-4 rounded-full font-bold transition-all duration-300 flex items-center">
+                            Explore Membership
+                            <i class="fa-solid fa-gem ml-3"></i>
+                        </button>
+                    </div>
+                    <div class="flex-1 flex justify-center">
+                        <div class="glass-card p-6 rounded-2xl border border-slate-700 w-full max-w-md">
+                            <h3 class="text-xl font-bold mb-4 text-center">Special Member Preview</h3>
+                            <div class="bg-gradient-to-r from-blue-500/20 to-indigo-600/20 h-48 rounded-xl flex items-center justify-center border border-slate-700 mb-4">
+                                <i class="fa-solid fa-microchip text-6xl text-cyan-400"></i>
+                            </div>
+                            <p class="text-center text-slate-300">Members get exclusive early access to our "Quantum Computing for AI" exhibition opening March 2026.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="pt-20 pb-10 border-t border-slate-800">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
+                <div class="md:col-span-2">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="bg-indigo-600 rounded-lg p-1.5">
+                            <i class="fa-solid fa-brain fa-lg text-white"></i>
+                        </div>
+                        <span class="font-bold text-xl">MUSEUM OF AI</span>
+                    </div>
+                    <p class="text-slate-400 max-w-md">
+                        The Museum of Artificial Intelligence is a groundbreaking institution dedicated to exploring the past, present, and future of artificial intelligence through immersive exhibits, educational programs, and public events.
+                    </p>
+                    <div class="flex space-x-4 mt-6">
+                        <a href="#" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-slate-700">
+                            <i class="fa-brands fa-twitter text-cyan-400"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-slate-700">
+                            <i class="fa-brands fa-linkedin-in text-cyan-400"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-slate-700">
+                            <i class="fa-brands fa-instagram text-cyan-400"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-slate-700">
+                            <i class="fa-brands fa-youtube text-cyan-400"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="font-bold text-lg mb-6">Visit Us</h3>
+                    <ul class="space-y-4 text-slate-400">
+                        <li class="flex space-x-3">
+                            <i class="fa-solid fa-location-dot mt-1.5 text-blue-500"></i>
+                            <span>Innovation Central<br>Tech Hub District, Silicon Valley</span>
+                        </li>
+                        <li class="flex space-x-3">
+                            <i class="fa-solid fa-clock mt-1.5 text-purple-500"></i>
+                            <span>Open by appointment only<br>10:00 AM - 6:00 PM</span>
+                        </li>
+                        <li class="flex space-x-3">
+                            <i class="fa-solid fa-ticket mt-1.5 text-amber-500"></i>
+                            <span>Adults: $24.99<br>Students/Seniors: $18.99</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="font-bold text-lg mb-6">Resources</h3>
+                    <ul class="space-y-4 text-slate-400">
+                        <li>
+                            <a href="#" class="hover:text-cyan-400 transition">
+                                <i class="fa-solid fa-chevron-right mr-2 text-xs text-slate-600"></i>
+                                Educational Resources
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="hover:text-cyan-400 transition">
+                                <i class="fa-solid fa-chevron-right mr-2 text-xs text-slate-600"></i>
+                                Research Publications
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="hover:text-cyan-400 transition">
+                                <i class="fa-solid fa-chevron-right mr-2 text-xs text-slate-600"></i>
+                                Press Center
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="hover:text-cyan-400 transition">
+                                <i class="fa-solid fa-chevron-right mr-2 text-xs text-slate-600"></i>
+                                Careers
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="hover:text-cyan-400 transition">
+                                <i class="fa-solid fa-chevron-right mr-2 text-xs text-slate-600"></i>
+                                FAQs
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="hover:text-cyan-400 transition">
+                                <i class="fa-solid fa-chevron-right mr-2 text-xs text-slate-600"></i>
+                                Contact Us
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-slate-800 mt-16 pt-8 text-center text-slate-500">
+                <p>© 2025 Museum of Artificial Intelligence. All rights reserved. | Designed with <i class="fa-solid fa-heart text-rose-500"></i> for the future of technology.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Add slide-in animations when elements come into view
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('slide-in');
+                }
+            });
+        }, { threshold: 0.2 });
+
+        document.querySelectorAll('.feature-card').forEach(card => {
+            observer.observe(card);
+        });
+
+        // Simple toggle for mobile menu (if added)
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Dynamic image slideshow system
+        document.addEventListener('DOMContentLoaded', () => {
+            // Configuration
+            const config = {
+                visibleSlides: 4, // Number of slides to show at once (1 main + 3 underneath)
+                rotationInterval: 4000, // Time between rotations in milliseconds
+                transitionDuration: 1000 // Transition duration in milliseconds
+            };
+
+            // Available images in numbered order (can be easily updated)
+            const imageData = [
+                { number: 1, filename: '1_Museums logo.webp', title: 'Museum Logo', description: 'Welcome to MAI Museum' },
+                { number: 2, filename: '2_hötorget exterior.webp', title: 'Hötorget Exterior', description: 'Urban innovation hub' },
+                { number: 3, filename: '3_Greg lecturing in museum.webp', title: 'AI Lecture', description: 'Expert presentations' },
+                { number: 4, filename: '4_max demonstrate for gregor.webp', title: 'Live Demo', description: 'Interactive demonstrations' },
+                { number: 5, filename: '5_three robot faces.webp', title: 'Robot Gallery', description: 'AI companions' },
+                { number: 6, filename: '6_musikafton hötorget.webp', title: 'Music & AI', description: 'Creative collaboration' },
+                { number: 7, filename: '7_platon robot 2.webp', title: 'Platon Robot', description: 'Advanced robotics' },
+                { number: 8, filename: '8_greg closeup lecture.webp', title: 'Expert Lecture', description: 'AI insights' },
+                { number: 10, filename: '10_tidnings articel invigning.webp', title: 'Opening Ceremony', description: 'Grand opening event' },
+                { number: 11, filename: '11_random graphics.webp', title: 'Digital Art', description: 'AI-generated graphics' },
+                { number: 12, filename: '12_music afton hötorget.webp', title: 'Music Evening', description: 'Cultural performances' },
+                { number: 13, filename: '13_storefront skrapan.webp', title: 'Storefront', description: 'Museum entrance' },
+                { number: 14, filename: '14_invigning skrapan.webp', title: 'Inauguration', description: 'Official opening' },
+                { number: 16, filename: '16_Public högtorget.webp', title: 'Public Space', description: 'Community area' },
+                { number: 17, filename: '17_hologram building.webp', title: 'Hologram Display', description: 'Future technology' },
+                { number: 18, filename: '18_evenemäng at närkesgatan.webp', title: 'Street Event', description: 'Public engagement' },
+                { number: 19, filename: '19_exterior skrapan.webp', title: 'Skrapan Exterior', description: 'Iconic building' },
+                { number: 20, filename: '20_greg lecture närkesg.webp', title: 'Lecture Series', description: 'Educational talks' },
+                { number: 21, filename: '21_happybirthday at närkesgtan.webp', title: 'Celebration', description: 'Special events' },
+                { number: 22, filename: '22_Jubelium pix-Patrick.webp', title: 'Jubilee', description: 'Milestone celebration' },
+                { number: 23, filename: '23_veiwing screen hötorget.webp', title: 'Viewing Screen', description: 'Large displays' },
+                { number: 24, filename: '24_jubelium pix genom skärmen - Patrick.webp', title: 'Through the Screen', description: 'Digital experiences' },
+                { number: 25, filename: '25_interior skrappan.webp', title: 'Interior Design', description: 'Modern spaces' },
+                { number: 26, filename: '26_greg skollecture hötorget.webp', title: 'School Lecture', description: 'Educational outreach' },
+                { number: 27, filename: '27_Mai interior nov 15.webp', title: 'MAI Interior', description: 'Museum spaces' },
+                { number: 28, filename: '28_survielence camera.webp', title: 'Surveillance', description: 'Security systems' },
+                { number: 29, filename: '29_stockholm AI högtorget.webp', title: 'Stockholm AI', description: 'Local innovation' },
+                { number: 30, filename: '30_closeup aws poster.webp', title: 'AWS Partnership', description: 'Cloud technology' },
+                { number: 31, filename: '31_Bob lecture.webp', title: 'Bob\'s Lecture', description: 'Featured speaker' },
+                { number: 32, filename: '32_big screens at hötorget.webp', title: 'Big Screens', description: 'Public displays' },
+                { number: 33, filename: '33_public hötorget.webp', title: 'Public Gathering', description: 'Community events' },
+                { number: 34, filename: '34_arc pussle.webp', title: 'Arc Puzzle', description: 'Interactive exhibit' },
+                { number: 35, filename: '35_AI och music seminar.webp', title: 'AI Music Seminar', description: 'Creative AI' },
+                { number: 37, filename: '37_aws poster.webp', title: 'AWS Exhibit', description: 'Technology showcase' }
+            ];
+
+            // Get slideshow container
+            const container = document.getElementById('slideshow-container');
+
+            // Create slide elements dynamically
+            function createSlide(imageInfo, index) {
+                const slide = document.createElement('div');
+                slide.className = 'glass-card rounded-xl overflow-hidden w-full h-full absolute transition-all duration-1000 ease-in-out z-0 opacity-0';
+                slide.style.transform = 'rotate(-6deg)';
+                slide.dataset.slideIndex = index;
+
+                slide.innerHTML = `
+                    <div class="bg-gray-800 w-full h-full">
+                        <div class="h-full w-full overflow-hidden">
+                            <img src="images/WEBP_images/${imageInfo.filename}"
+                                 alt="${imageInfo.title}"
+                                 class="w-full h-full object-cover object-left hover:scale-105 transition-transform duration-500 cursor-move"
+                                 onerror="console.log('Failed to load image:', this.src)">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold">${imageInfo.title}</h3>
+                            <p class="text-slate-400 mt-2">${imageInfo.description}</p>
+                        </div>
+                    </div>
+                `;
+
+                return slide;
+            }
+
+            // Generate all slides
+            function generateSlides() {
+                imageData.forEach((imageInfo, index) => {
+                    const slide = createSlide(imageInfo, index);
+                    container.appendChild(slide);
+                });
+            }
+
+            // Improved slideshow logic
+            function initSlideshow() {
+                // Wait a bit to ensure all slides are properly added to DOM
+                setTimeout(() => {
+                    const slides = container.querySelectorAll('[data-slide-index]');
+                    console.log('Initializing slideshow, found', slides.length, 'slides');
+                    let currentIndex = 0;
+
+                    function updateSlides() {
+                        slides.forEach((slide, index) => {
+                            const diff = (index - currentIndex + imageData.length) % imageData.length;
+                            const img = slide.querySelector('img');
+
+                            if (diff === 0) {
+                                // Main focused slide
+                                slide.style.opacity = '1';
+                                slide.style.zIndex = '30';
+                                slide.style.transform = 'rotate(6deg) translate(20px, 20px) scale(1.05)';
+                                // Add panning animation only to the main slide
+                                img.style.animation = 'panImage 8s ease-in-out infinite alternate';
+                            } else if (diff === 1) {
+                                // First underneath slide
+                                slide.style.opacity = '0.8';
+                                slide.style.zIndex = '20';
+                                slide.style.transform = 'rotate(-3deg) translate(-10px, 10px) scale(0.95)';
+                                // Remove animation
+                                img.style.animation = 'none';
+                            } else if (diff === 2) {
+                                // Second underneath slide
+                                slide.style.opacity = '0.6';
+                                slide.style.zIndex = '15';
+                                slide.style.transform = 'rotate(-6deg) translate(-20px, 5px) scale(0.9)';
+                                // Remove animation
+                                img.style.animation = 'none';
+                            } else if (diff === 3) {
+                                // Third underneath slide
+                                slide.style.opacity = '0.4';
+                                slide.style.zIndex = '10';
+                                slide.style.transform = 'rotate(-9deg) translate(-30px, 0px) scale(0.85)';
+                                // Remove animation
+                                img.style.animation = 'none';
+                            } else {
+                                // Hidden slides
+                                slide.style.opacity = '0';
+                                slide.style.zIndex = '0';
+                                slide.style.transform = 'rotate(-12deg) translate(-40px, -5px) scale(0.8)';
+                                // Remove animation
+                                img.style.animation = 'none';
+                            }
+                        });
+                    }
+
+                    function nextSlide() {
+                        currentIndex = (currentIndex + 1) % imageData.length;
+                        updateSlides();
+                    }
+
+                    // Initialize
+                    updateSlides();
+
+                    // Auto-rotate
+                    setInterval(nextSlide, config.rotationInterval);
+                }, 100); // Small delay to ensure DOM is ready
+            }
+
+            // Start the slideshow
+            generateSlides();
+            initSlideshow();
+        });
+    </script>
+<p style="border-radius: 8px; text-align: center; font-size: 12px; color: #fff; margin-top: 16px;position: fixed; left: 8px; bottom: 8px; z-index: 10; background: rgba(0, 0, 0, 0.8); padding: 4px 8px;">Made with <img src="https://enzostvs-deepsite.hf.space/logo.svg" alt="DeepSite Logo" style="width: 16px; height: 16px; vertical-align: middle;display:inline-block;margin-right:3px;filter:brightness(0) invert(1);"><a href="https://enzostvs-deepsite.hf.space" style="color: #fff;text-decoration: underline;" target="_blank" >DeepSite</a> - 🧬 <a href="https://enzostvs-deepsite.hf.space?remix=plumplucker/ai-museum-update" style="color: #fff;text-decoration: underline;" target="_blank" >Remix</a></p></body>
+</html>
