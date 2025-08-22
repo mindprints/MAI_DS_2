@@ -1,37 +1,27 @@
+// /api/substack.js  (Edge Runtime)
 export const config = { runtime: 'edge' };
 
 export default async function handler(req) {
-  const url = new URL(req.url);
-  const feed = url.searchParams.get("feed");
-  if (!feed) {
-    return new Response("Missing feed", { status: 400 });
-  }
+  try {
+    const url  = new URL(req.url);
+    const feed = url.searchParams.get('feed') || 'https://mindprints.substack.com/feed';
 
-  // Cache at the edge for 10 minutes
-  const cacheKey = new Request(url.toString(), { method: 'GET' });
-  const cache = caches.default;
-  let resp = await cache.match(cacheKey);
-  if (resp) return resp;
-
-  const upstream = await fetch(feed, {
-    headers: { "User-Agent": "MAI-Website/1.0 (+https://your-domain)" }
-  });
-
-  if (!upstream.ok) {
-    return new Response("Upstream failed", { status: 502 });
-  }
-
-  const body = await upstream.text();
-
-  resp = new Response(body, {
-    headers: {
-      "content-type": "application/rss+xml; charset=utf-8",
-      "cache-control": "public, s-maxage=600, max-age=60" // 10 min edge, 1 min browser
+    const r = await fetch(feed, {
+      headers: { 'user-agent': 'MAI-Website/1.0 (+https://mindprints.substack.com)' }
+    });
+    if (!r.ok) {
+      return new Response(`Upstream failed: ${r.status}`, { status: 502 });
     }
-  });
 
-  // store in edge cache
-  await cache.put(cacheKey, resp.clone());
-  return resp;
+    const xml = await r.text();
+    return new Response(xml, {
+      headers: {
+        'content-type': 'application/rss+xml; charset=utf-8',
+        'cache-control': 'public, s-maxage=600, max-age=60',
+        'access-control-allow-origin': '*' // handy during local dev
+      }
+    });
+  } catch (err) {
+    return new Response('Error: ' + (err?.message || 'unknown'), { status: 500 });
+  }
 }
-res.setHeader('Access-Control-Allow-Origin', '*');
