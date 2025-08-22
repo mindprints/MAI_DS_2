@@ -165,3 +165,7 @@ body {
     z-index: 0 !important;
     transform: rotate(-12deg) translate(-40px, -5px) scale(0.8) !important;
 }
+/* Journal cards */
+.blog-card .cover { height: 180px; background: radial-gradient(ellipse at top, #37415155, #111827aa); }
+.blog-card h3 { line-height: 1.2 }
+.blog-card p { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
