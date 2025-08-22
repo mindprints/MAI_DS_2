@@ -34,3 +34,4 @@ export default async function handler(req) {
   await cache.put(cacheKey, resp.clone());
   return resp;
 }
+res.setHeader('Access-Control-Allow-Origin', '*');
