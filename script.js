@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const config = {
         visibleSlides: 4, // Number of slides to show at once (1 main + 3 underneath)
         rotationInterval: 6000, // Time between rotations in milliseconds
-        transitionDuration: 1000 // Transition duration in milliseconds
+        transitionDuration: 2000 // Transition duration in milliseconds
     };
 
     // Available images in numbered order (can be easily updated)
@@ -112,11 +112,31 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Remove all slide state classes first
                     slide.classList.remove('slide-main', 'slide-under-1', 'slide-under-2', 'slide-under-3', 'slide-hidden');
 
+                    // Cancel any JS-driven zoom from a previous role and reset transforms
+                    if (img._zoomAnimation) {
+                        try { img._zoomAnimation.cancel(); } catch (e) {}
+                        img._zoomAnimation = null;
+                    }
+                    img.style.transformOrigin = 'center center';
+                    img.style.transform = '';
+
                     if (diff === 0) {
-                        // Main focused slide
+                        // Main focused slide (pan + smooth zoom)
                         slide.classList.add('slide-main');
-                        // Add panning animation only to the main slide
+                        // Keep panning
                         img.style.animation = 'panImage 8s ease-in-out infinite alternate';
+                        // Add zoom from 1 -> 1.2 over the full rotation interval
+                        img._zoomAnimation = img.animate(
+                            [
+                                { transform: 'scale(1)' },
+                                { transform: 'scale(1.2)' }
+                            ],
+                            {
+                                duration: config.rotationInterval,
+                                easing: 'ease-in-out',
+                                fill: 'forwards'
+                            }
+                        );
                     } else if (diff === 1) {
                         // First underneath slide
                         slide.classList.add('slide-under-1');
