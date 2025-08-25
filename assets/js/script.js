@@ -65,6 +65,16 @@ document.addEventListener('DOMContentLoaded', () => {
     // Get slideshow container
     const container = document.getElementById('slideshow-container');
 
+    // Determine correct base path for images depending on current page location
+    const imageBasePath = (() => {
+        const p = (window.location && window.location.pathname) ? window.location.pathname : '';
+        // Works for /sv/index.html, sv/index.html, and deeper sv/* pages if ever reused
+        if (p.includes('/sv/') || p.endsWith('/sv') || p.endsWith('/sv/')) {
+            return '../images/WEBP_images/';
+        }
+        return 'images/WEBP_images/';
+    })();
+
     // Create slide elements dynamically
     function createSlide(imageInfo, index) {
         const slide = document.createElement('div');
@@ -74,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
         slide.innerHTML = `
             <div class="bg-gray-800 w-full h-full">
                 <div class="h-full w-full overflow-hidden">
-                    <img src="images/WEBP_images/${imageInfo.filename}"
+                    <img src="${imageBasePath}${imageInfo.filename}"
                          alt="${imageInfo.title}"
                          class="w-full h-full object-cover object-left hover:scale-105 transition-transform duration-500 cursor-move"
                          onerror="console.log('Failed to load image:', this.src)">
