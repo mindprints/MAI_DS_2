@@ -8,6 +8,131 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="fixed w-full z-50">
+    <div class="container mx-auto px-4 py-4">
+      <nav class="glass-card py-3 px-6 flex flex-col md:flex-row md:justify-between md:items-center">
+        <div class="flex items-center space-x-2">
+          <div class="bg-indigo-500 rounded-lg p-1.5">
+            <img src="../logoTransp.png" alt="MAI logo" class="w-5 h-5">
+          </div>
+          <span class="font-bold text-xl tracking-wide">MUSEUM OF ARTIFICIAL INTELLIGENCE</span>
+        </div>
+
+        <div class="flex flex-wrap gap-6 justify-center md:justify-start mt-3 md:mt-0">
+          <a href="../index.html" class="nav-link font-medium text-gray-200 hover:text-white">Home</a>
+        </div>
+
+        <a href="https://mindprints.substack.com/" target="_blank" rel="noopener"
+           class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 rounded-full font-medium transition duration-300 flex items-center mt-3 md:mt-0">
+          <i class="fa-solid fa-bell mr-2"></i>
+          Subscribe on Substack
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero-bg min-h-[40vh] flex items-center pt-16">
+    <div class="container mx-auto px-4 py-16">
+      <h1 class="text-5xl font-black tracking-tight text-center">
+        <span class="gradient-text">Journal</span>
+      </h1>
+      <p class="text-slate-300 text-lg md:text-xl max-w-3xl mx-auto text-center mt-6">
+        Essays and updates from our Substack, <a class="underline" href="https://mindprints.substack.com/" target="_blank" rel="noopener">mindprints</a>.
+      </p>
+    </div>
+  </section>
+
+  <!-- Posts grid -->
+  <main class="py-16">
+    <div class="container mx-auto px-4">
+      <div id="blog-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+
+      <div class="text-center mt-12">
+        <a id="blog-view-all"
+           class="glass-card hover:border-indigo-500 px-8 py-4 rounded-full font-bold transition duration-300 inline-flex items-center"
+           href="https://mindprints.substack.com/" target="_blank" rel="noopener">
+          Read all on Substack
+          <i class="fa-solid fa-arrow-right ml-3"></i>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer (simple) -->
+  <footer class="pt-20 pb-10 border-t border-slate-800">
+    <div class="container mx-auto px-4 text-center text-slate-500">
+      <p>© 2025 Museum of Artificial Intelligence.</p>
+    </div>
+  </footer>
+
+  <script>
+    // ---- Substack blog integration (mindprints.substack.com) ----
+    (async function loadBlog() {
+      const SUBSTACK_HOST = "mindprints.substack.com";
+      const FEED = `https://${SUBSTACK_HOST}/feed`;
+      const PROXY = `/api/substack?feed=${encodeURIComponent(FEED)}`;
+      const listEl = document.getElementById("blog-list");
+
+      try {
+        const res = await fetch(PROXY, { cache: "no-store" });
+        if (!res.ok) throw new Error("Feed proxy failed");
+        const xml = await res.text();
+
+        const doc = new DOMParser().parseFromString(xml, "text/xml");
+        const items = Array.from(doc.querySelectorAll("item")).slice(0, 12); // show top 12
+
+        listEl.innerHTML = items.map(node => {
+          const title = node.querySelector("title")?.textContent ?? "Untitled";
+          const link  = node.querySelector("link")?.textContent ?? "#";
+          const pub   = node.querySelector("pubDate")?.textContent ?? "";
+          const date  = pub ? new Date(pub).toLocaleDateString() : "";
+          const html  = node.querySelector("content\\:encoded")?.textContent
+                     || node.querySelector("description")?.textContent || "";
+          const text  = html.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+          const imgMatch = html.match(/<img[^>]+src=\"([^\"]+)\"/i);
+          const img  = imgMatch ? imgMatch[1] : null;
+          const tracked = `${link}${link.includes("?") ? "&" : "?"}utm_source=mai_website&utm_medium=referral`;
+
+          return `
+            <article class="blog-card glass-card rounded-xl overflow-hidden transition duration-500 hover:shadow-xl">
+              <a href="${tracked}" target="_blank" rel="noopener">
+                <div class="${img ? '' : 'bg-gradient-to-br from-indigo-700/40 to-cyan-600/30'}">
+                  ${img ? `<img src="${img}" alt="${title}" class="w-full h-48 object-cover">` : `<div class="h-48"></div>`}
+                </div>
+                <div class="p-6">
+                  <div class="text-indigo-300 text-xs font-semibold mb-2">${date}</div>
+                  <h3 class="text-lg md:text-xl font-bold mb-2">${title}</h3>
+                  <p class="text-slate-400">${text}</p>
+                  <div class="mt-4 text-cyan-400 font-medium">Read on Substack »</div>
+                </div>
+              </a>
+            </article>
+          `;
+        }).join("") || `<div class="text-center text-slate-400 w-full">No posts yet.</div>`;
+      } catch (e) {
+        console.error(e);
+        listEl.innerHTML = `<div class="text-center text-slate-400 w-full">Couldn’t load posts right now.</div>`;
+      }
+    })();
+  </script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Journal — Museum of Artificial Intelligence</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
