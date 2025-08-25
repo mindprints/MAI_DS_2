@@ -68,10 +68,19 @@ document.addEventListener('DOMContentLoaded', () => {
     // Determine correct base path for images depending on current page location
     const imageBasePath = (() => {
         const p = (window.location && window.location.pathname) ? window.location.pathname : '';
-        // Works for /sv/index.html, sv/index.html, and deeper sv/* pages if ever reused
-        if (p.includes('/sv/') || p.endsWith('/sv') || p.endsWith('/sv/')) {
+        if (p.includes('/sv/pages/')) {
+            // From /sv/pages/* → up two levels
+            return '../../images/WEBP_images/';
+        }
+        if (p.includes('/sv/')) {
+            // From /sv/* → up one level
             return '../images/WEBP_images/';
         }
+        if (p.includes('/pages/')) {
+            // From /pages/* → up one level
+            return '../images/WEBP_images/';
+        }
+        // From root
         return 'images/WEBP_images/';
     })();
 
@@ -185,9 +194,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 100); // Small delay to ensure DOM is ready
     }
 
-    // Start the slideshow
-    generateSlides();
-    initSlideshow();
+    // Start the slideshow only if container exists on this page
+    if (container) {
+        generateSlides();
+        initSlideshow();
+    }
 });
 
 
