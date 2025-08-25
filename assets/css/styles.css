@@ -10,7 +10,7 @@ body {
     background: linear-gradient(125deg, rgba(30,41,59,0.8) 0%, rgba(30,58,138,0.85) 60%, rgba(30,58,138,0.7) 100%);
     /* Optional: Add local image if available */
     background-image: linear-gradient(125deg, rgba(30,41,59,0.8) 0%, rgba(30,58,138,0.85) 60%, rgba(30,58,138,0.7) 100%), 
-                      url('images/hero-bg.jpg');
+                      url('../../images/hero-bg.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -34,7 +34,7 @@ body {
     background: linear-gradient(rgba(15,23,42,0.9), rgba(15,23,42,0.9));
     /* Optional: Add local image if available */
     background-image: linear-gradient(rgba(15,23,42,0.9), rgba(15,23,42,0.9)), 
-                      url('images/model-bg.jpg');
+                      url('../../images/model-bg.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -169,3 +169,6 @@ body {
 .blog-card .cover { height: 180px; background: radial-gradient(ellipse at top, #37415155, #111827aa); }
 .blog-card h3 { line-height: 1.2 }
 .blog-card p { display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+
+
+

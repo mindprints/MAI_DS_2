@@ -1,3 +1,4 @@
+// Copied from root script.js
 // Add slide-in animations when elements come into view
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -178,3 +179,6 @@ document.addEventListener('DOMContentLoaded', () => {
     generateSlides();
     initSlideshow();
 });
+
+
+
