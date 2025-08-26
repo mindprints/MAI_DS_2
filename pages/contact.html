@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact • Museum of AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons/css/flag-icons.min.css">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="alternate" hreflang="en" href="./contact.html">
+    <link rel="alternate" hreflang="sv" href="../sv/pages/contact.html">
+</head>
+<body>
+    <header class="w-full">
+        <div class="container mx-auto px-4 py-6 flex items-center justify-between">
+            <a href="../index.html" class="text-slate-300 hover:text-white">← Back to Home</a>
+            <div class="flex items-center space-x-2">
+                <a href="../index.html" class="opacity-80 hover:opacity-100" title="English">
+                    <span class="fi fi-gb text-2xl"></span>
+                </a>
+                <a href="../sv/pages/contact.html" class="opacity-80 hover:opacity-100" title="Svenska">
+                    <span class="fi fi-se text-2xl"></span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="py-16">
+        <div class="container mx-auto px-4 max-w-3xl">
+            <h1 class="text-4xl font-bold mb-8">Contact Us</h1>
+
+            <div class="glass-card p-6 md:p-8 rounded-xl">
+                <p class="text-slate-400 mb-6">Select the type of enquiry and send us a message. We’ll get back to you as soon as possible.</p>
+
+                <form id="contact-form" class="space-y-6" onsubmit="return false;">
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">Your name</label>
+                        <input id="name" type="text" class="w-full bg-slate-900/50 border border-slate-700 rounded-lg px-4 py-3 text-slate-200 focus:outline-none focus:border-indigo-500" placeholder="Jane Doe">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">Email</label>
+                        <input id="email" type="email" class="w-full bg-slate-900/50 border border-slate-700 rounded-lg px-4 py-3 text-slate-200 focus:outline-none focus:border-indigo-500" placeholder="you@example.com">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold mb-3">Type of enquiry</label>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <label class="flex items-center space-x-3">
+                                <input type="checkbox" value="Educational Resources" class="enquiry-type accent-indigo-500">
+                                <span>Educational Resources</span>
+                            </label>
+                            <label class="flex items-center space-x-3">
+                                <input type="checkbox" value="Research Publications" class="enquiry-type accent-indigo-500">
+                                <span>Research Publications</span>
+                            </label>
+                            <label class="flex items-center space-x-3">
+                                <input type="checkbox" value="Press Center" class="enquiry-type accent-indigo-500">
+                                <span>Press Center</span>
+                            </label>
+                            <label class="flex items-center space-x-3">
+                                <input type="checkbox" value="Careers" class="enquiry-type accent-indigo-500">
+                                <span>Careers</span>
+                            </label>
+                            <label class="flex items-center space-x-3">
+                                <input type="checkbox" value="FAQs" class="enquiry-type accent-indigo-500">
+                                <span>FAQs</span>
+                            </label>
+                            <label class="flex items-center space-x-3">
+                                <input type="checkbox" value="Other" class="enquiry-type accent-indigo-500">
+                                <span>Other</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">Message</label>
+                        <textarea id="message" rows="6" class="w-full bg-slate-900/50 border border-slate-700 rounded-lg px-4 py-3 text-slate-200 focus:outline-none focus:border-indigo-500" placeholder="How can we help?"></textarea>
+                    </div>
+
+                    <div class="flex items-center justify-between">
+                        <p class="text-slate-500 text-sm">Email will be sent to <span class="text-slate-300">bokningar@aimuseum.se</span></p>
+                        <button id="send-btn" type="button" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-full font-medium transition duration-300 inline-flex items-center">
+                            <i class="fa-solid fa-paper-plane mr-2"></i>
+                            Send email
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        (function () {
+            const sendBtn = document.getElementById('send-btn');
+            sendBtn.addEventListener('click', function () {
+                const name = document.getElementById('name').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const message = document.getElementById('message').value.trim();
+                const types = Array.from(document.querySelectorAll('.enquiry-type:checked')).map(cb => cb.value);
+
+                const subject = `Enquiry${types.length ? ': ' + types.join(', ') : ''}`;
+                const lines = [];
+                if (name) lines.push(`Name: ${name}`);
+                if (email) lines.push(`Email: ${email}`);
+                if (types.length) lines.push(`Type(s): ${types.join(', ')}`);
+                if (message) lines.push('', message);
+                const body = encodeURIComponent(lines.join('\n'));
+                const mailto = `mailto:bokningar@aimuseum.se?subject=${encodeURIComponent(subject)}&body=${body}`;
+                window.location.href = mailto;
+            });
+        })();
+    </script>
+    <script src="../assets/js/script.js"></script>
+</body>
+</html>
+
+
