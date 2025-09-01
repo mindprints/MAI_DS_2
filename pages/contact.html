@@ -1,120 +1,222 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact • Museum of AI</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons/css/flag-icons.min.css">
-    <link rel="stylesheet" href="../assets/css/styles.css">
-    <link rel="alternate" hreflang="en" href="./contact.html">
-    <link rel="alternate" hreflang="sv" href="../sv/pages/contact.html">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact • Museum of AI</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../assets/css/styles.css">
+  <link rel="alternate" hreflang="sv" href="../sv/pages/contact.html">
+  <link rel="alternate" hreflang="en" href="./contact.html">
+
+  <!-- EmailJS v4 -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+    emailjs.init({ publicKey: "Z3nM5X7zfy1eF1Rzc" });
+  </script>
 </head>
 <body>
-    <header class="w-full">
-        <div class="container mx-auto px-4 py-6 flex items-center justify-between">
-            <a href="../index.html" class="text-slate-300 hover:text-white">← Back to Home</a>
-            <div class="flex items-center space-x-2">
-                <a href="../index.html" class="opacity-80 hover:opacity-100" title="English">
-                    <span class="fi fi-gb text-2xl"></span>
-                </a>
-                <a href="../sv/pages/contact.html" class="opacity-80 hover:opacity-100" title="Svenska">
-                    <span class="fi fi-se text-2xl"></span>
-                </a>
+  <header class="w-full">
+    <div class="container mx-auto px-4 py-6">
+      <a href="../index.html" class="text-slate-300 hover:text-white">← Back to Home</a>
+    </div>
+  </header>
+
+  <main class="py-16">
+    <div class="container mx-auto px-4 max-w-3xl">
+      <h1 class="text-4xl font-bold mb-6">Contact</h1>
+      <p class="text-slate-300 mb-8">Tell us how we can help. We’ll get back to you shortly.</p>
+
+      <div class="glass-card p-6 md:p-8 rounded-xl">
+        <form id="contact-form" class="space-y-6" novalidate>
+          <!-- Topic -->
+          <div>
+            <label for="topic" class="block text-sm font-medium text-slate-300 mb-2">Topic</label>
+            <select id="topic" name="topic"
+                    class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+              <option>General Contact</option>
+              <option>Membership Application</option>
+              <option>Workshop/Lecture Enquiry</option>
+              <option>Press Center</option>
+              <option>Careers</option>
+              <option>Partnerships</option>
+              <option>Donations/Sponsorship</option>
+              <option>Venue Hire</option>
+              <option>Accessibility</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <!-- Name / Email -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label for="name" class="block text-sm font-medium text-slate-300 mb-2">Your name</label>
+              <input id="name" name="name" type="text" required autocomplete="name"
+                     class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
             </div>
-        </div>
-    </header>
-
-    <main class="py-16">
-        <div class="container mx-auto px-4 max-w-3xl">
-            <h1 class="text-4xl font-bold mb-8">Contact Us</h1>
-
-            <div class="glass-card p-6 md:p-8 rounded-xl">
-                <p class="text-slate-400 mb-6">Select the type of enquiry and send us a message. We’ll get back to you as soon as possible.</p>
-
-                <form id="contact-form" class="space-y-6" onsubmit="return false;">
-                    <div>
-                        <label class="block text-sm font-semibold mb-2">Your name</label>
-                        <input id="name" type="text" class="w-full bg-slate-900/50 border border-slate-700 rounded-lg px-4 py-3 text-slate-200 focus:outline-none focus:border-indigo-500" placeholder="Jane Doe">
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-semibold mb-2">Email</label>
-                        <input id="email" type="email" class="w-full bg-slate-900/50 border border-slate-700 rounded-lg px-4 py-3 text-slate-200 focus:outline-none focus:border-indigo-500" placeholder="you@example.com">
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-semibold mb-3">Type of enquiry</label>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <label class="flex items-center space-x-3">
-                                <input type="checkbox" value="Educational Resources" class="enquiry-type accent-indigo-500">
-                                <span>Educational Resources</span>
-                            </label>
-                            <label class="flex items-center space-x-3">
-                                <input type="checkbox" value="Research Publications" class="enquiry-type accent-indigo-500">
-                                <span>Research Publications</span>
-                            </label>
-                            <label class="flex items-center space-x-3">
-                                <input type="checkbox" value="Press Center" class="enquiry-type accent-indigo-500">
-                                <span>Press Center</span>
-                            </label>
-                            <label class="flex items-center space-x-3">
-                                <input type="checkbox" value="Careers" class="enquiry-type accent-indigo-500">
-                                <span>Careers</span>
-                            </label>
-                            <label class="flex items-center space-x-3">
-                                <input type="checkbox" value="FAQs" class="enquiry-type accent-indigo-500">
-                                <span>FAQs</span>
-                            </label>
-                            <label class="flex items-center space-x-3">
-                                <input type="checkbox" value="Other" class="enquiry-type accent-indigo-500">
-                                <span>Other</span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-semibold mb-2">Message</label>
-                        <textarea id="message" rows="6" class="w-full bg-slate-900/50 border border-slate-700 rounded-lg px-4 py-3 text-slate-200 focus:outline-none focus:border-indigo-500" placeholder="How can we help?"></textarea>
-                    </div>
-
-                    <div class="flex items-center justify-between">
-                        <p class="text-slate-500 text-sm">Email will be sent to <span class="text-slate-300">bokningar@aimuseum.se</span></p>
-                        <button id="send-btn" type="button" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-full font-medium transition duration-300 inline-flex items-center">
-                            <i class="fa-solid fa-paper-plane mr-2"></i>
-                            Send email
-                        </button>
-                    </div>
-                </form>
+            <div>
+              <label for="email" class="block text-sm font-medium text-slate-300 mb-2">Email</label>
+              <input id="email" name="email" type="email" required autocomplete="email" inputmode="email"
+                     class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
             </div>
-        </div>
-    </main>
+          </div>
 
-    <script>
-        (function () {
-            const sendBtn = document.getElementById('send-btn');
-            sendBtn.addEventListener('click', function () {
-                const name = document.getElementById('name').value.trim();
-                const email = document.getElementById('email').value.trim();
-                const message = document.getElementById('message').value.trim();
-                const types = Array.from(document.querySelectorAll('.enquiry-type:checked')).map(cb => cb.value);
+          <!-- Optional meta -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label for="organization" class="block text-sm font-medium text-slate-300 mb-2">Organization (optional)</label>
+              <input id="organization" name="organization" type="text" autocomplete="organization"
+                     class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+            </div>
+            <div>
+              <label for="phone" class="block text-sm font-medium text-slate-300 mb-2">Phone (optional)</label>
+              <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel"
+                     class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+            </div>
+          </div>
 
-                const subject = `Enquiry${types.length ? ': ' + types.join(', ') : ''}`;
-                const lines = [];
-                if (name) lines.push(`Name: ${name}`);
-                if (email) lines.push(`Email: ${email}`);
-                if (types.length) lines.push(`Type(s): ${types.join(', ')}`);
-                if (message) lines.push('', message);
-                const body = encodeURIComponent(lines.join('\n'));
-                const mailto = `mailto:bokningar@aimuseum.se?subject=${encodeURIComponent(subject)}&body=${body}`;
-                window.location.href = mailto;
-            });
-        })();
-    </script>
-    <script src="../assets/js/script.js"></script>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label for="website" class="block text-sm font-medium text-slate-300 mb-2">Website (optional)</label>
+              <input id="website" name="website" type="url" inputmode="url" placeholder="https://"
+                     class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+            </div>
+            <div>
+              <label for="location" class="block text-sm font-medium text-slate-300 mb-2">Location (optional)</label>
+              <input id="location" name="location" type="text" placeholder="City, Country"
+                     class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label for="budget" class="block text-sm font-medium text-slate-300 mb-2">Budget (optional)</label>
+              <input id="budget" name="budget" type="text" placeholder="e.g., SEK 20–50k"
+                     class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+            </div>
+            <div>
+              <label for="timeline" class="block text-sm font-medium text-slate-300 mb-2">Timeline (optional)</label>
+              <input id="timeline" name="timeline" type="text" placeholder="e.g., Oct–Nov 2025"
+                     class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+            </div>
+          </div>
+
+          <!-- Message -->
+          <div>
+            <label for="message" class="block text-sm font-medium text-slate-300 mb-2">Message</label>
+            <textarea id="message" name="message" rows="6" required
+                      class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+          </div>
+
+          <p class="text-xs text-slate-400">
+            We use your information only to respond to your enquiry. See our
+            <a href="./privacy.html" class="underline hover:text-indigo-400">Privacy Policy</a>.
+          </p>
+
+          <div class="flex items-center justify-between gap-4">
+            <button type="submit"
+                    class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-full font-medium transition duration-300">
+              Send message
+            </button>
+            <span id="contact-feedback" class="text-sm text-slate-400"></span>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Config
+    const SERVICE_ID = "service_zxk9avv";
+    const TEMPLATE_CONTACT = "template_o3hvd4c"; // Contact Submission
+
+    // Prefill topic from ?topic=
+    (function prefillTopic() {
+      const params = new URLSearchParams(location.search);
+      const t = params.get('topic');
+      if (!t) return;
+      const select = document.getElementById('topic');
+      const options = Array.from(select.options).map(o => o.value);
+      // Try to select an exact match first, else set "Other"
+      const match = options.find(v => v.toLowerCase() === t.toLowerCase());
+      select.value = match || 'Other';
+      // If we had a subtopic/message passed through, you could also prefill #message here
+    })();
+
+    // Build a rich message string so the EmailJS template can stay minimal ({{name}}, {{email}}, {{message}})
+    function composeMessage() {
+      const get = id => document.getElementById(id)?.value.trim();
+      const topic = get('topic');
+      const name = get('name');
+      const email = get('email');
+      const org = get('organization');
+      const phone = get('phone');
+      const website = get('website');
+      const location = get('location');
+      const budget = get('budget');
+      const timeline = get('timeline');
+      const message = get('message');
+
+      const lines = [
+        `Topic: ${topic || '—'}`,
+        `Name: ${name || '—'}`,
+        `Email: ${email || '—'}`,
+        org ? `Organization: ${org}` : null,
+        phone ? `Phone: ${phone}` : null,
+        website ? `Website: ${website}` : null,
+        location ? `Location: ${location}` : null,
+        budget ? `Budget: ${budget}` : null,
+        timeline ? `Timeline: ${timeline}` : null,
+        '',
+        'Message:',
+        message || '—'
+      ].filter(Boolean);
+
+      return lines.join('\n');
+    }
+
+    document.getElementById('contact-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const feedback = document.getElementById('contact-feedback');
+
+      const name = form.name.value.trim();
+      const email = form.email.value.trim();
+      const msg = form.message.value.trim();
+
+      if (!name || !email || !msg) {
+        alert('Please fill in your name, email, and message.');
+        return;
+      }
+
+      const fullMessage = composeMessage();
+
+      const params = {
+        name,
+        email,
+        message: fullMessage,
+        reply_to: email,
+        from_name: 'MAI Website',
+        from_email: 'info@aimuseum.se'
+      };
+
+      const btn = form.querySelector('button[type="submit"]');
+      btn.disabled = true; btn.textContent = 'Sending…'; feedback.textContent = '';
+
+      try {
+        await emailjs.send(SERVICE_ID, TEMPLATE_CONTACT, params);
+        feedback.textContent = 'Thanks! Your message has been sent.';
+        form.reset();
+      } catch (err) {
+        console.error('EmailJS error:', err);
+        feedback.textContent = 'Sorry, there was a problem sending your message.';
+      } finally {
+        btn.disabled = false; btn.textContent = 'Send message';
+      }
+    });
+  </script>
 </body>
 </html>
-
-
