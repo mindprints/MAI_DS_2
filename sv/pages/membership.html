@@ -1,23 +1,21 @@
 <!DOCTYPE html>
 <html lang="sv">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Medlemskap • Museum of AI</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="../../assets/css/styles.css">
+  <!-- Hreflang -->
   <link rel="alternate" hreflang="en" href="../../pages/membership.html">
   <link rel="alternate" hreflang="sv" href="./membership.html">
 
-  <!-- EmailJS -->
+  <!-- EmailJS v4 -->
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-
-  <script type="text/javascript">
-    (function() {
-      emailjs.init("Z3nM5X7zfy1eF1Rzc"); // your EmailJS Public Key
-    })();
+  <script>
+    emailjs.init({ publicKey: "Z3nM5X7zfy1eF1Rzc" });
   </script>
 </head>
 <body>
@@ -31,35 +29,44 @@
     <div class="container mx-auto px-4">
       <h1 class="text-4xl font-bold mb-6">Medlemskap</h1>
       <p class="text-slate-300 mb-8">Förmåner, nivåer och hur du går med.</p>
+
       <div class="glass-card p-6 rounded-xl">
         <p class="text-slate-400">
-          Museet för artificiell intelligens drivs av en ideell förening som verkar för att utbilda och upplysa allmänheten,
-          branschfolk och akademi om AI:s dåtid, nutid och möjliga framtid. Medlemskap är öppet för alla som vill stödja detta mål.
+          Museet för artificiell intelligens drivs av en ideell förening som verkar för att utbilda och upplysa
+          allmänheten, branschfolk och akademi om AI:s dåtid, nutid och möjliga framtid. Medlemskap är öppet för alla
+          som vill stödja detta mål.
         </p>
         <p class="text-slate-400 mt-4">
-          Medlemsavgiften är 300 SEK per år för privatpersoner och 5000 SEK för företag. Använd formuläret nedan för att skicka in din ansökan.
+          Medlemsavgiften är 300 SEK per år för privatpersoner och 5000 SEK för företag. Använd formuläret nedan för att
+          skicka in din ansökan.
         </p>
 
-        <!-- One clean form -->
-        <form id="membership-form" class="mt-6 space-y-4">
+        <!-- Medlemskapsformulär (EmailJS) -->
+        <form id="membership-form-sv" class="mt-6 space-y-4" novalidate>
           <div>
-            <label for="name" class="block text-sm font-medium text-slate-300 mb-2">Namn</label>
-            <input id="name" name="name" type="text" required
-              class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+            <label for="name-sv" class="block text-sm font-medium text-slate-300 mb-2">Namn</label>
+            <input id="name-sv" name="name" type="text" required autocomplete="name"
+                   class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
           </div>
           <div>
-            <label for="profession" class="block text-sm font-medium text-slate-300 mb-2">Yrke (valfritt)</label>
-            <input id="profession" name="profession" type="text"
-              class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+            <label for="profession-sv" class="block text-sm font-medium text-slate-300 mb-2">Yrke (valfritt)</label>
+            <input id="profession-sv" name="profession" type="text" autocomplete="organization-title"
+                   class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
           </div>
           <div>
-            <label for="email" class="block text-sm font-medium text-slate-300 mb-2">E-post</label>
-            <input id="email" name="email" type="email" required
-              class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+            <label for="email-sv" class="block text-sm font-medium text-slate-300 mb-2">E-post</label>
+            <input id="email-sv" name="email" type="email" required autocomplete="email" inputmode="email"
+                   class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
           </div>
+
+          <p class="text-xs text-slate-400">
+            Vi använder dina uppgifter endast för att hantera din medlemsansökan. Se vår
+            <a href="./privacy.html" class="underline hover:text-indigo-400">Integritetspolicy</a>.
+          </p>
+
           <div>
             <button type="submit"
-              class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-full font-medium transition duration-300">
+                    class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-full font-medium transition duration-300">
               Skicka ansökan
             </button>
           </div>
@@ -69,61 +76,62 @@
 
     <div class="mt-8 flex justify-center">
       <img src="../../images/WEBP_images/21-happybirthday-at-narkesgtan.webp" alt="Evenemang på Närkesgatan"
-        class="max-w-full rounded-xl border border-slate-700 shadow-lg">
+           class="max-w-full rounded-xl border border-slate-700 shadow-lg">
     </div>
   </main>
 
   <script>
-    // Your verified SMTP service
+    // EmailJS: tjänst och mall
     const SERVICE_ID = "service_zxk9avv";
-  
-    // IMPORTANT: use the *real* template IDs from EmailJS (not the titles)
-    const TEMPLATE_BOARD      = "template_ziojkt6"; // from “Contact Us” template settings
-    const TEMPLATE_APPLICANT  = "template_t24l4pp"; // from your confirmation template settings
-  
-    const form = document.getElementById('membership-form');
-  
-    form.addEventListener('submit', async (e) => {
+    const TEMPLATE_CONTACT = "template_o3hvd4c"; // Contact Submission
+
+    document.getElementById('membership-form-sv').addEventListener('submit', async (e) => {
       e.preventDefault();
-  
+      const form = e.target;
+
       const name = form.name.value.trim();
-      const profession = (form.profession.value || "").trim() || "—";
       const email = form.email.value.trim();
-  
+      const profession = (form.profession.value || '').trim();
+
       if (!name || !email) {
-        alert('Fyll i namn och e-post.');
+        alert('Fyll i både namn och e-post.');
         return;
       }
-  
-      const submitBtn = form.querySelector('button[type="submit"]');
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Skickar...';
-  
+
+      // Packa allt i en message-sträng (mallen förväntar {{name}}, {{email}}, {{message}})
+      const message = [
+        'Medlemsansökan',
+        '',
+        `Namn: ${name}`,
+        `E-post: ${email}`,
+        `Yrke: ${profession || '—'}`
+      ].join('\n');
+
       const params = {
         name,
-        profession,
         email,
-        reply_to: email,              // board can press “Reply”
+        message,
+        reply_to: email,
         from_name: 'MAI Website',
         from_email: 'info@aimuseum.se'
       };
-  
+
+      const btn = form.querySelector('button[type="submit"]');
+      btn.disabled = true; btn.textContent = 'Skickar…';
+
       try {
-        await emailjs.send(SERVICE_ID, TEMPLATE_BOARD, params);      // to board
-        await emailjs.send(SERVICE_ID, TEMPLATE_APPLICANT, params);  // to applicant
-        alert('Tack! Din ansökan har skickats och en bekräftelse har mejlats till dig.');
+        await emailjs.send(SERVICE_ID, TEMPLATE_CONTACT, params);
+        alert('Tack! Din medlemsansökan har skickats.');
         form.reset();
       } catch (err) {
-        console.error('EmailJS send error:', err);
-        alert((err && err.text) || 'Tyvärr kunde vi inte skicka din ansökan just nu.');
+        console.error('EmailJS error:', err);
+        alert('Tyvärr gick det inte att skicka din ansökan just nu.');
       } finally {
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Skicka ansökan';
+        btn.disabled = false; btn.textContent = 'Skicka ansökan';
       }
     });
   </script>
-  
-  
+
   <script src="../../assets/js/script.js"></script>
 </body>
 </html>
