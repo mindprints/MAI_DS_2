@@ -129,24 +129,60 @@
   </main>
 
   <script>
-    // Config
+    // EmailJS config
     const SERVICE_ID = "service_zxk9avv";
-    const TEMPLATE_CONTACT = "template_o3hvd4c"; // Contact Submission
+    const TEMPLATE_CONTACT = "template_o3hvd4c";
 
-    // Prefill topic from ?topic=
+    // Normalize helper: strip accents, lowercase, trim
+    function norm(s) {
+      return (s || '')
+        .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase().trim();
+    }
+
+    // Alias map: Swedish/English -> exact English option values
+    const TOPIC_ALIASES = {
+      // English -> English
+      [norm('General Contact')]: 'General Contact',
+      [norm('Membership Application')]: 'Membership Application',
+      [norm('Workshop/Lecture Enquiry')]: 'Workshop/Lecture Enquiry',
+      [norm('Press Center')]: 'Press Center',
+      [norm('Careers')]: 'Careers',
+      [norm('Partnerships')]: 'Partnerships',
+      [norm('Donations/Sponsorship')]: 'Donations/Sponsorship',
+      [norm('Venue Hire')]: 'Venue Hire',
+      [norm('Accessibility')]: 'Accessibility',
+      [norm('Other')]: 'Other',
+
+      // Swedish -> English
+      [norm('Allmän kontakt')]: 'General Contact',
+      [norm('Medlemsansökan')]: 'Membership Application',
+      [norm('Workshop/Föreläsning')]: 'Workshop/Lecture Enquiry',
+      [norm('Press Center')]: 'Press Center',
+      [norm('Karriär')]: 'Careers',
+      [norm('Partnerskap')]: 'Partnerships',
+      [norm('Donation/Sponsring')]: 'Donations/Sponsorship',
+      [norm('Lokaluthyrning')]: 'Venue Hire',
+      [norm('Tillgänglighet')]: 'Accessibility',
+      [norm('Annat')]: 'Other'
+    };
+
+    // Prefill Topic from ?topic= (supports Swedish or English values, accent-insensitive)
     (function prefillTopic() {
       const params = new URLSearchParams(location.search);
-      const t = params.get('topic');
-      if (!t) return;
+      const raw = params.get('topic');
+      if (!raw) return;
+      const mapped = TOPIC_ALIASES[norm(raw)];
       const select = document.getElementById('topic');
-      const options = Array.from(select.options).map(o => o.value);
-      // Try to select an exact match first, else set "Other"
-      const match = options.find(v => v.toLowerCase() === t.toLowerCase());
-      select.value = match || 'Other';
-      // If we had a subtopic/message passed through, you could also prefill #message here
+      if (mapped) {
+        select.value = mapped;
+      } else {
+        // Fallback to "Other"
+        select.value = 'Other';
+      }
     })();
 
-    // Build a rich message string so the EmailJS template can stay minimal ({{name}}, {{email}}, {{message}})
+    // Build a rich message while keeping the EmailJS template minimal
     function composeMessage() {
       const get = id => document.getElementById(id)?.value.trim();
       const topic = get('topic');
