@@ -129,19 +129,59 @@
   </main>
 
   <script>
-    // EmailJS-konfiguration
+    // EmailJS
     const SERVICE_ID = "service_zxk9avv";
-    const TEMPLATE_CONTACT = "template_o3hvd4c"; // Contact Submission
+    const TEMPLATE_CONTACT = "template_o3hvd4c";
 
-    // Förvälj ämne från ?topic=
+    // Normalisera sträng (ta bort accenter, gemener)
+    function norm(s) {
+      return (s || '')
+        .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase().trim();
+    }
+
+    // Alias-karta: mappar olika svenska/engelska värden till exakt svenska option-värden
+    const TOPIC_ALIASES = {
+      // Svenska -> Svenska
+      [norm('Allmän kontakt')]: 'Allmän kontakt',
+      [norm('Medlemsansökan')]: 'Medlemsansökan',
+      [norm('Workshop/Föreläsning')]: 'Workshop/Föreläsning',
+      [norm('Press Center')]: 'Press Center',
+      [norm('Karriär')]: 'Karriär',
+      [norm('Partnerskap')]: 'Partnerskap',
+      [norm('Donation/Sponsring')]: 'Donation/Sponsring',
+      [norm('Lokaluthyrning')]: 'Lokaluthyrning',
+      [norm('Tillgänglighet')]: 'Tillgänglighet',
+      [norm('Annat')]: 'Annat',
+
+      // Engelska -> Svenska
+      [norm('General Contact')]: 'Allmän kontakt',
+      [norm('Membership Application')]: 'Medlemsansökan',
+      [norm('Workshop/Lecture Enquiry')]: 'Workshop/Föreläsning',
+      [norm('Press Center')]: 'Press Center',
+      [norm('Careers')]: 'Karriär',
+      [norm('Partnerships')]: 'Partnerskap',
+      [norm('Donations/Sponsorship')]: 'Donation/Sponsring',
+      [norm('Venue Hire')]: 'Lokaluthyrning',
+      [norm('Accessibility')]: 'Tillgänglighet',
+      [norm('Other')]: 'Annat'
+    };
+
+    // Förvälj ämne från ?topic= med stöd för svenska/engelska och accenter
     (function prefillTopic() {
       const params = new URLSearchParams(location.search);
-      const t = params.get('topic');
-      if (!t) return;
+      const raw = params.get('topic');
+      if (!raw) return;
+
+      const mapped = TOPIC_ALIASES[norm(raw)];
       const select = document.getElementById('topic');
-      const options = Array.from(select.options).map(o => o.value);
-      const match = options.find(v => v.toLowerCase() === t.toLowerCase());
-      select.value = match || 'Annat';
+
+      if (mapped) {
+        select.value = mapped;
+      } else {
+        // Fallback: välj "Annat"
+        select.value = 'Annat';
+      }
     })();
 
     // Bygg ett rikt meddelande som inkluderar ev. extra fält
