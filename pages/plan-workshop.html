@@ -1,125 +1,210 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plan a Workshop or Lecture • Museum of AI</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../assets/css/styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Plan a Workshop or Lecture • Museum of AI</title>
+
+  <!-- Tailwind + fonts -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../assets/css/styles.css">
+
+  <!-- EmailJS v4 (Browser) -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+    // Init with your EmailJS Public Key
+    emailjs.init({ publicKey: "Z3nM5X7zfy1eF1Rzc" });
+  </script>
 </head>
 <body>
-    <header class="w-full">
-        <div class="container mx-auto px-4 py-6">
-            <a href="../index.html" class="text-slate-300 hover:text-white">← Back to Home</a>
-        </div>
-    </header>
-    <main class="py-16">
-        <div class="container mx-auto px-4">
-            <h1 class="text-4xl font-bold mb-6">Plan a Workshop or Lecture</h1>
-            <p class="text-slate-300 mb-8">We tailor sessions for schools, companies, and institutions.</p>
-            <div class="glass-card p-6 md:p-8 rounded-xl max-w-3xl">
-                <form id="plan-form" class="space-y-6" action=":mailtobokningar@aimuseum.se" method="post" enctype="text/plain">
-                    <div>
-                        <label for="needs" class="block text-sm font-medium text-slate-300 mb-2">Describe your needs</label>
-                        <textarea id="needs" name="needs" required rows="5" class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
-                    </div>
+  <header class="w-full">
+    <div class="container mx-auto px-4 py-6">
+      <a href="../index.html" class="text-slate-300 hover:text-white">← Back to Home</a>
+    </div>
+  </header>
 
-                    <div>
-                        <label for="desired-datetime" class="block text-sm font-medium text-slate-300 mb-2">Desired dates and times</label>
-                        <textarea id="desired-datetime" name="desired_datetime" rows="3" placeholder="e.g., Week of May 12, weekday evenings 18:00–20:00" class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
-                    </div>
+  <main class="py-16">
+    <div class="container mx-auto px-4">
+      <h1 class="text-4xl font-bold mb-6">Plan a Workshop or Lecture</h1>
+      <p class="text-slate-300 mb-8">We tailor sessions for schools, companies, and institutions.</p>
 
-                    <div>
-                        <label for="participants" class="block text-sm font-medium text-slate-300 mb-2">Number of participants</label>
-                        <input id="participants" name="participants" type="number" min="1" step="1" placeholder="e.g., 25" class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
-                    </div>
-
-                    <div>
-                        <span class="block text-sm font-medium text-slate-300 mb-2">Location preference</span>
-                        <div class="space-y-2">
-                            <label class="flex items-center space-x-3">
-                                <input type="radio" name="location" value="visit-mai" required class="text-indigo-600 focus:ring-indigo-500">
-                                <span>Visit us at MAI (Närkesgatan 6, Stockholm)</span>
-                            </label>
-                            <label class="flex items-center space-x-3">
-                                <input type="radio" name="location" value="host-own-premises" class="text-indigo-600 focus:ring-indigo-500">
-                                <span>Host at your own premises</span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <div>
-                        <span class="block text-sm font-medium text-slate-300 mb-2">Experience with AI</span>
-                        <div class="space-y-2">
-                            <label class="flex items-center space-x-3">
-                                <input type="radio" name="ai_experience" value="beginner" required class="text-indigo-600 focus:ring-indigo-500">
-                                <span>Beginner</span>
-                            </label>
-                            <label class="flex items-center space-x-3">
-                                <input type="radio" name="ai_experience" value="intermediate" class="text-indigo-600 focus:ring-indigo-500">
-                                <span>Intermediate</span>
-                            </label>
-                            <label class="flex items-center space-x-3">
-                                <input type="radio" name="ai_experience" value="advanced" class="text-indigo-600 focus:ring-indigo-500">
-                                <span>Advanced</span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <div>
-                        <label for="experience-notes" class="block text-sm font-medium text-slate-300 mb-2">Experience details (optional)</label>
-                        <textarea id="experience-notes" name="experience_notes" rows="4" placeholder="Relevant tools, platforms, or previous trainings" class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
-                    </div>
-
-                    <div>
-                        <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-full font-medium transition duration-300">Submit</button>
-                    </div>
-                </form>
+      <div class="glass-card p-6 md:p-8 rounded-xl max-w-3xl">
+        <form id="plan-form" class="space-y-6" novalidate>
+          <!-- Contact details -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label for="name" class="block text-sm font-medium text-slate-300 mb-2">Your name</label>
+              <input id="name" name="name" type="text" required autocomplete="name"
+                     class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"/>
             </div>
-        </div>
-    </main>
-    <script>
+            <div>
+              <label for="email" class="block text-sm font-medium text-slate-300 mb-2">Email</label>
+              <input id="email" name="email" type="email" required autocomplete="email" inputmode="email"
+                     class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"/>
+            </div>
+          </div>
+
+          <div>
+            <label for="organization" class="block text-sm font-medium text-slate-300 mb-2">Organization (optional)</label>
+            <input id="organization" name="organization" type="text" autocomplete="organization"
+                   class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"/>
+          </div>
+
+          <!-- Needs -->
+          <div>
+            <label for="needs" class="block text-sm font-medium text-slate-300 mb-2">Describe your needs</label>
+            <textarea id="needs" name="needs" required rows="5"
+                      class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+          </div>
+
+          <!-- Desired dates/times -->
+          <div>
+            <label for="desired-datetime" class="block text-sm font-medium text-slate-300 mb-2">Desired dates and times</label>
+            <textarea id="desired-datetime" name="desired_datetime" rows="3" placeholder="e.g., Week of May 12, weekday evenings 18:00–20:00"
+                      class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+          </div>
+
+          <!-- Participants -->
+          <div>
+            <label for="participants" class="block text-sm font-medium text-slate-300 mb-2">Number of participants</label>
+            <input id="participants" name="participants" type="number" min="1" step="1" placeholder="e.g., 25"
+                   class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"/>
+          </div>
+
+          <!-- Location -->
+          <div>
+            <span class="block text-sm font-medium text-slate-300 mb-2">Location preference</span>
+            <div class="space-y-2">
+              <label class="flex items-center space-x-3">
+                <input type="radio" name="location" value="visit-mai" required class="text-indigo-600 focus:ring-indigo-500">
+                <span>Visit us at MAI (Närkesgatan 6, Stockholm)</span>
+              </label>
+              <label class="flex items-center space-x-3">
+                <input type="radio" name="location" value="host-own-premises" class="text-indigo-600 focus:ring-indigo-500">
+                <span>Host at your own premises</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Experience -->
+          <div>
+            <span class="block text-sm font-medium text-slate-300 mb-2">Experience with AI</span>
+            <div class="space-y-2">
+              <label class="flex items-center space-x-3">
+                <input type="radio" name="ai_experience" value="beginner" required class="text-indigo-600 focus:ring-indigo-500">
+                <span>Beginner</span>
+              </label>
+              <label class="flex items-center space-x-3">
+                <input type="radio" name="ai_experience" value="intermediate" class="text-indigo-600 focus:ring-indigo-500">
+                <span>Intermediate</span>
+              </label>
+              <label class="flex items-center space-x-3">
+                <input type="radio" name="ai_experience" value="advanced" class="text-indigo-600 focus:ring-indigo-500">
+                <span>Advanced</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Experience notes -->
+          <div>
+            <label for="experience-notes" class="block text-sm font-medium text-slate-300 mb-2">Experience details (optional)</label>
+            <textarea id="experience-notes" name="experience_notes" rows="4" placeholder="Relevant tools, platforms, or previous trainings"
+                      class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+          </div>
+
+          <p class="text-xs text-slate-400">
+            We will only use your information to respond to your enquiry. See our
+            <a href="./privacy.html" class="underline hover:text-indigo-400">Privacy Policy</a>.
+          </p>
+
+          <div>
+            <button type="submit"
+                    class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-full font-medium transition duration-300">
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // EmailJS config
+    const SERVICE_ID = "service_zxk9avv";      // your verified SMTP service
+    const TEMPLATE_WORKSHOP = "template_0wzjtk7"; // your Lecture Enquiry template ID
+
     document.addEventListener('DOMContentLoaded', () => {
-        const form = document.getElementById('plan-form');
-        if (!form) return;
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const needs = (document.getElementById('needs')?.value || '').trim();
-            const desiredDT = (document.getElementById('desired-datetime')?.value || '').trim();
-            const participants = (document.getElementById('participants')?.value || '').trim();
-            const location = (form.querySelector('input[name="location"]:checked')?.value || '').trim();
-            const aiExp = (form.querySelector('input[name="ai_experience"]:checked')?.value || '').trim();
-            const notes = (document.getElementById('experience-notes')?.value || '').trim();
+      const form = document.getElementById('plan-form');
+      if (!form) return;
 
-            const subject = encodeURIComponent('Workshop/Lecture Inquiry');
-            const body = encodeURIComponent([
-                'Describe your needs:',
-                needs,
-                '',
-                'Desired dates and times:',
-                desiredDT,
-                '',
-                'Number of participants:',
-                participants,
-                '',
-                'Location preference:',
-                location,
-                '',
-                'Experience with AI:',
-                aiExp,
-                '',
-                'Experience details:',
-                notes
-            ].join('\r\n'));
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
 
-            window.location.href = `mailto:bokningar@aimuseum.se?subject=${subject}&body=${body}`;
-        });
+        const name = document.getElementById('name')?.value.trim();
+        const email = document.getElementById('email')?.value.trim();
+        const organization = document.getElementById('organization')?.value.trim() || '';
+
+        const needs = document.getElementById('needs')?.value.trim();
+        const desiredDT = document.getElementById('desired-datetime')?.value.trim() || '';
+        const participants = document.getElementById('participants')?.value.trim() || '';
+
+        const locationRaw = form.querySelector('input[name="location"]:checked')?.value || '';
+        const aiExpRaw = form.querySelector('input[name="ai_experience"]:checked')?.value || '';
+        const notes = document.getElementById('experience-notes')?.value.trim() || '';
+
+        if (!name || !email || !needs) {
+          alert('Please fill in your name, email, and describe your needs.');
+          return;
+        }
+
+        // Map radio values to human-readable strings for the email
+        const location = (locationRaw === 'visit-mai')
+          ? 'Visit MAI'
+          : (locationRaw === 'host-own-premises' ? 'Host at your premises' : '');
+
+        const level =
+          aiExpRaw === 'beginner' ? 'Beginner' :
+          aiExpRaw === 'intermediate' ? 'Intermediate' :
+          aiExpRaw === 'advanced' ? 'Advanced' : '';
+
+        const submitBtn = form.querySelector('button[type="submit"]');
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sending…';
+
+        // Params must match the variables used in your EmailJS template
+        const params = {
+          name,
+          email,
+          organization,
+          needs,
+          dates: desiredDT,
+          participants,
+          location,
+          level,
+          experience_details: notes,
+          // helpful headers
+          reply_to: email,
+          from_name: 'MAI Website',
+          from_email: 'info@aimuseum.se'
+        };
+
+        try {
+          await emailjs.send(SERVICE_ID, TEMPLATE_WORKSHOP, params);
+          alert('Thank you! Your workshop/lecture enquiry has been sent.');
+          form.reset();
+        } catch (err) {
+          console.error('EmailJS send error:', err);
+          alert((err && err.text) || 'Sorry, we could not send your enquiry right now.');
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Submit';
+        }
+      });
     });
-    </script>
-    <script src="../assets/js/script.js"></script>
+  </script>
+
+  <script src="../assets/js/script.js"></script>
 </body>
 </html>
-
-
