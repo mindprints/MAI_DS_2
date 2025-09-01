@@ -1,120 +1,220 @@
 <!DOCTYPE html>
 <html lang="sv">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kontakt • Museum of AI</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons/css/flag-icons.min.css">
-    <link rel="stylesheet" href="../../assets/css/styles.css">
-    <link rel="alternate" hreflang="en" href="../../pages/contact.html">
-    <link rel="alternate" hreflang="sv" href="./contact.html">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kontakt • Museum of AI</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../../assets/css/styles.css">
+  <link rel="alternate" hreflang="en" href="../../pages/contact.html">
+  <link rel="alternate" hreflang="sv" href="./contact.html">
+
+  <!-- EmailJS v4 -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+    emailjs.init({ publicKey: "Z3nM5X7zfy1eF1Rzc" });
+  </script>
 </head>
 <body>
-    <header class="w-full">
-        <div class="container mx-auto px-4 py-6 flex items-center justify-between">
-            <a href="../index.html" class="text-slate-300 hover:text-white">← Till startsidan</a>
-            <div class="flex items-center space-x-2">
-                <a href="../../pages/contact.html" class="opacity-80 hover:opacity-100" title="English">
-                    <span class="fi fi-gb text-2xl"></span>
-                </a>
-                <a href="./contact.html" class="opacity-80 hover:opacity-100" title="Svenska">
-                    <span class="fi fi-se text-2xl"></span>
-                </a>
+  <header class="w-full">
+    <div class="container mx-auto px-4 py-6">
+      <a href="../index.html" class="text-slate-300 hover:text-white">← Till startsidan</a>
+    </div>
+  </header>
+
+  <main class="py-16">
+    <div class="container mx-auto px-4 max-w-3xl">
+      <h1 class="text-4xl font-bold mb-6">Kontakt</h1>
+      <p class="text-slate-300 mb-8">Berätta hur vi kan hjälpa till. Vi återkommer så snart vi kan.</p>
+
+      <div class="glass-card p-6 md:p-8 rounded-xl">
+        <form id="contact-form" class="space-y-6" novalidate>
+          <!-- Ämne -->
+          <div>
+            <label for="topic" class="block text-sm font-medium text-slate-300 mb-2">Ämne</label>
+            <select id="topic" name="topic"
+                    class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+              <option>Allmän kontakt</option>
+              <option>Medlemsansökan</option>
+              <option>Workshop/Föreläsning</option>
+              <option>Press Center</option>
+              <option>Karriär</option>
+              <option>Partnerskap</option>
+              <option>Donation/Sponsring</option>
+              <option>Lokaluthyrning</option>
+              <option>Tillgänglighet</option>
+              <option>Annat</option>
+            </select>
+          </div>
+
+          <!-- Namn / E-post -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label for="name" class="block text-sm font-medium text-slate-300 mb-2">Namn</label>
+              <input id="name" name="name" type="text" required autocomplete="name"
+                     class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
             </div>
-        </div>
-    </header>
-
-    <main class="py-16">
-        <div class="container mx-auto px-4 max-w-3xl">
-            <h1 class="text-4xl font-bold mb-8">Kontakta oss</h1>
-
-            <div class="glass-card p-6 md:p-8 rounded-xl">
-                <p class="text-slate-400 mb-6">Välj typ av förfrågan och skicka ett meddelande. Vi återkommer så snart vi kan.</p>
-
-                <form id="contact-form" class="space-y-6" onsubmit="return false;">
-                    <div>
-                        <label class="block text-sm font-semibold mb-2">Ditt namn</label>
-                        <input id="name" type="text" class="w-full bg-slate-900/50 border border-slate-700 rounded-lg px-4 py-3 text-slate-200 focus:outline-none focus:border-indigo-500" placeholder="Anna Andersson">
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-semibold mb-2">E‑post</label>
-                        <input id="email" type="email" class="w-full bg-slate-900/50 border border-slate-700 rounded-lg px-4 py-3 text-slate-200 focus:outline-none focus:border-indigo-500" placeholder="du@example.com">
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-semibold mb-3">Typ av förfrågan</label>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <label class="flex items-center space-x-3">
-                                <input type="checkbox" value="Utbildningsresurser" class="enquiry-type accent-indigo-500">
-                                <span>Utbildningsresurser</span>
-                            </label>
-                            <label class="flex items-center space-x-3">
-                                <input type="checkbox" value="Forskning och publikationer" class="enquiry-type accent-indigo-500">
-                                <span>Forskning och publikationer</span>
-                            </label>
-                            <label class="flex items-center space-x-3">
-                                <input type="checkbox" value="Press" class="enquiry-type accent-indigo-500">
-                                <span>Press</span>
-                            </label>
-                            <label class="flex items-center space-x-3">
-                                <input type="checkbox" value="Karriär" class="enquiry-type accent-indigo-500">
-                                <span>Karriär</span>
-                            </label>
-                            <label class="flex items-center space-x-3">
-                                <input type="checkbox" value="Vanliga frågor" class="enquiry-type accent-indigo-500">
-                                <span>Vanliga frågor</span>
-                            </label>
-                            <label class="flex items-center space-x-3">
-                                <input type="checkbox" value="Annat" class="enquiry-type accent-indigo-500">
-                                <span>Annat</span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-semibold mb-2">Meddelande</label>
-                        <textarea id="message" rows="6" class="w-full bg-slate-900/50 border border-slate-700 rounded-lg px-4 py-3 text-slate-200 focus:outline-none focus:border-indigo-500" placeholder="Hur kan vi hjälpa till?"></textarea>
-                    </div>
-
-                    <div class="flex items-center justify-between">
-                        <p class="text-slate-500 text-sm">E‑post skickas till <span class="text-slate-300">bokningar@aimuseum.se</span></p>
-                        <button id="send-btn" type="button" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-full font-medium transition duration-300 inline-flex items-center">
-                            <i class="fa-solid fa-paper-plane mr-2"></i>
-                            Skicka e‑post
-                        </button>
-                    </div>
-                </form>
+            <div>
+              <label for="email" class="block text-sm font-medium text-slate-300 mb-2">E-post</label>
+              <input id="email" name="email" type="email" required autocomplete="email" inputmode="email"
+                     class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
             </div>
-        </div>
-    </main>
+          </div>
 
-    <script>
-        (function () {
-            const sendBtn = document.getElementById('send-btn');
-            sendBtn.addEventListener('click', function () {
-                const name = document.getElementById('name').value.trim();
-                const email = document.getElementById('email').value.trim();
-                const message = document.getElementById('message').value.trim();
-                const types = Array.from(document.querySelectorAll('.enquiry-type:checked')).map(cb => cb.value);
+          <!-- Valfria uppgifter -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label for="organization" class="block text-sm font-medium text-slate-300 mb-2">Organisation (valfritt)</label>
+              <input id="organization" name="organization" type="text" autocomplete="organization"
+                     class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+            </div>
+            <div>
+              <label for="phone" class="block text-sm font-medium text-slate-300 mb-2">Telefon (valfritt)</label>
+              <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel"
+                     class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+            </div>
+          </div>
 
-                const subject = `Förfrågan${types.length ? ': ' + types.join(', ') : ''}`;
-                const lines = [];
-                if (name) lines.push(`Namn: ${name}`);
-                if (email) lines.push(`E‑post: ${email}`);
-                if (types.length) lines.push(`Typ(er): ${types.join(', ')}`);
-                if (message) lines.push('', message);
-                const body = encodeURIComponent(lines.join('\n'));
-                const mailto = `mailto:bokningar@aimuseum.se?subject=${encodeURIComponent(subject)}&body=${body}`;
-                window.location.href = mailto;
-            });
-        })();
-    </script>
-    <script src="../../assets/js/script.js"></script>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label for="website" class="block text-sm font-medium text-slate-300 mb-2">Webbplats (valfritt)</label>
+              <input id="website" name="website" type="url" inputmode="url" placeholder="https://"
+                     class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+            </div>
+            <div>
+              <label for="geo" class="block text-sm font-medium text-slate-300 mb-2">Plats (valfritt)</label>
+              <input id="geo" name="location" type="text" placeholder="Stad, land"
+                     class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label for="budget" class="block text-sm font-medium text-slate-300 mb-2">Budget (valfritt)</label>
+              <input id="budget" name="budget" type="text" placeholder="t.ex. 20–50 tkr"
+                     class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+            </div>
+            <div>
+              <label for="timeline" class="block text-sm font-medium text-slate-300 mb-2">Tidplan (valfritt)</label>
+              <input id="timeline" name="timeline" type="text" placeholder="t.ex. okt–nov 2025"
+                     class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+            </div>
+          </div>
+
+          <!-- Meddelande -->
+          <div>
+            <label for="message" class="block text-sm font-medium text-slate-300 mb-2">Meddelande</label>
+            <textarea id="message" name="message" rows="6" required
+                      class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+          </div>
+
+          <p class="text-xs text-slate-400">
+            Vi använder dina uppgifter endast för att besvara din förfrågan. Se vår
+            <a href="./privacy.html" class="underline hover:text-indigo-400">Integritetspolicy</a>.
+          </p>
+
+          <div class="flex items-center justify-between gap-4">
+            <button type="submit"
+                    class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-full font-medium transition duration-300">
+              Skicka meddelande
+            </button>
+            <span id="contact-feedback" class="text-sm text-slate-400"></span>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // EmailJS-konfiguration
+    const SERVICE_ID = "service_zxk9avv";
+    const TEMPLATE_CONTACT = "template_o3hvd4c"; // Contact Submission
+
+    // Förvälj ämne från ?topic=
+    (function prefillTopic() {
+      const params = new URLSearchParams(location.search);
+      const t = params.get('topic');
+      if (!t) return;
+      const select = document.getElementById('topic');
+      const options = Array.from(select.options).map(o => o.value);
+      const match = options.find(v => v.toLowerCase() === t.toLowerCase());
+      select.value = match || 'Annat';
+    })();
+
+    // Bygg ett rikt meddelande som inkluderar ev. extra fält
+    function composeMessage() {
+      const get = id => document.getElementById(id)?.value.trim();
+      const topic = get('topic');
+      const name = get('name');
+      const email = get('email');
+      const org = get('organization');
+      const phone = get('phone');
+      const website = get('website');
+      const geo = get('geo');
+      const budget = get('budget');
+      const timeline = get('timeline');
+      const message = get('message');
+
+      const lines = [
+        `Ämne: ${topic || '—'}`,
+        `Namn: ${name || '—'}`,
+        `E-post: ${email || '—'}`,
+        org ? `Organisation: ${org}` : null,
+        phone ? `Telefon: ${phone}` : null,
+        website ? `Webbplats: ${website}` : null,
+        geo ? `Plats: ${geo}` : null,
+        budget ? `Budget: ${budget}` : null,
+        timeline ? `Tidplan: ${timeline}` : null,
+        '',
+        'Meddelande:',
+        message || '—'
+      ].filter(Boolean);
+
+      return lines.join('\n');
+    }
+
+    document.getElementById('contact-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const feedback = document.getElementById('contact-feedback');
+
+      const name = form.name.value.trim();
+      const email = form.email.value.trim();
+      const msg = form.message.value.trim();
+
+      if (!name || !email || !msg) {
+        alert('Fyll i namn, e-post och ett meddelande.');
+        return;
+      }
+
+      const fullMessage = composeMessage();
+
+      const params = {
+        name,
+        email,
+        message: fullMessage,
+        reply_to: email,
+        from_name: 'MAI Website',
+        from_email: 'info@aimuseum.se'
+      };
+
+      const btn = form.querySelector('button[type="submit"]');
+      btn.disabled = true; btn.textContent = 'Skickar…'; feedback.textContent = '';
+
+      try {
+        await emailjs.send(SERVICE_ID, TEMPLATE_CONTACT, params);
+        feedback.textContent = 'Tack! Ditt meddelande har skickats.';
+        form.reset();
+      } catch (err) {
+        console.error('EmailJS error:', err);
+        feedback.textContent = 'Tyvärr uppstod ett fel vid sändning.';
+      } finally {
+        btn.disabled = false; btn.textContent = 'Skicka meddelande';
+      }
+    });
+  </script>
 </body>
 </html>
-
-
