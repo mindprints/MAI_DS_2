@@ -1,92 +1,203 @@
 <!DOCTYPE html>
 <html lang="sv">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Planera workshop eller föreläsning • Museum of AI</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../../assets/css/styles.css">
-    <link rel="alternate" hreflang="en" href="../../pages/plan-workshop.html">
-    <link rel="alternate" hreflang="sv" href="./plan-workshop.html">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Planera workshop eller föreläsning • Museum of AI</title>
+
+  <!-- Tailwind + typsnitt -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../../assets/css/styles.css">
+
+  <!-- EmailJS v4 -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+    emailjs.init({ publicKey: "Z3nM5X7zfy1eF1Rzc" });
+  </script>
 </head>
 <body>
-    <header class="w-full">
-        <div class="container mx-auto px-4 py-6">
-            <a href="../index.html" class="text-slate-300 hover:text-white">← Till startsidan</a>
-        </div>
-    </header>
-    <main class="py-16">
-        <div class="container mx-auto px-4">
-            <h1 class="text-4xl font-bold mb-6">Planera workshop eller föreläsning</h1>
-            <p class="text-slate-300 mb-8">Vi skräddarsyr upplägg för skolor, företag och organisationer.</p>
-            <div class="glass-card p-6 md:p-8 rounded-xl max-w-3xl">
-                <form id="plan-form" class="space-y-6" action="mailto:bokningar@aimuseum.se" method="post" enctype="text/plain">
-                    <div>
-                        <label for="needs" class="block text-sm font-medium text-slate-300 mb-2">Beskriv dina behov</label>
-                        <textarea id="needs" name="needs" required rows="5" class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
-                    </div>
+  <header class="w-full">
+    <div class="container mx-auto px-4 py-6">
+      <a href="../index.html" class="text-slate-300 hover:text-white">← Till startsidan</a>
+    </div>
+  </header>
 
-                    <div>
-                        <label for="desired-datetime" class="block text-sm font-medium text-slate-300 mb-2">Önskade datum och tider</label>
-                        <textarea id="desired-datetime" name="desired_datetime" rows="3" placeholder="t.ex. vecka 12, vardagskvällar 18:00–20:00" class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
-                    </div>
+  <main class="py-16">
+    <div class="container mx-auto px-4">
+      <h1 class="text-4xl font-bold mb-6">Planera workshop eller föreläsning</h1>
+      <p class="text-slate-300 mb-8">Vi skräddarsyr pass för skolor, företag och institutioner.</p>
 
-                    <div>
-                        <label for="participants" class="block text-sm font-medium text-slate-300 mb-2">Antal deltagare</label>
-                        <input id="participants" name="participants" type="number" min="1" step="1" placeholder="t.ex. 25" class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
-                    </div>
-
-                    <div>
-                        <span class="block text-sm font-medium text-slate-300 mb-2">Plats</span>
-                        <div class="space-y-2">
-                            <label class="flex items-center space-x-3">
-                                <input type="radio" name="location" value="visit-mai" required class="text-indigo-600 focus:ring-indigo-500">
-                                <span>Besök oss på MAI (Närkesgatan 6, Stockholm)</span>
-                            </label>
-                            <label class="flex items-center space-x-3">
-                                <input type="radio" name="location" value="host-own-premises" class="text-indigo-600 focus:ring-indigo-500">
-                                <span>Anordna på egna lokaler</span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <div>
-                        <span class="block text-sm font-medium text-slate-300 mb-2">Erfarenhet av AI</span>
-                        <div class="space-y-2">
-                            <label class="flex items-center space-x-3">
-                                <input type="radio" name="ai_experience" value="beginner" required class="text-indigo-600 focus:ring-indigo-500">
-                                <span>Nybörjare</span>
-                            </label>
-                            <label class="flex items-center space-x-3">
-                                <input type="radio" name="ai_experience" value="intermediate" class="text-indigo-600 focus:ring-indigo-500">
-                                <span>Medel</span>
-                            </label>
-                            <label class="flex items-center space-x-3">
-                                <input type="radio" name="ai_experience" value="advanced" class="text-indigo-600 focus:ring-indigo-500">
-                                <span>Avancerad</span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <div>
-                        <label for="experience-notes" class="block text-sm font-medium text-slate-300 mb-2">Erfarenhetsdetaljer (valfritt)</label>
-                        <textarea id="experience-notes" name="experience_notes" rows="4" placeholder="Relevanta verktyg, plattformar eller tidigare utbildningar" class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
-                    </div>
-
-                    <div>
-                            <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-full font-medium transition duration-300 flex items-center justify-center gap-2" action="mailto:bokningar@aimuseum.se" method="post" enctype="text/plain">
-                            <i class="fa-solid fa-paper-plane"></i>
-                            <span>Skicka</span>
-                        </button>
-                    </div>
-                </form>
+      <div class="glass-card p-6 md:p-8 rounded-xl max-w-3xl">
+        <form id="plan-form" class="space-y-6" novalidate>
+          <!-- Kontaktuppgifter -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label for="name" class="block text-sm font-medium text-slate-300 mb-2">Ditt namn</label>
+              <input id="name" name="name" type="text" required autocomplete="name"
+                     class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"/>
             </div>
-        </div>
-    </main>
-    <script src="../../assets/js/script.js"></script>
+            <div>
+              <label for="email" class="block text-sm font-medium text-slate-300 mb-2">E-post</label>
+              <input id="email" name="email" type="email" required autocomplete="email" inputmode="email"
+                     class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"/>
+            </div>
+          </div>
+
+          <div>
+            <label for="organization" class="block text-sm font-medium text-slate-300 mb-2">Organisation (valfritt)</label>
+            <input id="organization" name="organization" type="text" autocomplete="organization"
+                   class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"/>
+          </div>
+
+          <!-- Behov -->
+          <div>
+            <label for="needs" class="block text-sm font-medium text-slate-300 mb-2">Beskriv era behov</label>
+            <textarea id="needs" name="needs" required rows="5"
+                      class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+          </div>
+
+          <!-- Önskade datum/tider -->
+          <div>
+            <label for="desired-datetime" class="block text-sm font-medium text-slate-300 mb-2">Önskade datum och tider</label>
+            <textarea id="desired-datetime" name="desired_datetime" rows="3" placeholder="t.ex. vecka 12, vardagar 18:00–20:00"
+                      class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+          </div>
+
+          <!-- Deltagare -->
+          <div>
+            <label for="participants" class="block text-sm font-medium text-slate-300 mb-2">Antal deltagare</label>
+            <input id="participants" name="participants" type="number" min="1" step="1" placeholder="t.ex. 25"
+                   class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"/>
+          </div>
+
+          <!-- Plats -->
+          <div>
+            <span class="block text-sm font-medium text-slate-300 mb-2">Plats</span>
+            <div class="space-y-2">
+              <label class="flex items-center space-x-3">
+                <input type="radio" name="location" value="visit-mai" required class="text-indigo-600 focus:ring-indigo-500">
+                <span>Hos MAI (Närkesgatan 6, Stockholm)</span>
+              </label>
+              <label class="flex items-center space-x-3">
+                <input type="radio" name="location" value="host-own-premises" class="text-indigo-600 focus:ring-indigo-500">
+                <span>Hos er (på plats hos beställaren)</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Erfarenhet -->
+          <div>
+            <span class="block text-sm font-medium text-slate-300 mb-2">Erfarenhet av AI</span>
+            <div class="space-y-2">
+              <label class="flex items-center space-x-3">
+                <input type="radio" name="ai_experience" value="beginner" required class="text-indigo-600 focus:ring-indigo-500">
+                <span>Nybörjare</span>
+              </label>
+              <label class="flex items-center space-x-3">
+                <input type="radio" name="ai_experience" value="intermediate" class="text-indigo-600 focus:ring-indigo-500">
+                <span>Mellan</span>
+              </label>
+              <label class="flex items-center space-x-3">
+                <input type="radio" name="ai_experience" value="advanced" class="text-indigo-600 focus:ring-indigo-500">
+                <span>Avancerad</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Erfarenhetsdetaljer -->
+          <div>
+            <label for="experience-notes" class="block text-sm font-medium text-slate-300 mb-2">Erfarenhetsdetaljer (valfritt)</label>
+            <textarea id="experience-notes" name="experience_notes" rows="4" placeholder="Relevanta verktyg/plattformar eller tidigare utbildningar"
+                      class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+          </div>
+
+          <p class="text-xs text-slate-400">
+            Vi använder endast dina uppgifter för att besvara din förfrågan. Se vår
+            <a href="./privacy.html" class="underline hover:text-indigo-400">Integritetspolicy</a>.
+          </p>
+
+          <div>
+            <button type="submit"
+                    class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-full font-medium transition duration-300">
+              Skicka
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const SERVICE_ID = "service_zxk9avv";
+    const TEMPLATE_WORKSHOP = "template_0wzjtk7";
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('plan-form');
+      if (!form) return;
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const name = document.getElementById('name')?.value.trim();
+        const email = document.getElementById('email')?.value.trim();
+        const organization = document.getElementById('organization')?.value.trim() || '';
+
+        const needs = document.getElementById('needs')?.value.trim();
+        const desiredDT = document.getElementById('desired-datetime')?.value.trim() || '';
+        const participants = document.getElementById('participants')?.value.trim() || '';
+
+        const locationRaw = form.querySelector('input[name="location"]:checked')?.value || '';
+        const aiExpRaw = form.querySelector('input[name="ai_experience"]:checked')?.value || '';
+        const notes = document.getElementById('experience-notes')?.value.trim() || '';
+
+        if (!name || !email || !needs) {
+          alert('Fyll i namn, e-post och beskrivning av behov.');
+          return;
+        }
+
+        const location = (locationRaw === 'visit-mai')
+          ? 'Visit MAI'
+          : (locationRaw === 'host-own-premises' ? 'Host at your premises' : '');
+
+        const level =
+          aiExpRaw === 'beginner' ? 'Beginner' :
+          aiExpRaw === 'intermediate' ? 'Intermediate' :
+          aiExpRaw === 'advanced' ? 'Advanced' : '';
+
+        const btn = form.querySelector('button[type="submit"]');
+        btn.disabled = true; btn.textContent = 'Skickar…';
+
+        const params = {
+          name,
+          email,
+          organization,
+          needs,
+          dates: desiredDT,
+          participants,
+          location,
+          level,
+          experience_details: notes,
+          reply_to: email,
+          from_name: 'MAI Website',
+          from_email: 'info@aimuseum.se'
+        };
+
+        try {
+          await emailjs.send(SERVICE_ID, TEMPLATE_WORKSHOP, params);
+          alert('Tack! Din förfrågan har skickats.');
+          form.reset();
+        } catch (err) {
+          console.error('EmailJS send error:', err);
+          alert((err && err.text) || 'Tyvärr kunde vi inte skicka din förfrågan just nu.');
+        } finally {
+          btn.disabled = false; btn.textContent = 'Skicka';
+        }
+      });
+    });
+  </script>
+
+  <script src="../../assets/js/script.js"></script>
 </body>
 </html>
-
-
