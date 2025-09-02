@@ -5,7 +5,8 @@
   "main": "journal.js",
   "scripts": {
     "build": "postcss src/tailwind.css -o assets/css/tailwind.css --env production",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "audit": "lighthouse http://localhost:3000 --output=json --output-path=reports/lighthouse.json"
   },
   "keywords": [],
   "author": "",
@@ -15,6 +16,7 @@
     "autoprefixer": "^10.4.16",
     "postcss": "^8.4.31",
     "postcss-cli": "^10.1.0",
-    "tailwindcss": "^3.4.4"
+    "tailwindcss": "^3.4.4",
+    "lighthouse": "^12.0.0"
   }
 }
