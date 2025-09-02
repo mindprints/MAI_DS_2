@@ -24,26 +24,13 @@ MAI_DS_2/
 
 ## Background Images
 
-The website uses CSS gradients as primary backgrounds with optional local image fallbacks:
+The website uses CSS gradients as primary backgrounds:
 
 ### Hero Section (`.hero-bg`)
 - **Primary**: Blue gradient overlay
-- **Optional**: Add `images/hero-bg.jpg` for enhanced visual appeal
-- **Fallback**: Pure gradient if no image is available
 
 ### Model Section (`.model-bg`)
-- **Primary**: Dark gradient overlay  
-- **Optional**: Add `images/model-bg.jpg` for enhanced visual appeal
-- **Fallback**: Pure gradient if no image is available
-
-### Adding Local Background Images
-
-1. **Place images** in the `images/` directory:
-   - `hero-bg.jpg` - Hero section background (recommended: 1920x1080+)
-   - `model-bg.jpg` - Model section background (recommended: 1920x1080+)
-
-2. **Images will automatically be used** if they exist
-3. **Gradients remain as fallbacks** if images are missing or fail to load
+- **Primary**: Dark gradient overlay
 
 ## Performance Optimizations
 
