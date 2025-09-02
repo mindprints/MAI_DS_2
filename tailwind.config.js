@@ -4,7 +4,8 @@ module.exports = {
     './pages/**/*.html',
     './sv/**/*.html',
     './sv/pages/**/*.html',
-    './**/*.js'
+    './assets/js/**/*.js',
+    './journal.js'
   ],
   theme: {
     extend: {},
