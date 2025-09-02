@@ -16,6 +16,7 @@ document.querySelectorAll('.feature-card').forEach(card => {
 
 // Dynamic image slideshow system
 document.addEventListener('DOMContentLoaded', () => {
+    const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     // Configuration
     const config = {
         visibleSlides: 4, // Number of slides to show at once (1 main + 3 underneath)
@@ -171,20 +172,24 @@ document.addEventListener('DOMContentLoaded', () => {
                         ensureImageLoaded(slide);
                         // Main focused slide (pan + smooth zoom)
                         slide.classList.add('slide-main');
-                        // Keep panning
-                        img.style.animation = 'panImage 8s ease-in-out infinite alternate';
-                        // Add zoom from 1 -> 1.2 over the full rotation interval
-                        img._zoomAnimation = img.animate(
-                            [
-                                { transform: 'scale(1)' },
-                                { transform: 'scale(1.2)' }
-                            ],
-                            {
-                                duration: config.rotationInterval,
-                                easing: 'ease-in-out',
-                                fill: 'forwards'
-                            }
-                        );
+                        if (!prefersReducedMotion) {
+                            // Keep panning
+                            img.style.animation = 'panImage 8s ease-in-out infinite alternate';
+                            // Add zoom from 1 -> 1.2 over the full rotation interval
+                            img._zoomAnimation = img.animate(
+                                [
+                                    { transform: 'scale(1)' },
+                                    { transform: 'scale(1.2)' }
+                                ],
+                                {
+                                    duration: config.rotationInterval,
+                                    easing: 'ease-in-out',
+                                    fill: 'forwards'
+                                }
+                            );
+                        } else {
+                            img.style.animation = 'none';
+                        }
                     } else if (diff === 1) {
                         ensureImageLoaded(slide);
                         // First underneath slide
@@ -221,7 +226,9 @@ document.addEventListener('DOMContentLoaded', () => {
             updateSlides();
 
             // Auto-rotate
-            setInterval(nextSlide, config.rotationInterval);
+            if (!prefersReducedMotion) {
+                setInterval(nextSlide, config.rotationInterval);
+            }
         }, 100); // Small delay to ensure DOM is ready
     }
 

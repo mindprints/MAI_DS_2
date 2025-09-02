@@ -129,6 +129,15 @@ body {
     }
 }
 
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+    }
+}
+
 /* Slide states for slideshow */
 .slide-main {
     opacity: 1 !important;
@@ -163,6 +172,17 @@ body {
 .blog-card .cover { height: 180px; background: radial-gradient(ellipse at top, #37415155, #111827aa); }
 .blog-card h3 { line-height: 1.2 }
 .blog-card p { display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+
+/* Baseline focus-visible styles for interactive elements */
+a:focus-visible,
+button:focus-visible,
+[role="button"]:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 2px solid #6366f1; /* indigo-500 */
+    outline-offset: 2px;
+}
 
 
 
