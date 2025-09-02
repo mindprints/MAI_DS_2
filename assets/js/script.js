@@ -95,6 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="h-full w-full overflow-hidden">
                     <img src="${imageBasePath}${imageInfo.filename}"
                          alt="${imageInfo.title}"
+                         loading="lazy"
                          class="w-full h-full object-cover object-left hover:scale-105 transition-transform duration-500 cursor-move"
                          onerror="console.log('Failed to load image:', this.src)">
                 </div>
