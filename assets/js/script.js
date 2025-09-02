@@ -85,19 +85,32 @@ document.addEventListener('DOMContentLoaded', () => {
     })();
 
     // Create slide elements dynamically
-    function createSlide(imageInfo, index) {
+    function createSlide(imageInfo, index, loadImmediately = false) {
         const slide = document.createElement('div');
         slide.className = 'glass-card rounded-xl overflow-hidden w-full h-full absolute transition-all duration-1000 ease-in-out z-0 opacity-0 slide-hidden';
         slide.dataset.slideIndex = index;
 
+        // When loadImmediately is false, render a placeholder with a spinner and
+        // store the image path in data-src for later loading.
         slide.innerHTML = `
             <div class="bg-gray-800 w-full h-full">
-                <div class="h-full w-full overflow-hidden">
-                    <img src="${imageBasePath}${imageInfo.filename}"
-                         alt="${imageInfo.title}"
-                         loading="lazy"
-                         class="w-full h-full object-cover object-left hover:scale-105 transition-transform duration-500 cursor-move"
-                         onerror="console.log('Failed to load image:', this.src)">
+                <div class="h-full w-full overflow-hidden relative">
+                    ${loadImmediately ? `
+                        <img src="${imageBasePath}${imageInfo.filename}"
+                             alt="${imageInfo.title}"
+                             loading="lazy"
+                             class="w-full h-full object-cover object-left hover:scale-105 transition-transform duration-500 cursor-move"
+                             onerror="console.log('Failed to load image:', this.src)">
+                    ` : `
+                        <div class="spinner absolute inset-0 flex items-center justify-center">
+                            <div class="w-8 h-8 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+                        </div>
+                        <img data-src="${imageBasePath}${imageInfo.filename}"
+                             alt="${imageInfo.title}"
+                             loading="lazy"
+                             class="hidden w-full h-full object-cover object-left hover:scale-105 transition-transform duration-500 cursor-move"
+                             onerror="console.log('Failed to load image:', this.dataset.src)">
+                    `}
                 </div>
                 <div class="p-6">
                     <h3 class="text-xl font-bold">${imageInfo.title}</h3>
@@ -109,10 +122,23 @@ document.addEventListener('DOMContentLoaded', () => {
         return slide;
     }
 
+    // Ensure a slide's image is loaded, swapping out the spinner when done
+    function ensureImageLoaded(slide) {
+        const img = slide.querySelector('img[data-src]');
+        if (img) {
+            const spinner = slide.querySelector('.spinner');
+            img.src = img.dataset.src;
+            img.classList.remove('hidden');
+            img.addEventListener('load', () => spinner && spinner.remove(), { once: true });
+            img.removeAttribute('data-src');
+        }
+    }
+
     // Generate all slides
     function generateSlides() {
         imageData.forEach((imageInfo, index) => {
-            const slide = createSlide(imageInfo, index);
+            const loadNow = index < config.visibleSlides;
+            const slide = createSlide(imageInfo, index, loadNow);
             container.appendChild(slide);
         });
     }
@@ -142,6 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     img.style.transform = '';
 
                     if (diff === 0) {
+                        ensureImageLoaded(slide);
                         // Main focused slide (pan + smooth zoom)
                         slide.classList.add('slide-main');
                         // Keep panning
@@ -159,16 +186,19 @@ document.addEventListener('DOMContentLoaded', () => {
                             }
                         );
                     } else if (diff === 1) {
+                        ensureImageLoaded(slide);
                         // First underneath slide
                         slide.classList.add('slide-under-1');
                         // Remove animation
                         img.style.animation = 'none';
                     } else if (diff === 2) {
+                        ensureImageLoaded(slide);
                         // Second underneath slide
                         slide.classList.add('slide-under-2');
                         // Remove animation
                         img.style.animation = 'none';
                     } else if (diff === 3) {
+                        ensureImageLoaded(slide);
                         // Third underneath slide
                         slide.classList.add('slide-under-3');
                         // Remove animation
