@@ -14,6 +14,33 @@
     <link rel="stylesheet" href="../../assets/css/styles.css">
     <link rel="alternate" hreflang="en" href="../../pages/learn-more.html">
     <link rel="alternate" hreflang="sv" href="./learn-more.html">
+    <style>
+        /* Inline flourish: icon headers for first two sections on this page */
+        .space-y-8 > section:nth-of-type(1) > h2,
+        .space-y-8 > section:nth-of-type(2) > h2 {
+            display: flex;
+            align-items: center;
+            gap: 1rem; /* match gap-4 */
+        }
+        .space-y-8 > section:nth-of-type(1) > h2::before,
+        .space-y-8 > section:nth-of-type(2) > h2::before {
+            content: "";
+            display: inline-block;
+            width: 2.5rem; /* h-10 */
+            height: 2.5rem; /* h-10 */
+            border-radius: 0.375rem; /* rounded-md */
+            box-shadow: 0 1px 2px rgb(0 0 0 / 0.1), 0 1px 1px rgb(0 0 0 / 0.06);
+            outline: 1px solid rgba(255, 255, 255, 0.2); /* ring-1 ring-white/20 */
+            background-size: cover;
+            background-position: center;
+        }
+        .space-y-8 > section:nth-of-type(1) > h2::before {
+            background-image: url("../../assets/img/MAI logos/AImedicine.JPG");
+        }
+        .space-y-8 > section:nth-of-type(2) > h2::before {
+            background-image: url("../../assets/img/MAI logos/AIenergy.JPG");
+        }
+    </style>
 </head>
 <body>
     <header class="w-full">
@@ -40,31 +67,46 @@
                 </section>
 
                 <section class="glass-card p-6 rounded-xl">
-                    <h2 class="text-2xl font-bold mb-4">AI-kompanjonskap</h2>
+                    <div class="flex items-center gap-4 mb-4">
+                        <img src="../../assets/img/MAI logos/AIcompanions.JPG" alt="AI-kompanjonskap ikon" class="h-10 w-10 rounded-md object-cover shadow-md ring-1 ring-white/20" loading="lazy" decoding="async">
+                        <h2 class="text-2xl font-bold">AI-kompanjonskap</h2>
+                    </div>
                     <p class="text-emerald-300 mb-3">AI-kompanjoner kan erbjuda tröst, samtal och emotionellt stöd för människor som annars känner sig ensamma. För äldre, personer med funktionsnedsättningar eller den som vill ha sällskap när som helst kan AI bli en tillgänglig resurs som lär sig användarens vanor och känslotillstånd. Det kan i bästa fall minska ensamhet och bidra till bättre psykiskt välbefinnande.</p>
                     <p class="text-rose-300">Men det finns risker. Relationer med maskiner är aldrig detsamma som mänskliga band, och kan göra människor mindre benägna att söka verkliga sociala kontakter. Dessutom kan kommersiella intressen smyga sig in där ”kompanjonen” i praktiken påverkar användarens val, från shopping till politik. Detta sammanblandande av intimitet och manipulation är en etisk fallgrop.</p>
                 </section>
 
                 <section class="glass-card p-6 rounded-xl">
-                    <h2 class="text-2xl font-bold mb-4">Autonoma system</h2>
+                    <div class="flex items-center gap-4 mb-4">
+                        <img src="../../assets/img/MAI logos/AIunchained.JPG" alt="Autonoma system ikon" class="h-10 w-10 rounded-md object-cover shadow-md ring-1 ring-white/20" loading="lazy" decoding="async">
+                        <h2 class="text-2xl font-bold">Autonoma system</h2>
+                    </div>
                     <p class="text-emerald-300 mb-3">Autonoma system som självkörande bilar, leveransdrönare och industrirobotar lovar högre effektivitet, säkerhet och bekvämlighet. De kan minska trafikolyckor orsakade av mänskliga misstag, effektivisera logistik och arbeta i farliga miljöer där människor inte kan vistas. För samhället innebär detta lägre kostnader, högre produktivitet och potentiellt tryggare vägar och arbetsplatser.</p>
                     <p class="text-rose-300">Nackdelarna inkluderar jobbförluster och svårigheter att avgöra ansvar när något går fel. Om en självkörande bil orsakar en olycka—är det tillverkaren, programmeraren eller passageraren som bär skulden? Etiska dilemman uppstår också, till exempel hur maskiner ska programmeras i liv-eller-död-situationer. Dessutom ligger lagstiftning och infrastruktur långt efter teknikutvecklingen.</p>
                 </section>
 
                 <section class="glass-card p-6 rounded-xl">
-                    <h2 class="text-2xl font-bold mb-4">Utbildning och AI</h2>
+                    <div class="flex items-center gap-4 mb-4">
+                        <img src="../../assets/img/MAI logos/AIeducation.JPG" alt="Utbildning och AI ikon" class="h-10 w-10 rounded-md object-cover shadow-md ring-1 ring-white/20" loading="lazy" decoding="async">
+                        <h2 class="text-2xl font-bold">Utbildning och AI</h2>
+                    </div>
                     <p class="text-emerald-300 mb-3">AI kan revolutionera utbildningen genom att skapa personliga inlärningsvägar anpassade till varje elevs styrkor och svagheter. Automatiserade handledare kan ge omedelbar återkoppling, följa framsteg och frigöra lärarnas tid för mänsklig interaktion. Administration, rättning och planering kan effektiviseras, vilket gör att pedagoger kan ägna mer tid åt kreativitet och mentorskap.</p>
                     <p class="text-rose-300">Men samma verktyg riskerar också att leda till överberoende av algoritmer på bekostnad av äkta mänskliga möten. Om utbildningen blir alltför standardiserad via AI kan det hämma mångfald och kreativitet. Integritetsfrågor är centrala, eftersom systemen ofta samlar in känsliga lärardata. Dessutom kan ojämlik tillgång till teknik fördjupa den digitala klyftan mellan elever.</p>
                 </section>
 
                 <section class="glass-card p-6 rounded-xl">
-                    <h2 class="text-2xl font-bold mb-4">Programmering med AI</h2>
+                    <div class="flex items-center gap-4 mb-4">
+                        <img src="../../assets/img/MAI logos/AIcoding.JPG" alt="Programmering med AI ikon" class="h-10 w-10 rounded-md object-cover shadow-md ring-1 ring-white/20" loading="lazy" decoding="async">
+                        <h2 class="text-2xl font-bold">Programmering med AI</h2>
+                    </div>
                     <p class="text-emerald-300 mb-3">För utvecklare fungerar AI-drivna kodassistenter som superkollegor—de kan föreslå kodsnuttar, felsöka och snabba upp rutinuppgifter. Nybörjare får stöd i realtid medan erfarna utvecklare kan fokusera på arkitektur och kreativa lösningar. Detta sänker trösklarna och accelererar innovation i hela branschen.</p>
                     <p class="text-rose-300">Men riskerna är påtagliga. AI-genererad kod kan vara felaktig, osäker eller svår att förstå, vilket gör felsökning mer tidskrävande i längden. Ett överberoende kan försvaga utvecklares egna färdigheter, och frågor om upphovsrätt och äganderätt är fortfarande olösta. Dessutom finns en risk för homogenisering, där olika utvecklare lutar sig för mycket på samma AI-förslag, vilket kan minska mångfalden och kreativiteten i mjukvarulösningar.</p>
                 </section>
 
                 <section class="glass-card p-6 rounded-xl">
-                    <h2 class="text-2xl font-bold mb-4">Robotik</h2>
+                    <div class="flex items-center gap-4 mb-4">
+                        <img src="../../assets/img/MAI logos/AIindustrialization.JPG" alt="Robotik ikon" class="h-10 w-10 rounded-md object-cover shadow-md ring-1 ring-white/20" loading="lazy" decoding="async">
+                        <h2 class="text-2xl font-bold">Robotik</h2>
+                    </div>
                     <p class="text-emerald-300 mb-3">Robotik kan ta över tråkiga, smutsiga och farliga jobb och därmed öka säkerhet och produktivitet. I fabriker och lager hanterar robotar precisa, repetitiva uppgifter dygnet runt; på sjukhus hjälper de till med kirurgi och logistik; inom jordbruk och katastrofinsatser förlänger de människors räckvidd och minskar risker. Tillsammans med AI kan moderna robotar anpassa sig till föränderliga miljöer och hjälpa arbetare att fokusera på mer värdeskapande uppgifter.</p>
                     <p class="text-rose-300">Riskerna omfattar jobbförskjutning, nya säkerhetsrisker och otydliga beslut när perceptionsmodeller brister. Överautomatisering kan minska robusthet, göra leveranskedjor sköra och koncentrera makt. Robotar i offentliga miljöer väcker frågor om integritet och ansvar, medan gruvdrift, tillverkning och återvinning av hårdvara medför miljökostnader.</p>
                 </section>
