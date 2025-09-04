@@ -18,7 +18,12 @@ body {
 }
 
 .hero-bg {
-    background: linear-gradient(125deg, rgba(30,41,59,0.8) 0%, rgba(30,58,138,0.85) 60%, rgba(30,58,138,0.7) 100%);
+    /* Darker, more subdued gradient to match other sections */
+    background: linear-gradient(135deg,
+        rgba(15, 23, 42, 0.94) 0%,      /* slate-900 */
+        rgba(30, 41, 59, 0.92) 55%,     /* slate-800 */
+        rgba(12, 74, 110, 0.88) 100%    /* sky-900 teal tint */
+    );
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
