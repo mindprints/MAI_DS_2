@@ -23,6 +23,11 @@
     <link rel="icon" type="image/png" sizes="192x192" href="favicon/web-app-manifest-192x192.png">
     <link rel="icon" type="image/png" sizes="512x512" href="favicon/web-app-manifest-512x512.png">
     <link rel="icon" href="favicon/favicon.ico" sizes="any">
+    <style>
+        /* Slight alternating text colors for client list */
+        .clients-list > li:nth-child(odd) { color: rgb(203 213 225); /* slate-300 */ }
+        .clients-list > li:nth-child(even) { color: rgb(226 232 240); /* slate-200 */ }
+    </style>
 </head>
 <body>
     <!-- Header Navigation -->
@@ -192,7 +197,7 @@ The Museum of Artificial Intelligence's mission is to inform, teach, and promote
         <div class="container mx-auto px-4">
             <h2 class="section-title text-4xl font-bold text-center mb-8">Clients</h2>
             <div class="glass-card p-8 rounded-xl">
-                <ul class="columns-1 sm:columns-2 md:columns-3 gap-8 [column-fill:balance] text-slate-300">
+                <ul class="columns-1 sm:columns-2 md:columns-3 gap-8 [column-fill:balance] text-slate-300 clients-list">
                     <li class="mb-2">Aahus Business College</li>
                     <li class="mb-2">Biblioteksutveckling</li>
                     <li class="mb-2">DIS Stockholm</li>
