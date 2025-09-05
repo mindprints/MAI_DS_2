@@ -1058,6 +1058,9 @@ video {
   -o-object-position: left;
      object-position: left;
 }
+.p-1 {
+  padding: 0.25rem;
+}
 .p-1\.5 {
   padding: 0.375rem;
 }

@@ -83,7 +83,12 @@ async function loadPosts() {
       const html  = item.querySelector('content\\:encoded')?.textContent
                  || item.querySelector('description')?.textContent || '';
 
-      let cover = firstImageFromHtml(html);
+      // Prefer RSS-provided images to avoid extra network calls
+      const enclosure = item.querySelector('enclosure')?.getAttribute('url')
+        || item.querySelector('media\\:content')?.getAttribute('url')
+        || item.querySelector('media\\:thumbnail')?.getAttribute('url');
+
+      let cover = enclosure || firstImageFromHtml(html);
       if (!cover) cover = await getOgImage(link); // fallback to OG image when RSS has none
 
       const excerpt = cleanText(html);
@@ -98,4 +103,9 @@ async function loadPosts() {
   }
 }
 
-document.addEventListener('DOMContentLoaded', loadPosts);
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', loadPosts);
+} else {
+  // If script is loaded after DOMContentLoaded (e.g., injected at end), run immediately
+  loadPosts();
+}
