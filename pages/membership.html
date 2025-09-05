@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Membership • Museum of AI</title>
+  <title>Membership â€¢ Museum of AI</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;900&display=swap" rel="stylesheet">
@@ -27,7 +27,7 @@
 <body>
   <header class="w-full">
     <div class="container mx-auto px-4 py-6">
-      <a href="../index.html" class="text-slate-300 hover:text-white">← Back to Home</a>
+      <a href="../index.html" class="text-slate-300 hover:text-white">â† Back to Home</a>
     </div>
   </header>
 
@@ -81,7 +81,7 @@
     </div>
 
     <div class="mt-8 flex justify-center">
-      <img src="../images/WEBP_images/18-evenemang-at-narkesgatan.webp" alt="Evenemang at Närkegatan"
+      <img src="../images/slide/18-evenemang-at-narkesgatan.webp" alt="Evenemang at NÃ¤rkegatan"
            class="max-w-full rounded-xl border border-slate-700 shadow-lg" loading="lazy">
     </div>
   </main>
@@ -110,7 +110,7 @@
         '',
         `Name: ${name}`,
         `Email: ${email}`,
-        `Profession: ${profession || '—'}`
+        `Profession: ${profession || 'â€”'}`
       ].join('\n');
 
       const params = {
@@ -123,7 +123,7 @@
       };
 
       const btn = form.querySelector('button[type="submit"]');
-      btn.disabled = true; btn.textContent = 'Sending…';
+      btn.disabled = true; btn.textContent = 'Sendingâ€¦';
 
       try {
         await emailjs.send(SERVICE_ID, TEMPLATE_CONTACT, params);

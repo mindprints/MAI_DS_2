@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="sv">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Medlemskap • Museum of AI</title>
+  <title>Medlemskap â€¢ Museum of AI</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;900&display=swap" rel="stylesheet">
@@ -26,27 +26,27 @@
 <body>
   <header class="w-full">
     <div class="container mx-auto px-4 py-6">
-      <a href="../index.html" class="text-slate-300 hover:text-white">← Till startsidan</a>
+      <a href="../index.html" class="text-slate-300 hover:text-white">â† Till startsidan</a>
     </div>
   </header>
 
   <main class="py-16">
     <div class="container mx-auto px-4">
       <h1 class="text-4xl font-bold mb-6">Medlemskap</h1>
-      <p class="text-slate-300 mb-8">Förmåner, nivåer och hur du går med.</p>
+      <p class="text-slate-300 mb-8">FÃ¶rmÃ¥ner, nivÃ¥er och hur du gÃ¥r med.</p>
 
       <div class="glass-card p-6 rounded-xl">
         <p class="text-slate-400">
-          Museet för artificiell intelligens drivs av en ideell förening som verkar för att utbilda och upplysa
-          allmänheten, branschfolk och akademi om AI:s dåtid, nutid och möjliga framtid. Medlemskap är öppet för alla
-          som vill stödja detta mål.
+          Museet fÃ¶r artificiell intelligens drivs av en ideell fÃ¶rening som verkar fÃ¶r att utbilda och upplysa
+          allmÃ¤nheten, branschfolk och akademi om AI:s dÃ¥tid, nutid och mÃ¶jliga framtid. Medlemskap Ã¤r Ã¶ppet fÃ¶r alla
+          som vill stÃ¶dja detta mÃ¥l.
         </p>
         <p class="text-slate-400 mt-4">
-          Medlemsavgiften är 300 SEK per år för privatpersoner och 5000 SEK för företag. Använd formuläret nedan för att
-          skicka in din ansökan.
+          Medlemsavgiften Ã¤r 300 SEK per Ã¥r fÃ¶r privatpersoner och 5000 SEK fÃ¶r fÃ¶retag. AnvÃ¤nd formulÃ¤ret nedan fÃ¶r att
+          skicka in din ansÃ¶kan.
         </p>
 
-        <!-- Medlemskapsformulär (EmailJS) -->
+        <!-- MedlemskapsformulÃ¤r (EmailJS) -->
         <form id="membership-form-sv" class="mt-6 space-y-4" novalidate>
           <div>
             <label for="name-sv" class="block text-sm font-medium text-slate-300 mb-2">Namn</label>
@@ -65,14 +65,14 @@
           </div>
 
           <p class="text-xs text-slate-400">
-            Vi använder dina uppgifter endast för att hantera din medlemsansökan. Se vår
+            Vi anvÃ¤nder dina uppgifter endast fÃ¶r att hantera din medlemsansÃ¶kan. Se vÃ¥r
             <a href="./privacy.html" class="underline hover:text-indigo-400">Integritetspolicy</a>.
           </p>
 
           <div>
             <button type="submit"
                     class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-full font-medium transition duration-300">
-              Skicka ansökan
+              Skicka ansÃ¶kan
             </button>
           </div>
         </form>
@@ -80,13 +80,13 @@
     </div>
 
     <div class="mt-8 flex justify-center">
-      <img src="../../images/WEBP_images/21-happybirthday-at-narkesgtan.webp" alt="Evenemang på Närkesgatan"
+      <img src="../../images/slide/21-happybirthday-at-narkesgtan.webp" alt="Evenemang pÃ¥ NÃ¤rkesgatan"
            class="max-w-full rounded-xl border border-slate-700 shadow-lg">
     </div>
   </main>
 
   <script>
-    // EmailJS: tjänst och mall
+    // EmailJS: tjÃ¤nst och mall
     const SERVICE_ID = "service_zxk9avv";
     const TEMPLATE_CONTACT = "template_o3hvd4c"; // Contact Submission
 
@@ -99,17 +99,17 @@
       const profession = (form.profession.value || '').trim();
 
       if (!name || !email) {
-        alert('Fyll i både namn och e-post.');
+        alert('Fyll i bÃ¥de namn och e-post.');
         return;
       }
 
-      // Packa allt i en message-sträng (mallen förväntar {{name}}, {{email}}, {{message}})
+      // Packa allt i en message-strÃ¤ng (mallen fÃ¶rvÃ¤ntar {{name}}, {{email}}, {{message}})
       const message = [
-        'Medlemsansökan',
+        'MedlemsansÃ¶kan',
         '',
         `Namn: ${name}`,
         `E-post: ${email}`,
-        `Yrke: ${profession || '—'}`
+        `Yrke: ${profession || 'â€”'}`
       ].join('\n');
 
       const params = {
@@ -122,17 +122,17 @@
       };
 
       const btn = form.querySelector('button[type="submit"]');
-      btn.disabled = true; btn.textContent = 'Skickar…';
+      btn.disabled = true; btn.textContent = 'Skickarâ€¦';
 
       try {
         await emailjs.send(SERVICE_ID, TEMPLATE_CONTACT, params);
-        alert('Tack! Din medlemsansökan har skickats.');
+        alert('Tack! Din medlemsansÃ¶kan har skickats.');
         form.reset();
       } catch (err) {
         console.error('EmailJS error:', err);
-        alert('Tyvärr gick det inte att skicka din ansökan just nu.');
+        alert('TyvÃ¤rr gick det inte att skicka din ansÃ¶kan just nu.');
       } finally {
-        btn.disabled = false; btn.textContent = 'Skicka ansökan';
+        btn.disabled = false; btn.textContent = 'Skicka ansÃ¶kan';
       }
     });
   </script>

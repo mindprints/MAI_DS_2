@@ -1,4 +1,4 @@
-// Copied from root script.js
+﻿// Copied from root script.js
 // Add slide-in animations when elements come into view
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // All filenames use kebab-case ASCII to avoid server compatibility issues
     const imageData = [
         { number: 1, filename: '1-museums-logo.webp', title: 'Museum Logo', description: 'Welcome to MAI Museum' },
-        { number: 2, filename: '2-hotorget-exterior.webp', title: 'Hötorget Exterior', description: 'Urban innovation hub' },
+        { number: 2, filename: '2-hotorget-exterior.webp', title: 'HÃ¶torget Exterior', description: 'Urban innovation hub' },
         { number: 3, filename: '3-greg-lecturing-in-museum.webp', title: 'AI Lecture', description: 'Expert presentations' },
         { number: 4, filename: '4-max-demonstrate-for-gregor.webp', title: 'Live Demo', description: 'Interactive demonstrations' },
         { number: 5, filename: '5-three-robot-faces.webp', title: 'Robot Gallery', description: 'AI companions' },
@@ -70,19 +70,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const imageBasePath = (() => {
         const p = (window.location && window.location.pathname) ? window.location.pathname : '';
         if (p.includes('/sv/pages/')) {
-            // From /sv/pages/* → up two levels
-            return '../../images/WEBP_images/';
+            // From /sv/pages/* â†’ up two levels
+            return '../../images/slide/';
         }
         if (p.includes('/sv/')) {
-            // From /sv/* → up one level
-            return '../images/WEBP_images/';
+            // From /sv/* â†’ up one level
+            return '../images/slide/';
         }
         if (p.includes('/pages/')) {
-            // From /pages/* → up one level
-            return '../images/WEBP_images/';
+            // From /pages/* â†’ up one level
+            return '../images/slide/';
         }
         // From root
-        return 'images/WEBP_images/';
+        return 'images/slide/';
     })();
 
     // Create slide elements dynamically
@@ -149,7 +149,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // Wait a bit to ensure all slides are properly added to DOM
         setTimeout(() => {
             const slides = container.querySelectorAll('[data-slide-index]');
-            console.log('Initializing slideshow, found', slides.length, 'slides');
             let currentIndex = 0;
 
             function updateSlides() {
@@ -238,6 +237,5 @@ document.addEventListener('DOMContentLoaded', () => {
         initSlideshow();
     }
 });
-
 
 

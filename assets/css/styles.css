@@ -1,4 +1,4 @@
-body {
+﻿body {
     font-family: 'Exo 2', sans-serif;
     background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0c4a6e 100%);
     background-attachment: fixed;
@@ -9,7 +9,7 @@ body {
 /* Plan-workshop page background: image blended under the base gradient */
 .plan-workshop-page {
     /* Layer the site gradient with the workshop image using multiply blend */
-    background-image: linear-gradient(135deg, rgba(15,23,42,0.96) 0%, rgba(30,41,59,0.92) 45%, rgba(12,74,110,0.88) 100%), url('../../images/WEBP_images/20-greg-lecture-narkesg.webp');
+    background-image: linear-gradient(135deg, rgba(15,23,42,0.96) 0%, rgba(30,41,59,0.92) 45%, rgba(12,74,110,0.88) 100%), url('../../images/slide/20-greg-lecture-narkesg.webp');
     background-size: cover;            /* landscape image covers viewport */
     background-position: center;       /* center focus */
     background-repeat: no-repeat;
