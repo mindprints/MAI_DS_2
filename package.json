@@ -6,7 +6,8 @@
   "scripts": {
     "build": "postcss src/tailwind.css -o assets/css/tailwind.css --env production",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "audit": "lighthouse http://localhost:3000 --output=json --output-path=reports/lighthouse.json"
+    "audit": "lighthouse http://localhost:3000 --output=json --output-path=reports/lighthouse.json",
+    "optimize": "node tools/optimize-images.js images/slide"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +18,7 @@
     "postcss": "^8.4.31",
     "postcss-cli": "^10.1.0",
     "tailwindcss": "^3.4.4",
-    "lighthouse": "^12.0.0"
+    "lighthouse": "^12.0.0",
+    "sharp": "^0.33.4"
   }
 }
