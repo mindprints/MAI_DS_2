@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perceptrons, Minsky & Papert, and the First AI Winter • Museum of AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../assets/css/tailwind.css">
+
+    <link rel="stylesheet" href="../../assets/css/styles.css">
+</head>
+<body>
+    <header class="w-full">
+        <div class="container mx-auto px-4 py-6">
+            <a href="../research-index.html" class="text-slate-300 hover:text-white">← Back to Research Index</a>
+        </div>
+    </header>
+    <main class="py-16">
+        <div class="container mx-auto px-4">
+            <article class="max-w-3xl mx-auto glass-card p-6 md:p-10 rounded-xl">
+                <header class="mb-6">
+                    <h1 class="text-3xl md:text-4xl font-bold">Perceptrons, Minsky & Papert, and the First AI Winter</h1>
+                    <div class="mt-3 flex flex-wrap items-center text-slate-400 text-sm">
+                        <span class="mr-4"><i class="fa-regular fa-calendar mr-1"></i>2025</span>
+                        <span class="mr-4"><i class="fa-solid fa-tag mr-1"></i>History</span>
+                    </div>
+                </header>
+
+                <section class="prose prose-invert max-w-none">
+                    <h2 class="text-2xl font-semibold">Abstract</h2>
+                    <p>
+                        The perceptron—an early single‑layer neural network—sparked great optimism in the 1960s. In 1969,
+                        Marvin Minsky and Seymour Papert published <em>Perceptrons</em>, rigorously showing limitations of
+                        single‑layer architectures. Their critique did not “disprove neural networks,” but it did temper
+                        expectations and contributed to a funding downturn often associated with the first AI winter.
+                        Symbolic AI then dominated research agendas for over a decade, until multilayer learning and
+                        backpropagation revived connectionism in the 1980s.
+                    </p>
+
+                    <h2 class="text-2xl font-semibold">Background: The Perceptron</h2>
+                    <p>
+                        A perceptron computes a weighted sum of inputs and applies a threshold function to produce a
+                        binary output. Geometrically, it can represent decisions that are linearly separable. Early
+                        prototypes (notably Frank Rosenblatt’s work) demonstrated promising pattern recognition on
+                        simple tasks, fueling speculation that general intelligence might be achievable with similar
+                        learning machines.
+                    </p>
+
+                    <h2 class="text-2xl font-semibold">Minsky & Papert’s Critique</h2>
+                    <p>
+                        Minsky and Papert proved that single‑layer perceptrons cannot compute certain functions, most
+                        famously XOR, and more broadly, they cannot represent problems that are not linearly separable.
+                        The book’s formalism clarified where the approach worked and where it failed. While they noted
+                        that multi‑layer networks might overcome these limits, the theory and training methods for such
+                        networks were immature at the time.
+                    </p>
+
+                    <h2 class="text-2xl font-semibold">Consequences and the AI Winter</h2>
+                    <p>
+                        The book’s results, combined with unmet expectations and limited compute, cooled enthusiasm for
+                        neural networks. Funding shifted toward symbolic AI—rule‑based systems and logical reasoning—
+                        which dominated the 1970s. This period of reduced investment is commonly referred to as the first
+                        AI winter for connectionist methods.
+                    </p>
+
+                    <h2 class="text-2xl font-semibold">Revival: Multilayer Networks and Backpropagation</h2>
+                    <p>
+                        In the mid‑1980s, breakthroughs in training multilayer networks—especially the rediscovery and
+                        popularization of backpropagation—rebooted connectionism. With additional layers, neural models
+                        can represent complex, non‑linear functions, including XOR. Over time, advances in data, compute,
+                        and architectures led to today’s deep learning era.
+                    </p>
+
+                    <h2 class="text-2xl font-semibold">Perspective</h2>
+                    <p>
+                        A common misconception is that <em>Perceptrons</em> invalidated neural networks wholesale or that
+                        it caused a “demise of symbolic AI.” In fact, the opposite occurred: symbolic methods flourished
+                        while single‑layer networks fell out of favor. The lasting contribution of Minsky and Papert’s
+                        work is a clearer understanding of model capacity and the importance of depth—insights that
+                        continue to inform contemporary AI research.
+                    </p>
+                </section>
+
+                <footer class="mt-10 pt-6 border-t border-slate-800">
+                    <a class="text-cyan-400 hover:text-cyan-300" href="../research-index.html">← Back to Research Index</a>
+                </footer>
+            </article>
+        </div>
+    </main>
+    <script src="../../assets/js/script.js"></script>
+</body>
+</html>
+
+
