@@ -3,15 +3,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Journal — Museum of Artificial Intelligence</title>
+  <title>Journal – Museum of Artificial Intelligence</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;900&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="../../assets/css/tailwind.css">
-
   <link rel="stylesheet" href="../../assets/css/styles.css">
   <link rel="alternate" hreflang="en" href="../../pages/journal.html">
   <link rel="alternate" hreflang="sv" href="./journal.html">
@@ -22,7 +21,7 @@
       <nav class="glass-card py-3 px-6 flex flex-col md:flex-row md:justify-between md:items-center">
         <div class="flex items-center space-x-2">
           <div class="bg-indigo-500 rounded-lg p-1.5">
-            <img src="../../images/MAI_logoTransp_mc2.png" alt="MAI logo" class="w-5 h-5">
+            <img src="../../images/MAI_logoTransp_mc2.png" alt="MAI logotyp" class="w-5 h-5" loading="lazy">
           </div>
           <span class="font-bold text-xl tracking-wide">MUSEUM OF ARTIFICIAL INTELLIGENCE</span>
         </div>
@@ -72,55 +71,6 @@
     </div>
   </footer>
 
-  <script>
-    (async function loadBlog() {
-      const SUBSTACK_HOST = "mindprints.substack.com";
-      const FEED = `https://${SUBSTACK_HOST}/feed`;
-      const PROXY = `/api/substack?feed=${encodeURIComponent(FEED)}`;
-      const listEl = document.getElementById("blog-list");
-
-      try {
-        const res = await fetch(PROXY, { cache: "no-store" });
-        if (!res.ok) throw new Error("Feed proxy failed");
-        const xml = await res.text();
-
-        const doc = new DOMParser().parseFromString(xml, "text/xml");
-        const items = Array.from(doc.querySelectorAll("item")).slice(0, 12);
-
-        listEl.innerHTML = items.map(node => {
-          const title = node.querySelector("title")?.textContent ?? "Untitled";
-          const link  = node.querySelector("link")?.textContent ?? "#";
-          const pub   = node.querySelector("pubDate")?.textContent ?? "";
-          const date  = pub ? new Date(pub).toLocaleDateString() : "";
-          const html  = node.querySelector("content\\:encoded")?.textContent
-                     || node.querySelector("description")?.textContent || "";
-          const text  = html.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
-          const imgMatch = html.match(/<img[^>]+src=\"([^\"]+)\"/i);
-          const img  = imgMatch ? imgMatch[1] : null;
-          const tracked = `${link}${link.includes("?") ? "&" : "?"}utm_source=mai_website&utm_medium=referral`;
-
-          return `
-            <article class="blog-card glass-card rounded-xl overflow-hidden transition duration-500 hover:shadow-xl">
-              <a href="${tracked}" target="_blank" rel="noopener">
-                <div class="${img ? '' : 'bg-gradient-to-br from-indigo-700/40 to-cyan-600/30'}">
-                  ${img ? `<img src="${img}" alt="${title}" class="w-full h-48 object-cover">` : `<div class="h-48"></div>`}
-                </div>
-                <div class="p-6">
-                  <div class="text-indigo-300 text-xs font-semibold mb-2">${date}</div>
-                  <h3 class="text-lg md:text-xl font-bold mb-2">${title}</h3>
-                  <p class="text-slate-400">${text}</p>
-                  <div class="mt-4 text-cyan-400 font-medium">Läs på Substack »</div>
-                </div>
-              </a>
-            </article>
-          `;
-        }).join("") || `<div class="text-center text-slate-400 w-full">Inga inlägg ännu.</div>`;
-      } catch (e) {
-        console.error(e);
-        listEl.innerHTML = `<div class="text-center text-slate-400 w-full">Kunde inte ladda inlägg just nu.</div>`;
-      }
-    })();
-  </script>
   <script src="../../journal.js"></script>
 </body>
 </html>
