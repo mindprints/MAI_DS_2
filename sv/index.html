@@ -39,7 +39,8 @@
                         <img src="../images/MAI_logoTransp_mc2.png" alt="MAI logo" class="w-full h-full object-contain" loading="lazy">
                     </div>
                     <span class="font-bold text-xl tracking-wide">MUSEUM OF ARTIFICIAL INTELLIGENCE</span>
-                    <div class="flex items-center ml-3 space-x-2">
+                    <!-- Desktop/tablet language flags -->
+                    <div class="hidden md:flex items-center ml-3 space-x-2">
                         <a href="../index.html" class="opacity-80 hover:opacity-100" title="English">
                             <span class="fi fi-gb text-2xl"></span>
                         </a>
@@ -52,6 +53,15 @@
                         <a href="#events" class="nav-link font-medium text-slate-300 hover:text-white">Evenemang</a>
                     <a href="sv/pages/about.html" class="nav-link font-medium text-cyan-300 hover:text-white">Om</a>
                     <a href="pages/journal.html" class="nav-link font-medium text-indigo-300 hover:text-white">Nyhetsbrev</a>
+                    <!-- Mobile language flags (shown below links) -->
+                    <div class="flex md:hidden items-center gap-3 w-full justify-center">
+                        <a href="../index.html" class="opacity-80 hover:opacity-100" title="English">
+                            <span class="fi fi-gb text-2xl"></span>
+                        </a>
+                        <a href="index.html" class="opacity-80 hover:opacity-100" title="Svenska">
+                            <span class="fi fi-se text-2xl"></span>
+                        </a>
+                    </div>
                 </div>
             </nav>
         </div>
@@ -483,4 +493,3 @@
     <script src="../assets/js/script.js"></script>
 </body>
 </html>
-
