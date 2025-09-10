@@ -1,8 +1,8 @@
 ﻿:root {
     /* Brand gradient stops derived from header logo */
-    --brand-start: #e3d9d6;  /* indigo */
-    --brand-mid:   #beb5de;  /* blue */
-    --brand-end:   #e1a3a3;  /* cyan */
+    --brand-start: #f9f7f7;  /* indigo */
+    --brand-mid:   #ebe9f0;  /* blue */
+    --brand-end:   #faf4f4;  /* cyan */
 }
 
 body {
@@ -11,6 +11,9 @@ body {
     background-attachment: fixed;
     color: #f1f5f9;
     overflow-x: hidden;
+}
+.heading-mono, h1, h2, h3, .section-title, .btn-brand {
+    font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
 /* Plan-workshop page background: image blended under the base gradient */
@@ -75,7 +78,7 @@ body {
     height: 2px;
     bottom: -4px;
     left: 0;
-    background: linear-gradient(90deg, var(--brand-start), var(--brand-end));
+    background: #1e3a8a; /* dark blue */
     transition: width 0.3s;
 }
 
@@ -94,7 +97,7 @@ body {
     position: absolute;
     width: 60px;
     height: 4px;
-    background: linear-gradient(90deg, var(--brand-start), var(--brand-end));
+    background: #1e3a8a; /* dark blue */
     bottom: -10px;
     left: 50%;
     transform: translateX(-50%);
