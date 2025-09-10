@@ -27,23 +27,24 @@
         /* Alternating text colors for client list (higher contrast) */
         .clients-list > li:nth-child(odd) { color: rgb(241 245 249); /* slate-100 */ }
         .clients-list > li:nth-child(even) { color: rgb(148 163 184); /* slate-400 */ }
+        /* Monospace title with outline for brand */
+        .brand-outline { 
+            -webkit-text-stroke: 1px rgba(2, 6, 23, 0.8); /* slate-950 */
+            text-shadow: 0 1px 2px rgba(2, 6, 23, 0.6);
+        }
     </style>
 </head>
 <body>
     <!-- Header Navigation -->
     <header class="sticky top-0 w-full z-50">
         <div class="container mx-auto px-4 py-4">
-            <nav class="glass-card py-3 px-6 flex flex-col md:flex-row md:justify-between md:items-center">
+            <nav class="py-3 px-6 flex flex-col md:flex-row md:justify-between md:items-center">
                 <div class="flex items-center space-x-2">
-                    <div class="bg-indigo-500 rounded-lg w-8 h-8 p-1 flex items-center justify-center">
-                        <img src="../images/MAI_logoTransp_mc2.png" alt="MAI logo" class="w-full h-full object-contain" loading="lazy">
+                    <div class="select-none">
+                        <img src="../images/mai-logos/header_logo.png" alt="Museum of Artificial Intelligence" class="w-[360px] md:w-[560px] lg:w-[720px] h-auto object-contain" loading="lazy" draggable="false">
                     </div>
-                    <span class="font-bold text-lg md:text-xl tracking-wide leading-tight">
-                        <span class="block md:inline">MUSEUM OF</span>
-                        <span class="block md:inline md:ml-2">ARTIFICIAL INTELLIGENCE</span>
-                    </span>
                     <!-- Desktop/tablet language flags -->
-                    <div class="hidden md:flex items-center ml-3 space-x-2">
+                    <div class="hidden md:flex items-center ml-3 space-x-3">
                         <a href="../index.html" class="opacity-80 hover:opacity-100" title="English">
                             <span class="fi fi-gb text-2xl"></span>
                         </a>
@@ -55,7 +56,7 @@
                 <div class="flex flex-wrap gap-6 justify-center md:justify-start mt-3 md:mt-0">
                     <!-- Menylänkar flyttade till fotens resurssektion; språkflaggor finns kvar nedan för mobil -->
                     <!-- Mobile language flags (shown below links) -->
-                    <div class="flex md:hidden items-center gap-3 w-full justify-center">
+                    <div class="flex md:hidden items-center gap-4 w-full justify-center">
                         <a href="../index.html" class="opacity-80 hover:opacity-100" title="English">
                             <span class="fi fi-gb text-2xl"></span>
                         </a>
