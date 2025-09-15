@@ -15,53 +15,19 @@ document.querySelectorAll('.feature-card').forEach(card => {
 
 
 // Dynamic image slideshow system
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     // Configuration
     const config = {
         visibleSlides: 4, // Number of slides to show at once (1 main + 3 underneath)
         rotationInterval: 6000, // Time between rotations in milliseconds
-        transitionDuration: 2000 // Transition duration in milliseconds
+        transitionDuration: 2000, // Transition duration in milliseconds
+        shuffleSlides: true // Randomize order of slides on each load
     };
 
-    // Available images in numbered order (can be easily updated)
-    // All filenames use kebab-case ASCII to avoid server compatibility issues
-    const imageData = [
-        { number: 1, filename: '1-museums-logo.webp', title: 'Museum Logo', description: 'Welcome to MAI Museum' },
-        { number: 2, filename: '2-hotorget-exterior.webp', title: 'HÃ¶torget Exterior', description: 'Urban innovation hub' },
-        { number: 3, filename: '3-greg-lecturing-in-museum.webp', title: 'AI Lecture', description: 'Expert presentations' },
-        { number: 4, filename: '4-max-demonstrate-for-gregor.webp', title: 'Live Demo', description: 'Interactive demonstrations' },
-        { number: 5, filename: '5-three-robot-faces.webp', title: 'Robot Gallery', description: 'AI companions' },
-        { number: 6, filename: '6-musikafton-hotorget.webp', title: 'Music & AI', description: 'Creative collaboration' },
-        { number: 7, filename: '7-platon-robot-2.webp', title: 'Platon Robot', description: 'Advanced robotics' },
-        { number: 8, filename: '8-greg-closeup-lecture.webp', title: 'Expert Lecture', description: 'AI insights' },
-        { number: 10, filename: '10-tidnings-articel-invigning.webp', title: 'Opening Ceremony', description: 'Grand opening event' },
-        { number: 11, filename: '11-random-graphics.webp', title: 'Digital Art', description: 'AI-generated graphics' },
-        { number: 12, filename: '12-music-afton-hotorget.webp', title: 'Music Evening', description: 'Cultural performances' },
-        { number: 13, filename: '13-storefront-skrapan.webp', title: 'Storefront', description: 'Museum entrance' },
-        { number: 14, filename: '14-invigning-skrapan.webp', title: 'Inauguration', description: 'Official opening' },
-        { number: 16, filename: '16-public-hotorget.webp', title: 'Public Space', description: 'Community area' },
-        { number: 17, filename: '17-hologram-building.webp', title: 'Hologram Display', description: 'Future technology' },
-        { number: 18, filename: '18-evenemang-at-narkesgatan.webp', title: 'Street Event', description: 'Public engagement' },
-        { number: 19, filename: '19-exterior-skrapan.webp', title: 'Skrapan Exterior', description: 'Iconic building' },
-        { number: 20, filename: '20-greg-lecture-narkesg.webp', title: 'Lecture Series', description: 'Educational talks' },
-        { number: 21, filename: '21-happybirthday-at-narkesgtan.webp', title: 'Celebration', description: 'Special events' },
-        { number: 22, filename: '22-jubelium-pix-patrick.webp', title: 'Jubilee', description: 'Milestone celebration' },
-        { number: 23, filename: '23-veiwing-screen-hotorget.webp', title: 'Viewing Screen', description: 'Large displays' },
-        { number: 24, filename: '24-jubelium-pix-genom-skarmen-patrick.webp', title: 'Through the Screen', description: 'Digital experiences' },
-        { number: 25, filename: '25-interior-skrappan.webp', title: 'Interior Design', description: 'Modern spaces' },
-        { number: 26, filename: '26-greg-skollecture-hotorget.webp', title: 'School Lecture', description: 'Educational outreach' },
-        { number: 27, filename: '27-mai-interior-nov-15.webp', title: 'MAI Interior', description: 'Museum spaces' },
-        { number: 28, filename: '28-survielence-camera.webp', title: 'Surveillance', description: 'Security systems' },
-        { number: 29, filename: '29-stockholm-ai-hotorget.webp', title: 'Stockholm AI', description: 'Local innovation' },
-        { number: 30, filename: '30-closeup-aws-poster.webp', title: 'AWS Partnership', description: 'Cloud technology' },
-        { number: 31, filename: '31-bob-lecture.webp', title: 'Bob\'s Lecture', description: 'Featured speaker' },
-        { number: 32, filename: '32-big-screens-at-hotorget.webp', title: 'Big Screens', description: 'Public displays' },
-        { number: 33, filename: '33-public-hotorget.webp', title: 'Public Gathering', description: 'Community events' },
-        { number: 34, filename: '34-arc-pussle.webp', title: 'Arc Puzzle', description: 'Interactive exhibit' },
-        { number: 35, filename: '35-ai-och-music-seminar.webp', title: 'AI Music Seminar', description: 'Creative AI' },
-        { number: 37, filename: '37-aws-poster.webp', title: 'AWS Exhibit', description: 'Technology showcase' }
-    ];
+    // Slides data loaded from manifest
+    let imageData = [];
+    
 
     // Get slideshow container
     const container = document.getElementById('slideshow-container');
@@ -84,6 +50,47 @@ document.addEventListener('DOMContentLoaded', () => {
         // From root
         return 'images/slide/';
     })();
+
+    // Shuffle helper (returns a new array)
+    function shuffleArray(array) {
+        const arr = array.slice();
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+    }
+
+    // Try to load slides manifest from images/slide/slides.json
+    async function tryLoadSlidesManifest() {
+        const url = imageBasePath + 'slides.json';
+        try {
+            const res = await fetch(url, { cache: 'no-store' });
+            if (!res.ok) return false;
+            const data = await res.json();
+            if (!Array.isArray(data)) return false;
+            // Basic normalization: ensure objects have filename
+            let normalized = data
+                .filter(item => item && typeof item.filename === 'string')
+                .map((item, idx) => ({
+                    number: typeof item.number === 'number' ? item.number : (idx + 1),
+                    filename: item.filename,
+                    title: typeof item.title === 'string' && item.title.trim() ? item.title : item.filename,
+                    description: typeof item.description === 'string' ? item.description : ''
+                }));
+            if (normalized.length > 0) {
+                if (config.shuffleSlides) {
+                    normalized = shuffleArray(normalized);
+                }
+                imageData = normalized;
+                return true;
+            }
+            return false;
+        } catch (e) {
+            // Likely running without a server or manifest missing; fall back silently
+            return false;
+        }
+    }
 
     // Create slide elements dynamically
     function createSlide(imageInfo, index, loadImmediately = false) {
@@ -233,9 +240,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Start the slideshow only if container exists on this page
     if (container) {
+        const ok = await tryLoadSlidesManifest();
+        if (!ok || imageData.length === 0) {
+            try { container.style.display = 'none'; } catch (e) {}
+            return;
+        }
         generateSlides();
         initSlideshow();
     }
 });
-
-

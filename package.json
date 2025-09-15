@@ -7,7 +7,8 @@
     "build": "postcss src/tailwind.css -o assets/css/tailwind.css --env production",
     "test": "echo \"Error: no test specified\" && exit 1",
     "audit": "lighthouse http://localhost:3000 --output=json --output-path=reports/lighthouse.json",
-    "optimize": "node tools/optimize-images.js images/slide"
+    "optimize": "node tools/optimize-images.js images/slide",
+    "generate:slides": "node tools/generate-slides-manifest.js"
   },
   "keywords": [],
   "author": "",
