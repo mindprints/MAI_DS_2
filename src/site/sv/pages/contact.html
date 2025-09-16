@@ -16,12 +16,7 @@
   <link rel="alternate" hreflang="en" href="../../pages/contact.html">
   <link rel="alternate" hreflang="sv" href="./contact.html">
 
-  <!-- EmailJS v4 -->
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-  <script>
-    emailjs.init({ publicKey: "Z3nM5X7zfy1eF1Rzc" });
-  </script>
+  <!-- E-posthantering sker server-side via /api/send-email -->
 </head>
 <body>
   <header class="w-full">
@@ -134,10 +129,7 @@
   </main>
 
   <script>
-    // EmailJS
-    const SERVICE_ID = "service_zxk9avv";
-    const TEMPLATE_CONTACT = "template_o3hvd4c";
-
+    // Klientlogik; e-post skickas via /api/send-email
     // Normalisera sträng (ta bort accenter, gemener)
     function norm(s) {
       return (s || '')
@@ -237,7 +229,8 @@
 
       const fullMessage = composeMessage();
 
-      const params = {
+      const payload = {
+        kind: 'contact',
         name,
         email,
         message: fullMessage,
@@ -250,11 +243,19 @@
       btn.disabled = true; btn.textContent = 'Skickar…'; feedback.textContent = '';
 
       try {
-        await emailjs.send(SERVICE_ID, TEMPLATE_CONTACT, params);
+        const resp = await fetch('/api/send-email', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        if (!resp.ok) {
+          const data = await resp.json().catch(() => ({}));
+          throw new Error(data?.error || 'Failed to send');
+        }
         feedback.textContent = 'Tack! Ditt meddelande har skickats.';
         form.reset();
       } catch (err) {
-        console.error('EmailJS error:', err);
+        console.error('Send error:', err);
         feedback.textContent = 'Tyvärr uppstod ett fel vid sändning.';
       } finally {
         btn.disabled = false; btn.textContent = 'Skicka meddelande';

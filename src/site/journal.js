@@ -40,27 +40,35 @@ async function getOgImage(pageUrl) {
   }
 }
 
+function escapeHtml(unsafe) {
+  return unsafe
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
 function cardHtml({ title, link, date, cover, excerpt }) {
   const tracked = `${link}${link.includes('?') ? '&' : '?'}utm_source=mai_website&utm_medium=referral`;
   const coverHtml = cover
-    ? `<img src="${cover}" alt="${title}" loading="lazy" class="w-full h-full object-cover block">`
+    ? `<img src="${escapeHtml(cover)}" alt="${escapeHtml(title)}" loading="lazy" class="w-full h-full object-cover block">`
     : `<div class="w-full h-full bg-gradient-to-br from-indigo-700/40 to-cyan-600/30"></div>`;
 
   return `
     <article class="blog-card glass-card rounded-xl overflow-hidden transition duration-500 hover:shadow-xl">
-      <a href="${tracked}" target="_blank" rel="noopener">
+      <a href="${escapeHtml(tracked)}" target="_blank" rel="noopener">
         <div class="cover">${coverHtml}</div>
         <div class="p-6">
-          <div class="text-indigo-300 text-xs font-semibold mb-2">${date}</div>
-          <h3 class="text-lg md:text-xl font-bold mb-2">${title}</h3>
-          <p class="text-slate-300">${truncate(excerpt)}</p>
+          <div class="text-indigo-300 text-xs font-semibold mb-2">${escapeHtml(date)}</div>
+          <h3 class="text-lg md:text-xl font-bold mb-2">${escapeHtml(title)}</h3>
+          <p class="text-slate-300">${escapeHtml(truncate(excerpt))}</p>
           <div class="mt-4 text-cyan-400 font-medium">Read on Substack »</div>
         </div>
       </a>
     </article>
   `;
 }
-
 // ---------- main ----------
 async function loadPosts() {
   const listEl = byId('posts') || byId('blog-list');

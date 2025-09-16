@@ -1,4 +1,4 @@
-﻿// Copied from root script.js
+﻿﻿﻿// Copied from root script.js
 // Add slide-in animations when elements come into view
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -92,6 +92,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
+    function escapeHtml(unsafe) {
+        return unsafe
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+
     // Create slide elements dynamically
     function createSlide(imageInfo, index, loadImmediately = false) {
         const slide = document.createElement('div');
@@ -121,15 +130,14 @@ document.addEventListener('DOMContentLoaded', async () => {
                     `}
                 </div>
                 <div class="p-6">
-                    <h3 class="text-xl font-bold">${imageInfo.title}</h3>
-                    <p class="text-slate-400 mt-2">${imageInfo.description}</p>
+                    <h3 class="text-xl font-bold">${escapeHtml(imageInfo.title)}</h3>
+                    <p class="text-slate-400 mt-2">${escapeHtml(imageInfo.description)}</p>
                 </div>
             </div>
         `;
 
         return slide;
     }
-
     // Ensure a slide's image is loaded, swapping out the spinner when done
     function ensureImageLoaded(slide) {
         const img = slide.querySelector('img[data-src]');
@@ -152,92 +160,101 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     // Improved slideshow logic
-    function initSlideshow() {
-        // Wait a bit to ensure all slides are properly added to DOM
-        setTimeout(() => {
-            const slides = container.querySelectorAll('[data-slide-index]');
-            let currentIndex = 0;
+function initSlideshow() {
+    let rotationInterval;
+    // Wait a bit to ensure all slides are properly added to DOM
+    setTimeout(() => {
+        const slides = container.querySelectorAll('[data-slide-index]');
+        let currentIndex = 0;
 
-            function updateSlides() {
-                slides.forEach((slide, index) => {
-                    const diff = (index - currentIndex + imageData.length) % imageData.length;
-                    const img = slide.querySelector('img');
+        function updateSlides() {
+            slides.forEach((slide, index) => {
+                const diff = (index - currentIndex + imageData.length) % imageData.length;
+                const img = slide.querySelector('img');
 
-                    // Remove all slide state classes first
-                    slide.classList.remove('slide-main', 'slide-under-1', 'slide-under-2', 'slide-under-3', 'slide-hidden');
+                // Remove all slide state classes first
+                slide.classList.remove('slide-main', 'slide-under-1', 'slide-under-2', 'slide-under-3', 'slide-hidden');
 
-                    // Cancel any JS-driven zoom from a previous role and reset transforms
-                    if (img._zoomAnimation) {
-                        try { img._zoomAnimation.cancel(); } catch (e) {}
-                        img._zoomAnimation = null;
+                // Cancel any JS-driven zoom from a previous role and reset transforms
+                if (img._zoomAnimation) {
+                    try {
+                        img._zoomAnimation.cancel();
+                    } catch (e) {
+                        console.warn('Failed to cancel animation:', e);
                     }
-                    img.style.transformOrigin = 'center center';
-                    img.style.transform = '';
+                    img._zoomAnimation = null;
+                }
+                img.style.transformOrigin = 'center center';
+                img.style.transform = '';
 
-                    if (diff === 0) {
-                        ensureImageLoaded(slide);
-                        // Main focused slide (pan + smooth zoom)
-                        slide.classList.add('slide-main');
-                        if (!prefersReducedMotion) {
-                            // Keep panning
-                            img.style.animation = 'panImage 8s ease-in-out infinite alternate';
-                            // Add zoom from 1 -> 1.2 over the full rotation interval
-                            img._zoomAnimation = img.animate(
-                                [
-                                    { transform: 'scale(1)' },
-                                    { transform: 'scale(1.2)' }
-                                ],
-                                {
-                                    duration: config.rotationInterval,
-                                    easing: 'ease-in-out',
-                                    fill: 'forwards'
-                                }
-                            );
-                        } else {
-                            img.style.animation = 'none';
-                        }
-                    } else if (diff === 1) {
-                        ensureImageLoaded(slide);
-                        // First underneath slide
-                        slide.classList.add('slide-under-1');
-                        // Remove animation
-                        img.style.animation = 'none';
-                    } else if (diff === 2) {
-                        ensureImageLoaded(slide);
-                        // Second underneath slide
-                        slide.classList.add('slide-under-2');
-                        // Remove animation
-                        img.style.animation = 'none';
-                    } else if (diff === 3) {
-                        ensureImageLoaded(slide);
-                        // Third underneath slide
-                        slide.classList.add('slide-under-3');
-                        // Remove animation
-                        img.style.animation = 'none';
+                if (diff === 0) {
+                    ensureImageLoaded(slide);
+                    // Main focused slide (pan + smooth zoom)
+                    slide.classList.add('slide-main');
+                    if (!prefersReducedMotion) {
+                        // Keep panning
+                        img.style.animation = 'panImage 8s ease-in-out infinite alternate';
+                        // Add zoom from 1 -> 1.2 over the full rotation interval
+                        img._zoomAnimation = img.animate(
+                            [
+                                { transform: 'scale(1)' },
+                                { transform: 'scale(1.2)' }
+                            ],
+                            {
+                                duration: config.rotationInterval,
+                                easing: 'ease-in-out',
+                                fill: 'forwards'
+                            }
+                        );
                     } else {
-                        // Hidden slides
-                        slide.classList.add('slide-hidden');
-                        // Remove animation
                         img.style.animation = 'none';
                     }
-                });
-            }
+                } else if (diff === 1) {
+                    ensureImageLoaded(slide);
+                    // First underneath slide
+                    slide.classList.add('slide-under-1');
+                    // Remove animation
+                    img.style.animation = 'none';
+                } else if (diff === 2) {
+                    ensureImageLoaded(slide);
+                    // Second underneath slide
+                    slide.classList.add('slide-under-2');
+                    // Remove animation
+                    img.style.animation = 'none';
+                } else if (diff === 3) {
+                    ensureImageLoaded(slide);
+                    // Third underneath slide
+                    slide.classList.add('slide-under-3');
+                    // Remove animation
+                    img.style.animation = 'none';
+                } else {
+                    // Hidden slides
+                    slide.classList.add('slide-hidden');
+                    // Remove animation
+                    img.style.animation = 'none';
+                }
+            });
+        }
 
-            function nextSlide() {
-                currentIndex = (currentIndex + 1) % imageData.length;
-                updateSlides();
-            }
-
-            // Initialize
+        function nextSlide() {
+            currentIndex = (currentIndex + 1) % imageData.length;
             updateSlides();
+        }
 
-            // Auto-rotate
-            if (!prefersReducedMotion) {
-                setInterval(nextSlide, config.rotationInterval);
-            }
-        }, 100); // Small delay to ensure DOM is ready
-    }
+        // Initialize
+        updateSlides();
 
+        // Auto-rotate
+        if (!prefersReducedMotion) {
+            rotationInterval = setInterval(nextSlide, config.rotationInterval);
+        }
+        
+        // Clean up on page unload
+        window.addEventListener('beforeunload', () => {
+            if (rotationInterval) clearInterval(rotationInterval);
+        });
+    }, 100); // Small delay to ensure DOM is ready
+}
     // Start the slideshow only if container exists on this page
     if (container) {
         const ok = await tryLoadSlidesManifest();

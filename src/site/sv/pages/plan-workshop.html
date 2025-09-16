@@ -15,12 +15,7 @@
 
   <link rel="stylesheet" href="../../assets/css/styles.css">
 
-  <!-- EmailJS v4 -->
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-  <script>
-    emailjs.init({ publicKey: "Z3nM5X7zfy1eF1Rzc" });
-  </script>
+  <!-- E-posthantering sker server-side via /api/send-email -->
 </head>
 <body class="plan-workshop-page">
   <header class="w-full">
@@ -135,9 +130,7 @@
   </main>
 
   <script>
-    const SERVICE_ID = "service_zxk9avv";
-    const TEMPLATE_WORKSHOP = "template_0wzjtk7";
-
+    // Klientlogik; e-post skickas via /api/send-email
     document.addEventListener('DOMContentLoaded', () => {
       const form = document.getElementById('plan-form');
       if (!form) return;
@@ -174,7 +167,8 @@
         const btn = form.querySelector('button[type="submit"]');
         btn.disabled = true; btn.textContent = 'Skickar…';
 
-        const params = {
+        const payload = {
+          kind: 'workshop',
           name,
           email,
           organization,
@@ -190,12 +184,20 @@
         };
 
         try {
-          await emailjs.send(SERVICE_ID, TEMPLATE_WORKSHOP, params);
+          const resp = await fetch('/api/send-email', {
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify(payload),
+          });
+          if (!resp.ok) {
+            const data = await resp.json().catch(() => ({}));
+            throw new Error(data?.error || 'Failed to send');
+          }
           alert('Tack! Din förfrågan har skickats.');
           form.reset();
         } catch (err) {
-          console.error('EmailJS send error:', err);
-          alert((err && err.text) || 'Tyvärr kunde vi inte skicka din förfrågan just nu.');
+          console.error('Send error:', err);
+          alert('Tyvärr kunde vi inte skicka din förfrågan just nu.');
         } finally {
           btn.disabled = false; btn.textContent = 'Skicka';
         }

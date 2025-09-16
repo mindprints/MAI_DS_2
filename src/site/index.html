@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿﻿﻿﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -37,19 +37,19 @@
 </head>
 <body>
     <!-- Header Navigation -->
-    <header class="w-full z-50">
+    <header class="w-full z-50" role="banner">
         <div class="container mx-auto px-4 py-2">
-            <nav class="py-1 px-4 bg-transparent flex flex-col md:flex-row md:justify-between md:items-center">
+            <nav class="py-1 px-4 bg-transparent flex flex-col md:flex-row md:justify-between md:items-center" role="navigation" aria-label="Main navigation">
                 <div class="flex items-center space-x-2">
                     <div class="select-none">
-                        <img src="images/mai-logos/logo_in_3d_2_darkened.avif" alt="Museum of Artificial Intelligence" class="w-[360px] md:w-[560px] lg:w-[720px] h-auto object-contain" loading="lazy" draggable="false">
+                        <img src="images/mai-logos/logo_in_3d_2_darkened.avif" alt="Museum of Artificial Intelligence logo" class="w-[360px] md:w-[560px] lg:w-[720px] h-auto object-contain" loading="lazy" draggable="false">
                     </div>
                     <!-- Desktop/tablet language flags -->
-                    <div class="hidden md:flex items-center ml-3 space-x-3">
-                        <a href="index.html" class="opacity-80 hover:opacity-100" title="English">
+                    <div class="hidden md:flex items-center ml-3 space-x-3" role="group" aria-label="Language selection">
+                        <a href="index.html" class="opacity-80 hover:opacity-100" title="Switch to English" aria-label="Switch to English">
                             <span class="fi fi-gb text-2xl"></span>
                         </a>
-                        <a href="sv/index.html" class="opacity-80 hover:opacity-100" title="Svenska">
+                        <a href="sv/index.html" class="opacity-80 hover:opacity-100" title="Växla till svenska" aria-label="Switch to Swedish">
                             <span class="fi fi-se text-2xl"></span>
                         </a>
                     </div>
@@ -68,11 +68,10 @@
                     </div>
                 </div>
                 
-               
+                
             </nav>
         </div>
     </header>
-
     <!-- Hero Section -->
 
     
@@ -273,13 +272,10 @@
                                 <span>Coding with AI</span>
                             </li>
                         </ul>
-                        <button class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-full font-medium transition duration-300 flex items-center">
-                            <a href="pages/learn-more.html" class="text-cyan-400 hover:text-cyan-300 transition">
-                                Learn More
-                            </a>
+                        <a href="pages/learn-more.html" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-full font-medium transition duration-300 inline-flex items-center">
+                            Learn More
                             <i class="fa-solid fa-lightbulb ml-2"></i>
-                        </button>
-                    </div>
+                        </a>                    </div>
                     <div class="flex-1 mt-8 md:mt-0 flex justify-center">
                         <div class="relative">
                             <img src="images/good_bad_ugly.avif" alt="The Good, Bad, and Ugly of AI illustration" class="w-80 h-80 object-contain rounded-xl shadow-xl" loading="lazy" draggable="false" />
@@ -294,9 +290,8 @@
     <section id="events">
     <section class="py-20 lg:py-16 xl:py-14 2xl:py-12">
         <div class="container mx-auto px-4">
-            <h2 class="section-title text-4xl font-bold text-center mb-4">Upcoming Events in 2026</h2>
-            <p class="text-center text-xl text-slate-400 max-w-2xl mx-auto mb-16 lg:mb-12 xl:mb-10 2xl:mb-8">Join our talks, workshops, and special exhibitions to dive deeper into the world of artificial intelligence.</p>
-            
+    <!-- Upcoming Events -->
+    <section id="events" class="py-20 lg:py-16 xl:py-14 2xl:py-12">            
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
                 <!-- Event 1 -->
                 <div class="glass-card p-6 rounded-xl border-l-4 border-indigo-500">

@@ -16,12 +16,7 @@
   <link rel="alternate" hreflang="sv" href="../sv/pages/contact.html">
   <link rel="alternate" hreflang="en" href="./contact.html">
 
-  <!-- EmailJS v4 -->
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-  <script>
-    emailjs.init({ publicKey: "Z3nM5X7zfy1eF1Rzc" });
-  </script>
+  <!-- Email sending is handled server-side via /api/send-email -->
 </head>
 <body>
   <header class="w-full">
@@ -134,9 +129,7 @@
   </main>
 
   <script>
-    // EmailJS config
-    const SERVICE_ID = "service_zxk9avv";
-    const TEMPLATE_CONTACT = "template_o3hvd4c";
+    // Client-side helper only; email is sent via /api/send-email
 
     // Normalize helper: strip accents, lowercase, trim
     function norm(s) {
@@ -235,7 +228,8 @@
 
       const fullMessage = composeMessage();
 
-      const params = {
+      const payload = {
+        kind: 'contact',
         name,
         email,
         message: fullMessage,
@@ -248,11 +242,19 @@
       btn.disabled = true; btn.textContent = 'Sending…'; feedback.textContent = '';
 
       try {
-        await emailjs.send(SERVICE_ID, TEMPLATE_CONTACT, params);
+        const resp = await fetch('/api/send-email', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        if (!resp.ok) {
+          const data = await resp.json().catch(() => ({}));
+          throw new Error(data?.error || 'Failed to send');
+        }
         feedback.textContent = 'Thanks! Your message has been sent.';
         form.reset();
       } catch (err) {
-        console.error('EmailJS error:', err);
+        console.error('Send error:', err);
         feedback.textContent = 'Sorry, there was a problem sending your message.';
       } finally {
         btn.disabled = false; btn.textContent = 'Send message';
