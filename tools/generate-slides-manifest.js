@@ -1,17 +1,18 @@
 #!/usr/bin/env node
 /*
-  Generate a slides manifest JSON from images in images/slide.
+  Generate a slides manifest JSON from images in src/site/images/slide.
   - Reads image files (.webp, .jpg, .jpeg, .png, .avif)
   - Sorts by leading number prefix if present (e.g., 12-foo.webp)
   - Derives a human title from filename if none provided elsewhere
-  - Writes images/slide/slides.json
+  - Writes src/site/images/slide/slides.json
 */
 
 const fs = require('fs');
 const fsp = require('fs/promises');
 const path = require('path');
 
-const SLIDES_DIR = path.join('images', 'slide');
+const IMAGES_ROOT = path.join('src', 'site', 'images');
+const SLIDES_DIR = path.join(IMAGES_ROOT, 'slide');
 const OUT_PATH = path.join(SLIDES_DIR, 'slides.json');
 
 function isImageFile(name) {
@@ -46,7 +47,7 @@ async function main() {
   let files = entries.filter((e) => e.isFile()).map((e) => e.name).filter(isImageFile);
 
   if (files.length === 0) {
-    console.error('No image files found in images/slide');
+    console.error('No image files found in src/site/images/slide');
     await fsp.writeFile(OUT_PATH, '[]\n');
     console.log(`Wrote empty manifest: ${OUT_PATH}`);
     return;
@@ -86,4 +87,3 @@ main().catch((err) => {
   console.error(err);
   process.exit(1);
 });
-

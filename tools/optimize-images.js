@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /*
   Optimize images in place with sensible defaults.
-  - Targets a directory (default: images/slide)
+  - Targets a directory (default: src/site/images/slide)
   - Resizes images wider than MAX_WIDTH to MAX_WIDTH
   - Re-encodes WebP with quality/effort tuned for web
   - Creates a timestamped backup copy before overwriting
@@ -12,7 +12,9 @@ const fsp = require('fs/promises');
 const path = require('path');
 const sharp = require('sharp');
 
-const TARGET_DIR = process.argv[2] || path.join('images', 'slide');
+const IMAGES_ROOT = path.join('src', 'site', 'images');
+const DEFAULT_TARGET = path.join(IMAGES_ROOT, 'slide');
+const TARGET_DIR = path.resolve(process.argv[2] || DEFAULT_TARGET);
 const MAX_WIDTH = parseInt(process.env.IMG_MAX_WIDTH || '1920', 10);
 const WEBP_QUALITY = parseInt(process.env.WEBP_QUALITY || '75', 10);
 const WEBP_EFFORT = parseInt(process.env.WEBP_EFFORT || '5', 10); // 0..6
@@ -23,7 +25,7 @@ const ts = new Date()
   .replace('T', '-')
   .slice(0, 15);
 
-const BACKUP_ROOT = path.join('images', '_backup', ts);
+const BACKUP_ROOT = path.join(IMAGES_ROOT, '_backup', ts);
 
 function isImageFile(name) {
   const ext = path.extname(name).toLowerCase();
@@ -44,7 +46,7 @@ async function fileSize(p) {
 }
 
 async function backupFile(srcPath) {
-  const rel = path.relative('.', srcPath);
+  const rel = path.relative(IMAGES_ROOT, srcPath);
   const backupPath = path.join(BACKUP_ROOT, rel);
   await ensureDir(path.dirname(backupPath));
   await fsp.copyFile(srcPath, backupPath);
@@ -129,7 +131,7 @@ async function processFile(p) {
 }
 
 async function main() {
-  const target = path.resolve(TARGET_DIR);
+  const target = TARGET_DIR;
   if (!fs.existsSync(target)) {
     console.error(`Directory not found: ${target}`);
     process.exit(1);
@@ -140,14 +142,14 @@ async function main() {
     .filter((e) => e.isFile())
     .map((e) => path.join(target, e.name))
     .filter(isImageFile)
-    .filter((p) => !p.includes(path.join('images', '_backup')));
+    .filter((p) => !p.startsWith(path.join(IMAGES_ROOT, '_backup')));
 
   if (files.length === 0) {
     console.log('No images found to optimize.');
     return;
   }
 
-  await ensureDir(path.join(BACKUP_ROOT, path.relative('.', target)));
+  await ensureDir(path.join(BACKUP_ROOT, path.relative(IMAGES_ROOT, target)));
   console.log(`Backup originals to: ${BACKUP_ROOT}`);
   console.log(`Optimizing ${files.length} images in: ${target}`);
 

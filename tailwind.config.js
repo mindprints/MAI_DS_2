@@ -1,11 +1,8 @@
 module.exports = {
   content: [
-    './*.html',
-    './pages/**/*.html',
-    './sv/**/*.html',
-    './sv/pages/**/*.html',
-    './assets/js/**/*.js',
-    './journal.js'
+    './src/site/**/*.html',
+    './src/site/assets/js/**/*.js',
+    './src/site/journal.js'
   ],
   safelist: [
     // Classes used at runtime in JS or conditionally

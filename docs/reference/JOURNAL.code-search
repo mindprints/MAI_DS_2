@@ -1,0 +1,36 @@
+# Query: JOURNAL
+# ContextLines: 1
+
+7 results - 5 files
+
+clientlist.txt:
+  16  Dramaten
+  17: Stiftelsen institutt for journalistikk (Norway)
+  18  DIS Stockholm
+
+index.html:
+   52  
+   53:                     <a href="pages/journal.html" class="nav-link font-medium text-gray-200 hover:text-white">Newsletter</a>
+   54  
+
+  208                      <li class="mb-2">S+Âderk+Âpings kommun</li>
+  209:                     <li class="mb-2">Stiftelsen institutt for journalistik (Norway)</li>
+  210                      <li class="mb-2">Stockholm AI</li>
+
+journal.js:
+  1: // /journal.js  ÔÇö covers + OG-image fallback, resilient in dev/prod
+  2  
+
+assets\css\styles.css:
+  167  }
+  168: /* Journal cards */
+  169  .blog-card .cover { height: 180px; background: radial-gradient(ellipse at top, #37415155, #111827aa); }
+
+pages\journal.html:
+   5    <meta name="viewport" content="width=device-width, initial-scale=1" />
+   6:   <title>Journal ÔÇö Museum of Artificial Intelligence</title>
+   7  
+
+  42        <h1 class="text-5xl font-black tracking-tight text-center">
+  43:         <span class="gradient-text">Journal</span>
+  44        </h1>
