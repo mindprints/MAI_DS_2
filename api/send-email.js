@@ -77,7 +77,7 @@ function buildCorsHeaders(req) {
   return allow
     ? {
         'access-control-allow-origin': origin || '*',
-        'vary': 'origin',
+        vary: 'origin',
       }
     : {};
 }
@@ -140,9 +140,10 @@ export default async function handler(req) {
 
     const serviceId = process.env.EMAILJS_SERVICE_ID;
     const privateKey = process.env.EMAILJS_PRIVATE_KEY; // used in Authorization header
+    const publicKey = process.env.EMAILJS_PUBLIC_KEY; // required by EmailJS REST API payload
     const templateId = pickTemplate(kind);
 
-    if (!serviceId || !privateKey || !templateId) {
+    if (!serviceId || !privateKey || !publicKey || !templateId) {
       return json({ error: 'Server not configured' }, 500, buildCorsHeaders(req));
     }
 
@@ -181,14 +182,21 @@ export default async function handler(req) {
     const payload = {
       service_id: serviceId,
       template_id: templateId,
+      // EmailJS expects the public key as user_id in the REST payload
+      user_id: publicKey,
       template_params: templateParams,
     };
+
+    // Forward origin to EmailJS so it recognizes a browser-originated call
+    const origin = originFromHeaders(req) || getAllowedOrigins()[0] || 'http://localhost:3000';
 
     const resp = await fetch(EMAILJS_API_URL, {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
-        'authorization': `Bearer ${privateKey}`,
+        authorization: `Bearer ${privateKey}`,
+        origin,
+        referer: origin,
       },
       body: JSON.stringify(payload),
     });
