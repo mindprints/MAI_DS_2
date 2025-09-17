@@ -1,6 +1,7 @@
 module.exports = {
   content: [
     './src/site/**/*.html',
+    './src/templates/**/*.html',
     './src/site/assets/js/**/*.js',
     './src/site/journal.js'
   ],

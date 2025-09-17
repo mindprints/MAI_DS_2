@@ -1,0 +1,52 @@
+<script>
+document.getElementById('membership-form-sv').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const form = e.target;
+
+      const name = form.name.value.trim();
+      const email = form.email.value.trim();
+      const profession = (form.profession.value || '').trim();
+      const hp = (form.hp?.value || '').trim();
+
+      if (!name || !email) {
+        alert('Fyll i både namn och e-post.');
+        return;
+      }
+
+      const btn = form.querySelector('button[type="submit"]');
+      btn.disabled = true; btn.textContent = 'Skickar…';
+
+      try {
+        const resp = await fetch('/api/send-email', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({
+            kind: 'membership',
+            name,
+            email,
+            profession,
+            reply_to: email,
+            from_name: 'MAI Website',
+            from_email: 'info@aimuseum.se',
+            hp,
+          }),
+        });
+
+        if (!resp.ok) {
+          const data = await resp.json().catch(() => ({}));
+          throw new Error(data?.error || 'Failed to send');
+        }
+
+        alert('Tack! Din medlemsansökan har skickats.');
+        form.reset();
+      } catch (err) {
+        console.error('Send error:', err);
+        alert('Tyvärr gick det inte att skicka din ansökan just nu.');
+      } finally {
+        btn.disabled = false; btn.textContent = 'Skicka ansökan';
+      }
+    });
+  </script>
+
+  <script src="../../assets/js/script.js">
+</script>

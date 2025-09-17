@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="{{lang}}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{title}}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="{{tailwindHref}}">
+  <link rel="stylesheet" href="{{stylesHref}}">
+{{headExtras}}
+</head>
+<body>
+  <header class="w-full">
+    <div class="container mx-auto px-4 py-6">
+      <a href="{{indexHref}}" class="text-slate-300 hover:text-white">{{backLinkText}}</a>
+    </div>
+  </header>
+  <main class="py-16">
+{{mainContent}}
+  </main>
+  <script src="{{scriptSrc}}"></script>
+{{postScripts}}
+</body>
+</html>

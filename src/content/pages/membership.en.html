@@ -1,0 +1,54 @@
+<div class="container mx-auto px-4">
+      <h1 class="text-4xl font-bold mb-6">Membership</h1>
+      <p class="text-slate-300 mb-8">Benefits, tiers, and how to join.</p>
+
+      <div class="glass-card p-6 rounded-xl">
+        <p class="text-slate-400">
+          The Museum of Artificial Intelligence is operated by a non-profit association dedicated to educating and enlightening
+          the general public, industry professionals, and academics about the past, present, and potential future of AI.
+          Membership is open to all who wish to collaborate with us in achieving this objective.
+        </p>
+        <p class="text-slate-400 mt-4">
+          Membership dues are 300 SEK per year for individuals and 5000 SEK for companies.
+          Please use the form below to submit your application.
+        </p>
+
+        <!-- Membership form (EmailJS, no mailto) -->
+        <form id="membership-form-en" class="mt-6 space-y-4" novalidate>
+          <div>
+            <label for="name-en" class="block text-sm font-medium text-slate-300 mb-2">Name</label>
+            <input id="name-en" name="name" type="text" required autocomplete="name"
+                   class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+          </div>
+          <div>
+            <label for="profession-en" class="block text-sm font-medium text-slate-300 mb-2">Profession (optional)</label>
+            <input id="profession-en" name="profession" type="text" autocomplete="organization-title"
+                   class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+          </div>
+          <div>
+            <label for="email-en" class="block text-sm font-medium text-slate-300 mb-2">Email</label>
+            <input id="email-en" name="email" type="email" required autocomplete="email" inputmode="email"
+                   class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+          </div>
+
+          <input type="text" name="hp" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true">
+
+          <p class="text-xs text-slate-400">
+            We will only use your information to process your membership application. See our
+            <a href="./privacy.html" class="underline hover:text-indigo-400">Privacy Policy</a>.
+          </p>
+
+          <div>
+            <button type="submit"
+                    class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-full font-medium transition duration-300">
+              Submit application
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="mt-8 flex justify-center">
+      <img src="../images/slide/18-evenemang-at-narkesgatan.webp" alt="Evenemang at NÃ¤rkegatan"
+           class="max-w-full rounded-xl border border-slate-700 shadow-lg" loading="lazy">
+    </div>

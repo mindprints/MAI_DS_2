@@ -4,13 +4,14 @@
   "description": "A modern, responsive website for the Museum of Artificial Intelligence featuring interactive slideshows, smooth animations, and a professional design.",
   "main": "src/site/journal.js",
   "scripts": {
-    "build": "npm run build:static && npm run build:css",
+    "build": "npm run build:static && npm run build:pages && npm run build:css",
     "build:static": "node tools/build-static.js",
     "build:css": "postcss src/tailwind.css -o public/assets/css/tailwind.css --env production",
     "test": "echo \"Error: no test specified\" && exit 1",
     "audit": "lighthouse http://localhost:3000 --output=json --output-path=reports/lighthouse.json",
     "optimize": "node tools/optimize-images.js src/site/images/slide",
-    "generate:slides": "node tools/generate-slides-manifest.js"
+    "generate:slides": "node tools/generate-slides-manifest.js",
+    "build:pages": "node tools/build-pages.js"
   },
   "keywords": [],
   "author": "",

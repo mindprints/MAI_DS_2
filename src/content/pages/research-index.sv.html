@@ -1,0 +1,64 @@
+<div class="container mx-auto px-4">
+      <h1 class="text-4xl font-bold mb-2">Forskningsindex</h1>
+      <p class="text-slate-300 mb-6">Forskning och praktiknära artiklar kuraterade av Museum of AI.</p>
+
+      <div class="glass-card p-4 md:p-6 rounded-xl mb-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <label class="block text-slate-400 text-sm mb-1" for="search">Sök</label>
+            <input id="search" type="text" placeholder="Sök artiklar..." class="w-full px-3 py-2 rounded-md bg-slate-900/60 border border-slate-700 text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500">
+          </div>
+          <div>
+            <label class="block text-slate-400 text-sm mb-1" for="topic">Ämne</label>
+            <select id="topic" class="w-full px-3 py-2 rounded-md bg-slate-900/60 border border-slate-700 text-slate-200 focus:outline-none focus:border-indigo-500">
+              <option value="">Alla ämnen</option>
+              <option>Utbildning</option>
+              <option>Medicin</option>
+              <option>Energi</option>
+              <option>Industri</option>
+              <option>Etik</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-slate-400 text-sm mb-1" for="year">År</label>
+            <select id="year" class="w-full px-3 py-2 rounded-md bg-slate-900/60 border border-slate-700 text-slate-200 focus:outline-none focus:border-indigo-500">
+              <option value="">Vilket år som helst</option>
+              <option>2026</option>
+              <option>2025</option>
+              <option>2024</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div id="articles" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <article class="glass-card p-6 rounded-xl border border-slate-800" data-topic="Utbildning" data-year="2025">
+          <h2 class="text-xl font-bold">AI i klassrummet: Praktisk pedagogik med språkmodeller</h2>
+          <p class="text-slate-400 mt-2">En praktiknära guide till uppgifter och bedömning med generativ AI – balans mellan kreativitet och integritet.</p>
+          <div class="mt-4 flex items-center text-slate-400 text-sm">
+            <span class="mr-3"><i class="fa-regular fa-calendar mr-1"></i>2025</span>
+            <span class="mr-3"><i class="fa-solid fa-tag mr-1"></i>Utbildning</span>
+          </div>
+        </article>
+
+        <article class="glass-card p-6 rounded-xl border border-slate-800" data-topic="Medicin" data-year="2024">
+          <h2 class="text-xl font-bold">Pålitlig diagnostik: Utvärdera klinisk AI bortom noggrannhet</h2>
+          <p class="text-slate-400 mt-2">Ramverk för robusthet, rättvisa och uppföljning efter driftsättning i kliniskt beslutsstöd.</p>
+          <div class="mt-4 flex items-center text-slate-400 text-sm">
+            <span class="mr-3"><i class="fa-regular fa-calendar mr-1"></i>2024</span>
+            <span class="mr-3"><i class="fa-solid fa-tag mr-1"></i>Medicin</span>
+          </div>
+        </article>
+
+        <article class="glass-card p-6 rounded-xl border border-slate-800" data-topic="Etik" data-year="2026">
+          <h2 class="text-xl font-bold">Från principer till praktik: Så operationaliseras AI‑etik</h2>
+          <p class="text-slate-400 mt-2">Fallstudier om styrning, spårbarhet och incidenthantering för AI‑system.</p>
+          <div class="mt-4 flex items-center text-slate-400 text-sm">
+            <span class="mr-3"><i class="fa-regular fa-calendar mr-1"></i>2026</span>
+            <span class="mr-3"><i class="fa-solid fa-tag mr-1"></i>Etik</span>
+          </div>
+        </article>
+      </div>
+    </div>
+
+

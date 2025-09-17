@@ -1,0 +1,66 @@
+<div class="container mx-auto px-4">
+      <h1 class="text-4xl font-bold mb-2">Research Index</h1>
+      <p class="text-slate-300 mb-6">Peer-reviewed and practitioner articles curated by the Museum of AI.</p>
+
+      <div class="glass-card p-4 md:p-6 rounded-xl mb-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <label class="block text-slate-400 text-sm mb-1" for="search">Search</label>
+            <input id="search" type="text" placeholder="Search articles..." class="w-full px-3 py-2 rounded-md bg-slate-900/60 border border-slate-700 text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500">
+          </div>
+          <div>
+            <label class="block text-slate-400 text-sm mb-1" for="topic">Topic</label>
+            <select id="topic" class="w-full px-3 py-2 rounded-md bg-slate-900/60 border border-slate-700 text-slate-200 focus:outline-none focus:border-indigo-500">
+              <option value="">All topics</option>
+              <option>History</option>
+              <option>Education</option>
+              <option>Medicine</option>
+              <option>Energy</option>
+              <option>Industry</option>
+              <option>Ethics</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-slate-400 text-sm mb-1" for="year">Year</label>
+            <select id="year" class="w-full px-3 py-2 rounded-md bg-slate-900/60 border border-slate-700 text-slate-200 focus:outline-none focus:border-indigo-500">
+              <option value="">Any year</option>
+              <option>2026</option>
+              <option>2025</option>
+              <option>2024</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div id="articles" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Removed link to deprecated researchpapers content -->
+        <article class="glass-card p-6 rounded-xl border border-slate-800" data-topic="Education" data-year="2025">
+          <h2 class="text-xl font-bold">AI in the Classroom: Practical Pedagogy with Large Language Models</h2>
+          <p class="text-slate-400 mt-2">A practitioner-oriented guide to designing assignments and assessments with generative AI, balancing creativity and integrity.</p>
+          <div class="mt-4 flex items-center text-slate-400 text-sm">
+            <span class="mr-3"><i class="fa-regular fa-calendar mr-1"></i>2025</span>
+            <span class="mr-3"><i class="fa-solid fa-tag mr-1"></i>Education</span>
+          </div>
+        </article>
+
+        <article class="glass-card p-6 rounded-xl border border-slate-800" data-topic="Medicine" data-year="2024">
+          <h2 class="text-xl font-bold">Trustworthy Diagnostics: Evaluating Clinical AI Beyond Accuracy</h2>
+          <p class="text-slate-400 mt-2">Frameworks for robustness, fairness, and post-deployment monitoring in clinical decision support.</p>
+          <div class="mt-4 flex items-center text-slate-400 text-sm">
+            <span class="mr-3"><i class="fa-regular fa-calendar mr-1"></i>2024</span>
+            <span class="mr-3"><i class="fa-solid fa-tag mr-1"></i>Medicine</span>
+          </div>
+        </article>
+
+        <article class="glass-card p-6 rounded-xl border border-slate-800" data-topic="Ethics" data-year="2026">
+          <h2 class="text-xl font-bold">From Principles to Practice: Operationalizing AI Ethics</h2>
+          <p class="text-slate-400 mt-2">Case studies on implementing governance, audit trails, and incident response for AI systems.</p>
+          <div class="mt-4 flex items-center text-slate-400 text-sm">
+            <span class="mr-3"><i class="fa-regular fa-calendar mr-1"></i>2026</span>
+            <span class="mr-3"><i class="fa-solid fa-tag mr-1"></i>Ethics</span>
+          </div>
+        </article>
+      </div>
+    </div>
+
+

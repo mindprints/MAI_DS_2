@@ -1,0 +1,100 @@
+<div class="container mx-auto px-4 max-w-3xl">
+      <h1 class="text-4xl font-bold mb-6">Kontakt</h1>
+      <p class="text-slate-300 mb-8">Berätta hur vi kan hjälpa till. Vi återkommer så snart vi kan.</p>
+
+      <div class="glass-card p-6 md:p-8 rounded-xl">
+        <form id="contact-form" class="space-y-6" novalidate>
+          <!-- Ämne -->
+          <div>
+            <label for="topic" class="block text-sm font-medium text-slate-300 mb-2">Ämne</label>
+            <select id="topic" name="topic"
+                    class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+              <option>Allmän kontakt</option>
+              <option>Medlemsansökan</option>
+              <option>Workshop/Föreläsning</option>
+              <option>Press Center</option>
+              <option>Karriär</option>
+              <option>Partnerskap</option>
+              <option>Donation/Sponsring</option>
+              <option>Lokaluthyrning</option>
+              <option>Tillgänglighet</option>
+              <option>Annat</option>
+            </select>
+          </div>
+
+          <!-- Namn / E-post -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label for="name" class="block text-sm font-medium text-slate-300 mb-2">Namn</label>
+              <input id="name" name="name" type="text" required autocomplete="name"
+                     class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+            </div>
+            <div>
+              <label for="email" class="block text-sm font-medium text-slate-300 mb-2">E-post</label>
+              <input id="email" name="email" type="email" required autocomplete="email" inputmode="email"
+                     class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+            </div>
+          </div>
+
+          <!-- Valfria uppgifter -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label for="organization" class="block text-sm font-medium text-slate-300 mb-2">Organisation (valfritt)</label>
+              <input id="organization" name="organization" type="text" autocomplete="organization"
+                     class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+            </div>
+            <div>
+              <label for="phone" class="block text-sm font-medium text-slate-300 mb-2">Telefon (valfritt)</label>
+              <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel"
+                     class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label for="website" class="block text-sm font-medium text-slate-300 mb-2">Webbplats (valfritt)</label>
+              <input id="website" name="website" type="url" inputmode="url" placeholder="https://"
+                     class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+            </div>
+            <div>
+              <label for="geo" class="block text-sm font-medium text-slate-300 mb-2">Plats (valfritt)</label>
+              <input id="geo" name="location" type="text" placeholder="Stad, land"
+                     class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label for="budget" class="block text-sm font-medium text-slate-300 mb-2">Budget (valfritt)</label>
+              <input id="budget" name="budget" type="text" placeholder="t.ex. 20–50 tkr"
+                     class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+            </div>
+            <div>
+              <label for="timeline" class="block text-sm font-medium text-slate-300 mb-2">Tidplan (valfritt)</label>
+              <input id="timeline" name="timeline" type="text" placeholder="t.ex. okt–nov 2025"
+                     class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+            </div>
+          </div>
+
+          <!-- Meddelande -->
+          <div>
+            <label for="message" class="block text-sm font-medium text-slate-300 mb-2">Meddelande</label>
+            <textarea id="message" name="message" rows="6" required
+                      class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+          </div>
+
+          <p class="text-xs text-slate-400">
+            Vi använder dina uppgifter endast för att besvara din förfrågan. Se vår
+            <a href="./privacy.html" class="underline hover:text-indigo-400">Integritetspolicy</a>.
+          </p>
+
+          <div class="flex items-center justify-between gap-4">
+            <button type="submit"
+                    class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-full font-medium transition duration-300">
+              Skicka meddelande
+            </button>
+            <span id="contact-feedback" class="text-sm text-slate-400"></span>
+          </div>
+        </form>
+      </div>
+    </div>

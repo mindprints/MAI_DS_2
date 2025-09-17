@@ -1,0 +1,28 @@
+<script>
+(function(){
+  var searchInput = document.getElementById('search');
+  var topicSelect = document.getElementById('topic');
+  var yearSelect = document.getElementById('year');
+  var container = document.getElementById('articles');
+  if (!searchInput || !topicSelect || !yearSelect || !container) return;
+  function applyFilter(){
+    var q = (searchInput.value || '').toLowerCase();
+    var topic = topicSelect.value || '';
+    var year = yearSelect.value || '';
+    var cards = container.querySelectorAll('article');
+    cards.forEach(function(card){
+      var text = card.innerText.toLowerCase();
+      var matchesQuery = !q || text.indexOf(q) !== -1;
+      var matchesTopic = !topic || card.getAttribute('data-topic') === topic;
+      var matchesYear = !year || card.getAttribute('data-year') === year;
+      card.style.display = (matchesQuery && matchesTopic && matchesYear) ? '' : 'none';
+    });
+  }
+  ['input','change'].forEach(function(evt){
+    searchInput.addEventListener(evt, applyFilter);
+    topicSelect.addEventListener(evt, applyFilter);
+    yearSelect.addEventListener(evt, applyFilter);
+  });
+})();
+</script>
+

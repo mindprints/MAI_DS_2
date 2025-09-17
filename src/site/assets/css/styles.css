@@ -48,6 +48,29 @@ body {
     box-shadow: 0 8px 32px rgba(2, 8, 20, 0.4);
 }
 
+/* Form input shading (restored) */
+input[type="text"],
+input[type="email"],
+input[type="number"],
+input[type="tel"],
+select,
+textarea {
+    background-color: rgba(15, 23, 42, 0.5); /* slate-900/50 */
+    border: 1px solid rgba(51, 65, 85, 0.9);  /* slate-700 */
+    color: #e2e8f0; /* slate-200 */
+}
+input::placeholder,
+textarea::placeholder {
+    color: #64748b; /* slate-500 */
+}
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.35); /* indigo-500 */
+    border-color: #6366f1;
+}
+
 .feature-card {
     opacity: 0;
     transform: translateY(50px);

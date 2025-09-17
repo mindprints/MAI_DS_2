@@ -1,0 +1,97 @@
+<div class="container mx-auto px-4">
+      <h1 class="text-4xl font-bold mb-6">Vi erbjuder workshops och föreläsningar</h1>
+      <p class="text-slate-300 mb-8">Vårt uppdrag är att informera och lära ut om AI. Vi erbjuder workshops och föreläsningar för både nybörjare och mer insatta. Vi skräddarsyr pass för skolor, företag och institutioner. Berätta vad ni vill lära er så så föreslår ett upplägg anpassat efter era behov.</p>
+
+      <div class="glass-card p-6 md:p-8 rounded-xl max-w-3xl">
+        <form id="plan-form" class="space-y-6" novalidate>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label for="name" class="block text-sm font-medium text-slate-300 mb-2">Ditt namn</label>
+              <input id="name" name="name" type="text" required autocomplete="name"
+                     class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"/>
+            </div>
+            <div>
+              <label for="email" class="block text-sm font-medium text-slate-300 mb-2">E-post</label>
+              <input id="email" name="email" type="email" required autocomplete="email" inputmode="email"
+                     class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"/>
+            </div>
+          </div>
+
+          <div>
+            <label for="organization" class="block text-sm font-medium text-slate-300 mb-2">Organisation (valfritt)</label>
+            <input id="organization" name="organization" type="text" autocomplete="organization"
+                   class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"/>
+          </div>
+
+          <div>
+            <label for="needs" class="block text-sm font-medium text-slate-300 mb-2">Beskriv era behov</label>
+            <textarea id="needs" name="needs" required rows="5"
+                      class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+          </div>
+
+          <div>
+            <label for="desired-datetime" class="block text-sm font-medium text-slate-300 mb-2">Önskade datum och tider</label>
+            <textarea id="desired-datetime" name="desired_datetime" rows="3" placeholder="t.ex. vecka 12, vardagar 18:00–20:00"
+                      class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+          </div>
+
+          <div>
+            <label for="participants" class="block text-sm font-medium text-slate-300 mb-2">Antal deltagare</label>
+            <input id="participants" name="participants" type="number" min="1" step="1" placeholder="t.ex. 25"
+                   class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"/>
+          </div>
+
+          <div>
+            <span class="block text-sm font-medium text-slate-300 mb-2">Plats</span>
+            <div class="space-y-2">
+              <label class="flex items-center space-x-3">
+                <input type="radio" name="location" value="visit-mai" required class="text-indigo-600 focus:ring-indigo-500">
+                <span>Hos MAI (Närkesgatan 6, Stockholm)</span>
+              </label>
+              <label class="flex items-center space-x-3">
+                <input type="radio" name="location" value="host-own-premises" class="text-indigo-600 focus:ring-indigo-500">
+                <span>Hos er (på plats hos beställaren)</span>
+              </label>
+            </div>
+          </div>
+
+          <div>
+            <span class="block text-sm font-medium text-slate-300 mb-2">Erfarenhet av AI</span>
+            <div class="space-y-2">
+              <label class="flex items-center space-x-3">
+                <input type="radio" name="ai_experience" value="beginner" required class="text-indigo-600 focus:ring-indigo-500">
+                <span>Nybörjare</span>
+              </label>
+              <label class="flex items-center space-x-3">
+                <input type="radio" name="ai_experience" value="intermediate" class="text-indigo-600 focus:ring-indigo-500">
+                <span>Mellan</span>
+              </label>
+              <label class="flex items-center space-x-3">
+                <input type="radio" name="ai_experience" value="advanced" class="text-indigo-600 focus:ring-indigo-500">
+                <span>Avancerad</span>
+              </label>
+            </div>
+          </div>
+
+          <div>
+            <label for="experience-notes" class="block text-sm font-medium text-slate-300 mb-2">Erfarenhetsdetaljer (valfritt)</label>
+            <textarea id="experience-notes" name="experience_notes" rows="4" placeholder="Relevanta verktyg/plattformar eller tidigare utbildningar"
+                      class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+          </div>
+
+          <p class="text-xs text-slate-400">
+            Vi använder endast dina uppgifter för att besvara din förfrågan. Se vår
+            <a href="./privacy.html" class="underline hover:text-indigo-400">Integritetspolicy</a>.
+          </p>
+
+          <div>
+            <button type="submit"
+                    class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-full font-medium transition duration-300">
+              Skicka
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+

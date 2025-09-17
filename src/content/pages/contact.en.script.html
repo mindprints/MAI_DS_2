@@ -1,0 +1,133 @@
+<script>
+// Client-side helper only; email is sent via /api/send-email
+
+    // Normalize helper: strip accents, lowercase, trim
+    function norm(s) {
+      return (s || '')
+        .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase().trim();
+    }
+
+    // Alias map: Swedish/English -> exact English option values
+    const TOPIC_ALIASES = {
+      // English -> English
+      [norm('General Contact')]: 'General Contact',
+      [norm('Membership Application')]: 'Membership Application',
+      [norm('Workshop/Lecture Enquiry')]: 'Workshop/Lecture Enquiry',
+      [norm('Press Center')]: 'Press Center',
+      [norm('Careers')]: 'Careers',
+      [norm('Partnerships')]: 'Partnerships',
+      [norm('Donations/Sponsorship')]: 'Donations/Sponsorship',
+      [norm('Venue Hire')]: 'Venue Hire',
+      [norm('Accessibility')]: 'Accessibility',
+      [norm('Other')]: 'Other',
+
+      // Swedish -> English
+      [norm('Allmän kontakt')]: 'General Contact',
+      [norm('Medlemsansökan')]: 'Membership Application',
+      [norm('Workshop/Föreläsning')]: 'Workshop/Lecture Enquiry',
+      [norm('Press Center')]: 'Press Center',
+      [norm('Karriär')]: 'Careers',
+      [norm('Partnerskap')]: 'Partnerships',
+      [norm('Donation/Sponsring')]: 'Donations/Sponsorship',
+      [norm('Lokaluthyrning')]: 'Venue Hire',
+      [norm('Tillgänglighet')]: 'Accessibility',
+      [norm('Annat')]: 'Other'
+    };
+
+    // Prefill Topic from ?topic= (supports Swedish or English values, accent-insensitive)
+    (function prefillTopic() {
+      const params = new URLSearchParams(location.search);
+      const raw = params.get('topic');
+      if (!raw) return;
+      const mapped = TOPIC_ALIASES[norm(raw)];
+      const select = document.getElementById('topic');
+      if (mapped) {
+        select.value = mapped;
+      } else {
+        // Fallback to "Other"
+        select.value = 'Other';
+      }
+    })();
+
+    // Build a rich message while keeping the EmailJS template minimal
+    function composeMessage() {
+      const get = id => document.getElementById(id)?.value.trim();
+      const topic = get('topic');
+      const name = get('name');
+      const email = get('email');
+      const org = get('organization');
+      const phone = get('phone');
+      const website = get('website');
+      const location = get('location');
+      const budget = get('budget');
+      const timeline = get('timeline');
+      const message = get('message');
+
+      const lines = [
+        `Topic: ${topic || '—'}`,
+        `Name: ${name || '—'}`,
+        `Email: ${email || '—'}`,
+        org ? `Organization: ${org}` : null,
+        phone ? `Phone: ${phone}` : null,
+        website ? `Website: ${website}` : null,
+        location ? `Location: ${location}` : null,
+        budget ? `Budget: ${budget}` : null,
+        timeline ? `Timeline: ${timeline}` : null,
+        '',
+        'Message:',
+        message || '—'
+      ].filter(Boolean);
+
+      return lines.join('\n');
+    }
+
+    document.getElementById('contact-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const feedback = document.getElementById('contact-feedback');
+
+      const name = form.name.value.trim();
+      const email = form.email.value.trim();
+      const msg = form.message.value.trim();
+
+      if (!name || !email || !msg) {
+        alert('Please fill in your name, email, and message.');
+        return;
+      }
+
+      const fullMessage = composeMessage();
+
+      const payload = {
+        kind: 'contact',
+        name,
+        email,
+        message: fullMessage,
+        reply_to: email,
+        from_name: 'MAI Website',
+        from_email: 'info@aimuseum.se'
+      };
+
+      const btn = form.querySelector('button[type="submit"]');
+      btn.disabled = true; btn.textContent = 'Sending…'; feedback.textContent = '';
+
+      try {
+        const resp = await fetch('/api/send-email', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        if (!resp.ok) {
+          const data = await resp.json().catch(() => ({}));
+          throw new Error(data?.error || 'Failed to send');
+        }
+        feedback.textContent = 'Thanks! Your message has been sent.';
+        form.reset();
+      } catch (err) {
+        console.error('Send error:', err);
+        feedback.textContent = 'Sorry, there was a problem sending your message.';
+      } finally {
+        btn.disabled = false; btn.textContent = 'Send message';
+      }
+    });
+</script>

@@ -1,0 +1,76 @@
+<script>
+// Klientlogik; e-post skickas via /api/send-email
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('plan-form');
+  if (!form) return;
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const name = document.getElementById('name')?.value.trim();
+    const email = document.getElementById('email')?.value.trim();
+    const organization = document.getElementById('organization')?.value.trim() || '';
+
+    const needs = document.getElementById('needs')?.value.trim();
+    const desiredDT = document.getElementById('desired-datetime')?.value.trim() || '';
+    const participants = document.getElementById('participants')?.value.trim() || '';
+
+    const locationRaw = form.querySelector('input[name="location"]:checked')?.value || '';
+    const aiExpRaw = form.querySelector('input[name="ai_experience"]:checked')?.value || '';
+    const notes = document.getElementById('experience-notes')?.value.trim() || '';
+
+    if (!name || !email || !needs) {
+      alert('Fyll i namn, e-post och beskrivning av behov.');
+      return;
+    }
+
+    const location = (locationRaw === 'visit-mai')
+      ? 'Visit MAI'
+      : (locationRaw === 'host-own-premises' ? 'Host at your premises' : '');
+
+    const level =
+      aiExpRaw === 'beginner' ? 'Beginner' :
+      aiExpRaw === 'intermediate' ? 'Intermediate' :
+      aiExpRaw === 'advanced' ? 'Advanced' : '';
+
+    const btn = form.querySelector('button[type="submit"]');
+    btn.disabled = true; btn.textContent = 'Skickar…';
+
+    const payload = {
+      kind: 'workshop',
+      name,
+      email,
+      organization,
+      needs,
+      dates: desiredDT,
+      participants,
+      location,
+      level,
+      experience_details: notes,
+      reply_to: email,
+      from_name: 'MAI Website',
+      from_email: 'info@aimuseum.se'
+    };
+
+    try {
+      const resp = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      if (!resp.ok) {
+        const data = await resp.json().catch(() => ({}));
+        throw new Error(data?.error || 'Failed to send');
+      }
+      alert('Tack! Din förfrågan har skickats.');
+      form.reset();
+    } catch (err) {
+      console.error('Send error:', err);
+      alert('Tyvärr kunde vi inte skicka din förfrågan just nu.');
+    } finally {
+      btn.disabled = false; btn.textContent = 'Skicka';
+    }
+  });
+});
+</script>
+
