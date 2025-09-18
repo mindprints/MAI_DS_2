@@ -22,5 +22,16 @@ fs.mkdirSync(outDir, { recursive: true });
 
 // Copy everything under src/site into public
 fs.cpSync(srcDir, outDir, { recursive: true });
-
 console.log('Static assets copied to public/.');
+
+// Also copy admin static UI (if present) to public/admin
+try {
+  const adminStatic = path.join(rootDir, 'admin', 'static');
+  if (fs.existsSync(adminStatic)) {
+    const dest = path.join(outDir, 'admin');
+    fs.cpSync(adminStatic, dest, { recursive: true });
+    console.log('Admin UI copied to public/admin/.');
+  }
+} catch (e) {
+  console.warn('Failed to copy admin UI:', e.message);
+}
