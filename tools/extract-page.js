@@ -1,4 +1,4 @@
-﻿const fs = require('fs');
+﻿﻿const fs = require('fs');
 const { execSync } = require('child_process');
 
 const [,, sourcePath, destMain, destScript] = process.argv;
@@ -9,6 +9,11 @@ if (!sourcePath || !destMain) {
 }
 
 function readFromGit(path) {
+  // Sanitize path to prevent command injection
+  if (!/^[\w\-\/\.]+$/.test(path)) {
+    console.error(`Invalid path format: ${path}`);
+    process.exit(1);
+  }
   try {
     return execSync(`git show HEAD:${path}`, { encoding: 'utf8' });
   } catch (err) {

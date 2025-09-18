@@ -4,6 +4,7 @@
   - Reads image files (.webp, .jpg, .jpeg, .png, .avif)
   - Sorts by leading number prefix if present (e.g., 12-foo.webp)
   - Derives a human title from filename if none provided elsewhere
+  - Preserves existing metadata including i18n titles/descriptions
   - Writes src/site/images/slide/slides.json
 */
 
@@ -53,13 +54,28 @@ async function main() {
     return;
   }
 
+  // Load existing manifest to preserve metadata (titles, descriptions, i18n)
+  let existing = [];
+  try {
+    if (fs.existsSync(OUT_PATH)) {
+      existing = JSON.parse(await fsp.readFile(OUT_PATH, 'utf8'));
+    }
+  } catch {
+    existing = [];
+  }
+  const byFilename = new Map(Array.isArray(existing) ? existing.map(it => [it && it.filename, it]).filter(([k]) => typeof k === 'string') : []);
+
   const items = files.map((filename) => {
     const number = parseNumberPrefix(filename);
+    const prev = byFilename.get(filename) || {};
     return {
       number: number == null ? undefined : number,
       filename,
-      title: toTitleFromFilename(filename),
-      description: ''
+      // Keep existing values if present; otherwise default from filename
+      title: typeof prev.title === 'string' ? prev.title : toTitleFromFilename(filename),
+      description: typeof prev.description === 'string' ? prev.description : '',
+      // Optional i18n block: { en:{title,description}, sv:{...} }
+      i18n: prev.i18n && typeof prev.i18n === 'object' ? prev.i18n : { en: { title: '', description: '' }, sv: { title: '', description: '' } }
     };
   });
 

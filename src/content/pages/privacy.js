@@ -2,9 +2,12 @@ const fs = require('fs');
 const path = require('path');
 
 function load(partial) {
-  return fs.readFileSync(path.join(__dirname, partial), 'utf8');
+  try {
+    return fs.readFileSync(path.join(__dirname, partial), 'utf8');
+  } catch (error) {
+    throw new Error(`Failed to load partial "${partial}": ${error.message}`);
+  }
 }
-
 module.exports = {
   template: 'standard',
   locales: {

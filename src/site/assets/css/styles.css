@@ -53,11 +53,18 @@ input[type="text"],
 input[type="email"],
 input[type="number"],
 input[type="tel"],
+input[type="url"],
 select,
 textarea {
     background-color: rgba(15, 23, 42, 0.5); /* slate-900/50 */
     border: 1px solid rgba(51, 65, 85, 0.9);  /* slate-700 */
     color: #e2e8f0; /* slate-200 */
+}
+/* Ensure native form controls use dark-themed system UI (select dropdown, etc.) */
+input,
+select,
+textarea {
+    color-scheme: dark;
 }
 input::placeholder,
 textarea::placeholder {

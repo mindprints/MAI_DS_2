@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MAI Admin</title>
+  <style>
+    :root {
+      --bg: #0b1220;          /* slate-950-ish */
+      --panel: #0f172a;       /* slate-900 */
+      --panel2: #111827;      /* gray-900 */
+      --border: #334155;      /* slate-600 */
+      --muted: #94a3b8;       /* slate-400 */
+      --text: #e5e7eb;        /* gray-200 */
+      --accent: #7c3aed;      /* violet-600 */
+      --accent2: #06b6d4;     /* cyan-500 */
+      --danger: #ef4444;      /* red-500 */
+      --ok: #22c55e;          /* green-500 */
+    }
+    html, body { height: 100%; }
+    body { background: var(--bg); color: var(--text); font-family: system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; margin:20px; }
+    h1, h2, h3 { margin: 0 0 8px 0; }
+    .row { display:flex; gap:16px; align-items:flex-start; }
+    .col { flex:1; }
+    .card { background: var(--panel); border:1px solid var(--border); padding:12px; border-radius:10px; margin-bottom:20px; box-shadow: 0 1px 0 rgba(255,255,255,0.02) inset; }
+    table { border-collapse:collapse; width:100%; }
+    th { text-align:left; background: var(--panel2); }
+    td,th { border:1px solid var(--border); padding:8px; vertical-align: top; }
+    input[type="text"], input[type="number"], textarea, select, button { background: var(--panel2); color: var(--text); border:1px solid var(--border); border-radius:8px; padding:8px 10px; }
+    input[type="text"], textarea { width: 100%; }
+    textarea { min-height: 72px; font-family: inherit; line-height: 1.4; }
+    select { padding-right: 28px; }
+    button { cursor: pointer; }
+    button:hover { border-color: var(--accent2); }
+    .danger { border-color: var(--danger); color: var(--danger); }
+    .toolbar { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+    .seg { display:flex; gap:10px; align-items:flex-start; margin-bottom:10px; }
+    .badge { font-size: 12px; letter-spacing: 0.02em; padding:3px 8px; border-radius:999px; background: #1f2937; border:1px solid var(--border); color: var(--muted); white-space: nowrap; min-width: 40px; text-align:center; }
+    .badge.h1, .badge.h2, .badge.h3 { color:#f59e0b; border-color:#f59e0b33; background:#f59e0b14; }
+    .badge.p, .badge.li, .badge.blockquote { color:#38bdf8; border-color:#38bdf833; background:#38bdf814; }
+    .muted { color: var(--muted); font-size: 90%; }
+    .stack { display:flex; flex-direction: column; gap: 8px; }
+  </style>
+  <script>
+    async function api(path, opts){const r=await fetch(path,opts);if(!r.ok)throw new Error(await r.text());return r.headers.get('content-type')?.includes('application/json')?r.json():r.text();}
+
+    // Decide control type based on parent tag
+    function controlForSegment(locale, seg){
+      const tag = (seg.parentTag || '').toLowerCase();
+      const idAttr = `data-id="${seg.id}"`;
+      const safe = seg.text.replace(/&/g,'&amp;').replace(/"/g,'&quot;');
+      const isHeading = ['h1','h2','h3','h4','h5','h6'].includes(tag);
+      const isParagraph = ['p','li','blockquote','figcaption'].includes(tag);
+      const badge = `<span class="badge ${tag}">${tag.toUpperCase()}</span>`;
+      if (isHeading) {
+        return `<div class="seg">${badge}<input type="text" ${idAttr} value="${safe}" placeholder="${tag.toUpperCase()} text"></div>`;
+      }
+      if (isParagraph) {
+        // Estimate rows by length
+        const rows = Math.min(10, Math.max(2, Math.ceil(seg.text.length / 90)));
+        return `<div class="seg">${badge}<textarea ${idAttr} rows="${rows}" placeholder="${tag.toUpperCase()} text">${seg.text.replace(/</g,'&lt;')}</textarea></div>`;
+      }
+      return `<div class="seg">${badge}<input type="text" ${idAttr} value="${safe}" placeholder="${tag.toUpperCase()} text"></div>`;
+    }
+
+    // Text-only segments
+    let currentSlug='index';
+    async function loadSlugs(){const m=await api('/api/pages');const sel=document.getElementById('slug');sel.innerHTML='';const all=['index',...m.slugs];for(const s of all){const o=document.createElement('option');o.value=s;o.textContent=s;sel.appendChild(o);}sel.value=currentSlug;await loadSegments();}
+    async function loadSegments(){const slug=document.getElementById('slug').value;const en=await api(`/api/page-segments/${encodeURIComponent(slug)}?locale=en`);const sv=await api(`/api/page-segments/${encodeURIComponent(slug)}?locale=sv`);renderSegments('en',en.segments);renderSegments('sv',sv.segments);}    
+    function renderSegments(locale, segs){const box=document.getElementById('seg_'+locale);box.innerHTML='';box.className='stack';segs.forEach(s=>{box.insertAdjacentHTML('beforeend', controlForSegment(locale,s));});}
+    async function saveSegments(){const slug=document.getElementById('slug').value;for (const locale of ['en','sv']){const fields=[...document.querySelectorAll(`#seg_${locale} [data-id]`)];const updates=fields.map(i=>({id:i.dataset.id,text:i.value}));await api(`/api/page-segments/${encodeURIComponent(slug)}?locale=${locale}`,{method:'PUT',headers:{'content-type':'application/json'},body:JSON.stringify({updates})});}
+      alert('Saved text');}
+
+    async function buildSite(){const r=await api('/api/build',{method:'POST'});alert(r.ok?'Build finished':'Build error');}
+
+    // Slides
+    let slidesFiles=[],slidesManifest=[];
+    function getOrMakeEntry(filename){let it=slidesManifest.find(x=>x.filename===filename);if(!it){it={number:9999,filename,title:filename,description:'',i18n:{en:{title:'',description:''},sv:{title:'',description:''}}};slidesManifest.push(it);}if(!it.i18n)it.i18n={en:{title:'',description:''},sv:{title:'',description:''}};if(!it.i18n.en)it.i18n.en={title:'',description:''};if(!it.i18n.sv)it.i18n.sv={title:'',description:''};return it;}
+    function renderSlides(){const tbody=document.querySelector('#slides tbody');tbody.innerHTML='';const rows=slidesFiles.map(fn=>getOrMakeEntry(fn));rows.sort((a,b)=>(a.number||9999)-(b.number||9999)||a.filename.localeCompare(b.filename));for(const it of rows){const tr=document.createElement('tr');tr.innerHTML=`<td><img src="/slides-assets/${it.filename}" alt="" width="80"></td><td><input type="number" value="${it.number||''}"></td><td class="muted">${it.filename}</td><td><input type="text" value="${(it.i18n.en.title||'').replace(/&/g,'&amp;')}"></td><td><input type="text" value="${(it.i18n.en.description||'').replace(/&/g,'&amp;')}"></td><td><input type="text" value="${(it.i18n.sv.title||'').replace(/&/g,'&amp;')}"></td><td><input type="text" value="${(it.i18n.sv.description||'').replace(/&/g,'&amp;')}"></td><td><button class="danger" data-del="${it.filename}">Delete</button></td>`;const [imgTd,numTd,fileTd,enTitleTd,enDescTd,svTitleTd,svDescTd,delTd]=tr.children;numTd.querySelector('input').addEventListener('input',e=>{it.number=parseInt(e.target.value||'0',10)||undefined;});enTitleTd.querySelector('input').addEventListener('input',e=>{it.i18n.en.title=e.target.value;});enDescTd.querySelector('input').addEventListener('input',e=>{it.i18n.en.description=e.target.value;});svTitleTd.querySelector('input').addEventListener('input',e=>{it.i18n.sv.title=e.target.value;});svDescTd.querySelector('input').addEventListener('input',e=>{it.i18n.sv.description=e.target.value;});delTd.querySelector('button').addEventListener('click',()=>deleteSlide(it.filename));tbody.appendChild(tr);} }
+    async function loadSlides(){const d=await api('/api/slides');slidesFiles=d.files||[];slidesManifest=Array.isArray(d.manifest)?d.manifest:[];renderSlides();}
+    async function saveSlides(){await api('/api/slides',{method:'PUT',headers:{'content-type':'application/json'},body:JSON.stringify(slidesManifest)});alert('Slides manifest saved');}
+    async function uploadSlide(){const f=document.getElementById('upload').files[0];if(!f)return alert('Choose a file');const buf=await f.arrayBuffer();const r=await fetch('/api/slides/upload?name='+encodeURIComponent(f.name),{method:'POST',body:buf});if(!r.ok)return alert('Upload failed');await loadSlides();alert('Uploaded');}
+    async function deleteSlide(name){if(!confirm(`Delete ${name}?`))return;await api('/api/slides?name='+encodeURIComponent(name),{method:'DELETE'});await loadSlides();}
+
+    window.addEventListener('DOMContentLoaded', loadSlugs);
+  </script>
+</head>
+<body>
+  <h1>MAI Admin</h1>
+
+  <section class="card">
+    <h2>Pages (Text-only)</h2>
+    <div class="toolbar">
+      <label for="slug">Page:</label>
+      <select id="slug" onchange="loadSegments()"></select>
+      <button onclick="saveSegments()">Save Text</button>
+      <button onclick="buildSite()">Build</button>
+    </div>
+    <div class="row" style="margin-top:10px;">
+      <div class="col"><h3>English</h3><div id="seg_en"></div></div>
+      <div class="col"><h3>Svenska</h3><div id="seg_sv"></div></div>
+    </div>
+    <p class="muted">Only text content is editable; HTML structure and classes are preserved.</p>
+  </section>
+
+  <section class="card">
+    <h2>Slides</h2>
+    <div class="toolbar">
+      <button onclick="loadSlides()">Load</button>
+      <input type="file" id="upload" accept=".webp,.jpg,.jpeg,.png,.avif">
+      <button onclick="uploadSlide()">Upload</button>
+      <button onclick="saveSlides()">Save Manifest</button>
+    </div>
+    <table id="slides">
+      <thead><tr><th>Preview</th><th>#</th><th>Filename</th><th>EN Title</th><th>EN Desc</th><th>SV Title</th><th>SV Desc</th><th></th></tr></thead>
+      <tbody></tbody>
+    </table>
+    <p class="muted">Use Delete to remove the file and its manifest entry. Click Build to publish changes.</p>
+  </section>
+</body>
+</html>

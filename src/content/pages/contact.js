@@ -2,7 +2,16 @@
 const path = require('path');
 
 function load(localPath) {
-  return fs.readFileSync(path.join(__dirname, localPath), 'utf8');
+  const fullPath = path.join(__dirname, localPath);
+  try {
+    if (!fs.existsSync(fullPath)) {
+      throw new Error(`File not found: ${fullPath}`);
+    }
+    return fs.readFileSync(fullPath, 'utf8');
+  } catch (error) {
+    const originalMessage = error && error.message ? error.message : String(error);
+    throw new Error(`Failed to read file at ${fullPath}: ${originalMessage}`);
+  }
 }
 
 module.exports = {
