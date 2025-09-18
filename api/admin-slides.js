@@ -3,6 +3,14 @@ const { listDir, getFile, putFile, putBinary, deleteFile } = require('./_github.
 const MANIFEST_PATH = 'src/site/images/slide/slides.json';
 const SLIDES_DIR = 'src/site/images/slide';
 
+async function triggerDeployHook() {
+  try {
+    const hook = process.env.VERCEL_DEPLOY_HOOK_URL;
+    if (!hook) return;
+    await fetch(hook, { method: 'POST' });
+  } catch (_) { /* ignore */ }
+}
+
 module.exports = async function handler(req, res) {
   try {
     const { method } = req;
@@ -16,6 +24,7 @@ module.exports = async function handler(req, res) {
     if (method === 'PUT') {
       const manifest = Array.isArray(req.body) ? req.body : [];
       await putFile(MANIFEST_PATH, JSON.stringify(manifest, null, 2) + '\n', 'chore(admin): update slides manifest');
+      await triggerDeployHook();
       return res.status(200).json({ ok: true });
     }
     if (method === 'POST') {
@@ -23,6 +32,7 @@ module.exports = async function handler(req, res) {
       if (!name || !/^[\w\-.]+$/.test(String(name))) return res.status(400).json({ error: 'bad name' });
       const buffer = Buffer.from(String(contentBase64 || ''), 'base64');
       await putBinary(`${SLIDES_DIR}/${name}`, buffer, `chore(admin): upload ${name}`);
+      await triggerDeployHook();
       return res.status(200).json({ ok: true });
     }
     if (method === 'DELETE') {
@@ -35,6 +45,7 @@ module.exports = async function handler(req, res) {
         const next = Array.isArray(cur) ? cur.filter(it => it && it.filename !== name) : [];
         await putFile(MANIFEST_PATH, JSON.stringify(next, null, 2) + '\n', 'chore(admin): prune manifest');
       } catch {}
+      await triggerDeployHook();
       return res.status(200).json({ ok: true });
     }
     return res.status(405).json({ error: 'method not allowed' });
