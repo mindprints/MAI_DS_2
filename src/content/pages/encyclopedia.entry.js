@@ -22,6 +22,30 @@ function discoverEntries() {
   return [...map.entries()].map(([slug, locales]) => ({ slug, locales }));
 }
 
+function ensureDir(p) { try { fs.mkdirSync(p, { recursive: true }); } catch (e) {} }
+
+function extractTitle(html) {
+  const m = html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i);
+  if (!m) return '';
+  return m[1].replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
+}
+
+function buildJsonIndex() {
+  const entries = discoverEntries();
+  const out = [];
+  for (const e of entries) {
+    for (const locale of ['en', 'sv']) {
+      if (!e.locales[locale]) continue;
+      const html = fs.readFileSync(path.join(ENCYC_SRC, e.locales[locale]), 'utf8');
+      const title = extractTitle(html) || e.slug;
+      out.push({ slug: e.slug, locale, title, aliases: [], keywords: [] });
+    }
+  }
+  const outDir = path.join(process.cwd(), 'public', 'data');
+  ensureDir(outDir);
+  fs.writeFileSync(path.join(outDir, 'encyclopedia-index.json'), JSON.stringify(out, null, 2) + '\n', 'utf8');
+}
+
 module.exports = {
   template: 'encyclopedia-entry',
   locales: (() => {
@@ -61,4 +85,11 @@ module.exports = {
     }
     return out;
   })(),
+  prepare(locale, data) {
+    if (locale === 'en') {
+      // Ensure a JSON index exists when entries render (fallback to index module's writer)
+      try { buildJsonIndex(); } catch (e) {}
+    }
+    return data;
+  }
 };

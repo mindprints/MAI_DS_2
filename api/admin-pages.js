@@ -12,6 +12,10 @@ function resolvePagePath(slug, locale) {
   return `src/content/pages/${slug}.${locale}.html`;
 }
 
+function resolveEncyPath(slug, locale) {
+  return `src/content/encyclopedia/${slug}.${locale}.html`;
+}
+
 function getTextSegments(html) {
   const $ = cheerio.load(html, { decodeEntities: false });
   const segments = [];
@@ -78,19 +82,29 @@ function applyTextUpdates(html, updates) {
   return $.root().html();
 }
 
-async function triggerDeployHook() {
-  try {
-    const hook = process.env.VERCEL_DEPLOY_HOOK_URL;
-    if (!hook) return;
-    await fetch(hook, { method: 'POST' });
-  } catch (_) { /* ignore */ }
+async function listEncyclopediaSlugs() {
+  const entries = await listDir('src/content/encyclopedia');
+  const map = new Map();
+  for (const e of Array.isArray(entries) ? entries : []) {
+    const m = e.name && e.name.match(/^(.+)\.(en|sv)\.html$/i);
+    if (!m) continue;
+    const slug = m[1];
+    map.set(slug, true);
+  }
+  return Array.from(map.keys()).sort();
 }
 
 module.exports = async function handler(req, res) {
   try {
     const { method } = req;
+    const isEncy = String(req.query.type || '') === 'ency';
+
     if (method === 'GET') {
       if (req.query.list === '1') {
+        if (isEncy) {
+          const slugs = await listEncyclopediaSlugs();
+          return res.status(200).json({ slugs, home: [] });
+        }
         const files = await listDir('src/content/pages');
         const slugs = new Set();
         for (const f of files) {
@@ -102,24 +116,27 @@ module.exports = async function handler(req, res) {
       const slug = String(req.query.slug || 'index');
       const locale = String(req.query.locale || 'en');
       if (!isSafeSlug(slug) || (locale !== 'en' && locale !== 'sv')) return res.status(400).json({ error: 'bad params' });
-      const path = resolvePagePath(slug, locale);
-      const { content } = await getFile(path);
+      const contentPath = isEncy ? resolveEncyPath(slug, locale) : resolvePagePath(slug, locale);
+      const { content } = await getFile(contentPath);
       const segments = getTextSegments(content);
-      return res.status(200).json({ slug, locale, path, segments });
+      return res.status(200).json({ slug, locale, path: contentPath, segments });
     }
+
     if (method === 'PUT') {
       const slug = String(req.query.slug || 'index');
       const locale = String(req.query.locale || 'en');
       if (!isSafeSlug(slug) || (locale !== 'en' && locale !== 'sv')) return res.status(400).json({ error: 'bad params' });
-      const path = resolvePagePath(slug, locale);
+      const contentPath = isEncy ? resolveEncyPath(slug, locale) : resolvePagePath(slug, locale);
       const body = req.body || {};
       const updates = Array.isArray(body.updates) ? body.updates : [];
-      const { content } = await getFile(path);
+      const { content } = await getFile(contentPath);
       const next = applyTextUpdates(content, updates);
-      await putFile(path, next, `chore(admin): update text segments for ${slug}.${locale}`);
-      await triggerDeployHook();
+      await putFile(contentPath, next, `chore(admin): update ${isEncy ? 'encyclopedia' : 'page'} text segments for ${slug}.${locale}`);
+      const hook = process.env.VERCEL_DEPLOY_HOOK_URL;
+      if (hook) { try { await fetch(hook, { method: 'POST' }); } catch(e){} }
       return res.status(200).json({ ok: true });
     }
+
     return res.status(405).json({ error: 'method not allowed' });
   } catch (e) {
     return res.status(500).json({ error: e.message });
