@@ -13,6 +13,7 @@ const CONTENT_DIR = path.join(ROOT, 'src', 'content', 'pages');
 const SITE_DIR = path.join(ROOT, 'src', 'site');
 const SLIDES_DIR = path.join(SITE_DIR, 'images', 'slide');
 const SLIDES_MANIFEST = path.join(SLIDES_DIR, 'slides.json');
+const ENCYC_DIR = path.join(ROOT, 'src', 'content', 'encyclopedia');
 
 function assertLocale(locale) {
   if (locale !== 'en' && locale !== 'sv') {
@@ -146,6 +147,56 @@ app.put('/api/page-segments/:slug', async (req, res) => {
     if (!isSafeSlug(slug)) return res.status(400).json({ error: 'bad slug' });
     assertLocale(locale);
     const file = resolvePageFile(slug, locale);
+    const { updates } = req.body || {};
+    if (!Array.isArray(updates)) return res.status(400).json({ error: 'updates must be an array' });
+    const html = await fsp.readFile(file, 'utf8');
+    const next = applyTextUpdates(html, updates);
+    await fsp.writeFile(file, next, 'utf8');
+    res.json({ ok: true });
+  } catch (e) {
+    res.status(e.status || 500).json({ error: e.message });
+  }
+});
+
+// Encyclopedia: list available slugs
+app.get('/api/ency', async (_req, res) => {
+  try {
+    const files = await fsp.readdir(ENCYC_DIR);
+    const slugs = new Set();
+    files.forEach((f) => {
+      const m = f.match(/^(.+)\.(en|sv)\.html$/);
+      if (m) slugs.add(m[1]);
+    });
+    res.json({ slugs: Array.from(slugs).sort() });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+// Encyclopedia: get text-only segments
+app.get('/api/ency-segments/:slug', async (req, res) => {
+  try {
+    const slug = req.params.slug;
+    const locale = (req.query.locale || 'en').toString();
+    if (!isSafeSlug(slug)) return res.status(400).json({ error: 'bad slug' });
+    assertLocale(locale);
+    const file = path.join(ENCYC_DIR, `${slug}.${locale}.html`);
+    const html = await fsp.readFile(file, 'utf8');
+    const segments = getTextSegments(html);
+    res.json({ slug, locale, file, segments });
+  } catch (e) {
+    res.status(e.status || 500).json({ error: e.message });
+  }
+});
+
+// Encyclopedia: save text-only segments
+app.put('/api/ency-segments/:slug', async (req, res) => {
+  try {
+    const slug = req.params.slug;
+    const locale = (req.query.locale || 'en').toString();
+    if (!isSafeSlug(slug)) return res.status(400).json({ error: 'bad slug' });
+    assertLocale(locale);
+    const file = path.join(ENCYC_DIR, `${slug}.${locale}.html`);
     const { updates } = req.body || {};
     if (!Array.isArray(updates)) return res.status(400).json({ error: 'updates must be an array' });
     const html = await fsp.readFile(file, 'utf8');

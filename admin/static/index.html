@@ -22,8 +22,8 @@
     .stack{ display:flex; flex-direction:column; gap:8px; }
   </style>
   <script>
-    const isVercelHost = typeof window !== 'undefined' && /vercel\.app$/.test(location.hostname);
-    const API_BASE = isVercelHost ? '/api' : '';
+    const isHosted = typeof window !== 'undefined' && location && location.hostname && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1';
+    const API_BASE = '';
     async function api(path, opts){ const res=await fetch(API_BASE+path,opts); const ok=res.ok; const ct=res.headers.get('content-type')||''; const data=ct.includes('application/json')?await res.json():await res.text(); if(!ok) throw new Error(typeof data==='string'?data:(data.error||'request failed')); return data; }
     function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.style.display='block'; setTimeout(()=>t.style.display='none',4000); }
 
@@ -31,14 +31,38 @@
 
     // Endpoint helpers for pages and encyclopedia
     const PagesAPI = {
-      async list(){ const m=await api('/admin-pages?list=1'); return { slugs:m.slugs||[], home:m.home||['index'] }; },
-      async get(slug, locale){ return api(`/admin-pages?slug=${encodeURIComponent(slug)}&locale=${locale}`); },
-      async put(slug, locale, updates){ return api(`/admin-pages?slug=${encodeURIComponent(slug)}&locale=${locale}`, { method:'PUT', headers:{'content-type':'application/json'}, body: JSON.stringify({ updates }) }); }
+      async list(){
+        if (isHosted) {
+          const m = await api('/api/admin-pages?list=1');
+          return { slugs:m.slugs||[], home:m.home||['index'] };
+        } else {
+          return api('/api/pages');
+        }
+      },
+      async get(slug, locale){
+        if (isHosted) return api(`/api/admin-pages?slug=${encodeURIComponent(slug)}&locale=${locale}`);
+        return api(`/api/page-segments/${encodeURIComponent(slug)}?locale=${locale}`);
+      },
+      async put(slug, locale, updates){
+        const body = { method:'PUT', headers:{'content-type':'application/json'}, body: JSON.stringify({ updates }) };
+        if (isHosted) return api(`/api/admin-pages?slug=${encodeURIComponent(slug)}&locale=${locale}`, body);
+        return api(`/api/page-segments/${encodeURIComponent(slug)}?locale=${locale}`, body);
+      }
     };
     const EncyAPI = {
-      async list(){ const m=await api('/admin-pages?list=1&type=ency'); return m.slugs||[]; },
-      async get(slug, locale){ return api(`/admin-pages?type=ency&slug=${encodeURIComponent(slug)}&locale=${locale}`); },
-      async put(slug, locale, updates){ return api(`/admin-pages?type=ency&slug=${encodeURIComponent(slug)}&locale=${locale}`, { method:'PUT', headers:{'content-type':'application/json'}, body: JSON.stringify({ updates }) }); }
+      async list(){
+        if (isHosted) { const m=await api('/api/admin-pages?list=1&type=ency'); return m.slugs||[]; }
+        const m = await api('/api/ency'); return m.slugs||[];
+      },
+      async get(slug, locale){
+        if (isHosted) return api(`/api/admin-pages?type=ency&slug=${encodeURIComponent(slug)}&locale=${locale}`);
+        return api(`/api/ency-segments/${encodeURIComponent(slug)}?locale=${locale}`);
+      },
+      async put(slug, locale, updates){
+        const body = { method:'PUT', headers:{'content-type':'application/json'}, body: JSON.stringify({ updates }) };
+        if (isHosted) return api(`/api/admin-pages?type=ency&slug=${encodeURIComponent(slug)}&locale=${locale}`, body);
+        return api(`/api/ency-segments/${encodeURIComponent(slug)}?locale=${locale}`, body);
+      }
     };
 
     // Pages (text-only)
@@ -51,10 +75,18 @@
     // Slides
     let slidesFiles=[],slidesManifest=[];
     const SlidesAPI = {
-      async list(){ return api('/admin-slides'); },
-      async saveManifest(manifest){ return api('/admin-slides',{method:'PUT',headers:{'content-type':'application/json'},body:JSON.stringify(manifest)}); },
-      async upload(file){ const buf=await file.arrayBuffer(); const b64=btoa(String.fromCharCode(...new Uint8Array(buf))); return api('/admin-slides',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({name:file.name,contentBase64:b64})}); },
-      async delete(name){ return api('/admin-slides?name='+encodeURIComponent(name),{method:'DELETE'}); }
+      async list(){ return isHosted ? api('/api/admin-slides') : api('/api/slides'); },
+      async saveManifest(manifest){ return isHosted ? api('/api/admin-slides',{method:'PUT',headers:{'content-type':'application/json'},body:JSON.stringify(manifest)}) : api('/api/slides',{method:'PUT',headers:{'content-type':'application/json'},body:JSON.stringify(manifest)}); },
+      async upload(file){
+        if (isHosted) {
+          const buf=await file.arrayBuffer(); const b64=btoa(String.fromCharCode(...new Uint8Array(buf)));
+          return api('/api/admin-slides',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({name:file.name,contentBase64:b64})});
+        } else {
+          const buf=await file.arrayBuffer();
+          return fetch('/api/slides/upload?name='+encodeURIComponent(file.name), { method:'POST', headers:{}, body: buf }).then(r=>{ if(!r.ok) return r.text().then(t=>{ throw new Error(t||'upload failed'); }); return r.json(); });
+        }
+      },
+      async delete(name){ return isHosted ? api('/api/admin-slides?name='+encodeURIComponent(name),{method:'DELETE'}) : api('/api/slides?name='+encodeURIComponent(name),{method:'DELETE'}); }
     };
     function getOrMakeEntry(filename){ let it=slidesManifest.find(x=>x.filename===filename); if(!it){ it={number:9999,filename,title:filename,description:'',i18n:{en:{title:'',description:''},sv:{title:'',description:''}}}; slidesManifest.push(it);} if(!it.i18n) it.i18n={en:{title:'',description:''},sv:{title:'',description:''}}; if(!it.i18n.en) it.i18n.en={title:'',description:''}; if(!it.i18n.sv) it.i18n.sv={title:'',description:''}; return it; }
     function renderSlides(){ const tbody=document.querySelector('#slides tbody'); tbody.innerHTML=''; const rows=slidesFiles.map(fn=>getOrMakeEntry(fn)); rows.sort((a,b)=>(a.number||9999)-(b.number||9999)||a.filename.localeCompare(b.filename)); for(const it of rows){ const tr=document.createElement('tr'); tr.innerHTML=`<td><img src="/src/site/images/slide/${it.filename}" alt="" width="80"></td><td><input type="number" value="${it.number||''}"></td><td class="muted">${it.filename}</td><td><input type="text" value="${(it.i18n.en.title||'').replace(/&/g,'&amp;')}"></td><td><input type="text" value="${(it.i18n.en.description||'').replace(/&/g,'&amp;')}"></td><td><input type="text" value="${(it.i18n.sv.title||'').replace(/&/g,'&amp;')}"></td><td><input type="text" value="${(it.i18n.sv.description||'').replace(/&/g,'&amp;')}"></td><td><button class="danger" data-del="${it.filename}">Delete</button></td>`; const [imgTd,numTd,fileTd,enTitleTd,enDescTd,svTitleTd,svDescTd,delTd]=tr.children; numTd.querySelector('input').addEventListener('input',e=>{it.number=parseInt(e.target.value||'0',10)||undefined;}); enTitleTd.querySelector('input').addEventListener('input',e=>{it.i18n.en.title=e.target.value;}); enDescTd.querySelector('input').addEventListener('input',e=>{it.i18n.en.description=e.target.value;}); svTitleTd.querySelector('input').addEventListener('input',e=>{it.i18n.sv.title=e.target.value;}); svDescTd.querySelector('input').addEventListener('input',e=>{it.i18n.sv.description=e.target.value;}); delTd.querySelector('button').addEventListener('click',()=>deleteSlide(it.filename)); tbody.appendChild(tr);} }
