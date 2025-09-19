@@ -74,6 +74,17 @@ for (const { module: pageModule, file } of modules) {
       const rendered = renderTemplate(templateHtml, preparedData);
       fs.writeFileSync(outputPath, rendered, 'utf8');
       generated += 1;
+
+      // Write any alias outputs if provided (e.g., clean URL fallbacks)
+      if (Array.isArray(data.aliasOutputs) && data.aliasOutputs.length > 0) {
+        for (const aliasRel of data.aliasOutputs) {
+          if (typeof aliasRel !== 'string' || !aliasRel.trim()) continue;
+          const aliasPath = path.join(publicDir, aliasRel);
+          ensureDir(path.dirname(aliasPath));
+          fs.writeFileSync(aliasPath, rendered, 'utf8');
+          generated += 1;
+        }
+      }
     };
 
     // Support both simple objects and nested maps (e.g., many entries per locale)

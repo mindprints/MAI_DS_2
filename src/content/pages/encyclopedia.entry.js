@@ -55,6 +55,7 @@ module.exports = {
       if (locales.en) {
         out.en[slug] = {
           output: `pages/encyclopedia/${slug}.html`,
+          aliasOutputs: [`pages/${slug}.html`],
           lang: 'en',
           title: `Encyclopedia • ${slug}`,
           assetsPrefix: '..',
@@ -70,6 +71,7 @@ module.exports = {
       if (locales.sv) {
         out.sv[slug] = {
           output: `sv/pages/encyclopedia/${slug}.html`,
+          aliasOutputs: [`sv/pages/${slug}.html`],
           lang: 'sv',
           title: `Encyklopedi • ${slug}`,
           assetsPrefix: '../..',
