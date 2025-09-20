@@ -23,6 +23,7 @@
   </style>
   <script>
     const isHosted = typeof window !== 'undefined' && location && location.hostname && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1';
+    const isDokploy = typeof window !== 'undefined' && location && location.hostname === 'app.aimuseum.site';
     const API_BASE = '';
     async function api(path, opts){ const res=await fetch(API_BASE+path,opts); const ok=res.ok; const ct=res.headers.get('content-type')||''; const data=ct.includes('application/json')?await res.json():await res.text(); if(!ok) throw new Error(typeof data==='string'?data:(data.error||'request failed')); return data; }
     function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.style.display='block'; setTimeout(()=>t.style.display='none',4000); }
@@ -101,7 +102,16 @@
     function renderEncySegments(locale, segs){ const box=document.getElementById('ency_'+locale); box.innerHTML=''; box.className='stack'; (segs||[]).forEach(s=>{ box.insertAdjacentHTML('beforeend', controlForSegment(locale,s)); }); }
     async function saveEncyEntry(){ const slug=document.getElementById('ency-slug').value; try{ for(const locale of ['en','sv']){ const fields=[...document.querySelectorAll(`#ency_${locale} [data-id]`)]; const updates=fields.map(i=>({id:i.dataset.id,text:i.value})); await EncyAPI.put(slug, locale, updates); } toast('Encyclopedia entry saved. Rebuild triggered.'); } catch(e){ toast('Save failed: '+e.message); } }
 
-    window.addEventListener('DOMContentLoaded', async ()=>{ await loadSlugs(); await loadEncyList(); });
+    window.addEventListener('DOMContentLoaded', async ()=>{ 
+      if (isDokploy) {
+        // Dokploy doesn't support serverless functions - show helpful message
+        toast('Admin interface requires serverless functions. Use Vercel deployment for content editing.');
+        document.querySelector('h1').insertAdjacentHTML('afterend', '<div style="background:var(--panel2);border:1px solid var(--border);padding:12px;border-radius:8px;margin:10px 0;"><strong>Static Deployment:</strong> This admin interface requires serverless API functions. Please use the <a href="https://mai-ds-2.vercel.app/admin" style="color:var(--accent)">Vercel admin interface</a> for content editing.</div>');
+        return;
+      }
+      await loadSlugs(); 
+      await loadEncyList(); 
+    });
   </script>
 </head>
 <body>
