@@ -77,7 +77,7 @@ MAI_DS_2/
 - The two home pages are hand-authored:
   - `src/site/index.html` (EN)
   - `src/site/sv/index.html` (SV)
-- Reusable, localized pages (e.g., privacy, learn-more, research-index) are built from `src/content/pages/` modules:
+- Reusable, localized pages (e.g., privacy, learn-more, encyclopedia-index) are built from `src/content/pages/` modules:
   - A module exports `{ template, locales, prepare? }`.
   - Each locale entry provides `output`, `lang`, `title`, and HTML partials via a `load('*.en.html')` or `load('*.sv.html')` helper.
   - Build renders with `src/templates/pages/<template>.html` using `{{ variable }}` placeholders.
