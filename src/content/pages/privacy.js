@@ -18,7 +18,7 @@ module.exports = {
       assetsPrefix: '..',
       indexHref: '../index.html',
       backLinkText: '&larr; Back to Home',
-      headExtras: `  <link rel="alternate" hreflang="sv" href="../sv/pages/privacy.html">\n  <link rel="alternate" hreflang="en" href="./privacy.html">`,
+      headExtras: `  <link rel="alternate" hreflang="sv" href="../sv/pages/privacy">\n  <link rel="alternate" hreflang="en" href="./privacy">`,
       mainContent: load('privacy.en.html'),
       postScripts: ''
     },
@@ -29,7 +29,7 @@ module.exports = {
       assetsPrefix: '../..',
       indexHref: '../index.html',
       backLinkText: '&larr; Till startsidan',
-      headExtras: `  <link rel="alternate" hreflang="en" href="../../pages/privacy.html">\n  <link rel="alternate" hreflang="sv" href="./privacy.html">`,
+      headExtras: `  <link rel="alternate" hreflang="en" href="../../pages/privacy">\n  <link rel="alternate" hreflang="sv" href="./privacy">`,
       mainContent: load('privacy.sv.html'),
       postScripts: ''
     }

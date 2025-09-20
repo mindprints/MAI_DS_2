@@ -93,7 +93,7 @@ module.exports = {
       boardLead: 'Prominent representatives from the arts, business, and the public sector:',
       ctaHref: 'membership.html',
       ctaText: 'Join us',
-      headExtras: `  <link rel="alternate" hreflang="en" href="../pages/about.html">\n  <link rel="alternate" hreflang="sv" href="../sv/pages/about.html">\n  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>\n  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons/css/flag-icons.min.css">`
+      headExtras: `  <link rel="alternate" hreflang="en" href="../pages/about">\n  <link rel="alternate" hreflang="sv" href="../sv/pages/about">\n  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>\n  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons/css/flag-icons.min.css">`
     },
     sv: {
       output: 'sv/pages/about.html',
@@ -108,7 +108,7 @@ module.exports = {
       boardLead: 'Framstående företrädare från kultur, näringsliv och offentlig sektor:',
       ctaHref: 'membership.html',
       ctaText: 'Bli medlem',
-      headExtras: `  <link rel="alternate" hreflang="sv" href="./about.html">\n  <link rel="alternate" hreflang="en" href="../../pages/about.html">\n  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>\n  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons/css/flag-icons.min.css">`
+      headExtras: `  <link rel="alternate" hreflang="sv" href="./about">\n  <link rel="alternate" hreflang="en" href="../../pages/about">\n  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>\n  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons/css/flag-icons.min.css">`
     }
   },
   prepare(locale, data) {

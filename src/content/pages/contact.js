@@ -24,7 +24,7 @@ module.exports = {
       assetsPrefix: '..',
       indexHref: '../index.html',
       backLinkText: '&larr; Back to Home',
-      headExtras: `  <link rel="alternate" hreflang="sv" href="../sv/pages/contact.html">\n  <link rel="alternate" hreflang="en" href="./contact.html">\n  <!-- Email sending is handled server-side via /api/send-email -->`,
+      headExtras: `  <link rel="alternate" hreflang="sv" href="../sv/pages/contact">\n  <link rel="alternate" hreflang="en" href="./contact">\n  <!-- Email sending is handled server-side via /api/send-email -->`,
       mainContent: load('contact.en.html'),
       postScripts: '\n' + load('contact.en.script.html')
     },
@@ -35,7 +35,7 @@ module.exports = {
       assetsPrefix: '../..',
       indexHref: '../index.html',
       backLinkText: '&larr; Till startsidan',
-      headExtras: `  <link rel="alternate" hreflang="en" href="../../pages/contact.html">\n  <link rel="alternate" hreflang="sv" href="./contact.html">\n  <!-- E-posthantering sker server-side via /api/send-email -->`,
+      headExtras: `  <link rel="alternate" hreflang="en" href="../../pages/contact">\n  <link rel="alternate" hreflang="sv" href="./contact">\n  <!-- E-posthantering sker server-side via /api/send-email -->`,
       mainContent: load('contact.sv.html'),
       postScripts: '\n' + load('contact.sv.script.html')
     }

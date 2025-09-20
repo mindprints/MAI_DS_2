@@ -15,7 +15,7 @@ module.exports = {
       assetsPrefix: '..',
       indexHref: '../index.html',
       backLinkText: '&larr; Back to Home',
-      headExtras: `  <link rel="alternate" hreflang="en" href="../pages/plan-workshop.html">\n  <link rel="alternate" hreflang="sv" href="../sv/pages/plan-workshop.html">`,
+      headExtras: `  <link rel="alternate" hreflang="en" href="../pages/plan-workshop">\n  <link rel="alternate" hreflang="sv" href="../sv/pages/plan-workshop">`,
       mainContent: load('plan-workshop.en.html'),
       postScripts: '\n' + load('plan-workshop.en.script.html')
     },
@@ -26,7 +26,7 @@ module.exports = {
       assetsPrefix: '../..',
       indexHref: '../index.html',
       backLinkText: '&larr; Till startsidan',
-      headExtras: `  <link rel="alternate" hreflang="sv" href="./plan-workshop.html">\n  <link rel="alternate" hreflang="en" href="../../pages/plan-workshop.html">`,
+      headExtras: `  <link rel="alternate" hreflang="sv" href="./plan-workshop">\n  <link rel="alternate" hreflang="en" href="../../pages/plan-workshop">`,
       mainContent: load('plan-workshop.sv.html'),
       postScripts: '\n' + load('plan-workshop.sv.script.html')
     }

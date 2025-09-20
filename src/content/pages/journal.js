@@ -22,7 +22,7 @@ module.exports = {
       heroCopy: 'Essays and updates from our Substack, <a class="underline" href="https://mindprints.substack.com/" target="_blank" rel="noopener">mindprints</a>.',
       mainContent: load('journal.en.html'),
       footerText: '&copy; 2025 Museum of Artificial Intelligence.',
-      headExtras: `  <link rel="alternate" hreflang="en" href="../pages/journal.html">\n  <link rel="alternate" hreflang="sv" href="../sv/pages/journal.html">`,
+      headExtras: `  <link rel="alternate" hreflang="en" href="../pages/journal">\n  <link rel="alternate" hreflang="sv" href="../sv/pages/journal">`,
       journalScriptSrc: '../journal.js',
       postScripts: ''
     },
@@ -40,7 +40,7 @@ module.exports = {
       heroCopy: 'Essäer och uppdateringar från vår Substack, <a class="underline" href="https://mindprints.substack.com/" target="_blank" rel="noopener">mindprints</a>.',
       mainContent: load('journal.sv.html'),
       footerText: '&copy; 2025 Museum of Artificial Intelligence.',
-      headExtras: `  <link rel="alternate" hreflang="en" href="../../pages/journal.html">\n  <link rel="alternate" hreflang="sv" href="./journal.html">`,
+      headExtras: `  <link rel="alternate" hreflang="en" href="../../pages/journal">\n  <link rel="alternate" hreflang="sv" href="./journal">`,
       journalScriptSrc: '../../journal.js',
       postScripts: ''
     }

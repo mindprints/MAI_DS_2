@@ -15,7 +15,7 @@ module.exports = {
       assetsPrefix: '..',
       indexHref: '../index.html',
       backLinkText: '&larr; Back to Home',
-      headExtras: `  <link rel="alternate" hreflang="en" href="../pages/learn-more.html">\n  <link rel="alternate" hreflang="sv" href="../sv/pages/learn-more.html">`,
+      headExtras: `  <link rel="alternate" hreflang="en" href="../pages/learn-more">\n  <link rel="alternate" hreflang="sv" href="../sv/pages/learn-more">`,
       mainContent: load('learn-more.en.html'),
       postScripts: ''
     },
@@ -26,7 +26,7 @@ module.exports = {
       assetsPrefix: '../..',
       indexHref: '../index.html',
       backLinkText: '&larr; Till startsidan',
-      headExtras: `  <link rel="alternate" hreflang="sv" href="./learn-more.html">\n  <link rel="alternate" hreflang="en" href="../../pages/learn-more.html">`,
+      headExtras: `  <link rel="alternate" hreflang="sv" href="./learn-more">\n  <link rel="alternate" hreflang="en" href="../../pages/learn-more">`,
       mainContent: load('learn-more.sv.html'),
       postScripts: ''
     }

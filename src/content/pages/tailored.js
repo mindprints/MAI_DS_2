@@ -26,7 +26,7 @@ module.exports = {
       assetsPrefix: '../..',
       indexHref: '../index.html',
       backLinkText: '&larr; Till startsidan',
-      headExtras: `  <link rel="alternate" hreflang="en" href="../../pages/tailored.html">\n  <link rel="alternate" hreflang="sv" href="./tailored.html">`,
+      headExtras: `  <link rel="alternate" hreflang="en" href="../../pages/tailored">\n  <link rel="alternate" hreflang="sv" href="./tailored">`,
       mainContent: load('tailored.sv.html'),
       postScripts: ''
     }

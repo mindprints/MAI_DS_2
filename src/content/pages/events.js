@@ -11,7 +11,7 @@
       heading: 'Events',
       intro: 'Upcoming and past events at the Museum of Artificial Intelligence.',
       bodyText: 'Content coming soon.',
-      headExtras: `  <link rel="alternate" hreflang="en" href="../pages/events.html">\n  <link rel="alternate" hreflang="sv" href="../sv/pages/events.html">`
+      headExtras: `  <link rel="alternate" hreflang="en" href="../pages/events">\n  <link rel="alternate" hreflang="sv" href="../sv/pages/events">`
     },
     sv: {
       output: 'sv/pages/events.html',
@@ -23,7 +23,7 @@
       heading: 'Evenemang',
       intro: 'Kommande och tidigare evenemang.',
       bodyText: 'Innehåll kommer snart.',
-      headExtras: `  <link rel="alternate" hreflang="sv" href="./events.html">\n  <link rel="alternate" hreflang="en" href="../../pages/events.html">`
+      headExtras: `  <link rel="alternate" hreflang="sv" href="./events">\n  <link rel="alternate" hreflang="en" href="../../pages/events">`
     }
   }
 };
