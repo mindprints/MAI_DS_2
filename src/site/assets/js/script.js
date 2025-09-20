@@ -36,15 +36,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     const imageBasePath = (() => {
         const p = (window.location && window.location.pathname) ? window.location.pathname : '';
         if (p.includes('/sv/pages/')) {
-            // From /sv/pages/* â†’ up two levels
+            // From /sv/pages/* -> up two levels
             return '../../images/slide/';
         }
         if (p.includes('/sv/')) {
-            // From /sv/* â†’ up one level
+            // From /sv/* -> up one level
             return '../images/slide/';
         }
         if (p.includes('/pages/')) {
-            // From /pages/* â†’ up one level
+            // From /pages/* -> up one level
             return '../images/slide/';
         }
         // From root
