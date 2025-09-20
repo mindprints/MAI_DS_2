@@ -36,7 +36,7 @@ function renderEntriesGrid(locale, entries) {
   const items = entries.filter(e => e.locales[locale]);
   items.sort((a, b) => a.slug.localeCompare(b.slug));
   return items.map(e => {
-    const href = `./${e.slug}.html`;
+    const href = locale === 'sv' ? `/sv/pages/encyclopedia/${e.slug}` : `/pages/encyclopedia/${e.slug}`;
     const html = readFileSafe(path.join(ENCYC_SRC, e.locales[locale]));
     const title = extractTitle(html) || e.slug;
     return `<a data-term="${e.slug}" data-title="${title}" href="${href}" class="glass-card p-4 rounded-lg block hover:border-cyan-500">
