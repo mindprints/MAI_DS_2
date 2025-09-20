@@ -64,6 +64,12 @@ MAI_DS_2/
 
   docs/
     ARCHITECTURE.md          # This document
+    FILENAME_MAPPING.md      # Canonical image/file mapping notes
+    IMAGE_DISTRIBUTION.md    # Canonical image distribution notes
+  docs/
+    ARCHITECTURE.md          # This document
+    FILENAME_MAPPING.md      # Canonical image/file mapping notes
+    IMAGE_DISTRIBUTION.md    # Canonical image distribution notes
 
   package.json
   vercel.json                # Vercel build config (build → public)
