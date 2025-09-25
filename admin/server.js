@@ -2,8 +2,8 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const fsp = require('fs/promises');
-const cheerio = require('cheerio');
 const { exec } = require('child_process');
+const { getTextSegments, applyTextUpdates } = require('./dom');
 
 const app = express();
 app.use(express.json({ limit: '10mb' }));
@@ -32,80 +32,6 @@ function resolvePageFile(slug, locale) {
     return locale === 'sv' ? path.join(SITE_DIR, 'sv', 'index.html') : path.join(SITE_DIR, 'index.html');
   }
   return path.join(CONTENT_DIR, `${slug}.${locale}.html`);
-}
-
-function getTextSegments(html) {
-  const $ = cheerio.load(html, { decodeEntities: false });
-  // Collect text nodes not inside script/style and not purely whitespace
-  const segments = [];
-  const skipTags = new Set(['script', 'style']);
-
-  function getNodePath(node) {
-    // Build a path of child indices from root to this node across .contents()
-    const parts = [];
-    let cur = node;
-    while (cur && cur.parent) {
-      const parent = cur.parent;
-      const idx = parent.children.indexOf(cur);
-      parts.push(String(idx));
-      cur = parent;
-    }
-    return parts.reverse().join('/');
-  }
-
-  $('*').each((_, el) => {
-    if (skipTags.has(el.tagName)) return;
-    const contents = el.children || [];
-    contents.forEach((child) => {
-      if (child.type === 'text') {
-        const raw = child.data || '';
-        const text = raw.replace(/\s+/g, ' ').trim();
-        if (text) {
-          segments.push({
-            id: getNodePath(child),
-            parentTag: el.tagName,
-            text
-          });
-        }
-      }
-    });
-  });
-  return segments;
-}
-
-function applyTextUpdates(html, updates) {
-  const $ = cheerio.load(html, { decodeEntities: false });
-  const byId = new Map(updates.map(u => [u.id, u.text]));
-
-  // Walk DOM and replace text nodes whose path matches an update id
-  function getNodePath(node) {
-    const parts = [];
-    let cur = node;
-    while (cur && cur.parent) {
-      const parent = cur.parent;
-      const idx = parent.children.indexOf(cur);
-      parts.push(String(idx));
-      cur = parent;
-    }
-    return parts.reverse().join('/');
-  }
-
-  $('*').each((_, el) => {
-    if (new Set(['script', 'style']).has(el.tagName)) return;
-    const contents = el.children || [];
-    contents.forEach((child) => {
-      if (child.type === 'text') {
-        const id = getNodePath(child);
-        if (byId.has(id)) {
-          // Replace only the text node content
-          // Using replaceWith keeps surrounding HTML intact
-          $(child).replaceWith(byId.get(id));
-        }
-      }
-    });
-  });
-
-  return $.root().html();
 }
 
 // Pages: list available slugs
