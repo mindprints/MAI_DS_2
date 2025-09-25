@@ -1,0 +1,242 @@
+[
+  {
+    "tag": "img",
+    "file": "src/content/pages/learn-more.sv.html",
+    "src": "../../images/mai-logos/ai-coding.jpg",
+    "alt": "Programmering med AI ikon",
+    "loading": "lazy",
+    "decoding": "async"
+  },
+  {
+    "tag": "img",
+    "file": "src/content/pages/learn-more.sv.html",
+    "src": "../../images/mai-logos/ai-companions.jpg",
+    "alt": "AI-kompanjonskap ikon",
+    "loading": "lazy",
+    "decoding": "async"
+  },
+  {
+    "tag": "img",
+    "file": "src/content/pages/learn-more.sv.html",
+    "src": "../../images/mai-logos/ai-education.jpg",
+    "alt": "Utbildning och AI ikon",
+    "loading": "lazy",
+    "decoding": "async"
+  },
+  {
+    "tag": "img",
+    "file": "src/content/pages/learn-more.sv.html",
+    "src": "../../images/mai-logos/ai-energy.jpg",
+    "alt": "Ikon för energianvändning",
+    "loading": "lazy",
+    "decoding": "async"
+  },
+  {
+    "tag": "img",
+    "file": "src/content/pages/learn-more.sv.html",
+    "src": "../../images/mai-logos/ai-industrialization.jpg",
+    "alt": "Robotik ikon",
+    "loading": "lazy",
+    "decoding": "async"
+  },
+  {
+    "tag": "img",
+    "file": "src/content/pages/learn-more.sv.html",
+    "src": "../../images/mai-logos/ai-medicine.jpg",
+    "alt": "Ikon för hälso- och sjukvårdsdiagnostik",
+    "loading": "lazy",
+    "decoding": "async"
+  },
+  {
+    "tag": "img",
+    "file": "src/content/pages/learn-more.sv.html",
+    "src": "../../images/mai-logos/ai-unchained.jpg",
+    "alt": "Autonoma system ikon",
+    "loading": "lazy",
+    "decoding": "async"
+  },
+  {
+    "tag": "img",
+    "file": "src/content/pages/membership.sv.html",
+    "src": "../../images/slide/21-happybirthday-at-narkesgtan.webp",
+    "alt": "Evenemang på Närkesgatan",
+    "loading": "",
+    "decoding": ""
+  },
+  {
+    "tag": "img",
+    "file": "src/site/sv/index.html",
+    "src": "../images/evolution-AI.avif",
+    "alt": "",
+    "loading": "lazy",
+    "decoding": ""
+  },
+  {
+    "tag": "img",
+    "file": "src/site/sv/index.html",
+    "src": "../images/good_bad_ugly.avif",
+    "alt": "Den gode, den onde, den fule – AI‑illustration",
+    "loading": "lazy",
+    "decoding": ""
+  },
+  {
+    "tag": "img",
+    "file": "src/site/sv/index.html",
+    "src": "../images/hands-on-workshops.avif",
+    "alt": "",
+    "loading": "lazy",
+    "decoding": ""
+  },
+  {
+    "tag": "img",
+    "file": "src/site/sv/index.html",
+    "src": "../images/Human-AI-Interaction.avif",
+    "alt": "",
+    "loading": "lazy",
+    "decoding": ""
+  },
+  {
+    "tag": "img",
+    "file": "src/content/pages/learn-more.en.html",
+    "src": "../images/mai-logos/ai-coding.jpg",
+    "alt": "Coding with AI icon",
+    "loading": "lazy",
+    "decoding": "async"
+  },
+  {
+    "tag": "img",
+    "file": "src/content/pages/learn-more.en.html",
+    "src": "../images/mai-logos/ai-companions.jpg",
+    "alt": "AI companionship icon",
+    "loading": "lazy",
+    "decoding": "async"
+  },
+  {
+    "tag": "img",
+    "file": "src/content/pages/learn-more.en.html",
+    "src": "../images/mai-logos/ai-education.jpg",
+    "alt": "Education and AI icon",
+    "loading": "lazy",
+    "decoding": "async"
+  },
+  {
+    "tag": "img",
+    "file": "src/content/pages/learn-more.en.html",
+    "src": "../images/mai-logos/ai-energy.jpg",
+    "alt": "Energy use icon",
+    "loading": "lazy",
+    "decoding": "async"
+  },
+  {
+    "tag": "img",
+    "file": "src/content/pages/learn-more.en.html",
+    "src": "../images/mai-logos/ai-industrialization.jpg",
+    "alt": "Robotics icon",
+    "loading": "lazy",
+    "decoding": "async"
+  },
+  {
+    "tag": "img",
+    "file": "src/content/pages/learn-more.en.html",
+    "src": "../images/mai-logos/ai-medicine.jpg",
+    "alt": "Healthcare diagnostics icon",
+    "loading": "lazy",
+    "decoding": "async"
+  },
+  {
+    "tag": "img",
+    "file": "src/content/pages/learn-more.en.html",
+    "src": "../images/mai-logos/ai-unchained.jpg",
+    "alt": "Autonomous systems icon",
+    "loading": "lazy",
+    "decoding": "async"
+  },
+  {
+    "tag": "img",
+    "file": "src/site/sv/index.html",
+    "src": "../images/mai-logos/logo_in_3d_2_darkened.avif",
+    "alt": "Museum of Artificial Intelligence",
+    "loading": "lazy",
+    "decoding": ""
+  },
+  {
+    "tag": "img",
+    "file": "src/site/sv/index.html",
+    "src": "../images/mai-logos/logo_in_3d_2_darkened.avif",
+    "alt": "MAI logo",
+    "loading": "lazy",
+    "decoding": ""
+  },
+  {
+    "tag": "img",
+    "file": "src/site/sv/index.html",
+    "src": "../images/mai-logos/rotatingLogo.avif",
+    "alt": "MAI logo",
+    "loading": "",
+    "decoding": ""
+  },
+  {
+    "tag": "img",
+    "file": "src/content/pages/membership.en.html",
+    "src": "../images/slide/18-evenemang-at-narkesgatan.webp",
+    "alt": "Evenemang at NÃ¤rkegatan",
+    "loading": "lazy",
+    "decoding": ""
+  },
+  {
+    "tag": "img",
+    "file": "src/site/index.html",
+    "src": "images/evolution-AI.avif",
+    "alt": "",
+    "loading": "lazy",
+    "decoding": ""
+  },
+  {
+    "tag": "img",
+    "file": "src/site/index.html",
+    "src": "images/good_bad_ugly.avif",
+    "alt": "The Good, Bad, and Ugly of AI illustration",
+    "loading": "lazy",
+    "decoding": ""
+  },
+  {
+    "tag": "img",
+    "file": "src/site/index.html",
+    "src": "images/hands-on-workshops.avif",
+    "alt": "",
+    "loading": "lazy",
+    "decoding": ""
+  },
+  {
+    "tag": "img",
+    "file": "src/site/index.html",
+    "src": "images/Human-AI-Interaction.avif",
+    "alt": "",
+    "loading": "lazy",
+    "decoding": ""
+  },
+  {
+    "tag": "img",
+    "file": "src/site/index.html",
+    "src": "images/mai-logos/logo_in_3d_2_darkened.avif",
+    "alt": "Museum of Artificial Intelligence logo",
+    "loading": "lazy",
+    "decoding": ""
+  },
+  {
+    "tag": "img",
+    "file": "src/site/index.html",
+    "src": "images/mai-logos/rotatingLogo.avif",
+    "alt": "MAI logo",
+    "loading": "lazy",
+    "decoding": ""
+  },
+  {
+    "tag": "img",
+    "file": "src/site/index.html",
+    "src": "images\\mai-logos\\logo_in_3d_2_darkened.avif",
+    "alt": "MAI logo",
+    "loading": "lazy",
+    "decoding": ""
+  }
+]

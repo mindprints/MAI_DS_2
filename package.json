@@ -1,7 +1,7 @@
 {
   "name": "mai_ds_2",
   "version": "1.0.0",
-  "description": "A modern, responsive website for the Museum of Artificial Intelligence featuring interactive slideshows, smooth animations, and a professional design.",
+  "description": "A modern, responsive website for the Museum of Artificial Intelligence featuring interactive slideshows, smooth animations, and a professional designnode tools/export-content.js --out-dir exports .",
   "main": "src/site/journal.js",
   "scripts": {
     "build": "npm run build:static && npm run build:pages && npm run build:css",

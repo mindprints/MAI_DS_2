@@ -1,0 +1,3968 @@
+[
+  {
+    "kind": "encyclopedia",
+    "slug": "ai-winter-1974-1980",
+    "locale": "en",
+    "file": "src/content/encyclopedia/ai-winter-1974-1980.en.html",
+    "htmlSha1": "87fe3889079d3adac8b878b0b77ba8ba5231fc7a",
+    "segments": [
+      {
+        "id": "1/1/0/0",
+        "parentTag": "p",
+        "text": "A period of reduced funding and confidence in AI research following unmet early expectations and critical assessments.",
+        "textSha1": "085078fdb72492067a4aa37cf31ff9ce11f2da95"
+      },
+      {
+        "id": "1/1/2/1/0",
+        "parentTag": "p",
+        "text": "After rapid optimism in the 1960s, the 1970s brought tougher benchmarks, critical reviews, and limited computing resources. Governments and funders grew cautious as projects under-delivered against ambitious goals in machine translation, robotics, and general problem solving.",
+        "textSha1": "b7ba097f095055b5013084d1a1fb864bdf415d9b"
+      },
+      {
+        "id": "1/1/2/3/0",
+        "parentTag": "p",
+        "text": "The downturn reshaped priorities and evaluation standards. While the “winter” slowed some symbolic programs, it also prepared the ground for future revivals in statistical methods, data-driven learning, and later deep learning.",
+        "textSha1": "f01230725cd881a79a623d38903889b2f561aecb"
+      }
+    ]
+  },
+  {
+    "kind": "encyclopedia",
+    "slug": "ai-winter-1974-1980",
+    "locale": "sv",
+    "file": "src/content/encyclopedia/ai-winter-1974-1980.sv.html",
+    "htmlSha1": "cea0b2f0931a41c7597247c2842851c26a5e4ec1",
+    "segments": [
+      {
+        "id": "1/1/0/0",
+        "parentTag": "p",
+        "text": "En period med minskad finansiering och minskat förtroende för AI-forskning efter ouppfyllda förväntningar och kritiska utvärderingar.",
+        "textSha1": "9f01cc3f64ca7f34aab15f3599ad9fb1e74b53cc"
+      },
+      {
+        "id": "1/1/2/1/0",
+        "parentTag": "p",
+        "text": "Efter stark optimism på 1960-talet kom 1970-talet med tuffare riktmärken, kritiska rapporter och begränsade beräkningsresurser. Offentliga finansiärer blev försiktigare när resultat inom maskinöversättning, robotik och generell problemlösning inte nådde de högt ställda målen.",
+        "textSha1": "386e763d9b10e11c5683b85e7fdca7b63b0b74e4"
+      },
+      {
+        "id": "1/1/2/3/0",
+        "parentTag": "p",
+        "text": "Nedgången omformade prioriteringar och utvärderingskriterier. Även om ”vintern” bromsade vissa symboliska program, förberedde den också marken för senare återhämtningar inom statistiska metoder, datadriven inlärning och senare djupinlärning.",
+        "textSha1": "fb9c8d217d5b584a07386c1f9715e487543b7eb9"
+      }
+    ]
+  },
+  {
+    "kind": "encyclopedia",
+    "slug": "backpropagation-1986",
+    "locale": "en",
+    "file": "src/content/encyclopedia/backpropagation-1986.en.html",
+    "htmlSha1": "3a6d1ce80901d26bf8c529e6867432b5a7b5c418",
+    "segments": [
+      {
+        "id": "1/1/0/0",
+        "parentTag": "p",
+        "text": "An efficient method to compute gradients through multi-layer neural networks, enabling practical training beyond single-layer models.",
+        "textSha1": "5181fb780aab368d068e54c9c1b91c1c2b75afa8"
+      },
+      {
+        "id": "1/1/2/1/0",
+        "parentTag": "p",
+        "text": "Backpropagation applies the chain rule layer by layer to propagate errors from outputs back to earlier layers. This makes it feasible to optimize many parameters with gradient descent, reviving interest in neural networks after earlier limitations were highlighted.",
+        "textSha1": "33b3c5e888687ae46b2f1350d26bdd4d72751dc1"
+      },
+      {
+        "id": "1/1/2/3/0",
+        "parentTag": "p",
+        "text": "The technique laid groundwork for modern deep learning, where larger datasets, compute, and improved architectures extend the same core training principle.",
+        "textSha1": "ca161d89cedb894e0757b7066b35e000615ff589"
+      }
+    ]
+  },
+  {
+    "kind": "encyclopedia",
+    "slug": "backpropagation-1986",
+    "locale": "sv",
+    "file": "src/content/encyclopedia/backpropagation-1986.sv.html",
+    "htmlSha1": "cf1a8b0461dc98c8c69fc64a3be939fd8c9bde49",
+    "segments": [
+      {
+        "id": "1/1/0/0",
+        "parentTag": "p",
+        "text": "En effektiv metod för att beräkna gradienter genom flerskiktsnät, vilket möjliggör praktisk träning bortom enskiktsmodeller.",
+        "textSha1": "594ff518419f0e9620c9c2f8449b82405f57a850"
+      },
+      {
+        "id": "1/1/2/1/0",
+        "parentTag": "p",
+        "text": "Backpropagation tillämpar kedjeregeln lager för lager för att sprida fel från utgångar tillbaka till tidigare lager. Det gör det möjligt att optimera många parametrar med gradientnedstigning och återupplivade intresset för neurala nät efter tidigare begränsningar.",
+        "textSha1": "340483496e4fcf26cd8ef3a18f46c0cfa8212e16"
+      },
+      {
+        "id": "1/1/2/3/0",
+        "parentTag": "p",
+        "text": "Tekniken lade grunden för modern djupinlärning, där större dataset, beräkningskraft och förbättrade arkitekturer förlänger samma kärnprincip för träning.",
+        "textSha1": "e4e6e3dbfc065ae8ec22a6356e7a2d891e030318"
+      }
+    ]
+  },
+  {
+    "kind": "encyclopedia",
+    "slug": "dartmouth-1956",
+    "locale": "en",
+    "file": "src/content/encyclopedia/dartmouth-1956.en.html",
+    "htmlSha1": "8e70331b0fbaa911c67b926949468ecb3b32bba7",
+    "segments": [
+      {
+        "id": "1/1/0/0",
+        "parentTag": "p",
+        "text": "The 1956 summer workshop at Dartmouth College that coined “Artificial Intelligence” and framed early research ambitions.",
+        "textSha1": "7715c2e4fa502fd602c5543bcc94c6be5b6be591"
+      },
+      {
+        "id": "1/1/2/1/0",
+        "parentTag": "p",
+        "text": "In the summer of 1956, a small group of researchers proposed that aspects of learning and intelligence could, in principle, be precisely described and simulated on machines. The event catalyzed research into symbolic reasoning, search, and early learning approaches, and helped establish AI as a distinct academic field.",
+        "textSha1": "4dc9d205d3d0127ebdce068534ff16437caeaee8"
+      },
+      {
+        "id": "1/1/2/3/0",
+        "parentTag": "p",
+        "text": "While expectations were high, the symposium also set the stage for later debates between symbolic programs and data-driven learning methods. Many lines of work that emerged here—problem solving, logic, language—remain central to AI discourse.",
+        "textSha1": "9c634f2299e7952eed09f134b5ab99bfce308586"
+      }
+    ]
+  },
+  {
+    "kind": "encyclopedia",
+    "slug": "dartmouth-1956",
+    "locale": "sv",
+    "file": "src/content/encyclopedia/dartmouth-1956.sv.html",
+    "htmlSha1": "1d06130b2ca6633ed0055fc9f26128a97efeff9a",
+    "segments": [
+      {
+        "id": "1/1/0/0",
+        "parentTag": "p",
+        "text": "Sommarworkshopen vid Dartmouth College 1956 som myntade ”artificiell intelligens” och formulerade tidiga forskningsambitioner.",
+        "textSha1": "ed5457c28ee21dccdd00642cfea9be7c433fbbb3"
+      },
+      {
+        "id": "1/1/2/1/0",
+        "parentTag": "p",
+        "text": "Under sommaren 1956 föreslog en liten forskargrupp att lärande och intelligens kan beskrivas exakt och simuleras på maskiner. Händelsen gav fart åt forskning om symboliskt resonerande, sökning och tidiga inlärningsmetoder, och etablerade AI som ett eget akademiskt område.",
+        "textSha1": "b497f7f98cb5f8be01bd78972312e147f816a4bb"
+      },
+      {
+        "id": "1/1/2/3/0",
+        "parentTag": "p",
+        "text": "Förväntningarna var höga, men konferensen lade också grunden för senare debatter mellan symboliska program och datadrivna inlärningsmetoder. Många spår som tog form här—problemlösning, logik, språk—är fortfarande centrala i AI-diskussionen.",
+        "textSha1": "56f8f9ea760acbaa059e47e772792296174fddf8"
+      }
+    ]
+  },
+  {
+    "kind": "encyclopedia",
+    "slug": "imagenet-alexnet-2012",
+    "locale": "en",
+    "file": "src/content/encyclopedia/imagenet-alexnet-2012.en.html",
+    "htmlSha1": "a3af9f44f9f9fb99184cd85f97f0d2f228428bf1",
+    "segments": [
+      {
+        "id": "1/1/0/0",
+        "parentTag": "p",
+        "text": "A landmark dataset and deep convolutional network that sparked the modern deep learning revolution in computer vision.",
+        "textSha1": "a21faad54754511027cb58adf299908a5345cc40"
+      },
+      {
+        "id": "1/1/2/1/0",
+        "parentTag": "p",
+        "text": "ImageNet provided a massive labeled dataset of over 1 million images across 1,000 categories, while AlexNet demonstrated that deep convolutional neural networks could dramatically outperform traditional computer vision methods on this challenging benchmark.",
+        "textSha1": "3d1e4604d0942867a636b840e59aaba9d818da90"
+      },
+      {
+        "id": "1/1/2/3/0",
+        "parentTag": "p",
+        "text": "AlexNet's victory in the 2012 ImageNet Large Scale Visual Recognition Challenge marked a turning point, achieving a top-5 error rate of 15.3% compared to 26.2% from the second-place traditional method. This breakthrough proved that deep learning could scale to real-world problems with sufficient data and compute power.",
+        "textSha1": "c71973770e51c22e29ecc518aa9ec8be27828afa"
+      },
+      {
+        "id": "1/1/2/5/0",
+        "parentTag": "p",
+        "text": "The success launched the current era of deep learning, inspiring rapid adoption across industries and establishing convolutional neural networks as the foundation for modern computer vision systems.",
+        "textSha1": "f5b1051351762f87831e5dce8d8e9716d9ce2fac"
+      }
+    ]
+  },
+  {
+    "kind": "encyclopedia",
+    "slug": "imagenet-alexnet-2012",
+    "locale": "sv",
+    "file": "src/content/encyclopedia/imagenet-alexnet-2012.sv.html",
+    "htmlSha1": "a658b6e9bd413569e762f5cbabeb5d40d4aa6943",
+    "segments": [
+      {
+        "id": "1/1/0/0",
+        "parentTag": "p",
+        "text": "Ett banbrytande dataset och djupt faltningsnätverk som utlöste den moderna djupinlärningsrevolutionen inom datorseende.",
+        "textSha1": "146f452781a48632be2b290f52b035c5faf3e471"
+      },
+      {
+        "id": "1/1/2/1/0",
+        "parentTag": "p",
+        "text": "ImageNet tillhandahöll ett massivt märkt dataset med över 1 miljon bilder fördelade på 1 000 kategorier, medan AlexNet visade att djupa faltningsnätverk dramatiskt kunde överträffa traditionella datorseendemetoder på detta utmanande benchmark.",
+        "textSha1": "e3b17b5ef8acb44aff4930e28986ced976703a61"
+      },
+      {
+        "id": "1/1/2/3/0",
+        "parentTag": "p",
+        "text": "AlexNets seger i 2012 års ImageNet Large Scale Visual Recognition Challenge markerade en vändpunkt genom att uppnå en top-5 felfrekvens på 15,3% jämfört med 26,2% från den andraplatsade traditionella metoden. Detta genombrott bevisade att djupinlärning kunde skalas till verkliga problem med tillräckligt data och beräkningskraft.",
+        "textSha1": "c93982d4ae5bbb79d35f1a3f37fc3c13f997c8fe"
+      },
+      {
+        "id": "1/1/2/5/0",
+        "parentTag": "p",
+        "text": "Framgången lanserade den nuvarande eran av djupinlärning, inspirerade snabb adoption över industrier och etablerade faltningsnätverk som grunden för moderna datorseendesystem.",
+        "textSha1": "1bd013124912710a7576fd21997dee93b4c9d0e9"
+      }
+    ]
+  },
+  {
+    "kind": "encyclopedia",
+    "slug": "perceptron",
+    "locale": "en",
+    "file": "src/content/encyclopedia/perceptron.en.html",
+    "htmlSha1": "e18646080d7a2adb92127c7f3ff2f31155c8a51e",
+    "segments": [
+      {
+        "id": "1/1/0/0",
+        "parentTag": "p",
+        "text": "A pioneering linear classifier introduced in the late 1950s that inspired early neural network research and later critique.",
+        "textSha1": "d76fa36973d766ab05577d3d3757499f5be8b794"
+      },
+      {
+        "id": "1/1/2/1/0",
+        "parentTag": "p",
+        "text": "The perceptron computes a weighted sum of inputs and applies a threshold to produce a binary decision. It can learn weights from labeled examples via simple update rules. Its limitations on non-linearly separable problems became a key historical lesson, motivating multi-layer networks and new training methods.",
+        "textSha1": "f55c71b6090aa3a0a5654925f58fed823c447f14"
+      },
+      {
+        "id": "1/1/2/3/0",
+        "parentTag": "p",
+        "text": "Despite its simplicity, the perceptron remains an important foundation for understanding modern linear models and the evolution toward deep learning.",
+        "textSha1": "613c8d58841dfe7a47b07b7bceb0e1f68d69ed7c"
+      }
+    ]
+  },
+  {
+    "kind": "encyclopedia",
+    "slug": "perceptron",
+    "locale": "sv",
+    "file": "src/content/encyclopedia/perceptron.sv.html",
+    "htmlSha1": "91badf134273a7a8d24423a62edb8945d361317e",
+    "segments": [
+      {
+        "id": "1/1/0/0",
+        "parentTag": "p",
+        "text": "En banbrytande linjär klassificerare från slutet av 1950-talet som inspirerade tidig nätverksforskning och senare kritik.",
+        "textSha1": "114b7d3b46a7ba7a3aeb93ad59a3f3640d653225"
+      },
+      {
+        "id": "1/1/2/1/0",
+        "parentTag": "p",
+        "text": "Perceptron beräknar en viktad summa av indata och tillämpar en tröskel för att ge ett binärt beslut. Det kan lära vikter från märkta exempel via enkla uppdateringsregler. Begränsningar vid icke-linjärt separerbara problem blev en viktig lärdom historiskt och ledde till flerskiktsnät och nya träningsmetoder.",
+        "textSha1": "a2f1b487c5764126181025b000a89e70e71ce132"
+      },
+      {
+        "id": "1/1/2/3/0",
+        "parentTag": "p",
+        "text": "Trots enkelheten är perceptron fortfarande en grund för att förstå moderna linjära modeller och utvecklingen mot djupinlärning.",
+        "textSha1": "c766de4c26626754477d857ebaca2b702a700319"
+      }
+    ]
+  },
+  {
+    "kind": "encyclopedia",
+    "slug": "transformers-2017",
+    "locale": "en",
+    "file": "src/content/encyclopedia/transformers-2017.en.html",
+    "htmlSha1": "0f21dd8aa35315beb8c8da2bb345ddb4590c0209",
+    "segments": [
+      {
+        "id": "1/1/0/0",
+        "parentTag": "p",
+        "text": "A self-attention architecture that replaced recurrence with parallel attention, reshaping NLP and enabling scalable multimodal models.",
+        "textSha1": "1da107b3e313e665cc787590f43937273fb3ac66"
+      },
+      {
+        "id": "1/1/2/1/0",
+        "parentTag": "p",
+        "text": "Transformers use attention to weight relationships among tokens, allowing efficient parallel training and strong long-range dependencies. Encoder-decoder and decoder-only variants underpin many state-of-the-art language and vision-language systems.",
+        "textSha1": "3387bec9313b56b50043ab21e189897f8a02d55c"
+      },
+      {
+        "id": "1/1/2/3/0",
+        "parentTag": "p",
+        "text": "The design scales effectively with data and compute, which has driven rapid advances in capabilities and sparked broad adoption across research and industry.",
+        "textSha1": "d28d57154ff533da7e3fa10ec0283e30117ca1c2"
+      }
+    ]
+  },
+  {
+    "kind": "encyclopedia",
+    "slug": "transformers-2017",
+    "locale": "sv",
+    "file": "src/content/encyclopedia/transformers-2017.sv.html",
+    "htmlSha1": "b8de35af53c67b1985558a22cde66712844c7e1a",
+    "segments": [
+      {
+        "id": "1/1/0/0",
+        "parentTag": "p",
+        "text": "En självuppmärksam arkitektur som ersatte rekurrens med parallell uppmärksamhet, omformade NLP och möjliggjorde skalbara multimodala modeller.",
+        "textSha1": "50cca1d173fe099559982dacdbbedfd5e6d18572"
+      },
+      {
+        "id": "1/1/2/1/0",
+        "parentTag": "p",
+        "text": "Transformers använder uppmärksamhet för att väga relationer mellan token, vilket möjliggör effektiv parallell träning och starka långdistansberoenden. Encoder-decoder- och enbart decoder-varianter ligger till grund för många ledande språk- och språk-bild-system.",
+        "textSha1": "c8f7ccb17f93a7830be4d7247bda327371d35841"
+      },
+      {
+        "id": "1/1/2/3/0",
+        "parentTag": "p",
+        "text": "Designen skalar väl med data och beräkningsresurser, vilket har drivit snabba framsteg i kapacitet och lett till bred användning inom forskning och industri.",
+        "textSha1": "98f9e59a37086e11f0c3f28cc561667c872a745b"
+      }
+    ]
+  },
+  {
+    "kind": "page",
+    "slug": "contact",
+    "locale": "en",
+    "file": "src/content/pages/contact.en.html",
+    "htmlSha1": "64b940924fb64b066435f3abc080049b768b9a04",
+    "segments": [
+      {
+        "id": "0/1/0/1/0",
+        "parentTag": "h1",
+        "text": "Contact",
+        "textSha1": "b37456c4530be810dc040f50da72eda09addfb0a"
+      },
+      {
+        "id": "0/1/0/3/0",
+        "parentTag": "p",
+        "text": "Tell us how we can help. We’ll get back to you shortly.",
+        "textSha1": "cbd5225029b83c3ce660fef5cd7a87b77198e19f"
+      },
+      {
+        "id": "0/1/0/5/1/3/1/0",
+        "parentTag": "label",
+        "text": "Topic",
+        "textSha1": "7e13bd176f89a12f0b614b55ffc19c14515ef920"
+      },
+      {
+        "id": "0/1/0/5/1/3/3/1/0",
+        "parentTag": "option",
+        "text": "General Contact",
+        "textSha1": "51d88fed9ad9b6c44d3de80f6cfb016f97b6df3e"
+      },
+      {
+        "id": "0/1/0/5/1/3/3/3/0",
+        "parentTag": "option",
+        "text": "Membership Application",
+        "textSha1": "eda94ba5f5cfdb1304d94110845d0664aba70963"
+      },
+      {
+        "id": "0/1/0/5/1/3/3/5/0",
+        "parentTag": "option",
+        "text": "Workshop/Lecture Enquiry",
+        "textSha1": "813abaf46ec2147d0335e49dbb5b7a50927ef5cf"
+      },
+      {
+        "id": "0/1/0/5/1/3/3/7/0",
+        "parentTag": "option",
+        "text": "Press Center",
+        "textSha1": "e108056467aada7b2ed293f8871a9bd447292b3e"
+      },
+      {
+        "id": "0/1/0/5/1/3/3/9/0",
+        "parentTag": "option",
+        "text": "Careers",
+        "textSha1": "68d70e596c656407fcebb9854ef64847a2a5a78f"
+      },
+      {
+        "id": "0/1/0/5/1/3/3/11/0",
+        "parentTag": "option",
+        "text": "Partnerships",
+        "textSha1": "7b0a0d109b127effb203f4eafbe3db1675afea89"
+      },
+      {
+        "id": "0/1/0/5/1/3/3/13/0",
+        "parentTag": "option",
+        "text": "Donations/Sponsorship",
+        "textSha1": "e09a2b478945aca85356e9bd2bec6af289eeeb62"
+      },
+      {
+        "id": "0/1/0/5/1/3/3/15/0",
+        "parentTag": "option",
+        "text": "Venue Hire",
+        "textSha1": "eaab6771589cf49b66618341409d395836a3172e"
+      },
+      {
+        "id": "0/1/0/5/1/3/3/17/0",
+        "parentTag": "option",
+        "text": "Accessibility",
+        "textSha1": "d660049bc1f2f54fc0e3f4ace6fa5eb205f2f1e0"
+      },
+      {
+        "id": "0/1/0/5/1/3/3/19/0",
+        "parentTag": "option",
+        "text": "Other",
+        "textSha1": "6e6a6f2086bb5fe5dbfd17d8d5f502d48759834b"
+      },
+      {
+        "id": "0/1/0/5/1/7/1/1/0",
+        "parentTag": "label",
+        "text": "Your name",
+        "textSha1": "ab42293e29e1ffb306c1403dd95144d664853a60"
+      },
+      {
+        "id": "0/1/0/5/1/7/3/1/0",
+        "parentTag": "label",
+        "text": "Email",
+        "textSha1": "84add5b2952787581cb9a8851eef63d1ec75d22b"
+      },
+      {
+        "id": "0/1/0/5/1/11/1/1/0",
+        "parentTag": "label",
+        "text": "Organization (optional)",
+        "textSha1": "43fd346e1d39edf67a3c14d12b3962a7de42281a"
+      },
+      {
+        "id": "0/1/0/5/1/11/3/1/0",
+        "parentTag": "label",
+        "text": "Phone (optional)",
+        "textSha1": "df21aeef8f34a6a89c3946c46560bdd844a11ea3"
+      },
+      {
+        "id": "0/1/0/5/1/13/1/1/0",
+        "parentTag": "label",
+        "text": "Website (optional)",
+        "textSha1": "e397cb24908a17f440c571e9b68f2196cf5296e0"
+      },
+      {
+        "id": "0/1/0/5/1/13/3/1/0",
+        "parentTag": "label",
+        "text": "Location (optional)",
+        "textSha1": "b08ded404a8cdda4cc8f9a2668c415cb17ab7e5e"
+      },
+      {
+        "id": "0/1/0/5/1/15/1/1/0",
+        "parentTag": "label",
+        "text": "Budget (optional)",
+        "textSha1": "17f11421b3143ec0c31bb42bf3ea11b33b9bf111"
+      },
+      {
+        "id": "0/1/0/5/1/15/3/1/0",
+        "parentTag": "label",
+        "text": "Timeline (optional)",
+        "textSha1": "15032978526837d5c5f4153133b8e05841018495"
+      },
+      {
+        "id": "0/1/0/5/1/19/1/0",
+        "parentTag": "label",
+        "text": "Message",
+        "textSha1": "68f4145fee7dde76afceb910165924ad14cf0d00"
+      },
+      {
+        "id": "0/1/0/5/1/21/0",
+        "parentTag": "p",
+        "text": "We use your information only to respond to your enquiry. See our",
+        "textSha1": "04baceb5de1c1f67a262c2f0e363d6e681177667"
+      },
+      {
+        "id": "0/1/0/5/1/21/2",
+        "parentTag": "p",
+        "text": ".",
+        "textSha1": "3a52ce780950d4d969792a2559cd519d7ee8c727"
+      },
+      {
+        "id": "0/1/0/5/1/21/1/0",
+        "parentTag": "a",
+        "text": "Privacy Policy",
+        "textSha1": "9db108ba6b7f6571356060929e37dae65878cfca"
+      },
+      {
+        "id": "0/1/0/5/1/23/1/0",
+        "parentTag": "button",
+        "text": "Send message",
+        "textSha1": "c70a890d1411098b6bbd10f59252da322a68af82"
+      }
+    ]
+  },
+  {
+    "kind": "page",
+    "slug": "contact",
+    "locale": "sv",
+    "file": "src/content/pages/contact.sv.html",
+    "htmlSha1": "306b86d88b1cc378514b880c3788844892ca2315",
+    "segments": [
+      {
+        "id": "0/1/0/1/0",
+        "parentTag": "h1",
+        "text": "Kontakt",
+        "textSha1": "a92b9bcb166569797fbf3ac4689fcf144151b1e6"
+      },
+      {
+        "id": "0/1/0/3/0",
+        "parentTag": "p",
+        "text": "Berätta hur vi kan hjälpa till. Vi återkommer så snart vi kan.",
+        "textSha1": "153dfe195f0a15a8973c44622bf6f856c00e51ac"
+      },
+      {
+        "id": "0/1/0/5/1/3/1/0",
+        "parentTag": "label",
+        "text": "Ämne",
+        "textSha1": "21678bcf450e1d758c3b1ae240f1201a23f106e5"
+      },
+      {
+        "id": "0/1/0/5/1/3/3/1/0",
+        "parentTag": "option",
+        "text": "Allmän kontakt",
+        "textSha1": "ae9f25c3604683bb5691c8d1100e42f1a665dd8f"
+      },
+      {
+        "id": "0/1/0/5/1/3/3/3/0",
+        "parentTag": "option",
+        "text": "Medlemsansökan",
+        "textSha1": "81643779e10248557776b4488509e9c672f9167e"
+      },
+      {
+        "id": "0/1/0/5/1/3/3/5/0",
+        "parentTag": "option",
+        "text": "Workshop/Föreläsning",
+        "textSha1": "e8795baf67f76791243b91e8b15bb8012e8d2a6e"
+      },
+      {
+        "id": "0/1/0/5/1/3/3/7/0",
+        "parentTag": "option",
+        "text": "Press Center",
+        "textSha1": "e108056467aada7b2ed293f8871a9bd447292b3e"
+      },
+      {
+        "id": "0/1/0/5/1/3/3/9/0",
+        "parentTag": "option",
+        "text": "Karriär",
+        "textSha1": "26d657485085c1363d5a70b3f4f816b2db10a0ba"
+      },
+      {
+        "id": "0/1/0/5/1/3/3/11/0",
+        "parentTag": "option",
+        "text": "Partnerskap",
+        "textSha1": "a6d800a17f166f515150e2a40f7e25068ef30779"
+      },
+      {
+        "id": "0/1/0/5/1/3/3/13/0",
+        "parentTag": "option",
+        "text": "Donation/Sponsring",
+        "textSha1": "24d3f8f3f6a088eda2b62bb7763bf54a0fb25b4f"
+      },
+      {
+        "id": "0/1/0/5/1/3/3/15/0",
+        "parentTag": "option",
+        "text": "Lokaluthyrning",
+        "textSha1": "152a9705ed4cdeb3972ac7df93c18c0c0235ad37"
+      },
+      {
+        "id": "0/1/0/5/1/3/3/17/0",
+        "parentTag": "option",
+        "text": "Tillgänglighet",
+        "textSha1": "e1a2969d87bbf05ec9bb58fe1d802fd457574a31"
+      },
+      {
+        "id": "0/1/0/5/1/3/3/19/0",
+        "parentTag": "option",
+        "text": "Annat",
+        "textSha1": "787be8b8a5f7521748287479bef8107f1ec57dfe"
+      },
+      {
+        "id": "0/1/0/5/1/7/1/1/0",
+        "parentTag": "label",
+        "text": "Namn",
+        "textSha1": "26e32eec2d495a78e4a0cf60546cf0d3976cb209"
+      },
+      {
+        "id": "0/1/0/5/1/7/3/1/0",
+        "parentTag": "label",
+        "text": "E-post",
+        "textSha1": "b3418c97162213f5ae3260a7b8a644302ac744fa"
+      },
+      {
+        "id": "0/1/0/5/1/11/1/1/0",
+        "parentTag": "label",
+        "text": "Organisation (valfritt)",
+        "textSha1": "bcff416d4399a7a5f6364ceed334041a14c795ec"
+      },
+      {
+        "id": "0/1/0/5/1/11/3/1/0",
+        "parentTag": "label",
+        "text": "Telefon (valfritt)",
+        "textSha1": "ed6eae9cca02f9daa9b0a220e6c22617cc56454b"
+      },
+      {
+        "id": "0/1/0/5/1/13/1/1/0",
+        "parentTag": "label",
+        "text": "Webbplats (valfritt)",
+        "textSha1": "a909019f3c3f62d7f0a981de4c9d089881a1829d"
+      },
+      {
+        "id": "0/1/0/5/1/13/3/1/0",
+        "parentTag": "label",
+        "text": "Plats (valfritt)",
+        "textSha1": "d838b7b0dd714873d9ce387f9b56c3d33e7d91aa"
+      },
+      {
+        "id": "0/1/0/5/1/15/1/1/0",
+        "parentTag": "label",
+        "text": "Budget (valfritt)",
+        "textSha1": "e5acd1e2a7afd550a37f4b7f073c7e53e4541b99"
+      },
+      {
+        "id": "0/1/0/5/1/15/3/1/0",
+        "parentTag": "label",
+        "text": "Tidplan (valfritt)",
+        "textSha1": "c134e497c1b6d8a11a4bef789ba44cde4e61090c"
+      },
+      {
+        "id": "0/1/0/5/1/19/1/0",
+        "parentTag": "label",
+        "text": "Meddelande",
+        "textSha1": "dd21c9f2b2d17d1f4ae0bc8bdb3859d6e7f6718d"
+      },
+      {
+        "id": "0/1/0/5/1/21/0",
+        "parentTag": "p",
+        "text": "Vi använder dina uppgifter endast för att besvara din förfrågan. Se vår",
+        "textSha1": "935178f54e86504a7dd9637e0070c48b126d25b9"
+      },
+      {
+        "id": "0/1/0/5/1/21/2",
+        "parentTag": "p",
+        "text": ".",
+        "textSha1": "3a52ce780950d4d969792a2559cd519d7ee8c727"
+      },
+      {
+        "id": "0/1/0/5/1/21/1/0",
+        "parentTag": "a",
+        "text": "Integritetspolicy",
+        "textSha1": "f9db640783ee0ef032bea3e37974f38db62d57b7"
+      },
+      {
+        "id": "0/1/0/5/1/23/1/0",
+        "parentTag": "button",
+        "text": "Skicka meddelande",
+        "textSha1": "1f51ec1b5b848a9a2dd4deedeccc88a4362ee045"
+      }
+    ]
+  },
+  {
+    "kind": "page",
+    "slug": "explore",
+    "locale": "en",
+    "file": "src/content/pages/explore.en.html",
+    "htmlSha1": "bc059a41cbbda0bac4b312f896b2b0932ebcd684",
+    "segments": [
+      {
+        "id": "0/1/0/1/0",
+        "parentTag": "h1",
+        "text": "Explore",
+        "textSha1": "b965ae66fcc42dd628d9bdf69b2b3719c5cb2d26"
+      },
+      {
+        "id": "0/1/0/3/0",
+        "parentTag": "p",
+        "text": "Details on our exhibits and sessions.",
+        "textSha1": "364a07dfb32a62b4b823eb7caa1d7620ba5b41a9"
+      },
+      {
+        "id": "0/1/0/5/1/1/0",
+        "parentTag": "h2",
+        "text": "The Evolution of Artificial Intelligence",
+        "textSha1": "0ce5d86f2e65e154359c332babf89b9aaebb6968"
+      },
+      {
+        "id": "0/1/0/5/1/3/0",
+        "parentTag": "p",
+        "text": "Artificial Intelligence did not begin with computers but with human imagination. Philosophers from Aristotle to Descartes speculated about logic, reasoning, and mechanical minds long before machines existed to test these ideas. In the 20th century, Alan Turing proposed the idea of a \"universal machine\" and the famous Turing Test, laying the groundwork for a science that would seek to recreate human thought. The 1956 Dartmouth Conference is often called the birth of AI as a research field. Early pioneers such as John McCarthy, Marvin Minsky, and Herbert Simon explored symbolic reasoning, problem solving, and machine learning. Over the decades, AI has experienced cycles of great optimism and \"AI winters,\" when progress slowed due to limited computing power or overly ambitious expectations. Today, AI has grown into a global enterprise driving fields from medicine to art. Machine learning, neural networks, and large-scale data have made systems like ChatGPT, self-driving cars, and image generators possible. What began as a philosophical question—can machines think?—has become a practical force shaping science, culture, and society.",
+        "textSha1": "4b5e69423f0a99a693057b62ebb42973fc78e96c"
+      },
+      {
+        "id": "0/1/0/5/3/1/0",
+        "parentTag": "h2",
+        "text": "Hands-on Workshops",
+        "textSha1": "0795f27bb62c7d32ab2f057529c677efc09b0c8a"
+      },
+      {
+        "id": "0/1/0/5/3/3/0",
+        "parentTag": "p",
+        "text": "Our workshops are designed to move beyond theory and into practice. You will learn how to work directly with today's most powerful AI tools, gaining practical skills that can be applied in your studies, projects, and workplace. No advanced technical background is required—just curiosity and a willingness to experiment. Participants will explore applications ranging from text generation and image creation to data analysis and decision support. You'll learn how to frame the right questions, guide AI outputs, and critically assess results. We emphasize both creativity and problem-solving, showing how AI can assist in tasks from brainstorming to technical research. By the end of the workshop, you'll not only understand how these tools function but also feel confident using them for real-world challenges. Whether your goal is to boost productivity, enhance communication, or spark innovation, these sessions provide a hands-on introduction to the possibilities of AI.",
+        "textSha1": "5728066e0daa123624276e2d4870d2d0f3793168"
+      },
+      {
+        "id": "0/1/0/5/5/1/0",
+        "parentTag": "h2",
+        "text": "The Human-AI Future",
+        "textSha1": "474f28d8fb353e1fef8b25b4cd158024d6193be0"
+      },
+      {
+        "id": "0/1/0/5/5/3/0",
+        "parentTag": "p",
+        "text": "Artificial Intelligence is not just a tool we use—it is becoming a partner in how we live, work, and think. From medical diagnostics to personalized education, AI is entering spaces that affect our most personal decisions and daily routines. Its influence is likely to expand further as systems become more capable and adaptive. The workplace of the future will see tasks reshaped or in some simply replaced. Routine and repetitive work may be automated, freeing people for more creative or strategic roles, but also demanding new skills and adaptability. Entire sectors—such as healthcare, transportation, and entertainment—will continue to evolve with AI integrating more deeply into their processes. At the same time, these changes raise important social and ethical questions. How do we ensure AI serves human values? Who benefits most from its advances? What risks need to be addressed? Imagining the human-AI future means not only looking at the opportunities ahead but also preparing thoughtfully for the challenges they bring.",
+        "textSha1": "f4582b2b3d518bb3f003dcd3a789c2ac15c4e00d"
+      },
+      {
+        "id": "0/1/0/7/1/2",
+        "parentTag": "a",
+        "text": "Plan a workshop or lecture",
+        "textSha1": "7a43a3f26b50334ad17086f94f2d9f70ead5adaf"
+      }
+    ]
+  },
+  {
+    "kind": "page",
+    "slug": "explore",
+    "locale": "sv",
+    "file": "src/content/pages/explore.sv.html",
+    "htmlSha1": "12de52432c7a5daeb946c88bbe0ba60151e2b153",
+    "segments": [
+      {
+        "id": "0/1/0/1/0",
+        "parentTag": "h1",
+        "text": "Utforska",
+        "textSha1": "579ffafe5b3f8eda5944a394c5ecea2ce3f81bd8"
+      },
+      {
+        "id": "0/1/0/3/0",
+        "parentTag": "p",
+        "text": "Information om våra utställningar och sessioner.",
+        "textSha1": "4d47c0d47a2d7b11ec2f3e6df2495d1d47d7e562"
+      },
+      {
+        "id": "0/1/0/5/1/1/0",
+        "parentTag": "h2",
+        "text": "Den artificiella intelligensens utveckling",
+        "textSha1": "9b2a3aeceea15f22b8e343f0004007abe5fa6fe2"
+      },
+      {
+        "id": "0/1/0/5/1/3/0",
+        "parentTag": "p",
+        "text": "Artificiell intelligens började inte med datorer, utan med mänsklig fantasi. Filosofer från Aristoteles till Descartes spekulerade om logik, slutledning och mekaniska sinnen långt innan maskiner fanns för att pröva idéerna. Under 1900-talet föreslog Alan Turing den \"universella maskinen\" och det berömda Turingtestet, vilket lade grunden för en vetenskap som försökte återskapa mänskligt tänkande. Dartmouthkonferensen 1956 ses ofta som AI-fältets födelse. Tidiga pionjärer som John McCarthy, Marvin Minsky och Herbert Simon utforskade symboliskt resonerande, problemlösning och maskininlärning. Under decennierna följde perioder av stor optimism och \"AI-vintrar\" när utvecklingen bromsade av begränsad datorkraft eller alltför högt ställda förväntningar. Idag driver AI utvecklingen inom allt från medicin till konst. Maskininlärning, neuronnät och storskalig data har gjort system som ChatGPT, självkörande bilar och bildgeneratorer möjliga. Vad som började som en filosofisk fråga – kan maskiner tänka? – har blivit en praktisk kraft som formar vetenskap, kultur och samhälle.",
+        "textSha1": "72393dd32596bd49c3370e952fafda791cdf2fad"
+      },
+      {
+        "id": "0/1/0/5/3/1/0",
+        "parentTag": "h2",
+        "text": "Praktiska workshops",
+        "textSha1": "4a732f78d2bd7ffab938ad8af5868a2cf46dcee0"
+      },
+      {
+        "id": "0/1/0/5/3/3/0",
+        "parentTag": "p",
+        "text": "Våra workshops är utformade för att gå från teori till praktik. Du lär dig arbeta direkt med dagens mest kraftfulla AI‑verktyg och får praktiska färdigheter som kan användas i studier, projekt och arbetsliv. Ingen avancerad teknisk bakgrund krävs – bara nyfikenhet och vilja att experimentera. Deltagare utforskar tillämpningar från textgenerering och bildskapande till dataanalys och beslutsstöd. Du lär dig formulera rätt frågor, styra AI:ns svar och kritiskt granska resultaten. Vi betonar kreativitet och problemlösning, och visar hur AI kan stödja allt från brainstorming till teknisk research. I slutet av workshopen förstår du inte bara hur verktygen fungerar – du känner dig också trygg i att använda dem för verkliga utmaningar. Oavsett om målet är att höja produktiviteten, förbättra kommunikationen eller tända innovation, ger dessa pass en praktisk introduktion till AI:s möjligheter.",
+        "textSha1": "04c793c5284e17b721f42c71cb9ed1d2a431cd1a"
+      },
+      {
+        "id": "0/1/0/5/5/1/0",
+        "parentTag": "h2",
+        "text": "Människa och AI – framtiden",
+        "textSha1": "d833062bd9f0f0c62593740d591a681483bde00b"
+      },
+      {
+        "id": "0/1/0/5/5/3/0",
+        "parentTag": "p",
+        "text": "Artificiell intelligens är inte bara ett verktyg vi använder – den blir en partner i hur vi lever, arbetar och tänker. Från medicinska diagnoser till personlig undervisning går AI in i områden som påverkar våra mest personliga beslut och vardagsrutiner. Påverkan lär öka i takt med att systemen blir mer kapabla och anpassningsbara. Arbetslivet kommer förändras: rutinuppgifter kan automatiseras och frigöra tid för kreativt och strategiskt arbete, men kräver också nya färdigheter och högre anpassningsförmåga. Hela sektorer – som vård, transport och underhållning – utvecklas när AI integreras djupare. Samtidigt väcker förändringarna viktiga samhälleliga och etiska frågor. Hur säkerställer vi att AI tjänar mänskliga värden? Vem gynnas mest? Vilka risker måste hanteras? Att föreställa sig framtiden med människa och AI innebär både att se möjligheterna och att förbereda sig klokt för de utmaningar som följer.",
+        "textSha1": "fdeb24005a5ca898a6b4c8e5c5627df559de1c23"
+      },
+      {
+        "id": "0/1/0/7/1/2",
+        "parentTag": "a",
+        "text": "Boka workshop eller föreläsning",
+        "textSha1": "7c53123183aecdeeaedab2003c004dc54f068d5e"
+      }
+    ]
+  },
+  {
+    "kind": "page",
+    "slug": "index",
+    "locale": "en",
+    "file": "src/site/index.html",
+    "htmlSha1": "1cfaf8516e6a0ccd770c3766bc2c555942daf5de",
+    "segments": [
+      {
+        "id": "1/1/5/0",
+        "parentTag": "title",
+        "text": "Museum of Artificial Intelligence",
+        "textSha1": "5fb4792484ebc341155edc43c1217459554837de"
+      },
+      {
+        "id": "1/1/49/1/1/1/5/5/0",
+        "parentTag": "a",
+        "text": "Encyclopedia",
+        "textSha1": "cc5645f0e43dd9b3de3c56079e659582d460994d"
+      },
+      {
+        "id": "1/1/49/1/1/3/5/5/0",
+        "parentTag": "a",
+        "text": "Encyclopedia",
+        "textSha1": "cc5645f0e43dd9b3de3c56079e659582d460994d"
+      },
+      {
+        "id": "1/1/53/1/1/1/1/1/0",
+        "parentTag": "span",
+        "text": "BOOK NOW",
+        "textSha1": "d88e1af5d66c90d51bcfa4fb7c9b40833b28c6b8"
+      },
+      {
+        "id": "1/1/53/1/1/1/1/3/0/0",
+        "parentTag": "span",
+        "text": "Learn AI with us!",
+        "textSha1": "f902142958876b67aefddbd8d5dd242dbb02f8b2"
+      },
+      {
+        "id": "1/1/53/1/1/3/0",
+        "parentTag": "p",
+        "text": "Artificial intelligence is the most significant invention in human history. We make AI accessible through qualified lectures and hands-on workshops for both experienced professionals and curious beginners. Prepare for an AI-driven future with our expert guidance.",
+        "textSha1": "51c001a4ea01fc9f76d80b64acc8c370f0a108d8"
+      },
+      {
+        "id": "1/1/57/1/1/0",
+        "parentTag": "h2",
+        "text": "Workshops and Lectures",
+        "textSha1": "6cc7cba0eb8ed1b0428a48b0f412d58368f05711"
+      },
+      {
+        "id": "1/1/57/1/3/3/3/1/0",
+        "parentTag": "span",
+        "text": "HISTORY",
+        "textSha1": "f6dc58f5e8036353a7ac15516c30ac562e23dc26"
+      },
+      {
+        "id": "1/1/57/1/3/3/3/3/0",
+        "parentTag": "h3",
+        "text": "The Evolution of Artificial Intelligence",
+        "textSha1": "0ce5d86f2e65e154359c332babf89b9aaebb6968"
+      },
+      {
+        "id": "1/1/57/1/3/3/3/5/0",
+        "parentTag": "p",
+        "text": "A concise history of AI from its philosophical roots to present day technologies",
+        "textSha1": "95bc4af17a95d3890732efdc0db61c9e4a033068"
+      },
+      {
+        "id": "1/1/57/1/3/3/3/7/1/2",
+        "parentTag": "span",
+        "text": "1 hour",
+        "textSha1": "f030c3d667652646b86732ad7bc67e226c49cd3a"
+      },
+      {
+        "id": "1/1/57/1/3/3/3/7/3/0",
+        "parentTag": "a",
+        "text": "Explore »",
+        "textSha1": "5df3dd4d7b87324def770b9fe943946bd5f11635"
+      },
+      {
+        "id": "1/1/57/1/3/7/3/1/0",
+        "parentTag": "span",
+        "text": "INTERACTIVE",
+        "textSha1": "1b80b5d37f1c317dd1f1652003f3f4a385c91e98"
+      },
+      {
+        "id": "1/1/57/1/3/7/3/3/0",
+        "parentTag": "h3",
+        "text": "Hands-on Workshops",
+        "textSha1": "0795f27bb62c7d32ab2f057529c677efc09b0c8a"
+      },
+      {
+        "id": "1/1/57/1/3/7/3/5/0",
+        "parentTag": "p",
+        "text": "Learn how to use AI tools to solve real world problems.",
+        "textSha1": "5d8e02773cca68674e9e27156ffc24d18e151cfd"
+      },
+      {
+        "id": "1/1/57/1/3/7/3/7/1/2",
+        "parentTag": "span",
+        "text": "180 minutes",
+        "textSha1": "d70bd153ae5dc282600b622eafcc1e500cac787f"
+      },
+      {
+        "id": "1/1/57/1/3/7/3/7/3/0",
+        "parentTag": "a",
+        "text": "Explore »",
+        "textSha1": "5df3dd4d7b87324def770b9fe943946bd5f11635"
+      },
+      {
+        "id": "1/1/57/1/3/11/3/1/0",
+        "parentTag": "span",
+        "text": "DEBATE",
+        "textSha1": "2009cac6950c3d4401be88dec4ea5352010fbcdf"
+      },
+      {
+        "id": "1/1/57/1/3/11/3/3/0",
+        "parentTag": "h3",
+        "text": "The Human-AI Future",
+        "textSha1": "474f28d8fb353e1fef8b25b4cd158024d6193be0"
+      },
+      {
+        "id": "1/1/57/1/3/11/3/5/0",
+        "parentTag": "p",
+        "text": "How might AI change the way we live and work?",
+        "textSha1": "47004a8559abcc0bb83e549c6a036f35252b476a"
+      },
+      {
+        "id": "1/1/57/1/3/11/3/7/1/2",
+        "parentTag": "span",
+        "text": "90 minutes",
+        "textSha1": "7e7e298ce69ef11b743eade1632a1c94288cb78f"
+      },
+      {
+        "id": "1/1/57/1/3/11/3/7/3/0",
+        "parentTag": "a",
+        "text": "Explore »",
+        "textSha1": "5df3dd4d7b87324def770b9fe943946bd5f11635"
+      },
+      {
+        "id": "1/1/57/1/5/1/0",
+        "parentTag": "a",
+        "text": "Lectures and workshops tailored to your needs",
+        "textSha1": "320586d200755bdfeead7576b698b9b40aea8cfe"
+      },
+      {
+        "id": "1/1/61/1/1/0",
+        "parentTag": "h2",
+        "text": "Clients",
+        "textSha1": "28e22fe3dde53ce03b40861a4b22d205384bde66"
+      },
+      {
+        "id": "1/1/61/1/3/1/1/0",
+        "parentTag": "li",
+        "text": "Aahus Business College",
+        "textSha1": "09c0549c8eebc30f2c095a16a222b7e0aa9b31a3"
+      },
+      {
+        "id": "1/1/61/1/3/1/3/0",
+        "parentTag": "li",
+        "text": "Biblioteksutveckling",
+        "textSha1": "30a39d6a29ac5d112e6c73d2b9135cf0dd22b9e8"
+      },
+      {
+        "id": "1/1/61/1/3/1/5/0",
+        "parentTag": "li",
+        "text": "DIS Stockholm",
+        "textSha1": "5c007d0ecf245807af9f4c62b4ecf7091b360d0a"
+      },
+      {
+        "id": "1/1/61/1/3/1/7/0",
+        "parentTag": "li",
+        "text": "Dramaten",
+        "textSha1": "f93fc136e25ecb54e0bc28b0a67d095656762921"
+      },
+      {
+        "id": "1/1/61/1/3/1/9/0",
+        "parentTag": "li",
+        "text": "Förenningen Media",
+        "textSha1": "7f3ac6be1cd6f3e01299bc9cb7e8291ecf8765cc"
+      },
+      {
+        "id": "1/1/61/1/3/1/11/0",
+        "parentTag": "li",
+        "text": "Fryshuset Stockholm",
+        "textSha1": "4da5ed37f824f242fe6cf8780944755a97515711"
+      },
+      {
+        "id": "1/1/61/1/3/1/13/0",
+        "parentTag": "li",
+        "text": "Handelshögskola Stockholm",
+        "textSha1": "ed896fc9bf067435e6712397074f3b18afe2d83d"
+      },
+      {
+        "id": "1/1/61/1/3/1/15/0",
+        "parentTag": "li",
+        "text": "Länsstyrelsen Örebro Län",
+        "textSha1": "7e702de8f331293a3503612ba0a02401b5aaaa61"
+      },
+      {
+        "id": "1/1/61/1/3/1/17/0",
+        "parentTag": "li",
+        "text": "Lundbergs Fastighets AB",
+        "textSha1": "093ca5480cc3c0e1e809843ade79c3c3b1e4433f"
+      },
+      {
+        "id": "1/1/61/1/3/1/19/0",
+        "parentTag": "li",
+        "text": "Grenspecialisten",
+        "textSha1": "359f5a0172f2185efa3406a77e24dfc526f92f46"
+      },
+      {
+        "id": "1/1/61/1/3/1/21/0",
+        "parentTag": "li",
+        "text": "MTA",
+        "textSha1": "b4d357a05fbb70b1d3bd2f50d77f21966129da3f"
+      },
+      {
+        "id": "1/1/61/1/3/1/23/0",
+        "parentTag": "li",
+        "text": "Praktiskagymnasiet",
+        "textSha1": "6e1d2cc04234444662a11053c79739600ffd62ee"
+      },
+      {
+        "id": "1/1/61/1/3/1/25/0",
+        "parentTag": "li",
+        "text": "Scarab AB",
+        "textSha1": "484c023f3ebf05d8309d29f1f06601e23e2dc584"
+      },
+      {
+        "id": "1/1/61/1/3/1/27/0",
+        "parentTag": "li",
+        "text": "Skeppsholmens Folkhögskola",
+        "textSha1": "3bf940734b9eda9944c4498bde80561f4cd68c20"
+      },
+      {
+        "id": "1/1/61/1/3/1/29/0",
+        "parentTag": "li",
+        "text": "Söderköpings kommun",
+        "textSha1": "1e4d4012bbe163d1181ab755a3f1c615369703e7"
+      },
+      {
+        "id": "1/1/61/1/3/1/31/0",
+        "parentTag": "li",
+        "text": "Stiftelsen institutt for journalistikk (Norway)",
+        "textSha1": "32f3b44d76e23e52456405e7b7c51cfd4d122751"
+      },
+      {
+        "id": "1/1/61/1/3/1/33/0",
+        "parentTag": "li",
+        "text": "Stockholm AI",
+        "textSha1": "7cdb768cdd1fce39a0826e6286237f28716d91ba"
+      },
+      {
+        "id": "1/1/61/1/3/1/35/0",
+        "parentTag": "li",
+        "text": "Stockholm International School",
+        "textSha1": "7685a58644f5c92f425e81ff0cab204d5c104ee0"
+      },
+      {
+        "id": "1/1/61/1/3/1/37/0",
+        "parentTag": "li",
+        "text": "Sweco Sverige AB",
+        "textSha1": "033237a0860affb479cecad46992cc5d0c2e6a1d"
+      },
+      {
+        "id": "1/1/61/1/3/1/39/0",
+        "parentTag": "li",
+        "text": "Travel Service",
+        "textSha1": "4f3a2879f8ad691a53c342d1b0a8a17c916bb8ec"
+      },
+      {
+        "id": "1/1/61/1/3/1/41/0",
+        "parentTag": "li",
+        "text": "Utrikesdepartements Konstförening",
+        "textSha1": "6051939691969093736b7c4a1478a0d32a6aa49c"
+      },
+      {
+        "id": "1/1/61/1/3/1/43/0",
+        "parentTag": "li",
+        "text": "Viktor Rydberg gymnasium",
+        "textSha1": "89e92d58e318929ba4400f36542df1e7da1043a6"
+      },
+      {
+        "id": "1/1/61/1/3/1/45/0",
+        "parentTag": "li",
+        "text": "Violet AI",
+        "textSha1": "88c09eac474df93a44dc7f396da7b0d2125d1181"
+      },
+      {
+        "id": "1/1/65/1/1/1/1/1/0",
+        "parentTag": "h2",
+        "text": "The Good, Bad, and Ugly of AI",
+        "textSha1": "a666fe49785a150993d66461d4d0dcc5c403b046"
+      },
+      {
+        "id": "1/1/65/1/1/1/1/5/1/3/0",
+        "parentTag": "span",
+        "text": "Healthcare Diagnostics",
+        "textSha1": "2988bfe938669820cca2f34cc71a06e5941f1e3f"
+      },
+      {
+        "id": "1/1/65/1/1/1/1/5/3/3/0",
+        "parentTag": "span",
+        "text": "Energy Use",
+        "textSha1": "1581f18c5f8cc36e4e2fdc6ac447ae81a267603a"
+      },
+      {
+        "id": "1/1/65/1/1/1/1/5/5/3/0",
+        "parentTag": "span",
+        "text": "AI Companionship",
+        "textSha1": "7c344e4514212e7e9f49b190724293cad496c2df"
+      },
+      {
+        "id": "1/1/65/1/1/1/1/5/7/3/0",
+        "parentTag": "span",
+        "text": "Autonomous Systems",
+        "textSha1": "4f37c284954f032ef56712f94fda352186554ed0"
+      },
+      {
+        "id": "1/1/65/1/1/1/1/5/9/3/0",
+        "parentTag": "span",
+        "text": "Education and AI",
+        "textSha1": "f6f6687bfa5c1d120f2d525cf6473edce7dd408a"
+      },
+      {
+        "id": "1/1/65/1/1/1/1/5/11/3/0",
+        "parentTag": "span",
+        "text": "Coding with AI",
+        "textSha1": "10dd0deeac76429aa85c7c6059f550714dddfe18"
+      },
+      {
+        "id": "1/1/65/1/1/1/1/7/0",
+        "parentTag": "a",
+        "text": "Learn More",
+        "textSha1": "378cbbf54cbb2e3f3bd201f02c1b946ec3601eba"
+      },
+      {
+        "id": "1/1/69/1/1/3/1/3/1/1/3/0",
+        "parentTag": "div",
+        "text": "JAN",
+        "textSha1": "521ad2c98e9ec034c8682b0dc1b535f66e282240"
+      },
+      {
+        "id": "1/1/69/1/1/3/1/3/1/3/1/0",
+        "parentTag": "h3",
+        "text": "AI Ethics Symposium",
+        "textSha1": "2ff9d42fe52242b5260d2b0ebd16782c08535967"
+      },
+      {
+        "id": "1/1/69/1/1/3/1/3/1/3/3/0",
+        "parentTag": "p",
+        "text": "Navigating the moral challenges of autonomous systems",
+        "textSha1": "b1bb457f30bd4e3e5fb1b1402470283fb9d1063e"
+      },
+      {
+        "id": "1/1/69/1/1/3/1/7/1/1/3/0",
+        "parentTag": "div",
+        "text": "MAR",
+        "textSha1": "a8d9b8dee4747b275826d8ca97471f0a4e64e65e"
+      },
+      {
+        "id": "1/1/69/1/1/3/1/7/1/3/1/0",
+        "parentTag": "h3",
+        "text": "Robotics Workshop",
+        "textSha1": "249e9d8d29eabfeccdbaac0f056ecf7c0d4247c8"
+      },
+      {
+        "id": "1/1/69/1/1/3/1/7/1/3/3/0",
+        "parentTag": "p",
+        "text": "Hands-on session with autonomous robotic systems",
+        "textSha1": "beca76b6d60f91f2c7fc7eb56ac39b4406571437"
+      },
+      {
+        "id": "1/1/69/1/1/3/1/11/1/1/3/0",
+        "parentTag": "div",
+        "text": "MAY",
+        "textSha1": "18ae5317d40a3cf04540bdf1a7cae69c2c6704dd"
+      },
+      {
+        "id": "1/1/69/1/1/3/1/11/1/3/1/0",
+        "parentTag": "h3",
+        "text": "Future of Creative AI",
+        "textSha1": "ed20a40e99fb27e617cc02639592b3772f2b36ae"
+      },
+      {
+        "id": "1/1/69/1/1/3/1/11/1/3/3/0",
+        "parentTag": "p",
+        "text": "How generative models are transforming arts and design",
+        "textSha1": "33ef72a8e5d6130129f0239cd3070d113be5238b"
+      },
+      {
+        "id": "1/1/69/1/1/3/1/15/1/1/3/0",
+        "parentTag": "div",
+        "text": "SEP",
+        "textSha1": "492c5f509c7763e341eb6da22a9e35ff6a96cbab"
+      },
+      {
+        "id": "1/1/69/1/1/3/1/15/1/3/1/0",
+        "parentTag": "h3",
+        "text": "AI in Medicine",
+        "textSha1": "5f6a31246c104f8b0d317d70da5ac9c590cd14a1"
+      },
+      {
+        "id": "1/1/69/1/1/3/1/15/1/3/3/0",
+        "parentTag": "p",
+        "text": "Breakthroughs in disease diagnosis and treatment",
+        "textSha1": "16698cb652cb74ac3f32eb264e0f9c3ae284d88e"
+      },
+      {
+        "id": "1/1/69/5/1/1/5/1/1/0",
+        "parentTag": "h2",
+        "text": "Become a Member",
+        "textSha1": "9e9fa239748dc208010d4fc49c9d5b4f1a537972"
+      },
+      {
+        "id": "1/1/69/5/1/1/5/1/3/0",
+        "parentTag": "p",
+        "text": "Join our community and enjoy unlimited access to exhibitions, priority booking for events and a free subscription to our newsletter.",
+        "textSha1": "dd18d10d33f141cb821ec9566fbdf645c2e5aef5"
+      },
+      {
+        "id": "1/1/69/5/1/1/5/1/5/1/3/0",
+        "parentTag": "span",
+        "text": "Unlimited entry to all permanent exhibits",
+        "textSha1": "96da71a52a2b0b3354d089c23f7983a3e5aaed38"
+      },
+      {
+        "id": "1/1/69/5/1/1/5/1/5/3/3/0",
+        "parentTag": "span",
+        "text": "20% discount on paid events",
+        "textSha1": "9a58d86fb324efa6418b7e3881988e10635829d6"
+      },
+      {
+        "id": "1/1/69/5/1/1/5/1/5/5/3/0",
+        "parentTag": "span",
+        "text": "Priority booking for events",
+        "textSha1": "e11e90a102977862df7d9d8ff00037e3bccb8688"
+      },
+      {
+        "id": "1/1/69/5/1/1/5/1/7/0",
+        "parentTag": "a",
+        "text": "Explore Membership",
+        "textSha1": "2e656bdd9868c03838beee276e0ef3b2694c43b7"
+      },
+      {
+        "id": "1/1/69/5/1/1/5/3/1/1/0",
+        "parentTag": "h3",
+        "text": "Members Preview",
+        "textSha1": "35247c3042bd0080a6daa458860f7af8b575ba58"
+      },
+      {
+        "id": "1/1/69/5/1/1/5/3/1/5/0",
+        "parentTag": "p",
+        "text": "Members get exclusive early access to our \"Vibe Coding\" workshops starting in March 2026.",
+        "textSha1": "b6e961c6993a7032742724ceb57cb78bffbb98a1"
+      },
+      {
+        "id": "1/1/69/9/1/1/1/1/3/0",
+        "parentTag": "span",
+        "text": "MUSEUM OF AI",
+        "textSha1": "199bf14ab6667ecd6afd0b313e70115e39a93640"
+      },
+      {
+        "id": "1/1/69/9/1/1/1/3/0",
+        "parentTag": "p",
+        "text": "The Museum of Artificial Intelligence is operated by a non-profit organization dedicated to exploring the past, present, and future of artificial intelligence through immersive exhibits, educational programs, and public events.",
+        "textSha1": "baab9495148a4683eb5473458947688064e70ee3"
+      },
+      {
+        "id": "1/1/69/9/1/1/3/1/0",
+        "parentTag": "h3",
+        "text": "Located at",
+        "textSha1": "236cdf9b55319986fb8a75258c69fc96719f1bfb"
+      },
+      {
+        "id": "1/1/69/9/1/1/3/3/1/3/0",
+        "parentTag": "span",
+        "text": "Närkesgatan 6",
+        "textSha1": "ff160612af4c23de8d5db26e5ad9770f6a3bcd35"
+      },
+      {
+        "id": "1/1/69/9/1/1/3/3/1/3/2",
+        "parentTag": "span",
+        "text": "Stockholm, Sweden",
+        "textSha1": "92169336ee423643e4d74d0dc5724c6b612cc7a8"
+      },
+      {
+        "id": "1/1/69/9/1/1/3/3/3/3/0",
+        "parentTag": "span",
+        "text": "Visits by appointment only",
+        "textSha1": "c4c54851d32f68652e7b85297f54f06013f8c724"
+      },
+      {
+        "id": "1/1/69/9/1/1/5/1/0",
+        "parentTag": "h3",
+        "text": "Resources",
+        "textSha1": "87df60de337fb58864343e396696d74611e0d403"
+      },
+      {
+        "id": "1/1/69/9/1/1/5/3/1/1/2",
+        "parentTag": "a",
+        "text": "Events",
+        "textSha1": "c5497bca58468ae64aed6c0fd921109217988db3"
+      },
+      {
+        "id": "1/1/69/9/1/1/5/3/3/1/2",
+        "parentTag": "a",
+        "text": "About",
+        "textSha1": "6b21fb791ac05170893860c248401cd24a59b732"
+      },
+      {
+        "id": "1/1/69/9/1/1/5/3/5/1/2",
+        "parentTag": "a",
+        "text": "Newsletter",
+        "textSha1": "6ed05e720ccc3ef269db1b38201da8b873acc895"
+      },
+      {
+        "id": "1/1/69/9/1/1/5/3/7/1/2",
+        "parentTag": "a",
+        "text": "Press Center",
+        "textSha1": "e108056467aada7b2ed293f8871a9bd447292b3e"
+      },
+      {
+        "id": "1/1/69/9/1/1/5/3/9/1/2",
+        "parentTag": "a",
+        "text": "Volunteer!",
+        "textSha1": "cf973a2ca466600933db947b06466ee87cb5fec2"
+      },
+      {
+        "id": "1/1/69/9/1/1/5/3/11/1/2",
+        "parentTag": "a",
+        "text": "FAQs",
+        "textSha1": "ab9dcd4a0295bd5e2c0f799fd9becca5752365e8"
+      },
+      {
+        "id": "1/1/69/9/1/1/5/3/13/1/2",
+        "parentTag": "a",
+        "text": "Contact Us",
+        "textSha1": "9ad0ccff7c60872356cb74b82694782be79ba338"
+      },
+      {
+        "id": "1/1/69/9/1/3/1/0",
+        "parentTag": "p",
+        "text": "© 2025 Museum of Artificial Intelligence. All rights reserved. | Designed with",
+        "textSha1": "f084d9006c4c391f7967389beed4998fcf51a144"
+      },
+      {
+        "id": "1/1/69/9/1/3/1/2",
+        "parentTag": "p",
+        "text": "for the future of humanity.",
+        "textSha1": "a2c4f5b198b9356327b4275200ec5109688a2b39"
+      }
+    ]
+  },
+  {
+    "kind": "page",
+    "slug": "index",
+    "locale": "sv",
+    "file": "src/site/sv/index.html",
+    "htmlSha1": "0ad3b4b01148c8c6709adbe6345680d394c2d962",
+    "segments": [
+      {
+        "id": "0/1/5/0",
+        "parentTag": "title",
+        "text": "Museum of Artificial Intelligence",
+        "textSha1": "5fb4792484ebc341155edc43c1217459554837de"
+      },
+      {
+        "id": "0/1/49/1/1/1/5/5/0",
+        "parentTag": "a",
+        "text": "Encyklopedi",
+        "textSha1": "970787d0c42344d675253af5f7797d8ceb61327f"
+      },
+      {
+        "id": "0/1/49/1/1/3/5/5/0",
+        "parentTag": "a",
+        "text": "Encyklopedi",
+        "textSha1": "970787d0c42344d675253af5f7797d8ceb61327f"
+      },
+      {
+        "id": "0/1/53/1/1/1/1/1/0",
+        "parentTag": "span",
+        "text": "BOKA NU",
+        "textSha1": "690d65a2dedbebb3df7f0fde91da071096ca8079"
+      },
+      {
+        "id": "0/1/53/1/1/1/1/3/0/0",
+        "parentTag": "span",
+        "text": "Lär dig AI med oss!",
+        "textSha1": "70714b6c79bf0f885819e14a83ac7185725f918f"
+      },
+      {
+        "id": "0/1/53/1/1/3/0",
+        "parentTag": "p",
+        "text": "Artificiell intelligens är den mest betydelsefulla uppfinningen i mänsklighetens historia. Vi gör AI tillgängligt genom kvalificerade föreläsningar och praktiska workshops för både erfarna yrkesverksamma och nyfikna nybörjare. Förbered dig för en AI‑driven framtid med vår expertledning.",
+        "textSha1": "821ad347846c634528a904a9d874f177dedb0e62"
+      },
+      {
+        "id": "0/1/57/1/1/0",
+        "parentTag": "h2",
+        "text": "Workshops och Föreläsningar",
+        "textSha1": "fdfaea3538d8b1582ceb825d4283643599bd16fd"
+      },
+      {
+        "id": "0/1/57/1/3/1/3/1/0",
+        "parentTag": "span",
+        "text": "HISTORIA",
+        "textSha1": "f3f63661c06899417950f02a3fc8f0c11286b04a"
+      },
+      {
+        "id": "0/1/57/1/3/1/3/3/0",
+        "parentTag": "h3",
+        "text": "AI:s utveckling",
+        "textSha1": "a87221d04bc4b7483d872c0d3e0b2ac6fe5cd85a"
+      },
+      {
+        "id": "0/1/57/1/3/1/3/5/0",
+        "parentTag": "p",
+        "text": "En koncentrerad historia från filosofiska rötter till dagens teknik",
+        "textSha1": "7552ec88566b4934865fbb098b3e7bf8adc49e59"
+      },
+      {
+        "id": "0/1/57/1/3/1/3/7/1/2",
+        "parentTag": "span",
+        "text": "ca 1 timme",
+        "textSha1": "9a04939a036dee9ab24c6f0041318444e07b1a50"
+      },
+      {
+        "id": "0/1/57/1/3/1/3/7/3/0",
+        "parentTag": "a",
+        "text": "Utforska »",
+        "textSha1": "28a7da4b522cee2d28236c29ccc849e8f54332e4"
+      },
+      {
+        "id": "0/1/57/1/3/3/3/1/0",
+        "parentTag": "span",
+        "text": "INTERAKTIV",
+        "textSha1": "3d4b04d642c734b8daf0e560fa13b8b2039ef33b"
+      },
+      {
+        "id": "0/1/57/1/3/3/3/3/0",
+        "parentTag": "h3",
+        "text": "Praktiska Workshops",
+        "textSha1": "1c1b6bcc1a8e81888a3d07cb64c0e980b174625b"
+      },
+      {
+        "id": "0/1/57/1/3/3/3/5/0",
+        "parentTag": "p",
+        "text": "Lär dig använda AI-verktyg för verkliga problem.",
+        "textSha1": "2ff1617316104bceb66ccbcd7a2de4fca2cc9d4a"
+      },
+      {
+        "id": "0/1/57/1/3/3/3/7/1/2",
+        "parentTag": "span",
+        "text": "90 minuter",
+        "textSha1": "decea28c1ba5905e453f5c9280d518b3db978d30"
+      },
+      {
+        "id": "0/1/57/1/3/3/3/7/3/0",
+        "parentTag": "a",
+        "text": "Utforska »",
+        "textSha1": "28a7da4b522cee2d28236c29ccc849e8f54332e4"
+      },
+      {
+        "id": "0/1/57/1/3/5/3/1/0",
+        "parentTag": "span",
+        "text": "DEBATT",
+        "textSha1": "63877eddca3897fe86157a00e4c82113b2d03c7d"
+      },
+      {
+        "id": "0/1/57/1/3/5/3/3/0",
+        "parentTag": "h3",
+        "text": "Människa och AI",
+        "textSha1": "7796a394d4b62c41ab2069d456366ada4ab9c07e"
+      },
+      {
+        "id": "0/1/57/1/3/5/3/5/0",
+        "parentTag": "p",
+        "text": "Hur kan AI förändra hur vi lever och arbetar?",
+        "textSha1": "ec191b02916db33ff0fbbdd895dc5a33ad2f3015"
+      },
+      {
+        "id": "0/1/57/1/3/5/3/7/1/2",
+        "parentTag": "span",
+        "text": "90 minuter",
+        "textSha1": "decea28c1ba5905e453f5c9280d518b3db978d30"
+      },
+      {
+        "id": "0/1/57/1/3/5/3/7/3/0",
+        "parentTag": "a",
+        "text": "Utforska »",
+        "textSha1": "28a7da4b522cee2d28236c29ccc849e8f54332e4"
+      },
+      {
+        "id": "0/1/57/1/5/1/0",
+        "parentTag": "a",
+        "text": "Föreläsningar och workshops anpassade efter dina behov",
+        "textSha1": "85b9e0b9759b9e5983a186112a2e291c78b4bc66"
+      },
+      {
+        "id": "0/1/61/1/1/0",
+        "parentTag": "h2",
+        "text": "Kunder",
+        "textSha1": "c39f8f161146ad869c64c14bc7666265df9dab07"
+      },
+      {
+        "id": "0/1/61/1/3/1/1/0",
+        "parentTag": "li",
+        "text": "Aahus Business College",
+        "textSha1": "09c0549c8eebc30f2c095a16a222b7e0aa9b31a3"
+      },
+      {
+        "id": "0/1/61/1/3/1/3/0",
+        "parentTag": "li",
+        "text": "Biblioteksutveckling",
+        "textSha1": "30a39d6a29ac5d112e6c73d2b9135cf0dd22b9e8"
+      },
+      {
+        "id": "0/1/61/1/3/1/5/0",
+        "parentTag": "li",
+        "text": "DIS Stockholm",
+        "textSha1": "5c007d0ecf245807af9f4c62b4ecf7091b360d0a"
+      },
+      {
+        "id": "0/1/61/1/3/1/7/0",
+        "parentTag": "li",
+        "text": "Dramaten",
+        "textSha1": "f93fc136e25ecb54e0bc28b0a67d095656762921"
+      },
+      {
+        "id": "0/1/61/1/3/1/9/0",
+        "parentTag": "li",
+        "text": "Förenningen Media",
+        "textSha1": "7f3ac6be1cd6f3e01299bc9cb7e8291ecf8765cc"
+      },
+      {
+        "id": "0/1/61/1/3/1/11/0",
+        "parentTag": "li",
+        "text": "Fryshuset Stockholm",
+        "textSha1": "4da5ed37f824f242fe6cf8780944755a97515711"
+      },
+      {
+        "id": "0/1/61/1/3/1/13/0",
+        "parentTag": "li",
+        "text": "Handelshögskola Stockholm",
+        "textSha1": "ed896fc9bf067435e6712397074f3b18afe2d83d"
+      },
+      {
+        "id": "0/1/61/1/3/1/15/0",
+        "parentTag": "li",
+        "text": "Länsstyrelsen Örebro Län",
+        "textSha1": "7e702de8f331293a3503612ba0a02401b5aaaa61"
+      },
+      {
+        "id": "0/1/61/1/3/1/17/0",
+        "parentTag": "li",
+        "text": "Lundbergs Fastighets AB",
+        "textSha1": "093ca5480cc3c0e1e809843ade79c3c3b1e4433f"
+      },
+      {
+        "id": "0/1/61/1/3/1/19/0",
+        "parentTag": "li",
+        "text": "Grenspecialisten",
+        "textSha1": "359f5a0172f2185efa3406a77e24dfc526f92f46"
+      },
+      {
+        "id": "0/1/61/1/3/1/21/0",
+        "parentTag": "li",
+        "text": "MTA",
+        "textSha1": "b4d357a05fbb70b1d3bd2f50d77f21966129da3f"
+      },
+      {
+        "id": "0/1/61/1/3/1/23/0",
+        "parentTag": "li",
+        "text": "Praktiskagymnasiet",
+        "textSha1": "6e1d2cc04234444662a11053c79739600ffd62ee"
+      },
+      {
+        "id": "0/1/61/1/3/1/25/0",
+        "parentTag": "li",
+        "text": "Scarab AB",
+        "textSha1": "484c023f3ebf05d8309d29f1f06601e23e2dc584"
+      },
+      {
+        "id": "0/1/61/1/3/1/27/0",
+        "parentTag": "li",
+        "text": "Skeppsholmens Folkhögskola",
+        "textSha1": "3bf940734b9eda9944c4498bde80561f4cd68c20"
+      },
+      {
+        "id": "0/1/61/1/3/1/29/0",
+        "parentTag": "li",
+        "text": "Söderköpings kommun",
+        "textSha1": "1e4d4012bbe163d1181ab755a3f1c615369703e7"
+      },
+      {
+        "id": "0/1/61/1/3/1/31/0",
+        "parentTag": "li",
+        "text": "Stiftelsen institutt for journalistikk (Norway)",
+        "textSha1": "32f3b44d76e23e52456405e7b7c51cfd4d122751"
+      },
+      {
+        "id": "0/1/61/1/3/1/33/0",
+        "parentTag": "li",
+        "text": "Stockholm AI",
+        "textSha1": "7cdb768cdd1fce39a0826e6286237f28716d91ba"
+      },
+      {
+        "id": "0/1/61/1/3/1/35/0",
+        "parentTag": "li",
+        "text": "Stockholm International School",
+        "textSha1": "7685a58644f5c92f425e81ff0cab204d5c104ee0"
+      },
+      {
+        "id": "0/1/61/1/3/1/37/0",
+        "parentTag": "li",
+        "text": "Sweco Sverige AB",
+        "textSha1": "033237a0860affb479cecad46992cc5d0c2e6a1d"
+      },
+      {
+        "id": "0/1/61/1/3/1/39/0",
+        "parentTag": "li",
+        "text": "Travel Service",
+        "textSha1": "4f3a2879f8ad691a53c342d1b0a8a17c916bb8ec"
+      },
+      {
+        "id": "0/1/61/1/3/1/41/0",
+        "parentTag": "li",
+        "text": "Utrikesdepartements Konstförening",
+        "textSha1": "6051939691969093736b7c4a1478a0d32a6aa49c"
+      },
+      {
+        "id": "0/1/61/1/3/1/43/0",
+        "parentTag": "li",
+        "text": "Viktor Rydberg gymnasium",
+        "textSha1": "89e92d58e318929ba4400f36542df1e7da1043a6"
+      },
+      {
+        "id": "0/1/61/1/3/1/45/0",
+        "parentTag": "li",
+        "text": "Violet AI",
+        "textSha1": "88c09eac474df93a44dc7f396da7b0d2125d1181"
+      },
+      {
+        "id": "0/1/65/1/1/1/1/1/0",
+        "parentTag": "h2",
+        "text": "Den gode, den onde, den fule",
+        "textSha1": "fce9c967b85571547c071e089d685c3496865368"
+      },
+      {
+        "id": "0/1/65/1/1/1/1/5/1/3/0",
+        "parentTag": "span",
+        "text": "Sjukvårdsdiagnostik",
+        "textSha1": "da9c2a7f75aca61b307b5f28b4f708c80bdb68d6"
+      },
+      {
+        "id": "0/1/65/1/1/1/1/5/3/3/0",
+        "parentTag": "span",
+        "text": "Energianvändning",
+        "textSha1": "d0a448e73806b172098683badcee307019479da4"
+      },
+      {
+        "id": "0/1/65/1/1/1/1/5/5/3/0",
+        "parentTag": "span",
+        "text": "AI-kompanjonskap",
+        "textSha1": "93511a557b0e19eec13c75f5537d641f26fceb3f"
+      },
+      {
+        "id": "0/1/65/1/1/1/1/5/7/3/0",
+        "parentTag": "span",
+        "text": "Autonoma system",
+        "textSha1": "aaf14c5dc70e3377c65970887d3292c8c7729e2e"
+      },
+      {
+        "id": "0/1/65/1/1/1/1/5/9/3/0",
+        "parentTag": "span",
+        "text": "Utbildning och AI",
+        "textSha1": "09a537e86433aa2e2770c0ef0b92c1dc29d40fed"
+      },
+      {
+        "id": "0/1/65/1/1/1/1/5/11/3/0",
+        "parentTag": "span",
+        "text": "Programmering med AI",
+        "textSha1": "92c7949a2206b3b351b4da86ac3daeebca332440"
+      },
+      {
+        "id": "0/1/65/1/1/1/1/7/1/0",
+        "parentTag": "a",
+        "text": "Lära mer",
+        "textSha1": "9f24941adfa8696c86912ffece1676f430327194"
+      },
+      {
+        "id": "0/1/69/1/1/1/0",
+        "parentTag": "h2",
+        "text": "Kommande evenemang 2026",
+        "textSha1": "899e0860921f2085d768f0d04c44796e4131d984"
+      },
+      {
+        "id": "0/1/69/1/1/3/0",
+        "parentTag": "p",
+        "text": "Gå på våra föreläsningar, workshops och specialutställningar för att fördjupa dig i artificiell intelligens.",
+        "textSha1": "6bede87c68093d5e9f5e8cd1cd22d0b29734ea29"
+      },
+      {
+        "id": "0/1/69/1/1/5/3/1/1/3/0",
+        "parentTag": "div",
+        "text": "JAN",
+        "textSha1": "521ad2c98e9ec034c8682b0dc1b535f66e282240"
+      },
+      {
+        "id": "0/1/69/1/1/5/3/1/3/1/0",
+        "parentTag": "h3",
+        "text": "Symposium om AI‑etik",
+        "textSha1": "0c87144678101634954f1ce47ea6062936198cd9"
+      },
+      {
+        "id": "0/1/69/1/1/5/3/1/3/3/0",
+        "parentTag": "p",
+        "text": "Navigera de moraliska utmaningarna med autonoma system",
+        "textSha1": "ae5bc1f604cf2eca727fbc51619811ec8c28edae"
+      },
+      {
+        "id": "0/1/69/1/1/5/7/1/1/3/0",
+        "parentTag": "div",
+        "text": "MAR",
+        "textSha1": "a8d9b8dee4747b275826d8ca97471f0a4e64e65e"
+      },
+      {
+        "id": "0/1/69/1/1/5/7/1/3/1/0",
+        "parentTag": "h3",
+        "text": "Robotikworkshop",
+        "textSha1": "bef2a4f2a657c8b0d7bba0c486d203989c77fa58"
+      },
+      {
+        "id": "0/1/69/1/1/5/7/1/3/3/0",
+        "parentTag": "p",
+        "text": "Praktisk session med autonoma robotsystem",
+        "textSha1": "108639159355f898f2af362bf2f483ee1f972c12"
+      },
+      {
+        "id": "0/1/69/1/1/5/11/1/1/3/0",
+        "parentTag": "div",
+        "text": "MAJ",
+        "textSha1": "8220d932b454730357fbfdbcc3b27befca0a52bb"
+      },
+      {
+        "id": "0/1/69/1/1/5/11/1/3/1/0",
+        "parentTag": "h3",
+        "text": "Framtiden för kreativ AI",
+        "textSha1": "4f52e518d6f60216651e0f41d79cf5cb38199d1d"
+      },
+      {
+        "id": "0/1/69/1/1/5/11/1/3/3/0",
+        "parentTag": "p",
+        "text": "Hur generativa modeller förändrar konst och design",
+        "textSha1": "36924988bf6a7b9ea1475963976999e4b81f89a4"
+      },
+      {
+        "id": "0/1/69/1/1/5/15/1/1/3/0",
+        "parentTag": "div",
+        "text": "SEP",
+        "textSha1": "492c5f509c7763e341eb6da22a9e35ff6a96cbab"
+      },
+      {
+        "id": "0/1/69/1/1/5/15/1/3/1/0",
+        "parentTag": "h3",
+        "text": "AI inom medicin",
+        "textSha1": "1ddab122952f57d823d3578e4d2a78d207d42af7"
+      },
+      {
+        "id": "0/1/69/1/1/5/15/1/3/3/0",
+        "parentTag": "p",
+        "text": "Genombrott i sjukdomsdiagnostik och behandling",
+        "textSha1": "12af0551320b5285541fd4012344294497e0f1af"
+      },
+      {
+        "id": "0/1/69/5/1/1/5/1/1/0",
+        "parentTag": "h2",
+        "text": "Bli medlem",
+        "textSha1": "b602583dc4590a26d9c8da06215d6f519f23b475"
+      },
+      {
+        "id": "0/1/69/5/1/1/5/1/3/0",
+        "parentTag": "p",
+        "text": "Gå med i vår gemenskap och få obegränsad tillgång till utställningar, förtur till bokning av evenemang och en gratis prenumeration på vårt nyhetsbrev.",
+        "textSha1": "521061746b164dbed8ae578884ac43b13e5d9e6f"
+      },
+      {
+        "id": "0/1/69/5/1/1/5/1/5/1/3/0",
+        "parentTag": "span",
+        "text": "Obegränsad tillgång till alla permanenta utställningar",
+        "textSha1": "41c82472541d51622d57f8e4470bc85ec4c595b6"
+      },
+      {
+        "id": "0/1/69/5/1/1/5/1/5/3/3/0",
+        "parentTag": "span",
+        "text": "20% rabatt på betalda evenemang",
+        "textSha1": "48a259b1f4228f2c8b7e4c8297e901de949b9961"
+      },
+      {
+        "id": "0/1/69/5/1/1/5/1/5/5/3/0",
+        "parentTag": "span",
+        "text": "Förtursbokning till evenemang",
+        "textSha1": "3ec85b2d85e395efd1ea8e0066923f1960d98fd9"
+      },
+      {
+        "id": "0/1/69/5/1/1/5/1/7/0",
+        "parentTag": "a",
+        "text": "Utforska medlemskap",
+        "textSha1": "249a8519cb5139134f9fa9af64c846e11e84444c"
+      },
+      {
+        "id": "0/1/69/5/1/1/5/3/1/1/0",
+        "parentTag": "h3",
+        "text": "Förhandsvisning för medlemmar",
+        "textSha1": "04a6e3cef1c94b55f14adc7018997eb608953882"
+      },
+      {
+        "id": "0/1/69/5/1/1/5/3/1/5/0",
+        "parentTag": "p",
+        "text": "Medlemmar får förtur till våra evenemang.",
+        "textSha1": "f969d7672ec1ff19c9b660009f55e10371a88851"
+      },
+      {
+        "id": "0/1/69/7/1/1/1/1/3/0",
+        "parentTag": "span",
+        "text": "Museum of Artificial Intelligence",
+        "textSha1": "5fb4792484ebc341155edc43c1217459554837de"
+      },
+      {
+        "id": "0/1/69/7/1/1/1/3/0",
+        "parentTag": "p",
+        "text": "Museum of Artificial Intelligence drivs av en ideell organisation som utforskar det förflutna, nutiden och framtiden för artificiell intelligens genom uppslukande utställningar, utbildningsprogram och publika evenemang.",
+        "textSha1": "cfb59c0a57a12cf28b84dc69c30c34464a2dc087"
+      },
+      {
+        "id": "0/1/69/7/1/1/3/1/0",
+        "parentTag": "h3",
+        "text": "Vi finns på",
+        "textSha1": "c3f6bcb98a5ac40ba41e53b4182b84728c041efa"
+      },
+      {
+        "id": "0/1/69/7/1/1/3/3/1/3/0",
+        "parentTag": "span",
+        "text": "Närkesgatan 6",
+        "textSha1": "ff160612af4c23de8d5db26e5ad9770f6a3bcd35"
+      },
+      {
+        "id": "0/1/69/7/1/1/3/3/1/3/2",
+        "parentTag": "span",
+        "text": "Stockholm, Sverige",
+        "textSha1": "9587bc6043cbebfd748537cc629791da49e8426a"
+      },
+      {
+        "id": "0/1/69/7/1/1/3/3/3/3/0",
+        "parentTag": "span",
+        "text": "Besök endast efter överenskommelse",
+        "textSha1": "7c9c5554872a6ce839176678967956f70e12111f"
+      },
+      {
+        "id": "0/1/69/7/1/1/5/1/0",
+        "parentTag": "h3",
+        "text": "Resurser",
+        "textSha1": "2b1ac935602114d789ad7c271495650e653cbafd"
+      },
+      {
+        "id": "0/1/69/7/1/1/5/3/1/1/2",
+        "parentTag": "a",
+        "text": "Evenemang",
+        "textSha1": "796de5f9a6a488b31a7be69319a54595ad8fd3a3"
+      },
+      {
+        "id": "0/1/69/7/1/1/5/3/3/1/2",
+        "parentTag": "a",
+        "text": "Om",
+        "textSha1": "e02cc996927684db5c6560daa103f032bc1c1d87"
+      },
+      {
+        "id": "0/1/69/7/1/1/5/3/5/1/2",
+        "parentTag": "a",
+        "text": "Nyhetsbrev",
+        "textSha1": "3ccdeb49d709eb7a4de44ae24665a569e24b2c10"
+      },
+      {
+        "id": "0/1/69/7/1/1/5/3/11/1/2",
+        "parentTag": "a",
+        "text": "Press",
+        "textSha1": "ea683ad616063b7347bdddeee7203a82e1a3805b"
+      },
+      {
+        "id": "0/1/69/7/1/1/5/3/13/1/2",
+        "parentTag": "a",
+        "text": "Anmäla dig som volontär",
+        "textSha1": "b539559bc49223a072d7668a2274f3eb84da05d3"
+      },
+      {
+        "id": "0/1/69/7/1/1/5/3/15/1/2",
+        "parentTag": "a",
+        "text": "Vanliga frågor",
+        "textSha1": "2d4234aea0b80314e160be68ff6df201437a2855"
+      },
+      {
+        "id": "0/1/69/7/1/1/5/3/17/1/2",
+        "parentTag": "a",
+        "text": "Kontakta oss",
+        "textSha1": "62b77380fe557931cf492fda5605a3463c119af3"
+      },
+      {
+        "id": "0/1/69/7/1/3/1/0",
+        "parentTag": "p",
+        "text": "© 2025 Museum of Artificial Intelligence. Alla rättigheter förbehållna. | Designad med",
+        "textSha1": "a23b4709034ec037169a0daf7845fcc349957397"
+      },
+      {
+        "id": "0/1/69/7/1/3/1/2",
+        "parentTag": "p",
+        "text": "för mänsklighetens framtid.",
+        "textSha1": "29630e56f06c1c956dd708b3a46ae9f5a444bdbb"
+      }
+    ]
+  },
+  {
+    "kind": "page",
+    "slug": "journal",
+    "locale": "en",
+    "file": "src/content/pages/journal.en.html",
+    "htmlSha1": "d248d81ab350cf621d0111e0f510df5baf64a2d7",
+    "segments": [
+      {
+        "id": "0/1/0/3/1/0",
+        "parentTag": "a",
+        "text": "Read all on Substack",
+        "textSha1": "e416b062490af305130837d1ee5e8fdcda698c40"
+      }
+    ]
+  },
+  {
+    "kind": "page",
+    "slug": "journal",
+    "locale": "sv",
+    "file": "src/content/pages/journal.sv.html",
+    "htmlSha1": "04935718e3c6aa628ea0c9ea5bbfce53b4acb997",
+    "segments": [
+      {
+        "id": "0/1/0/3/1/0",
+        "parentTag": "a",
+        "text": "Läs allt på Substack",
+        "textSha1": "685a916a78c641f227d63b08ea3ea1f3c60169ef"
+      }
+    ]
+  },
+  {
+    "kind": "page",
+    "slug": "learn-more",
+    "locale": "en",
+    "file": "src/content/pages/learn-more.en.html",
+    "htmlSha1": "938629d7e1dd9bb32ff89d89f34e7eeb6bf8f769",
+    "segments": [
+      {
+        "id": "0/1/0/1/0",
+        "parentTag": "h1",
+        "text": "Some of the major issues",
+        "textSha1": "5939275ba3670d5f689929584b2d0867de202ce5"
+      },
+      {
+        "id": "0/1/0/3/0",
+        "parentTag": "p",
+        "text": "What can go right and what can go wrong.",
+        "textSha1": "dffc12c4eb000f9961e5e2dc2a9fd1f1f29d09f7"
+      },
+      {
+        "id": "0/1/0/5/1/1/3/0",
+        "parentTag": "h2",
+        "text": "Healthcare Diagnostics",
+        "textSha1": "2988bfe938669820cca2f34cc71a06e5941f1e3f"
+      },
+      {
+        "id": "0/1/0/5/1/3/0",
+        "parentTag": "p",
+        "text": "AI brings powerful advantages to healthcare by spotting patterns that human eyes often miss. Algorithms can scan X-rays, MRIs, or lab results in seconds, flagging potential problems long before they become critical. This not only helps doctors save time but also expands access to expert-level diagnostics in areas with limited healthcare resources. The result is earlier treatment, fewer errors, and better outcomes for patients.",
+        "textSha1": "0a65c3f6411ede6a455e8f80c9dae6ea1791078e"
+      },
+      {
+        "id": "0/1/0/5/1/5/0",
+        "parentTag": "p",
+        "text": "On the other hand, AI in healthcare raises concerns around accuracy, trust, and bias. A model trained on limited or skewed data might miss diagnoses for certain populations, worsening existing health disparities. There are also ethical and legal questions: who is responsible if an AI-driven diagnosis is wrong—the doctor, the developer, or the hospital? Privacy is another issue, since training these systems requires enormous amounts of sensitive personal data.",
+        "textSha1": "e7bcc8053021a9f14b8658ceb8e7391c6b3b2b24"
+      },
+      {
+        "id": "0/1/0/5/3/1/3/0",
+        "parentTag": "h2",
+        "text": "Energy Use",
+        "textSha1": "1581f18c5f8cc36e4e2fdc6ac447ae81a267603a"
+      },
+      {
+        "id": "0/1/0/5/3/3/0",
+        "parentTag": "p",
+        "text": "AI offers huge potential for more sustainable energy systems. By analyzing real-time data, it can optimize how electricity flows through smart grids, balance renewable energy sources like wind and solar, and predict demand to reduce waste. For industries and households alike, AI can recommend efficiency measures, lowering costs while cutting carbon emissions.",
+        "textSha1": "2c257633e42175058d4373677482f88ab31bfcef"
+      },
+      {
+        "id": "0/1/0/5/3/5/0",
+        "parentTag": "p",
+        "text": "But relying on AI for energy management also comes with challenges. Complex systems are vulnerable to cyberattacks, which could disrupt entire grids. Moreover, AI requires large amounts of computational power, which itself consumes energy and may offset some of its benefits. Decisions about which energy uses to prioritize could also become political, raising questions about fairness and control.",
+        "textSha1": "feec5d729cd4c4698753d2a66035cce0571d6f99"
+      },
+      {
+        "id": "0/1/0/5/5/1/3/0",
+        "parentTag": "h2",
+        "text": "AI Companionship",
+        "textSha1": "7c344e4514212e7e9f49b190724293cad496c2df"
+      },
+      {
+        "id": "0/1/0/5/5/3/0",
+        "parentTag": "p",
+        "text": "AI companions can provide comfort, conversation, and emotional support to those who might otherwise feel isolated. For the elderly, people with disabilities, or even busy professionals, AI can offer companionship at any time of day, learning personal preferences and adapting to moods. These systems may even help reduce loneliness and contribute to better mental health.",
+        "textSha1": "bbbda80a22a1f70e85b821a3d8a4431bc342b98f"
+      },
+      {
+        "id": "0/1/0/5/5/5/0",
+        "parentTag": "p",
+        "text": "Still, AI companionship raises deep concerns about authenticity and dependency. Relationships with machines, however realistic, are not the same as human bonds and may discourage people from seeking real social connections. There is also the danger of commercialization—where “companions” are subtly designed to influence users’ decisions, from shopping to politics. This blurring of intimacy and manipulation is a major ethical risk.",
+        "textSha1": "4ada608696ee11e4557216013edabd2ff1f0e206"
+      },
+      {
+        "id": "0/1/0/5/7/1/3/0",
+        "parentTag": "h2",
+        "text": "Autonomous Systems",
+        "textSha1": "4f37c284954f032ef56712f94fda352186554ed0"
+      },
+      {
+        "id": "0/1/0/5/7/3/0",
+        "parentTag": "p",
+        "text": "Autonomous systems like self-driving cars, delivery drones, and industrial robots promise efficiency, safety, and new levels of convenience. They can reduce traffic accidents caused by human error, streamline logistics, and operate in dangerous environments where humans cannot safely go. For society, this means lower costs, increased productivity, and potentially safer roads and workplaces.",
+        "textSha1": "e86846cd08467abb2533975d9c09181af41edb00"
+      },
+      {
+        "id": "0/1/0/5/7/5/0",
+        "parentTag": "p",
+        "text": "The downsides include the displacement of jobs and the difficulty of assigning accountability when things go wrong. If an autonomous car causes an accident, who bears the blame—the manufacturer, the software developer, or the passenger? Ethical dilemmas also arise, such as how machines should be programmed to act in life-or-death situations. Widespread adoption also depends on updating laws and infrastructure, which lag far behind the technology.",
+        "textSha1": "add90266d944276ade2dd7c85cc04d81c98c8e9d"
+      },
+      {
+        "id": "0/1/0/5/9/1/3/0",
+        "parentTag": "h2",
+        "text": "Education and AI",
+        "textSha1": "f6f6687bfa5c1d120f2d525cf6473edce7dd408a"
+      },
+      {
+        "id": "0/1/0/5/9/3/0",
+        "parentTag": "p",
+        "text": "AI has the potential to revolutionize education by creating personalized learning paths that adapt to each student’s strengths and weaknesses. Automated tutors can provide instant feedback, track progress, and free up teachers to focus more on human interaction. Administrative tasks, grading, and lesson planning can also be streamlined, allowing educators to devote more time to creativity and mentorship.",
+        "textSha1": "8e258b2c79588190fd2862f61163c1c8985046c4"
+      },
+      {
+        "id": "0/1/0/5/9/5/0",
+        "parentTag": "p",
+        "text": "Yet these same tools may also create over-reliance on algorithms at the expense of genuine human connection. If education becomes too standardized through AI, it risks flattening the diversity of thought and creativity that comes from teacher-student interaction. Privacy is also a concern, since these systems often collect sensitive learning data. Finally, unequal access to technology could deepen the digital divide, leaving some students far behind.",
+        "textSha1": "0567bb29466fcb968a8a640fca323c6d3d59c15e"
+      },
+      {
+        "id": "0/1/0/5/11/1/3/0",
+        "parentTag": "h2",
+        "text": "Coding with AI",
+        "textSha1": "10dd0deeac76429aa85c7c6059f550714dddfe18"
+      },
+      {
+        "id": "0/1/0/5/11/3/0",
+        "parentTag": "p",
+        "text": "For developers, AI coding assistants can act like super-powered colleagues—suggesting snippets, debugging code, and speeding up routine tasks. Beginners benefit from real-time help, while professionals can focus on higher-level architecture and creative problem-solving. This lowers barriers to entry and accelerates innovation across the tech industry.",
+        "textSha1": "04f6df4061747d1c7514915941bffd9c8db28a4c"
+      },
+      {
+        "id": "0/1/0/5/11/5/0",
+        "parentTag": "p",
+        "text": "But the risks are real: AI-generated code can sometimes be incorrect, insecure, or opaque, making debugging harder in the long run. Over-reliance could erode developers’ own skills, while questions of copyright and intellectual property remain unresolved. There is also the risk of homogenization, where different developers lean too heavily on the same AI outputs, reducing diversity and creativity in software solutions.",
+        "textSha1": "8ba33ff95f433935d8361b54d568acc8887955c8"
+      },
+      {
+        "id": "0/1/0/5/13/1/3/0",
+        "parentTag": "h2",
+        "text": "Robotics",
+        "textSha1": "d058025dbc42a6112091b64d3424838407b0da5f"
+      },
+      {
+        "id": "0/1/0/5/13/3/0",
+        "parentTag": "p",
+        "text": "Robotics can take on dull, dirty, and dangerous work, improving safety and productivity. In factories and warehouses, robots handle precise, repetitive tasks 24/7; in hospitals they assist with surgery and logistics; in agriculture and disaster response they extend human reach and reduce risk. Paired with AI, modern robots adapt to changing environments and help workers focus on higher-value tasks.",
+        "textSha1": "e8793be3d85cf9f2be75f2f6f904ea3f2145e5f4"
+      },
+      {
+        "id": "0/1/0/5/13/5/0",
+        "parentTag": "p",
+        "text": "Risks include job displacement, new safety hazards, and opaque decision-making when perception models fail. Over-automation can reduce resilience, create brittle supply chains, and concentrate power. Robots deployed in public spaces raise privacy and accountability concerns, while the mining, manufacturing, and disposal of hardware carry environmental costs.",
+        "textSha1": "6ce1882d11100ca4b530d94e0c3cbec837df9821"
+      }
+    ]
+  },
+  {
+    "kind": "page",
+    "slug": "learn-more",
+    "locale": "sv",
+    "file": "src/content/pages/learn-more.sv.html",
+    "htmlSha1": "d8d87bbef947cc4f1e4db5e647eb6acce89d5dd3",
+    "segments": [
+      {
+        "id": "0/1/0/1/0",
+        "parentTag": "h1",
+        "text": "Några av de stora frågorna",
+        "textSha1": "9e3a7fbf5d8a92adec69465217b334ed19df7738"
+      },
+      {
+        "id": "0/1/0/3/0",
+        "parentTag": "p",
+        "text": "Vad kan bli bättre – och vad kan gå fel.",
+        "textSha1": "2518ca743cfcbf197accd0b8fbdcbdb57f3dd902"
+      },
+      {
+        "id": "0/1/0/5/1/1/3/0",
+        "parentTag": "h2",
+        "text": "Hälso- och sjukvårdsdiagnostik",
+        "textSha1": "90fb294ae234d7448781166035884799b00e57f5"
+      },
+      {
+        "id": "0/1/0/5/1/3/0",
+        "parentTag": "p",
+        "text": "AI ger kraftfulla fördelar inom sjukvården genom att upptäcka mönster som mänskliga ögon ofta missar. Algoritmer kan på några sekunder granska röntgenbilder, MR-skanningar eller laboratorieresultat och markera potentiella problem långt innan de blir kritiska. Det sparar tid för läkare, minskar risken för misstag och gör expertkunskap tillgänglig även i områden med begränsad sjukvård. Resultatet blir tidigare behandlingar och bättre vårdutfall.",
+        "textSha1": "38ef799a26f453f5adc238c772305f3a9897f50e"
+      },
+      {
+        "id": "0/1/0/5/1/5/0",
+        "parentTag": "p",
+        "text": "Samtidigt väcker AI i vården oro kring tillförlitlighet, förtroende och bias. En modell som tränats på skeva eller begränsade data kan missa diagnoser för vissa grupper och därmed förstärka befintliga ojämlikheter. Etiska och juridiska frågor kvarstår också: vem bär ansvaret om en AI-diagnos är felaktig—läkaren, utvecklaren eller sjukhuset? Integritetsrisker är ytterligare en utmaning, då systemen kräver enorma mängder känsliga personuppgifter.",
+        "textSha1": "ef885097353b4fb160aad56f8cdcb18efe31d649"
+      },
+      {
+        "id": "0/1/0/5/3/1/3/0",
+        "parentTag": "h2",
+        "text": "Energianvändning",
+        "textSha1": "d0a448e73806b172098683badcee307019479da4"
+      },
+      {
+        "id": "0/1/0/5/3/3/0",
+        "parentTag": "p",
+        "text": "AI har enorm potential att göra energisystem mer hållbara. Genom att analysera data i realtid kan tekniken optimera hur elen flödar i smarta nät, balansera förnybara energikällor som sol och vind samt förutse efterfrågan för att minska slöseri. För både hushåll och industrier kan AI ge rekommendationer som sänker kostnader och minskar koldioxidutsläpp.",
+        "textSha1": "2b413be01c02b5e3e55fd6337ad89500505e217d"
+      },
+      {
+        "id": "0/1/0/5/3/5/0",
+        "parentTag": "p",
+        "text": "Men det finns också utmaningar. Komplexa AI-styrda system är sårbara för cyberattacker som kan slå ut hela elnät. Dessutom kräver AI enorm datorkraft som i sig förbrukar energi, vilket delvis kan motverka miljövinsterna. Slutligen kan beslut om vilka energianvändningar som ska prioriteras bli politiska, vilket väcker frågor om rättvisa och kontroll.",
+        "textSha1": "bba34569a19598acf8ecd832de43a67200bfad35"
+      },
+      {
+        "id": "0/1/0/5/5/1/3/0",
+        "parentTag": "h2",
+        "text": "AI-kompanjonskap",
+        "textSha1": "93511a557b0e19eec13c75f5537d641f26fceb3f"
+      },
+      {
+        "id": "0/1/0/5/5/3/0",
+        "parentTag": "p",
+        "text": "AI-kompanjoner kan erbjuda tröst, samtal och emotionellt stöd för människor som annars känner sig ensamma. För äldre, personer med funktionsnedsättningar eller den som vill ha sällskap när som helst kan AI bli en tillgänglig resurs som lär sig användarens vanor och känslotillstånd. Det kan i bästa fall minska ensamhet och bidra till bättre psykiskt välbefinnande.",
+        "textSha1": "507e6bf44e6aac04f2e7cc4fe7b2c6d5b1609699"
+      },
+      {
+        "id": "0/1/0/5/5/5/0",
+        "parentTag": "p",
+        "text": "Men det finns risker. Relationer med maskiner är aldrig detsamma som mänskliga band, och kan göra människor mindre benägna att söka verkliga sociala kontakter. Dessutom kan kommersiella intressen smyga sig in där ”kompanjonen” i praktiken påverkar användarens val, från shopping till politik. Detta sammanblandande av intimitet och manipulation är en etisk fallgrop.",
+        "textSha1": "b274be8ea584a2523fe363168abcb819fd51db93"
+      },
+      {
+        "id": "0/1/0/5/7/1/3/0",
+        "parentTag": "h2",
+        "text": "Autonoma system",
+        "textSha1": "aaf14c5dc70e3377c65970887d3292c8c7729e2e"
+      },
+      {
+        "id": "0/1/0/5/7/3/0",
+        "parentTag": "p",
+        "text": "Autonoma system som självkörande bilar, leveransdrönare och industrirobotar lovar högre effektivitet, säkerhet och bekvämlighet. De kan minska trafikolyckor orsakade av mänskliga misstag, effektivisera logistik och arbeta i farliga miljöer där människor inte kan vistas. För samhället innebär detta lägre kostnader, högre produktivitet och potentiellt tryggare vägar och arbetsplatser.",
+        "textSha1": "3680cb36c94d368663566bfed9888a9f0eed55d1"
+      },
+      {
+        "id": "0/1/0/5/7/5/0",
+        "parentTag": "p",
+        "text": "Nackdelarna inkluderar jobbförluster och svårigheter att avgöra ansvar när något går fel. Om en självkörande bil orsakar en olycka—är det tillverkaren, programmeraren eller passageraren som bär skulden? Etiska dilemman uppstår också, till exempel hur maskiner ska programmeras i liv-eller-död-situationer. Dessutom ligger lagstiftning och infrastruktur långt efter teknikutvecklingen.",
+        "textSha1": "5f2127cb88cb6304881f6645fdc0d6c808349d75"
+      },
+      {
+        "id": "0/1/0/5/9/1/3/0",
+        "parentTag": "h2",
+        "text": "Utbildning och AI",
+        "textSha1": "09a537e86433aa2e2770c0ef0b92c1dc29d40fed"
+      },
+      {
+        "id": "0/1/0/5/9/3/0",
+        "parentTag": "p",
+        "text": "AI kan revolutionera utbildningen genom att skapa personliga inlärningsvägar anpassade till varje elevs styrkor och svagheter. Automatiserade handledare kan ge omedelbar återkoppling, följa framsteg och frigöra lärarnas tid för mänsklig interaktion. Administration, rättning och planering kan effektiviseras, vilket gör att pedagoger kan ägna mer tid åt kreativitet och mentorskap.",
+        "textSha1": "bb9942c7a418984eabe36a913f2379e2ebdc04e5"
+      },
+      {
+        "id": "0/1/0/5/9/5/0",
+        "parentTag": "p",
+        "text": "Men samma verktyg riskerar också att leda till överberoende av algoritmer på bekostnad av äkta mänskliga möten. Om utbildningen blir alltför standardiserad via AI kan det hämma mångfald och kreativitet. Integritetsfrågor är centrala, eftersom systemen ofta samlar in känsliga lärardata. Dessutom kan ojämlik tillgång till teknik fördjupa den digitala klyftan mellan elever.",
+        "textSha1": "5bc14df78df151989c2dd431c5652bf9fab3ae07"
+      },
+      {
+        "id": "0/1/0/5/11/1/3/0",
+        "parentTag": "h2",
+        "text": "Programmering med AI",
+        "textSha1": "92c7949a2206b3b351b4da86ac3daeebca332440"
+      },
+      {
+        "id": "0/1/0/5/11/3/0",
+        "parentTag": "p",
+        "text": "För utvecklare fungerar AI-drivna kodassistenter som superkollegor—de kan föreslå kodsnuttar, felsöka och snabba upp rutinuppgifter. Nybörjare får stöd i realtid medan erfarna utvecklare kan fokusera på arkitektur och kreativa lösningar. Detta sänker trösklarna och accelererar innovation i hela branschen.",
+        "textSha1": "b84cb2dc302482a63f669902d654261f2f0b3244"
+      },
+      {
+        "id": "0/1/0/5/11/5/0",
+        "parentTag": "p",
+        "text": "Men riskerna är påtagliga. AI-genererad kod kan vara felaktig, osäker eller svår att förstå, vilket gör felsökning mer tidskrävande i längden. Ett överberoende kan försvaga utvecklares egna färdigheter, och frågor om upphovsrätt och äganderätt är fortfarande olösta. Dessutom finns en risk för homogenisering, där olika utvecklare lutar sig för mycket på samma AI-förslag, vilket kan minska mångfalden och kreativiteten i mjukvarulösningar.",
+        "textSha1": "2c858a1d21b6b8742471f153363c514761a99690"
+      },
+      {
+        "id": "0/1/0/5/13/1/3/0",
+        "parentTag": "h2",
+        "text": "Robotik",
+        "textSha1": "57cef485f56ab3c0ebf009147f137c3eece54f49"
+      },
+      {
+        "id": "0/1/0/5/13/3/0",
+        "parentTag": "p",
+        "text": "Robotik kan ta över tråkiga, smutsiga och farliga jobb och därmed öka säkerhet och produktivitet. I fabriker och lager hanterar robotar precisa, repetitiva uppgifter dygnet runt; på sjukhus hjälper de till med kirurgi och logistik; inom jordbruk och katastrofinsatser förlänger de människors räckvidd och minskar risker. Tillsammans med AI kan moderna robotar anpassa sig till föränderliga miljöer och hjälpa arbetare att fokusera på mer värdeskapande uppgifter.",
+        "textSha1": "d6b75ed28e413500d52a0040ee2d370f5b4dc5e0"
+      },
+      {
+        "id": "0/1/0/5/13/5/0",
+        "parentTag": "p",
+        "text": "Riskerna omfattar jobbförskjutning, nya säkerhetsrisker och otydliga beslut när perceptionsmodeller brister. Överautomatisering kan minska robusthet, göra leveranskedjor sköra och koncentrera makt. Robotar i offentliga miljöer väcker frågor om integritet och ansvar, medan gruvdrift, tillverkning och återvinning av hårdvara medför miljökostnader.",
+        "textSha1": "131b9fe44dc79b5477912fe290df45d49e7dfa8b"
+      }
+    ]
+  },
+  {
+    "kind": "page",
+    "slug": "membership",
+    "locale": "en",
+    "file": "src/content/pages/membership.en.html",
+    "htmlSha1": "97c2dd4704cf006427dc7f682e95f5ffa1ff0eea",
+    "segments": [
+      {
+        "id": "0/1/0/1/0",
+        "parentTag": "h1",
+        "text": "Membership",
+        "textSha1": "53bc9670e7230f766538a396ed6acc93c09e9067"
+      },
+      {
+        "id": "0/1/0/3/0",
+        "parentTag": "p",
+        "text": "Benefits, tiers, and how to join.",
+        "textSha1": "e40246ccc12218f03db09e66d60b1991c6d5eba6"
+      },
+      {
+        "id": "0/1/0/5/1/0",
+        "parentTag": "p",
+        "text": "The Museum of Artificial Intelligence is operated by a non-profit association dedicated to educating and enlightening the general public, industry professionals, and academics about the past, present, and potential future of AI. Membership is open to all who wish to collaborate with us in achieving this objective.",
+        "textSha1": "3e5c3fd87f1622ec16ca1ff4567ccf24137ea466"
+      },
+      {
+        "id": "0/1/0/5/3/0",
+        "parentTag": "p",
+        "text": "Membership dues are 300 SEK per year for individuals and 5000 SEK for companies. Please use the form below to submit your application.",
+        "textSha1": "3f4cee47b743a5b204c601afe0650bf5b99ab1e9"
+      },
+      {
+        "id": "0/1/0/5/7/1/1/0",
+        "parentTag": "label",
+        "text": "Name",
+        "textSha1": "709a23220f2c3d64d1e1d6d18c4d5280f8d82fca"
+      },
+      {
+        "id": "0/1/0/5/7/3/1/0",
+        "parentTag": "label",
+        "text": "Profession (optional)",
+        "textSha1": "1c37eb629bb3fd4d044beda65aa4af7159414b5f"
+      },
+      {
+        "id": "0/1/0/5/7/5/1/0",
+        "parentTag": "label",
+        "text": "Email",
+        "textSha1": "84add5b2952787581cb9a8851eef63d1ec75d22b"
+      },
+      {
+        "id": "0/1/0/5/7/9/0",
+        "parentTag": "p",
+        "text": "We will only use your information to process your membership application. See our",
+        "textSha1": "6f95cb3a6ecc1e55747e872a2c28eb89e96ab31e"
+      },
+      {
+        "id": "0/1/0/5/7/9/2",
+        "parentTag": "p",
+        "text": ".",
+        "textSha1": "3a52ce780950d4d969792a2559cd519d7ee8c727"
+      },
+      {
+        "id": "0/1/0/5/7/9/1/0",
+        "parentTag": "a",
+        "text": "Privacy Policy",
+        "textSha1": "9db108ba6b7f6571356060929e37dae65878cfca"
+      },
+      {
+        "id": "0/1/0/5/7/11/1/0",
+        "parentTag": "button",
+        "text": "Submit application",
+        "textSha1": "93ff9f7165f378f95b01d73b2408a47b67e1a99f"
+      }
+    ]
+  },
+  {
+    "kind": "page",
+    "slug": "membership",
+    "locale": "sv",
+    "file": "src/content/pages/membership.sv.html",
+    "htmlSha1": "48e33fb22dc68030e886b6e00967b7412d0ce069",
+    "segments": [
+      {
+        "id": "0/1/0/1/0",
+        "parentTag": "h1",
+        "text": "Medlemskap",
+        "textSha1": "ce9889c136131fcbc797fb27073e9af086ba1b02"
+      },
+      {
+        "id": "0/1/0/3/0",
+        "parentTag": "p",
+        "text": "Förmåner, nivåer och hur du går med.",
+        "textSha1": "f4370c1136fd9c00bd72c6743a04dffd2e055422"
+      },
+      {
+        "id": "0/1/0/5/1/0",
+        "parentTag": "p",
+        "text": "Museet för artificiell intelligens drivs av en ideell förening som verkar för att utbilda och upplysa allmänheten, branschfolk och akademi om AI:s dåtid, nutid och möjliga framtid. Medlemskap är öppet för alla som vill stödja detta mål.",
+        "textSha1": "9baf6206351b759ff1fd98d7d37b1707b7b4ad6c"
+      },
+      {
+        "id": "0/1/0/5/3/0",
+        "parentTag": "p",
+        "text": "Medlemsavgiften är 300 SEK per år för privatpersoner och 5000 SEK för företag. Använd formuläret nedan för att skicka in din ansökan.",
+        "textSha1": "84313266eba87f3e913f74fa805e06636805001d"
+      },
+      {
+        "id": "0/1/0/5/7/1/1/0",
+        "parentTag": "label",
+        "text": "Namn",
+        "textSha1": "26e32eec2d495a78e4a0cf60546cf0d3976cb209"
+      },
+      {
+        "id": "0/1/0/5/7/3/1/0",
+        "parentTag": "label",
+        "text": "Yrke (valfritt)",
+        "textSha1": "e4a4cf5ef94bb21a55075e70c80e5064104f56ec"
+      },
+      {
+        "id": "0/1/0/5/7/5/1/0",
+        "parentTag": "label",
+        "text": "E-post",
+        "textSha1": "b3418c97162213f5ae3260a7b8a644302ac744fa"
+      },
+      {
+        "id": "0/1/0/5/7/9/0",
+        "parentTag": "p",
+        "text": "Vi använder dina uppgifter endast för att hantera din medlemsansökan. Se vår",
+        "textSha1": "d5961bfafcb9e2f1262e307419008ac58047e5d2"
+      },
+      {
+        "id": "0/1/0/5/7/9/2",
+        "parentTag": "p",
+        "text": ".",
+        "textSha1": "3a52ce780950d4d969792a2559cd519d7ee8c727"
+      },
+      {
+        "id": "0/1/0/5/7/9/1/0",
+        "parentTag": "a",
+        "text": "Integritetspolicy",
+        "textSha1": "f9db640783ee0ef032bea3e37974f38db62d57b7"
+      },
+      {
+        "id": "0/1/0/5/7/11/1/0",
+        "parentTag": "button",
+        "text": "Skicka ansökan",
+        "textSha1": "16f61df4a15e36f10d422c2698a06332767288aa"
+      }
+    ]
+  },
+  {
+    "kind": "page",
+    "slug": "plan-workshop",
+    "locale": "en",
+    "file": "src/content/pages/plan-workshop.en.html",
+    "htmlSha1": "60f73018786455c9adcbc339926bc0e9b488478c",
+    "segments": [
+      {
+        "id": "0/1/0/1/0",
+        "parentTag": "h1",
+        "text": "We offer workshops and lectures",
+        "textSha1": "dc2a21c1be94e34a50b21c9e3b801779380a8178"
+      },
+      {
+        "id": "0/1/0/3/0",
+        "parentTag": "p",
+        "text": "Our mission is to inform and teach about AI We offer workshops and lectures for both beginners and the well-initiated. We tailor sessions for schools, companies, and institutions. Tell us your needs and we will get back to you right away.",
+        "textSha1": "716e9d1bb6d7ddda2ae423e97fb225af8fe0fe44"
+      },
+      {
+        "id": "0/1/0/5/1/1/1/1/0",
+        "parentTag": "label",
+        "text": "Your name",
+        "textSha1": "ab42293e29e1ffb306c1403dd95144d664853a60"
+      },
+      {
+        "id": "0/1/0/5/1/1/3/1/0",
+        "parentTag": "label",
+        "text": "Email",
+        "textSha1": "84add5b2952787581cb9a8851eef63d1ec75d22b"
+      },
+      {
+        "id": "0/1/0/5/1/3/1/0",
+        "parentTag": "label",
+        "text": "Organization (optional)",
+        "textSha1": "43fd346e1d39edf67a3c14d12b3962a7de42281a"
+      },
+      {
+        "id": "0/1/0/5/1/5/1/0",
+        "parentTag": "label",
+        "text": "Describe your needs",
+        "textSha1": "177e2c1bf476e091b0a6eb9da6c18ee0aef654d8"
+      },
+      {
+        "id": "0/1/0/5/1/7/1/0",
+        "parentTag": "label",
+        "text": "Desired dates and times",
+        "textSha1": "03e42a594873de31831eb54bc3730daaf6085ba8"
+      },
+      {
+        "id": "0/1/0/5/1/9/1/0",
+        "parentTag": "label",
+        "text": "Number of participants",
+        "textSha1": "1299f88a470e11239e09d9880d42baae92b4b9f1"
+      },
+      {
+        "id": "0/1/0/5/1/11/1/0",
+        "parentTag": "span",
+        "text": "Location preference",
+        "textSha1": "be00b0c4cdc21cbcf5b75f5585918713411177f9"
+      },
+      {
+        "id": "0/1/0/5/1/11/3/1/3/0",
+        "parentTag": "span",
+        "text": "Visit us at MAI (Närkesgatan 6, Stockholm)",
+        "textSha1": "0ba73929ea6b3218edf892a9a551a793c374f11d"
+      },
+      {
+        "id": "0/1/0/5/1/11/3/3/3/0",
+        "parentTag": "span",
+        "text": "Host at your own premises",
+        "textSha1": "cdd36260b4d89efea1f9dea1d067df8a8073b0e6"
+      },
+      {
+        "id": "0/1/0/5/1/13/1/0",
+        "parentTag": "span",
+        "text": "Experience with AI",
+        "textSha1": "f717db63be3b3f7e55596d4babc65e8ec41399c8"
+      },
+      {
+        "id": "0/1/0/5/1/13/3/1/3/0",
+        "parentTag": "span",
+        "text": "Beginner",
+        "textSha1": "60575a6ebba9f780b4312324662169830d12bea1"
+      },
+      {
+        "id": "0/1/0/5/1/13/3/3/3/0",
+        "parentTag": "span",
+        "text": "Intermediate",
+        "textSha1": "b1cfe72fd27178870354f9f4e07bb82072caea55"
+      },
+      {
+        "id": "0/1/0/5/1/13/3/5/3/0",
+        "parentTag": "span",
+        "text": "Advanced",
+        "textSha1": "4d064726954a17487f94e931f5b157b733ec22ed"
+      },
+      {
+        "id": "0/1/0/5/1/15/1/0",
+        "parentTag": "label",
+        "text": "Experience details (optional)",
+        "textSha1": "a7390455915c78fae05095d3ac742a9788df978c"
+      },
+      {
+        "id": "0/1/0/5/1/17/0",
+        "parentTag": "p",
+        "text": "We will only use your information to respond to your enquiry. See our",
+        "textSha1": "92be45d7ba87fcdb12107fd93c7dd0d5a0a5a6a2"
+      },
+      {
+        "id": "0/1/0/5/1/17/2",
+        "parentTag": "p",
+        "text": ".",
+        "textSha1": "3a52ce780950d4d969792a2559cd519d7ee8c727"
+      },
+      {
+        "id": "0/1/0/5/1/17/1/0",
+        "parentTag": "a",
+        "text": "Privacy Policy",
+        "textSha1": "9db108ba6b7f6571356060929e37dae65878cfca"
+      },
+      {
+        "id": "0/1/0/5/1/19/1/0",
+        "parentTag": "button",
+        "text": "Submit",
+        "textSha1": "2dacf65959849884a011f36f76a04eebea94c5ea"
+      }
+    ]
+  },
+  {
+    "kind": "page",
+    "slug": "plan-workshop",
+    "locale": "sv",
+    "file": "src/content/pages/plan-workshop.sv.html",
+    "htmlSha1": "0dd5e6c21ffa8e023141dd15fc7ecc2613a4c761",
+    "segments": [
+      {
+        "id": "0/1/0/1/0",
+        "parentTag": "h1",
+        "text": "Vi erbjuder workshops och föreläsningar",
+        "textSha1": "e00b96337212d5fc3099e472966d083e664da327"
+      },
+      {
+        "id": "0/1/0/3/0",
+        "parentTag": "p",
+        "text": "Vårt uppdrag är att informera och lära ut om AI. Vi erbjuder workshops och föreläsningar för både nybörjare och mer insatta. Vi skräddarsyr pass för skolor, företag och institutioner. Berätta vad ni vill lära er så så föreslår ett upplägg anpassat efter era behov.",
+        "textSha1": "17a36ac3ab4fd3c8961de8f1ed5a9a7b365b7ce3"
+      },
+      {
+        "id": "0/1/0/5/1/1/1/1/0",
+        "parentTag": "label",
+        "text": "Ditt namn",
+        "textSha1": "9d31c9326d3bf7d4ef6cb751fda036ebb9916dea"
+      },
+      {
+        "id": "0/1/0/5/1/1/3/1/0",
+        "parentTag": "label",
+        "text": "E-post",
+        "textSha1": "b3418c97162213f5ae3260a7b8a644302ac744fa"
+      },
+      {
+        "id": "0/1/0/5/1/3/1/0",
+        "parentTag": "label",
+        "text": "Organisation (valfritt)",
+        "textSha1": "bcff416d4399a7a5f6364ceed334041a14c795ec"
+      },
+      {
+        "id": "0/1/0/5/1/5/1/0",
+        "parentTag": "label",
+        "text": "Beskriv era behov",
+        "textSha1": "b9553ba311cc0b29461a6eb45873e6c642021760"
+      },
+      {
+        "id": "0/1/0/5/1/7/1/0",
+        "parentTag": "label",
+        "text": "Önskade datum och tider",
+        "textSha1": "621669af2421e7329bb03a47e48d048286bd6e15"
+      },
+      {
+        "id": "0/1/0/5/1/9/1/0",
+        "parentTag": "label",
+        "text": "Antal deltagare",
+        "textSha1": "cfabb0b3d3ea3fe9f19dbb96d04f0ed94127099a"
+      },
+      {
+        "id": "0/1/0/5/1/11/1/0",
+        "parentTag": "span",
+        "text": "Plats",
+        "textSha1": "558a5caa5b01e64658667e274e749ae9a90bace1"
+      },
+      {
+        "id": "0/1/0/5/1/11/3/1/3/0",
+        "parentTag": "span",
+        "text": "Hos MAI (Närkesgatan 6, Stockholm)",
+        "textSha1": "4e3fcc3a455d6ec1992cfdf0a1b759254b8a8282"
+      },
+      {
+        "id": "0/1/0/5/1/11/3/3/3/0",
+        "parentTag": "span",
+        "text": "Hos er (på plats hos beställaren)",
+        "textSha1": "60b31abbe8dc1e243e2764c8e46347da597aed01"
+      },
+      {
+        "id": "0/1/0/5/1/13/1/0",
+        "parentTag": "span",
+        "text": "Erfarenhet av AI",
+        "textSha1": "951e6e1bb9bab16a4b81db9dfd6789bf0d63853c"
+      },
+      {
+        "id": "0/1/0/5/1/13/3/1/3/0",
+        "parentTag": "span",
+        "text": "Nybörjare",
+        "textSha1": "8aecc6cfaa7531c28ef4d60c20e470737d0557f2"
+      },
+      {
+        "id": "0/1/0/5/1/13/3/3/3/0",
+        "parentTag": "span",
+        "text": "Mellan",
+        "textSha1": "584b40baaff876002a8e9b0fbd9dc29f334d0ee7"
+      },
+      {
+        "id": "0/1/0/5/1/13/3/5/3/0",
+        "parentTag": "span",
+        "text": "Avancerad",
+        "textSha1": "2e97b1e78a03745cb54f97d3ce45366c321d3197"
+      },
+      {
+        "id": "0/1/0/5/1/15/1/0",
+        "parentTag": "label",
+        "text": "Erfarenhetsdetaljer (valfritt)",
+        "textSha1": "76849df1492f2beec2a2be3f2ddcaf96c98e10fd"
+      },
+      {
+        "id": "0/1/0/5/1/17/0",
+        "parentTag": "p",
+        "text": "Vi använder endast dina uppgifter för att besvara din förfrågan. Se vår",
+        "textSha1": "679b9602fd8a483f01b7c50b78f58bde68a136e9"
+      },
+      {
+        "id": "0/1/0/5/1/17/2",
+        "parentTag": "p",
+        "text": ".",
+        "textSha1": "3a52ce780950d4d969792a2559cd519d7ee8c727"
+      },
+      {
+        "id": "0/1/0/5/1/17/1/0",
+        "parentTag": "a",
+        "text": "Integritetspolicy",
+        "textSha1": "f9db640783ee0ef032bea3e37974f38db62d57b7"
+      },
+      {
+        "id": "0/1/0/5/1/19/1/0",
+        "parentTag": "button",
+        "text": "Skicka",
+        "textSha1": "03b05ed4513b55ed0997d245c56d6a73d60e2571"
+      }
+    ]
+  },
+  {
+    "kind": "page",
+    "slug": "privacy",
+    "locale": "en",
+    "file": "src/content/pages/privacy.en.html",
+    "htmlSha1": "fd04ca4c64d2d10eeadf4e2b95aa408681d22b34",
+    "segments": [
+      {
+        "id": "0/1/0/1/0",
+        "parentTag": "h1",
+        "text": "Privacy Policy",
+        "textSha1": "9db108ba6b7f6571356060929e37dae65878cfca"
+      },
+      {
+        "id": "0/1/0/3/1/0",
+        "parentTag": "p",
+        "text": "The Museum of Artificial Intelligence (“MAI”) respects your privacy. This page briefly explains how we handle personal data when you contact us, apply for membership, or send a booking enquiry.",
+        "textSha1": "e13c8719db9015d677cf8fc748897de5275794eb"
+      },
+      {
+        "id": "0/1/0/3/3/0",
+        "parentTag": "h2",
+        "text": "Controller",
+        "textSha1": "a36a5ffa6e0dcfb64fac1b2b3d6fb176de9689de"
+      },
+      {
+        "id": "0/1/0/3/5/0",
+        "parentTag": "p",
+        "text": "Museum of Artificial Intelligence (MAI), Närkesgatan 6, 118 40 Stockholm, Sweden. Contact:",
+        "textSha1": "8131d9b8e2f8b8e43da18eb3873bbf4279c918db"
+      },
+      {
+        "id": "0/1/0/3/5/1/0",
+        "parentTag": "a",
+        "text": "info@aimuseum.se",
+        "textSha1": "634d69856c54e4bf32991e3cae9947d8a71bd6ee"
+      },
+      {
+        "id": "0/1/0/3/7/0",
+        "parentTag": "h2",
+        "text": "What we collect",
+        "textSha1": "c48bbcfed6efd0fd912af96f1f129cd8d5d32cfc"
+      },
+      {
+        "id": "0/1/0/3/9/0",
+        "parentTag": "p",
+        "text": "Information you provide in our forms, such as your name, email address, organisation and your message or enquiry details.",
+        "textSha1": "fb37997db9196c33bd7bb40ccb107f104ff1fdff"
+      },
+      {
+        "id": "0/1/0/3/11/0",
+        "parentTag": "h2",
+        "text": "Purpose and legal basis",
+        "textSha1": "5190705eae8c2e59a53199d0bbdf0cd5fd2a4de1"
+      },
+      {
+        "id": "0/1/0/3/13/1/1",
+        "parentTag": "li",
+        "text": "— performance of a contract and/or legitimate interests.",
+        "textSha1": "b6460f5edb7e6d5e021b2378b9f8ff51c944895a"
+      },
+      {
+        "id": "0/1/0/3/13/1/0/0",
+        "parentTag": "span",
+        "text": "Respond to enquiries and administer bookings/memberships",
+        "textSha1": "7d601f7edcdef831963c78aaad1e7ff05cb43f02"
+      },
+      {
+        "id": "0/1/0/3/13/3/1",
+        "parentTag": "li",
+        "text": "(e.g., planning workshops) — legitimate interests.",
+        "textSha1": "b86977abce602ddca0aa4f162d833e9279eae477"
+      },
+      {
+        "id": "0/1/0/3/13/3/0/0",
+        "parentTag": "span",
+        "text": "Administration and follow-up",
+        "textSha1": "836ccf61f6b6e588fe6ede0ac1b1ae4bf97adc4b"
+      },
+      {
+        "id": "0/1/0/3/15/0",
+        "parentTag": "h2",
+        "text": "Retention",
+        "textSha1": "c7199d9e9593b6f0b1302f7c3c32d2e46e9a9d1e"
+      },
+      {
+        "id": "0/1/0/3/17/0",
+        "parentTag": "p",
+        "text": "We keep personal data only as long as needed to handle your request and thereafter only as required for administrative or audit purposes.",
+        "textSha1": "04f93b07daf25bacccdae7e4493b533ad35f8dcd"
+      },
+      {
+        "id": "0/1/0/3/19/0",
+        "parentTag": "h2",
+        "text": "Recipients and processors",
+        "textSha1": "0ed7c540f7dfa91774d9b32f299d66fefc1e4821"
+      },
+      {
+        "id": "0/1/0/3/21/0",
+        "parentTag": "p",
+        "text": "We use",
+        "textSha1": "29e7787ea7646ff4f6db0c43e907aea4a569693e"
+      },
+      {
+        "id": "0/1/0/3/21/2",
+        "parentTag": "p",
+        "text": "to send messages from our forms. They process data as our data processor under their terms. We do not sell your data or share it with third parties for their marketing.",
+        "textSha1": "1d4a5d8470ad63717f15896462f5ad8e77851490"
+      },
+      {
+        "id": "0/1/0/3/21/1/0",
+        "parentTag": "span",
+        "text": "EmailJS",
+        "textSha1": "802347453c781b068d74840b8a6865d08c030e2a"
+      },
+      {
+        "id": "0/1/0/3/23/0",
+        "parentTag": "h2",
+        "text": "Cookies",
+        "textSha1": "524cf50b5df5f29161c0600989922de48abede70"
+      },
+      {
+        "id": "0/1/0/3/25/0",
+        "parentTag": "p",
+        "text": "Our website currently uses only essential cookies. If we add analytics or tracking cookies, we will request your consent before activating them.",
+        "textSha1": "e8748ee8c00f228ab541ba4062f20c1fa8914e31"
+      },
+      {
+        "id": "0/1/0/3/27/0",
+        "parentTag": "h2",
+        "text": "Your rights",
+        "textSha1": "e71102d544b3e10c80c07b5006f8f68846db9159"
+      },
+      {
+        "id": "0/1/0/3/29/0",
+        "parentTag": "p",
+        "text": "You may request access, rectification or deletion of your data, and you may object to or request restriction of processing. Contact us at",
+        "textSha1": "d0ea1f15ab6f1e18bcb8c4144bcb3c718b51ec05"
+      },
+      {
+        "id": "0/1/0/3/29/2",
+        "parentTag": "p",
+        "text": ". You also have the right to lodge a complaint with your supervisory authority.",
+        "textSha1": "09328eb9abcfab99c91fffd4a255571e585cd42a"
+      },
+      {
+        "id": "0/1/0/3/29/1/0",
+        "parentTag": "a",
+        "text": "info@aimuseum.se",
+        "textSha1": "634d69856c54e4bf32991e3cae9947d8a71bd6ee"
+      },
+      {
+        "id": "0/1/0/3/31/0",
+        "parentTag": "p",
+        "text": "Last updated: 2025-09-01",
+        "textSha1": "cd789df57a8fff036a9fac96a6ae6c7829668212"
+      }
+    ]
+  },
+  {
+    "kind": "page",
+    "slug": "privacy",
+    "locale": "sv",
+    "file": "src/content/pages/privacy.sv.html",
+    "htmlSha1": "0b68dbba6f395635e5c767dbccb97f67b6127dd2",
+    "segments": [
+      {
+        "id": "0/1/0/1/0",
+        "parentTag": "h1",
+        "text": "Integritetspolicy",
+        "textSha1": "f9db640783ee0ef032bea3e37974f38db62d57b7"
+      },
+      {
+        "id": "0/1/0/3/1/0",
+        "parentTag": "p",
+        "text": "Museet för Artificiell Intelligens (MAI) värnar om din integritet. Denna sida beskriver kort hur vi behandlar personuppgifter när du kontaktar oss, skickar medlemsansökan eller bokningsförfrågan.",
+        "textSha1": "d4e591f78e08563d9368a9b1cc22546a9ce06021"
+      },
+      {
+        "id": "0/1/0/3/3/0",
+        "parentTag": "h2",
+        "text": "Personuppgiftsansvarig",
+        "textSha1": "015ec9653d5dda6dd579e8e24378dc6245394d3d"
+      },
+      {
+        "id": "0/1/0/3/5/0",
+        "parentTag": "p",
+        "text": "Museet för Artificiell Intelligens (MAI), Närkesgatan 6, 118 40 Stockholm. Kontakt:",
+        "textSha1": "3256308da1a3c1e720dbe381e3d4d11f4b667aa6"
+      },
+      {
+        "id": "0/1/0/3/5/1/0",
+        "parentTag": "a",
+        "text": "info@aimuseum.se",
+        "textSha1": "634d69856c54e4bf32991e3cae9947d8a71bd6ee"
+      },
+      {
+        "id": "0/1/0/3/7/0",
+        "parentTag": "h2",
+        "text": "Vilka uppgifter vi samlar in",
+        "textSha1": "5891fa382b5948dcc854fdf47c1d05ecaade1024"
+      },
+      {
+        "id": "0/1/0/3/9/0",
+        "parentTag": "p",
+        "text": "De uppgifter du själv lämnar i våra formulär, t.ex. namn, e-postadress, organisation och ditt meddelande.",
+        "textSha1": "55d2a8ec66389a6222a55adcff3aa8063a688413"
+      },
+      {
+        "id": "0/1/0/3/11/0",
+        "parentTag": "h2",
+        "text": "Ändamål och laglig grund",
+        "textSha1": "c7efd755a65f8ffaf406ed8bbe565140b44f5b1e"
+      },
+      {
+        "id": "0/1/0/3/13/1/1",
+        "parentTag": "li",
+        "text": "– berättigat intresse och/eller avtal.",
+        "textSha1": "0dd7fbe685da980fe377698096e26f6e206c8e94"
+      },
+      {
+        "id": "0/1/0/3/13/1/0/0",
+        "parentTag": "span",
+        "text": "Svara på förfrågningar och hantera bokningar/medlemskap",
+        "textSha1": "38de32e6d44d2df59014f111fa1a506885b73207"
+      },
+      {
+        "id": "0/1/0/3/13/3/1",
+        "parentTag": "li",
+        "text": "(t.ex. planering av workshops) – berättigat intresse.",
+        "textSha1": "6c19166c44deef20960012b44a8bbc288cfb6835"
+      },
+      {
+        "id": "0/1/0/3/13/3/0/0",
+        "parentTag": "span",
+        "text": "Administration och uppföljning",
+        "textSha1": "914632e5ad15acb52b6d33600f5a38072a713026"
+      },
+      {
+        "id": "0/1/0/3/15/0",
+        "parentTag": "h2",
+        "text": "Lagringstid",
+        "textSha1": "828cfb91c1f4b304218df3bc057c6af3c4f2a26d"
+      },
+      {
+        "id": "0/1/0/3/17/0",
+        "parentTag": "p",
+        "text": "Vi sparar uppgifter endast så länge som behövs för att hantera ditt ärende och därefter enligt nödvändiga administrativa/kontrollkrav.",
+        "textSha1": "70d047b3898cae2749c201f61f436edcf5eddffd"
+      },
+      {
+        "id": "0/1/0/3/19/0",
+        "parentTag": "h2",
+        "text": "Mottagare och tjänsteleverantörer",
+        "textSha1": "87839143cf9b2b41f8a04b075935e849934819f2"
+      },
+      {
+        "id": "0/1/0/3/21/0",
+        "parentTag": "p",
+        "text": "Vi använder e-posttjänsten",
+        "textSha1": "487bcc9fa5432120e48b5f9473f2b55d99f10d89"
+      },
+      {
+        "id": "0/1/0/3/21/2",
+        "parentTag": "p",
+        "text": "för att skicka meddelanden från våra formulär. De behandlar uppgifterna som personuppgiftsbiträde enligt sina villkor. Vi delar inte dina uppgifter vidare för marknadsföring från tredje part.",
+        "textSha1": "be06efba49348f206a732acec34f9ff403da0bd9"
+      },
+      {
+        "id": "0/1/0/3/21/1/0",
+        "parentTag": "span",
+        "text": "EmailJS",
+        "textSha1": "802347453c781b068d74840b8a6865d08c030e2a"
+      },
+      {
+        "id": "0/1/0/3/23/0",
+        "parentTag": "h2",
+        "text": "Cookies",
+        "textSha1": "524cf50b5df5f29161c0600989922de48abede70"
+      },
+      {
+        "id": "0/1/0/3/25/0",
+        "parentTag": "p",
+        "text": "Vår webbplats använder i nuläget endast nödvändiga cookies. Om vi lägger till analys- eller spårningscookies kommer vi att be om samtycke innan de aktiveras.",
+        "textSha1": "17f14e1060baae2ee971dd39d4abadf369a6393f"
+      },
+      {
+        "id": "0/1/0/3/27/0",
+        "parentTag": "h2",
+        "text": "Dina rättigheter",
+        "textSha1": "0f616204150fe2d860f336e59c43d7d5c2ac70f2"
+      },
+      {
+        "id": "0/1/0/3/29/0",
+        "parentTag": "p",
+        "text": "Du kan begära tillgång till, rättelse eller radering av dina uppgifter, samt invända mot eller begära begränsning av behandlingen. Kontakta oss på",
+        "textSha1": "27abf9edc98140fa23ceebd972d7ef2c882692d1"
+      },
+      {
+        "id": "0/1/0/3/29/2",
+        "parentTag": "p",
+        "text": ". Du har även rätt att klaga till Integritetsskyddsmyndigheten (IMY).",
+        "textSha1": "af8000636eee27780172be06bdd77c3b7ea15273"
+      },
+      {
+        "id": "0/1/0/3/29/1/0",
+        "parentTag": "a",
+        "text": "info@aimuseum.se",
+        "textSha1": "634d69856c54e4bf32991e3cae9947d8a71bd6ee"
+      },
+      {
+        "id": "0/1/0/3/31/0",
+        "parentTag": "p",
+        "text": "Senast uppdaterad: 2025-09-01",
+        "textSha1": "57d634ba83a03f2bba1acfe1ef219ee5cab8de06"
+      }
+    ]
+  },
+  {
+    "kind": "page",
+    "slug": "research-index",
+    "locale": "en",
+    "file": "src/content/pages/research-index.en.html",
+    "htmlSha1": "c767c6b2cf1dd4621250aa5c1d2695c26b11f428",
+    "segments": [
+      {
+        "id": "0/1/0/1/0",
+        "parentTag": "h1",
+        "text": "Research Index",
+        "textSha1": "7a88b78ebfd1118cb5a20c5889524ae01ab90da7"
+      },
+      {
+        "id": "0/1/0/3/0",
+        "parentTag": "p",
+        "text": "Peer-reviewed and practitioner articles curated by the Museum of AI.",
+        "textSha1": "3539860bfbf8e5bc23fc3f706fd71c96ce1e006d"
+      },
+      {
+        "id": "0/1/0/5/1/1/1/0",
+        "parentTag": "label",
+        "text": "Search",
+        "textSha1": "bce06414177f72ab70e6387b6af9f8ceef0d6049"
+      },
+      {
+        "id": "0/1/0/5/1/3/1/0",
+        "parentTag": "label",
+        "text": "Topic",
+        "textSha1": "7e13bd176f89a12f0b614b55ffc19c14515ef920"
+      },
+      {
+        "id": "0/1/0/5/1/3/3/1/0",
+        "parentTag": "option",
+        "text": "All topics",
+        "textSha1": "e0631cd8f4c91f8e80fa92e7f871af7046444819"
+      },
+      {
+        "id": "0/1/0/5/1/3/3/3/0",
+        "parentTag": "option",
+        "text": "History",
+        "textSha1": "90ccd6497400b5576aeca1bd94af74aae1e0a250"
+      },
+      {
+        "id": "0/1/0/5/1/3/3/5/0",
+        "parentTag": "option",
+        "text": "Education",
+        "textSha1": "aaf87fe57ae6d323db5496e6e27b7bc55f15827c"
+      },
+      {
+        "id": "0/1/0/5/1/3/3/7/0",
+        "parentTag": "option",
+        "text": "Medicine",
+        "textSha1": "cd8c2df26c59ee73a03c6a4ccbbc83cfdb565e7c"
+      },
+      {
+        "id": "0/1/0/5/1/3/3/9/0",
+        "parentTag": "option",
+        "text": "Energy",
+        "textSha1": "437bcb15112715dc73cb38b85f0830f3ce457ded"
+      },
+      {
+        "id": "0/1/0/5/1/3/3/11/0",
+        "parentTag": "option",
+        "text": "Industry",
+        "textSha1": "973d438fe5d3cf552c5fcd3b2265fe9bff3d71c6"
+      },
+      {
+        "id": "0/1/0/5/1/3/3/13/0",
+        "parentTag": "option",
+        "text": "Ethics",
+        "textSha1": "0d1aa605bd963f29fa77ce283dae3dc9cac0bd2f"
+      },
+      {
+        "id": "0/1/0/5/1/5/1/0",
+        "parentTag": "label",
+        "text": "Year",
+        "textSha1": "879e32326c5217968ac8e3a14e4a8a5214957264"
+      },
+      {
+        "id": "0/1/0/5/1/5/3/1/0",
+        "parentTag": "option",
+        "text": "Any year",
+        "textSha1": "573442653243e9ebda50d896e284f8c0850affd0"
+      },
+      {
+        "id": "0/1/0/5/1/5/3/3/0",
+        "parentTag": "option",
+        "text": "2026",
+        "textSha1": "aee655773d856fb038536adcfd6472fc7543463e"
+      },
+      {
+        "id": "0/1/0/5/1/5/3/5/0",
+        "parentTag": "option",
+        "text": "2025",
+        "textSha1": "004be89dd9e070ecb080b9b759e5be29ec24881b"
+      },
+      {
+        "id": "0/1/0/5/1/5/3/7/0",
+        "parentTag": "option",
+        "text": "2024",
+        "textSha1": "7e79a3af2634de6635e59c9404d251b3955d39f9"
+      },
+      {
+        "id": "0/1/0/7/3/1/0",
+        "parentTag": "h2",
+        "text": "AI in the Classroom: Practical Pedagogy with Large Language Models",
+        "textSha1": "1e412e798f622adebfaf86c90079e6e84f3c1047"
+      },
+      {
+        "id": "0/1/0/7/3/3/0",
+        "parentTag": "p",
+        "text": "A practitioner-oriented guide to designing assignments and assessments with generative AI, balancing creativity and integrity.",
+        "textSha1": "0b5bb8e1a9ba3ff2644219829c4f29e3d53382dd"
+      },
+      {
+        "id": "0/1/0/7/3/5/1/1",
+        "parentTag": "span",
+        "text": "2025",
+        "textSha1": "004be89dd9e070ecb080b9b759e5be29ec24881b"
+      },
+      {
+        "id": "0/1/0/7/3/5/3/1",
+        "parentTag": "span",
+        "text": "Education",
+        "textSha1": "aaf87fe57ae6d323db5496e6e27b7bc55f15827c"
+      },
+      {
+        "id": "0/1/0/7/5/1/0",
+        "parentTag": "h2",
+        "text": "Trustworthy Diagnostics: Evaluating Clinical AI Beyond Accuracy",
+        "textSha1": "ac71bdfb3ecc65feec4beaeffd3bcf7dbe89fd39"
+      },
+      {
+        "id": "0/1/0/7/5/3/0",
+        "parentTag": "p",
+        "text": "Frameworks for robustness, fairness, and post-deployment monitoring in clinical decision support.",
+        "textSha1": "0ed18d0f3e0c418a80e358d829f538e05e13c5bf"
+      },
+      {
+        "id": "0/1/0/7/5/5/1/1",
+        "parentTag": "span",
+        "text": "2024",
+        "textSha1": "7e79a3af2634de6635e59c9404d251b3955d39f9"
+      },
+      {
+        "id": "0/1/0/7/5/5/3/1",
+        "parentTag": "span",
+        "text": "Medicine",
+        "textSha1": "cd8c2df26c59ee73a03c6a4ccbbc83cfdb565e7c"
+      },
+      {
+        "id": "0/1/0/7/7/1/0",
+        "parentTag": "h2",
+        "text": "From Principles to Practice: Operationalizing AI Ethics",
+        "textSha1": "96d87c2731180c8dd1550baa29c53f25b93eb546"
+      },
+      {
+        "id": "0/1/0/7/7/3/0",
+        "parentTag": "p",
+        "text": "Case studies on implementing governance, audit trails, and incident response for AI systems.",
+        "textSha1": "2c1f36d1aadcd74356a80c294d15f9a302c728a2"
+      },
+      {
+        "id": "0/1/0/7/7/5/1/1",
+        "parentTag": "span",
+        "text": "2026",
+        "textSha1": "aee655773d856fb038536adcfd6472fc7543463e"
+      },
+      {
+        "id": "0/1/0/7/7/5/3/1",
+        "parentTag": "span",
+        "text": "Ethics",
+        "textSha1": "0d1aa605bd963f29fa77ce283dae3dc9cac0bd2f"
+      }
+    ]
+  },
+  {
+    "kind": "page",
+    "slug": "research-index",
+    "locale": "sv",
+    "file": "src/content/pages/research-index.sv.html",
+    "htmlSha1": "7d2e69d79ea7dcae6588b9284a8cf0128643272e",
+    "segments": [
+      {
+        "id": "0/1/0/1/0",
+        "parentTag": "h1",
+        "text": "Forskningsindex",
+        "textSha1": "0edefaa92be1d4bc700093711619e9e96274aa7d"
+      },
+      {
+        "id": "0/1/0/3/0",
+        "parentTag": "p",
+        "text": "Forskning och praktiknära artiklar kuraterade av Museum of AI.",
+        "textSha1": "9112d8e8001aa8ea009ffcec1d6d3c20e5413601"
+      },
+      {
+        "id": "0/1/0/5/1/1/1/0",
+        "parentTag": "label",
+        "text": "Sök",
+        "textSha1": "3b62b31336c63cb76335785b1944688908d63221"
+      },
+      {
+        "id": "0/1/0/5/1/3/1/0",
+        "parentTag": "label",
+        "text": "Ämne",
+        "textSha1": "21678bcf450e1d758c3b1ae240f1201a23f106e5"
+      },
+      {
+        "id": "0/1/0/5/1/3/3/1/0",
+        "parentTag": "option",
+        "text": "Alla ämnen",
+        "textSha1": "e2dda088a17019e9362f87a9328940fd93c6e07b"
+      },
+      {
+        "id": "0/1/0/5/1/3/3/3/0",
+        "parentTag": "option",
+        "text": "Utbildning",
+        "textSha1": "d2ca6caabc51815af59aac77fe88069fe30e39d0"
+      },
+      {
+        "id": "0/1/0/5/1/3/3/5/0",
+        "parentTag": "option",
+        "text": "Medicin",
+        "textSha1": "11386286fdd9d12e9a584dfb3b4895f3cd670503"
+      },
+      {
+        "id": "0/1/0/5/1/3/3/7/0",
+        "parentTag": "option",
+        "text": "Energi",
+        "textSha1": "d7cf04b531ea5460fd39af1f4320132f52ab4990"
+      },
+      {
+        "id": "0/1/0/5/1/3/3/9/0",
+        "parentTag": "option",
+        "text": "Industri",
+        "textSha1": "f041c3c30b128b2969c2f9e0ef3c0620d38a799e"
+      },
+      {
+        "id": "0/1/0/5/1/3/3/11/0",
+        "parentTag": "option",
+        "text": "Etik",
+        "textSha1": "694e45d5e2b47979f4a534b35d846e330b96aed4"
+      },
+      {
+        "id": "0/1/0/5/1/5/1/0",
+        "parentTag": "label",
+        "text": "År",
+        "textSha1": "25c8cc0cf24c542e83ec78b4ba386a20e69d8457"
+      },
+      {
+        "id": "0/1/0/5/1/5/3/1/0",
+        "parentTag": "option",
+        "text": "Vilket år som helst",
+        "textSha1": "10b595650924a9f8c4c652133879f35fa5d3f0f5"
+      },
+      {
+        "id": "0/1/0/5/1/5/3/3/0",
+        "parentTag": "option",
+        "text": "2026",
+        "textSha1": "aee655773d856fb038536adcfd6472fc7543463e"
+      },
+      {
+        "id": "0/1/0/5/1/5/3/5/0",
+        "parentTag": "option",
+        "text": "2025",
+        "textSha1": "004be89dd9e070ecb080b9b759e5be29ec24881b"
+      },
+      {
+        "id": "0/1/0/5/1/5/3/7/0",
+        "parentTag": "option",
+        "text": "2024",
+        "textSha1": "7e79a3af2634de6635e59c9404d251b3955d39f9"
+      },
+      {
+        "id": "0/1/0/7/1/1/0",
+        "parentTag": "h2",
+        "text": "AI i klassrummet: Praktisk pedagogik med språkmodeller",
+        "textSha1": "25dd2418866cfc39fc614acd7c0fa315b797df43"
+      },
+      {
+        "id": "0/1/0/7/1/3/0",
+        "parentTag": "p",
+        "text": "En praktiknära guide till uppgifter och bedömning med generativ AI – balans mellan kreativitet och integritet.",
+        "textSha1": "35707999b166741e05b11b3aac62814138dd5e78"
+      },
+      {
+        "id": "0/1/0/7/1/5/1/1",
+        "parentTag": "span",
+        "text": "2025",
+        "textSha1": "004be89dd9e070ecb080b9b759e5be29ec24881b"
+      },
+      {
+        "id": "0/1/0/7/1/5/3/1",
+        "parentTag": "span",
+        "text": "Utbildning",
+        "textSha1": "d2ca6caabc51815af59aac77fe88069fe30e39d0"
+      },
+      {
+        "id": "0/1/0/7/3/1/0",
+        "parentTag": "h2",
+        "text": "Pålitlig diagnostik: Utvärdera klinisk AI bortom noggrannhet",
+        "textSha1": "06d2040dd7eb1d721ffa85b7ea01637020cfd27c"
+      },
+      {
+        "id": "0/1/0/7/3/3/0",
+        "parentTag": "p",
+        "text": "Ramverk för robusthet, rättvisa och uppföljning efter driftsättning i kliniskt beslutsstöd.",
+        "textSha1": "4de163125df48409ebd03270ff7500a8388ae01a"
+      },
+      {
+        "id": "0/1/0/7/3/5/1/1",
+        "parentTag": "span",
+        "text": "2024",
+        "textSha1": "7e79a3af2634de6635e59c9404d251b3955d39f9"
+      },
+      {
+        "id": "0/1/0/7/3/5/3/1",
+        "parentTag": "span",
+        "text": "Medicin",
+        "textSha1": "11386286fdd9d12e9a584dfb3b4895f3cd670503"
+      },
+      {
+        "id": "0/1/0/7/5/1/0",
+        "parentTag": "h2",
+        "text": "Från principer till praktik: Så operationaliseras AI‑etik",
+        "textSha1": "46f355957b9feab3edd50e1ea3b6162b943b2355"
+      },
+      {
+        "id": "0/1/0/7/5/3/0",
+        "parentTag": "p",
+        "text": "Fallstudier om styrning, spårbarhet och incidenthantering för AI‑system.",
+        "textSha1": "106150e064fc4dd6bdd1332f072203d7a5e7e6cf"
+      },
+      {
+        "id": "0/1/0/7/5/5/1/1",
+        "parentTag": "span",
+        "text": "2026",
+        "textSha1": "aee655773d856fb038536adcfd6472fc7543463e"
+      },
+      {
+        "id": "0/1/0/7/5/5/3/1",
+        "parentTag": "span",
+        "text": "Etik",
+        "textSha1": "694e45d5e2b47979f4a534b35d846e330b96aed4"
+      }
+    ]
+  },
+  {
+    "kind": "page",
+    "slug": "resources",
+    "locale": "en",
+    "file": "src/content/pages/resources.en.html",
+    "htmlSha1": "02ba2de6ecdc0d86d4deba94dbff71cc99ed82b5",
+    "segments": [
+      {
+        "id": "0/1/0/1/0",
+        "parentTag": "h1",
+        "text": "Resources",
+        "textSha1": "87df60de337fb58864343e396696d74611e0d403"
+      },
+      {
+        "id": "0/1/0/3/1/1/0",
+        "parentTag": "h2",
+        "text": "Educational Resources",
+        "textSha1": "2967bf3ac9ada50bc59b31074ac282ee66c15969"
+      },
+      {
+        "id": "0/1/0/3/1/3/0",
+        "parentTag": "p",
+        "text": "We offer a range of workshops and lectures for all who want to learn more about AI - from basic concepts to advanced topics and exercises. Let us know your needs and interests and we will create the right program for you.",
+        "textSha1": "f0cb811b6f4dee32aecd44ac3b005926b5c28ff0"
+      },
+      {
+        "id": "0/1/0/3/1/5/2",
+        "parentTag": "a",
+        "text": "Book a workshop or lecture",
+        "textSha1": "afd66e68d2a967e525e43ffe0da3859cba9d527c"
+      },
+      {
+        "id": "0/1/0/3/3/1/0",
+        "parentTag": "h2",
+        "text": "What do lectures and workshops cost?",
+        "textSha1": "b228cb5c8ddfee47a08c1fa6a9e1c3c9f109b70c"
+      },
+      {
+        "id": "0/1/0/3/3/3/0",
+        "parentTag": "p",
+        "text": "Our pricing is competitive and we offer a range of options to suit your needs. We also offer discounts for schools and academic institutions. Contact us for a custom quote.",
+        "textSha1": "cad18614c10a53bc5a69a259223b292436045d4d"
+      },
+      {
+        "id": "0/1/0/3/3/5/2",
+        "parentTag": "a",
+        "text": "Get a quote",
+        "textSha1": "02e3a582bd6fcc9737b7eebce3686461f83160c7"
+      },
+      {
+        "id": "0/1/0/3/5/1/0",
+        "parentTag": "h2",
+        "text": "Research Publications",
+        "textSha1": "33c1ac142d5f25c59a28b3c02395b9d6f2040e9e"
+      },
+      {
+        "id": "0/1/0/3/5/3/0",
+        "parentTag": "p",
+        "text": "Subscribe to our newsletter for the latest news and updates on our research as well as membership activities.",
+        "textSha1": "a9dd021d73ea58aedfcd372f46431f7a8e0b88ad"
+      },
+      {
+        "id": "0/1/0/3/5/5/2",
+        "parentTag": "a",
+        "text": "Subscribe to our newsletter",
+        "textSha1": "3ae5a4f21ea0626bab5ac6472de6e1415aaa416a"
+      },
+      {
+        "id": "0/1/0/3/7/1/0",
+        "parentTag": "h2",
+        "text": "Press Center",
+        "textSha1": "e108056467aada7b2ed293f8871a9bd447292b3e"
+      },
+      {
+        "id": "0/1/0/3/7/3/0",
+        "parentTag": "p",
+        "text": "Contact us for press inquiries and media coverage, or to get access to our press kit.",
+        "textSha1": "451a65438e34b1c95856b55a8556deb057cf5c61"
+      },
+      {
+        "id": "0/1/0/3/7/5/2",
+        "parentTag": "a",
+        "text": "Contact us",
+        "textSha1": "4832e45812a2724f16a15f9ae87adfc8ae4168cf"
+      },
+      {
+        "id": "0/1/0/3/9/1/0",
+        "parentTag": "h2",
+        "text": "Careers",
+        "textSha1": "68d70e596c656407fcebb9854ef64847a2a5a78f"
+      },
+      {
+        "id": "0/1/0/3/9/3/0",
+        "parentTag": "p",
+        "text": "We are always looking for talented individuals to join our team. If you are interested in working with us, please drop us a line.",
+        "textSha1": "e94f92f5473d8febacfbbee4dc58ff6bd251ac48"
+      },
+      {
+        "id": "0/1/0/3/9/5/2",
+        "parentTag": "a",
+        "text": "Contact us",
+        "textSha1": "4832e45812a2724f16a15f9ae87adfc8ae4168cf"
+      },
+      {
+        "id": "0/1/0/3/11/1/0",
+        "parentTag": "h2",
+        "text": "FAQs",
+        "textSha1": "ab9dcd4a0295bd5e2c0f799fd9becca5752365e8"
+      },
+      {
+        "id": "0/1/0/3/11/3/1/1/0",
+        "parentTag": "h3",
+        "text": "Is the museum open to the public?",
+        "textSha1": "1f771a2ce590c55d9f5ddb6aba710c4e6fa885f2"
+      },
+      {
+        "id": "0/1/0/3/11/3/1/3/0",
+        "parentTag": "p",
+        "text": "Currently, visits are by appointment only. Please contact us to book a visit.",
+        "textSha1": "ddceadc465c6b17f3bd68496ee3743378806b29a"
+      },
+      {
+        "id": "0/1/0/3/11/3/3/1/0",
+        "parentTag": "h3",
+        "text": "What organizations support the museum?",
+        "textSha1": "06b2a1c215ccb9ea50c8c869e4bae122b28a5a8a"
+      },
+      {
+        "id": "0/1/0/3/11/3/3/3/0",
+        "parentTag": "p",
+        "text": "The museum is run on a non-profit basis and is supported by our member association, corporate sponsors and private individuals.",
+        "textSha1": "8839094c9825befd38f6351aa18f61079da4ac35"
+      },
+      {
+        "id": "0/1/0/3/11/3/5/1/0",
+        "parentTag": "h3",
+        "text": "Are your lecturers and workshop facilitators available for hire?",
+        "textSha1": "fa4a10d8e090b84fb27fe2f1bf78d7f4d26437e2"
+      },
+      {
+        "id": "0/1/0/3/11/3/5/3/0",
+        "parentTag": "p",
+        "text": "Yes, within the limits of availability. Please contact us to discuss your needs.",
+        "textSha1": "dfe9a94bee57296cf2ef59798d88920f3f57443a"
+      },
+      {
+        "id": "0/1/0/3/11/3/7/1/0",
+        "parentTag": "h3",
+        "text": "What can I expect in a workshop?",
+        "textSha1": "0f403908db722e7f394b5f6c1bbf1dfde47998d9"
+      },
+      {
+        "id": "0/1/0/3/11/3/7/3/0",
+        "parentTag": "p",
+        "text": "A workshop entails a mix of prepatory instructions and hands-on activities. We will help you install the software and tools you need to participate in the workshop. You will work with AI tools and get a good start on using them in your own projects.",
+        "textSha1": "e9127d989931adfba7abb978246c9dd9deb40b13"
+      },
+      {
+        "id": "0/1/0/3/11/3/9/1/0",
+        "parentTag": "h3",
+        "text": "What are the qualifications of your lecturers and workshop facilitators?",
+        "textSha1": "c820063b8b6cf5ccac06ab15e1f18f65e29926d7"
+      },
+      {
+        "id": "0/1/0/3/11/3/9/3/0",
+        "parentTag": "p",
+        "text": "We are a team of experienced educators and AI researchers. We have a good mix of technical and pedagogical skills and we are all passionate about teaching. We have a significant list of satisfied customers who have praised our workshops and lectures.",
+        "textSha1": "2a2bc4c39b81dec82d2cc8b59d208f61883ac3cc"
+      },
+      {
+        "id": "0/1/0/3/11/3/11/1/0",
+        "parentTag": "h3",
+        "text": "What are the prerequisites for attending a workshop?",
+        "textSha1": "929e89213ecaa37f7aa89171dcb16f8db5106dc3"
+      },
+      {
+        "id": "0/1/0/3/11/3/11/3/0",
+        "parentTag": "p",
+        "text": "We cater to both professional and private individuals who wish to prepare for the future. For the latter category prior knowledge is not required, but some basic IT skills are helpful.",
+        "textSha1": "b5d7984ff97139ecdb343088ff92ed10855ccb2d"
+      },
+      {
+        "id": "0/1/0/3/13/1/0",
+        "parentTag": "h2",
+        "text": "Contact Us",
+        "textSha1": "9ad0ccff7c60872356cb74b82694782be79ba338"
+      },
+      {
+        "id": "0/1/0/3/13/3/0",
+        "parentTag": "p",
+        "text": "We will respond within 24 hours.",
+        "textSha1": "8277cfad644bad7d0ec87170e63eb01a05347769"
+      },
+      {
+        "id": "0/1/0/3/13/5/2",
+        "parentTag": "a",
+        "text": "Contact us",
+        "textSha1": "4832e45812a2724f16a15f9ae87adfc8ae4168cf"
+      }
+    ]
+  },
+  {
+    "kind": "page",
+    "slug": "resources",
+    "locale": "sv",
+    "file": "src/content/pages/resources.sv.html",
+    "htmlSha1": "47add3154aedb232ae83abf136c597e5d9daadc0",
+    "segments": [
+      {
+        "id": "0/1/0/1/0",
+        "parentTag": "h1",
+        "text": "Resurser",
+        "textSha1": "2b1ac935602114d789ad7c271495650e653cbafd"
+      },
+      {
+        "id": "0/1/0/3/1/1/0",
+        "parentTag": "h2",
+        "text": "Utbildningsresurser",
+        "textSha1": "b6d86a8af7a56953a4a4af7038cf735aeac2c974"
+      },
+      {
+        "id": "0/1/0/3/1/3/0",
+        "parentTag": "p",
+        "text": "Vi erbjuder ett brett utbud av workshops och föreläsningar för alla som vill lära sig mer om AI – från grundläggande koncept till avancerade ämnen och övningar. Berätta om era behov och intressen så sätter vi ihop rätt upplägg för er.",
+        "textSha1": "2b06a3ffa5ff817a1b330d1f4b94203ab30b3a4a"
+      },
+      {
+        "id": "0/1/0/3/1/5/2",
+        "parentTag": "a",
+        "text": "Boka workshop eller föreläsning",
+        "textSha1": "7c53123183aecdeeaedab2003c004dc54f068d5e"
+      },
+      {
+        "id": "0/1/0/3/3/1/0",
+        "parentTag": "h2",
+        "text": "Vad kostar föreläsningar och workshops?",
+        "textSha1": "698b5afa50d52a8864ba97015e0d6f7af4543be4"
+      },
+      {
+        "id": "0/1/0/3/3/3/0",
+        "parentTag": "p",
+        "text": "Våra priser är konkurrenskraftiga och vi erbjuder flera alternativ som passar era behov. Vi ger även rabatt till skolor och akademiska institutioner. Kontakta oss för en offert.",
+        "textSha1": "32490877b60be4fba66d56153fdeac5136021aab"
+      },
+      {
+        "id": "0/1/0/3/3/5/2",
+        "parentTag": "a",
+        "text": "Begär offert",
+        "textSha1": "60e8147acff80dede73d989583debf5d4d75abef"
+      },
+      {
+        "id": "0/1/0/3/5/1/0",
+        "parentTag": "h2",
+        "text": "Forskning och publikationer",
+        "textSha1": "aacaa39c7c8de1c4c57fdd8166e04270b7bfeb5c"
+      },
+      {
+        "id": "0/1/0/3/5/3/0",
+        "parentTag": "p",
+        "text": "Prenumerera på vårt nyhetsbrev för de senaste nyheterna och uppdateringarna om vår forskning samt medlemsaktiviteter.",
+        "textSha1": "0ed247c95b491445417701088e27a7101402b7d9"
+      },
+      {
+        "id": "0/1/0/3/5/5/2",
+        "parentTag": "a",
+        "text": "Prenumerera på vårt nyhetsbrev",
+        "textSha1": "4adf5879862df897bdc40f2bdb89f263ef79dbeb"
+      },
+      {
+        "id": "0/1/0/3/7/1/0",
+        "parentTag": "h2",
+        "text": "Press",
+        "textSha1": "ea683ad616063b7347bdddeee7203a82e1a3805b"
+      },
+      {
+        "id": "0/1/0/3/7/3/0",
+        "parentTag": "p",
+        "text": "Kontakta oss för pressförfrågningar och mediebevakning eller för tillgång till vårt presskit.",
+        "textSha1": "6e14e81e5b09b1b499c0b843d7a6e1636fa3d385"
+      },
+      {
+        "id": "0/1/0/3/7/5/2",
+        "parentTag": "a",
+        "text": "Kontakta oss",
+        "textSha1": "62b77380fe557931cf492fda5605a3463c119af3"
+      },
+      {
+        "id": "0/1/0/3/9/1/0",
+        "parentTag": "h2",
+        "text": "Karriär",
+        "textSha1": "26d657485085c1363d5a70b3f4f816b2db10a0ba"
+      },
+      {
+        "id": "0/1/0/3/9/3/0",
+        "parentTag": "p",
+        "text": "Vi söker alltid talangfulla personer som vill bli en del av vårt team. Om du är intresserad av att arbeta med oss, hör av dig.",
+        "textSha1": "bf396a9ec3445b5f648de26a785eef57c09871cd"
+      },
+      {
+        "id": "0/1/0/3/9/5/2",
+        "parentTag": "a",
+        "text": "Kontakta oss",
+        "textSha1": "62b77380fe557931cf492fda5605a3463c119af3"
+      },
+      {
+        "id": "0/1/0/3/11/1/0",
+        "parentTag": "h2",
+        "text": "Vanliga frågor",
+        "textSha1": "2d4234aea0b80314e160be68ff6df201437a2855"
+      },
+      {
+        "id": "0/1/0/3/11/3/1/1/0",
+        "parentTag": "h3",
+        "text": "Är museet öppet för allmänheten?",
+        "textSha1": "08bd3fbb50835b66c6b6d9fb56015b59db0eac05"
+      },
+      {
+        "id": "0/1/0/3/11/3/1/3/0",
+        "parentTag": "p",
+        "text": "För närvarande sker besök efter överenskommelse. Kontakta oss för att boka en visning.",
+        "textSha1": "e9466c9972b4d342579188d89238ab4594233f12"
+      },
+      {
+        "id": "0/1/0/3/11/3/3/1/0",
+        "parentTag": "h3",
+        "text": "Vilka organisationer stödjer museet?",
+        "textSha1": "aae14fa22befa070d2088969b368857811876dbf"
+      },
+      {
+        "id": "0/1/0/3/11/3/3/3/0",
+        "parentTag": "p",
+        "text": "Museet drivs utan vinstintresse och stöds av vår medlemsförening, företagssponsorer och privatpersoner.",
+        "textSha1": "99eb35a2c6f1f8c9403db4b0d9a1104f8082c686"
+      },
+      {
+        "id": "0/1/0/3/11/3/5/1/0",
+        "parentTag": "h3",
+        "text": "Går det att anlita era föreläsare och workshopledare?",
+        "textSha1": "5d2622a9ba1133702db517dbe0b4e6c117aa663d"
+      },
+      {
+        "id": "0/1/0/3/11/3/5/3/0",
+        "parentTag": "p",
+        "text": "Ja, i mån av tillgänglighet. Kontakta oss så diskuterar vi era behov.",
+        "textSha1": "146c4898756f2896ef3d45a3d9c1d66461400737"
+      },
+      {
+        "id": "0/1/0/3/11/3/7/1/0",
+        "parentTag": "h3",
+        "text": "Vad kan jag förvänta mig av en workshop?",
+        "textSha1": "b4d3d5ad73231617c9aa17a01f2645448b8b34f2"
+      },
+      {
+        "id": "0/1/0/3/11/3/7/3/0",
+        "parentTag": "p",
+        "text": "En workshop innehåller både förberedande instruktioner och praktiska moment. Vi hjälper er att installera den programvara och de verktyg ni behöver för att kunna delta. Ni arbetar med AI‑verktyg och får en bra start i att använda dem i egna projekt.",
+        "textSha1": "6547634a87942c877b57109058f562da9fba4e0e"
+      },
+      {
+        "id": "0/1/0/3/11/3/9/1/0",
+        "parentTag": "h3",
+        "text": "Vilka kvalifikationer har era föreläsare och workshopledare?",
+        "textSha1": "dff7ae3b1b43589d9906752630f1ae9edac278a5"
+      },
+      {
+        "id": "0/1/0/3/11/3/9/3/0",
+        "parentTag": "p",
+        "text": "Vi är ett team av erfarna pedagoger och AI‑forskare. Vi har en bra mix av teknisk och pedagogisk kompetens och brinner för undervisning. Vi har många nöjda kunder som uppskattat våra workshops och föreläsningar.",
+        "textSha1": "697b0a4ba60639f4cab377fc793f5c5553b5fe5b"
+      },
+      {
+        "id": "0/1/0/3/11/3/11/1/0",
+        "parentTag": "h3",
+        "text": "Vilka förkunskaper krävs för att delta i en workshop?",
+        "textSha1": "10948d38ce56bddac7e20fc7b7b05f7553b15b79"
+      },
+      {
+        "id": "0/1/0/3/11/3/11/3/0",
+        "parentTag": "p",
+        "text": "Vi vänder oss både till yrkesverksamma och till privatpersoner som vill förbereda sig för framtiden. För den senare gruppen krävs inga förkunskaper, men grundläggande IT‑vana är hjälpsam.",
+        "textSha1": "3f4817d6986486f058b89c163868d430721efb25"
+      },
+      {
+        "id": "0/1/0/3/13/1/0",
+        "parentTag": "h2",
+        "text": "Kontakt",
+        "textSha1": "a92b9bcb166569797fbf3ac4689fcf144151b1e6"
+      },
+      {
+        "id": "0/1/0/3/13/3/0",
+        "parentTag": "p",
+        "text": "Vi återkommer inom 24 timmar.",
+        "textSha1": "402e90967001a92fae67ec9f08849dbeab1fb621"
+      },
+      {
+        "id": "0/1/0/3/13/5/2",
+        "parentTag": "a",
+        "text": "Kontakta oss",
+        "textSha1": "62b77380fe557931cf492fda5605a3463c119af3"
+      }
+    ]
+  },
+  {
+    "kind": "page",
+    "slug": "tailored",
+    "locale": "en",
+    "file": "src/content/pages/tailored.en.html",
+    "htmlSha1": "c4be2117a00efab38cd3aba5fdee7ed25261061f",
+    "segments": [
+      {
+        "id": "0/1/0/1/0",
+        "parentTag": "h1",
+        "text": "Lectures and workshops",
+        "textSha1": "1702f3b52293ff355901a9acb0e56b20916ececc"
+      },
+      {
+        "id": "0/1/0/3/1/0",
+        "parentTag": "p",
+        "text": "Our programs are both modular and flexible. The client has the opportunity to choose in advance which modules are suitable, or just tell us what you want to learn and we will create a program that is tailored to your needs.",
+        "textSha1": "c2dec2594c22f6c708399f37f262840bba8a8e6e"
+      },
+      {
+        "id": "0/1/0/3/3/0",
+        "parentTag": "p",
+        "text": "A lecture typically takes 90 minutes including Q&A.",
+        "textSha1": "a4d67de3a05983dfd572a8e63f3827b99613311a"
+      },
+      {
+        "id": "0/1/0/3/5/3",
+        "parentTag": "div",
+        "text": "Below you can see examples of some of the modules we offer, but it is up to you decide what you want to learn.",
+        "textSha1": "27b393905861cdb521ee1e16ad6be5c9c294f76a"
+      },
+      {
+        "id": "0/1/0/3/5/1/0",
+        "parentTag": "p",
+        "text": "For companies, organizations and educational institutions:",
+        "textSha1": "4f0c00f7e75650544f287a8e6a8bf2e6a67071e1"
+      },
+      {
+        "id": "0/1/0/3/5/1/2",
+        "parentTag": "p",
+        "text": ". After work and other evening activities are priced by agreement.",
+        "textSha1": "a2878f4771c67a54014898098a364b09a6c32c79"
+      },
+      {
+        "id": "0/1/0/3/5/1/1/0",
+        "parentTag": "a",
+        "text": "contact us",
+        "textSha1": "6cf2723409421477d8f65e4cda5f65ffa86eff60"
+      },
+      {
+        "id": "0/1/0/3/7/1/0",
+        "parentTag": "h2",
+        "text": "Module A) History",
+        "textSha1": "a64d88489da2f1e07c865a958ca0580470b29057"
+      },
+      {
+        "id": "0/1/0/3/7/3/0",
+        "parentTag": "p",
+        "text": "A fundamental journey through the history of AI:",
+        "textSha1": "ee717c1d0a75f14ceb1afb70f70d623e92ad722a"
+      },
+      {
+        "id": "0/1/0/3/7/5/0",
+        "parentTag": "p",
+        "text": "Symbolist vs connectionist directions ⋅ Turing Test ⋅ Dartmouth Conference ⋅ Emergence of neural networks ⋅ Perceptron ⋅ Eliza ⋅ AI winters ⋅ ResNet ⋅ ImageNet ⋅ AlexNet ⋅ Transformers ⋅ The most important events to date.",
+        "textSha1": "1b043d65c92f26981303fe0a1915916f60d954e4"
+      },
+      {
+        "id": "0/1/0/3/9/1/0",
+        "parentTag": "h2",
+        "text": "Module B) Hands-on AI",
+        "textSha1": "27a6efc1a2de099346a490875a884d323e0aa856"
+      },
+      {
+        "id": "0/1/0/3/9/3/0",
+        "parentTag": "p",
+        "text": "Inventory and use of today's most promising AI models:",
+        "textSha1": "fe89a8e7abb1d1f16e14c60ecdf819dd63d5ccce"
+      },
+      {
+        "id": "0/1/0/3/9/5/0",
+        "parentTag": "p",
+        "text": "Use through the cloud or on your own computer/mobile ⋅ The difference between open-source and proprietary models ⋅ Access to AI models through API keys ⋅ Effective prompting ⋅ How to build your own AI chatbot ⋅ Introduction to AI agents. (Participants follow the lecturer on their own mobiles or laptops)",
+        "textSha1": "31d0add7ca14139419a79bd3d1c7bd9e5ee2dc9e"
+      },
+      {
+        "id": "0/1/0/3/11/1/0",
+        "parentTag": "h2",
+        "text": "Module C) Anatomy of AI",
+        "textSha1": "e036dc9e76d52b2965f0f8e4702e22f386a848db"
+      },
+      {
+        "id": "0/1/0/3/11/3/0",
+        "parentTag": "p",
+        "text": "Review of the different concepts and components:",
+        "textSha1": "6bd600854d018a3153aa02e3a090d3855c010176"
+      },
+      {
+        "id": "0/1/0/3/11/5/0",
+        "parentTag": "p",
+        "text": "RNNs ⋅ CNNs ⋅ LSTMs ⋅ Diffusion ⋅ GANs ⋅ Transformers ⋅ State Space ⋅ Supervised and unsupervised learning ⋅ Pretraining ⋅ Fine-tuning ⋅ Backpropagation ⋅ Reinforcement Learning ⋅ Reinforcement Learning through human feedback ⋅ Synthetic data ⋅ Data distillation ⋅ RAG ⋅ Mixture of Experts.",
+        "textSha1": "f8dc6da0f72995ced568d9e4e34d96d7e0aa01ee"
+      },
+      {
+        "id": "0/1/0/3/13/1/0",
+        "parentTag": "h2",
+        "text": "Module D) AI and the Future",
+        "textSha1": "2b2a96dc72e42c01f9990627c8859d9b2eee184d"
+      },
+      {
+        "id": "0/1/0/3/13/3/0",
+        "parentTag": "p",
+        "text": "Possibilities and risks:",
+        "textSha1": "ec68f30df7c33978fd75fdb07ee49c9bce7bec02"
+      },
+      {
+        "id": "0/1/0/3/13/5/0",
+        "parentTag": "p",
+        "text": "What is AGI? ⋅ Will AI take our jobs? ⋅ How far can scaling take us? ⋅ Energy consumption ⋅ Monopolization ⋅ Deep Fakes ⋅ AI as a weapon ⋅ Regulation and legislation ⋅ DEI & ESG issues ⋅ Copyright and data integrity ⋅ Geopolitical factors ⋅ Security.",
+        "textSha1": "5259a1cd1e4bacfdfcd39c73bc1abd8a5676842e"
+      }
+    ]
+  },
+  {
+    "kind": "page",
+    "slug": "tailored",
+    "locale": "sv",
+    "file": "src/content/pages/tailored.sv.html",
+    "htmlSha1": "05a82318c7fb6f83ce09890f02912143a5057859",
+    "segments": [
+      {
+        "id": "0/1/0/1/0",
+        "parentTag": "h1",
+        "text": "Föreläsningar och workshops",
+        "textSha1": "ecb103f4d72583590e2c7c6b5cbf9a67ba1c4d63"
+      },
+      {
+        "id": "0/1/0/3/1/0",
+        "parentTag": "p",
+        "text": "Våra program är både modulära och flexibla. Berätta vad ni vill lära er så sätter vi ihop ett upplägg anpassat efter era behov.",
+        "textSha1": "57986564bbf32d0df1439723164136753ad67617"
+      },
+      {
+        "id": "0/1/0/3/3/0",
+        "parentTag": "p",
+        "text": "En föreläsning tar vanligtvis 90 minuter inklusive frågor och svar.",
+        "textSha1": "846fdc6e4046153e09aaf743ac215340f575b642"
+      },
+      {
+        "id": "0/1/0/3/5/3",
+        "parentTag": "div",
+        "text": "Nedan kan du se exempel på några av de moduler vi erbjuder, men det är upp till er att bestämma vad ni vill lära er.",
+        "textSha1": "0f37c96a85f7feca9c2b638d8e15c5b774cff639"
+      },
+      {
+        "id": "0/1/0/3/5/1/0",
+        "parentTag": "p",
+        "text": "För företag, organisationer och utbildningsinstitutioner:",
+        "textSha1": "74a16aece371ea5b7735022e74275e2d68e2da69"
+      },
+      {
+        "id": "0/1/0/3/5/1/2",
+        "parentTag": "p",
+        "text": ". After work och andra kvällsaktiviteter prissätts enligt överenskommelse.",
+        "textSha1": "2722189dac270e43e0901423b0869c5e84e373cc"
+      },
+      {
+        "id": "0/1/0/3/5/1/1/0",
+        "parentTag": "a",
+        "text": "kontakta oss",
+        "textSha1": "baaf99cab40e1c50d93bc71762dde44c18016a7b"
+      },
+      {
+        "id": "0/1/0/3/7/1/0",
+        "parentTag": "h2",
+        "text": "Modul A) Historia",
+        "textSha1": "cb584f315c97e4d5ee7b8c93d1572d65582d7140"
+      },
+      {
+        "id": "0/1/0/3/7/3/0",
+        "parentTag": "p",
+        "text": "En fascinerande resa genom AI:s utveckling:",
+        "textSha1": "899c90d518b94104c18e8a4c20d7267dc3539e93"
+      },
+      {
+        "id": "0/1/0/3/7/5/0",
+        "parentTag": "p",
+        "text": "Från Turingtestet och Dartmouthkonferensen till neurala nätverk, AI-vintrar och dagens genombrott som Transformers och ResNet. Vi följer de viktigaste idéerna och milstolparna som format AI-historien.",
+        "textSha1": "8fa06d777bbc16777c24b18da88592a1a0a08524"
+      },
+      {
+        "id": "0/1/0/3/9/1/0",
+        "parentTag": "h2",
+        "text": "Modul B) Praktisk AI",
+        "textSha1": "eaa55885aac98fa74a3a2200eea3c2a4b21550da"
+      },
+      {
+        "id": "0/1/0/3/9/3/0",
+        "parentTag": "p",
+        "text": "Lär dig använda de mest spännande AI-verktygen:",
+        "textSha1": "34ae8d2f29039749d443df342077ef7a6ba1126c"
+      },
+      {
+        "id": "0/1/0/3/9/5/0",
+        "parentTag": "p",
+        "text": "Utforska skillnaden mellan öppna och kommersiella modeller, hur man använder API-nycklar, bygger en egen chatbot och provar AI-agenter – direkt på din egen dator eller mobil.",
+        "textSha1": "14349d525b936001c77880a19f68bbc6dba16b7f"
+      },
+      {
+        "id": "0/1/0/3/11/1/0",
+        "parentTag": "h2",
+        "text": "Modul C) AI:s anatomi",
+        "textSha1": "330419207c3c0685b3457c3cf9df8d6f47d65862"
+      },
+      {
+        "id": "0/1/0/3/11/3/0",
+        "parentTag": "p",
+        "text": "Förstå grunderna i hur AI fungerar:",
+        "textSha1": "0bd72c91a7e6a307580f008f2568c9e39f0ed305"
+      },
+      {
+        "id": "0/1/0/3/11/5/0",
+        "parentTag": "p",
+        "text": "Vi går igenom neurala nätverk, diffusion, GAN:er, transformers, förstärkningsinlärning och andra centrala begrepp – förklarat på ett begripligt sätt med fokus på helheten.",
+        "textSha1": "9bf14f90c1899a8a5070ee78eba114e394f4f87c"
+      },
+      {
+        "id": "0/1/0/3/13/1/0",
+        "parentTag": "h2",
+        "text": "Modul D) AI och framtiden",
+        "textSha1": "9aa04ef1ffe58e3feebd6067f3a5303537f596dd"
+      },
+      {
+        "id": "0/1/0/3/13/3/0",
+        "parentTag": "p",
+        "text": "En blick framåt – möjligheter och risker:",
+        "textSha1": "6774a10eb4f017b44ccf6309be4bc1b5e5a22044"
+      },
+      {
+        "id": "0/1/0/3/13/5/0",
+        "parentTag": "p",
+        "text": "Kommer AI ta våra jobb? Hur påverkas energi, säkerhet, politik och lagstiftning? Vi diskuterar AGI, deepfakes, monopol och etiska frågor som formar vår gemensamma framtid.",
+        "textSha1": "a57ae90ae32b5335b8eebb2ebee4247c4f29de5e"
+      },
+      {
+        "id": "0/1/0/5/1/2",
+        "parentTag": "a",
+        "text": "Boka workshop eller föreläsning",
+        "textSha1": "7c53123183aecdeeaedab2003c004dc54f068d5e"
+      }
+    ]
+  }
+]

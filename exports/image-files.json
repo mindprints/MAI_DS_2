@@ -1,0 +1,284 @@
+[
+  {
+    "path": "src/site/images/evolution-AI.avif",
+    "size": 109319,
+    "mtime": "2025-09-23T15:39:48.639Z",
+    "sha1": "7b9bf33b2ebf9765b2a7e3ab0f1b628f6a0a6250"
+  },
+  {
+    "path": "src/site/images/good_bad_ugly.avif",
+    "size": 114223,
+    "mtime": "2025-09-23T15:39:48.640Z",
+    "sha1": "ccc7021c4c1121c3d7c4b5fd7e344b5660c5ad3c"
+  },
+  {
+    "path": "src/site/images/hands-on-workshops.avif",
+    "size": 48405,
+    "mtime": "2025-09-23T15:39:48.640Z",
+    "sha1": "0c1ed59db961a6b08075b4b8734fd86482268011"
+  },
+  {
+    "path": "src/site/images/Human-AI-Interaction.avif",
+    "size": 78064,
+    "mtime": "2025-09-23T15:39:48.636Z",
+    "sha1": "38b9dd0143ef0c29b8f1bff1a1601b381dd17ed3"
+  },
+  {
+    "path": "src/site/images/MAI_styrelse_logo.webp",
+    "size": 43558,
+    "mtime": "2025-09-23T15:39:48.638Z",
+    "sha1": "417e3de949c8945b4ac2e9718d1ce1531b47b7c6"
+  },
+  {
+    "path": "src/site/images/mai-logos/ai-coding.jpg",
+    "size": 52927,
+    "mtime": "2025-09-23T15:39:48.644Z",
+    "sha1": "8c6380feef74045458d399577eceb51b42fb4c31"
+  },
+  {
+    "path": "src/site/images/mai-logos/ai-companions.jpg",
+    "size": 50409,
+    "mtime": "2025-09-23T15:39:48.644Z",
+    "sha1": "0748c962f0cd1e07e5cf7c1fe786e916aaec23a7"
+  },
+  {
+    "path": "src/site/images/mai-logos/ai-education.jpg",
+    "size": 45685,
+    "mtime": "2025-09-23T15:39:48.644Z",
+    "sha1": "864017febd162f452bde96dc904838d2a53733a7"
+  },
+  {
+    "path": "src/site/images/mai-logos/ai-energy.jpg",
+    "size": 50378,
+    "mtime": "2025-09-23T15:39:48.645Z",
+    "sha1": "5b7b3a8604a778f312fc594c557d283d4251d19c"
+  },
+  {
+    "path": "src/site/images/mai-logos/ai-industrialization.jpg",
+    "size": 39624,
+    "mtime": "2025-09-23T15:39:48.645Z",
+    "sha1": "49632eaccba4ec62091718cb505a12928dd5bbf8"
+  },
+  {
+    "path": "src/site/images/mai-logos/ai-medicine.jpg",
+    "size": 44099,
+    "mtime": "2025-09-23T15:39:48.645Z",
+    "sha1": "a0d81952d7707c79a5d2b6ba5b7ff3b9dbeb36fe"
+  },
+  {
+    "path": "src/site/images/mai-logos/ai-unchained.jpg",
+    "size": 66788,
+    "mtime": "2025-09-23T15:39:48.646Z",
+    "sha1": "7ce18b2b105de53da9ef9c9ca85609837e3b4a26"
+  },
+  {
+    "path": "src/site/images/mai-logos/logo_in_3d_2_darkened.avif",
+    "size": 83619,
+    "mtime": "2025-09-23T15:39:48.646Z",
+    "sha1": "ec359a90cf2a8b02c70b4bb57eba270c458cf369"
+  },
+  {
+    "path": "src/site/images/mai-logos/MAI_logoTransp_mc.png",
+    "size": 218900,
+    "mtime": "2025-09-23T15:39:48.643Z",
+    "sha1": "23f04c9513c763454d21977823c459ac6c6d3622"
+  },
+  {
+    "path": "src/site/images/mai-logos/rotatingLogo.avif",
+    "size": 273877,
+    "mtime": "2025-09-23T15:39:48.647Z",
+    "sha1": "ab6f8bb4a908189014ad0a5f15c0ee439571f35b"
+  },
+  {
+    "path": "src/site/images/slide/1-museums-logo.webp",
+    "size": 45300,
+    "mtime": "2025-09-23T15:39:48.648Z",
+    "sha1": "19653e2e7500ccd31a0f8a871ebe5dcf05c7c37b"
+  },
+  {
+    "path": "src/site/images/slide/10-tidnings-articel-invigning.webp",
+    "size": 361062,
+    "mtime": "2025-09-23T15:39:48.649Z",
+    "sha1": "74aff1e01012912f6394152c10f2216d1864068e"
+  },
+  {
+    "path": "src/site/images/slide/12-music-afton-hotorget.webp",
+    "size": 224944,
+    "mtime": "2025-09-23T15:39:48.650Z",
+    "sha1": "606ed88cedf03ffe60afd7c9975f7de1d1b64f33"
+  },
+  {
+    "path": "src/site/images/slide/13-storefront-skrapan.webp",
+    "size": 139968,
+    "mtime": "2025-09-23T15:39:48.650Z",
+    "sha1": "0404c3bba195f14e0131e00eab3fba867390b643"
+  },
+  {
+    "path": "src/site/images/slide/14-invigning-skrapan.webp",
+    "size": 180028,
+    "mtime": "2025-09-23T15:39:48.651Z",
+    "sha1": "be95db24f6244a7738b4234845a8bbb3a7a9e683"
+  },
+  {
+    "path": "src/site/images/slide/16-public-hotorget.webp",
+    "size": 187022,
+    "mtime": "2025-09-23T15:39:48.651Z",
+    "sha1": "7bea1d38f47a0da4c66db3bc530f67ca8132d308"
+  },
+  {
+    "path": "src/site/images/slide/17-hologram-building.webp",
+    "size": 74992,
+    "mtime": "2025-09-23T15:39:48.651Z",
+    "sha1": "5dee6d37712c745ceed9a33ad0645f961979d404"
+  },
+  {
+    "path": "src/site/images/slide/18-evenemang-at-narkesgatan.webp",
+    "size": 66108,
+    "mtime": "2025-09-23T15:39:48.652Z",
+    "sha1": "07b61233e6a00884f1caf1178a1c47d82cde467c"
+  },
+  {
+    "path": "src/site/images/slide/19-exterior-skrapan.webp",
+    "size": 126546,
+    "mtime": "2025-09-23T15:39:48.652Z",
+    "sha1": "61eb1f73192be9289cc6f7d3cd4e1965f55c4f1a"
+  },
+  {
+    "path": "src/site/images/slide/2-hotorget-exterior.webp",
+    "size": 180656,
+    "mtime": "2025-09-23T15:39:48.653Z",
+    "sha1": "6fa474ba4c4a59855167d29357dd57dc03516c17"
+  },
+  {
+    "path": "src/site/images/slide/20-greg-lecture-narkesg.webp",
+    "size": 59370,
+    "mtime": "2025-09-23T15:39:48.653Z",
+    "sha1": "9b179f77d64381a12687d4b7dea679de9ede23c6"
+  },
+  {
+    "path": "src/site/images/slide/21-happybirthday-at-narkesgtan.webp",
+    "size": 113494,
+    "mtime": "2025-09-23T15:39:48.655Z",
+    "sha1": "7d12db8e0d47af60989aea755d4d0d758f86be28"
+  },
+  {
+    "path": "src/site/images/slide/23-veiwing-screen-hotorget.webp",
+    "size": 127806,
+    "mtime": "2025-09-23T15:39:48.656Z",
+    "sha1": "17e7c0b6d9a8ff05402151797254d8ae2f393739"
+  },
+  {
+    "path": "src/site/images/slide/24-jubelium-pix-genom-skarmen-patrick.webp",
+    "size": 131664,
+    "mtime": "2025-09-23T15:39:48.657Z",
+    "sha1": "545fb133f45a7b6f52361c0ab7b37202e1c50e36"
+  },
+  {
+    "path": "src/site/images/slide/25-interior-skrappan.webp",
+    "size": 17992,
+    "mtime": "2025-09-23T15:39:48.657Z",
+    "sha1": "c0efe6c4e57df13c0297924a5d8bdbc7b920936c"
+  },
+  {
+    "path": "src/site/images/slide/26-greg-skollecture-hotorget.webp",
+    "size": 110748,
+    "mtime": "2025-09-23T15:39:48.657Z",
+    "sha1": "a98ed93247bf42d5e6406fa23cb799b7ab53ec44"
+  },
+  {
+    "path": "src/site/images/slide/27-mai-interior-nov-15.webp",
+    "size": 131948,
+    "mtime": "2025-09-23T15:39:48.658Z",
+    "sha1": "5edcd0c412cd00f4ac5aa33f6c51037a2a4886c8"
+  },
+  {
+    "path": "src/site/images/slide/28-survielence-camera.webp",
+    "size": 70884,
+    "mtime": "2025-09-23T15:39:48.658Z",
+    "sha1": "4e1c7e3f4a3702bc5a0c775ef7c9e988939c87d5"
+  },
+  {
+    "path": "src/site/images/slide/29-stockholm-ai-hotorget.webp",
+    "size": 277662,
+    "mtime": "2025-09-23T15:39:48.659Z",
+    "sha1": "440af7db7d1121fe754337047102bb8dc0102bb9"
+  },
+  {
+    "path": "src/site/images/slide/3-greg-lecturing-in-museum.webp",
+    "size": 214512,
+    "mtime": "2025-09-23T15:39:48.659Z",
+    "sha1": "93f80fbef8625b0018aef4b80c3fc5b2c4a6eec2"
+  },
+  {
+    "path": "src/site/images/slide/30-closeup-aws-poster.webp",
+    "size": 139494,
+    "mtime": "2025-09-23T15:39:48.660Z",
+    "sha1": "4692e799743ef57dffd2451e6aa3e7ce0c136590"
+  },
+  {
+    "path": "src/site/images/slide/31-bob-lecture.webp",
+    "size": 67274,
+    "mtime": "2025-09-23T15:39:48.661Z",
+    "sha1": "5a84c6f3b31e33504da035982ce7c28a8ec755b6"
+  },
+  {
+    "path": "src/site/images/slide/32-big-screens-at-hotorget.webp",
+    "size": 228792,
+    "mtime": "2025-09-23T15:39:48.661Z",
+    "sha1": "80d300e7838a390679d25745032d8ca8f678de8b"
+  },
+  {
+    "path": "src/site/images/slide/33-public-hotorget.webp",
+    "size": 207168,
+    "mtime": "2025-09-23T15:39:48.662Z",
+    "sha1": "3fc64d61651a3738ad51229fc9a69730b4ad3a6e"
+  },
+  {
+    "path": "src/site/images/slide/35-ai-och-music-seminar.webp",
+    "size": 65758,
+    "mtime": "2025-09-23T15:39:48.662Z",
+    "sha1": "06d3f032f3189c5213e127e675e73c70617e8185"
+  },
+  {
+    "path": "src/site/images/slide/37-aws-poster.webp",
+    "size": 152852,
+    "mtime": "2025-09-23T15:39:48.662Z",
+    "sha1": "0351a07e0905b78be58652b6211540ff85e477a4"
+  },
+  {
+    "path": "src/site/images/slide/4-max-demonstrate-for-gregor.webp",
+    "size": 152106,
+    "mtime": "2025-09-23T15:39:48.663Z",
+    "sha1": "d5dd3d1cdc029f9fff0a1bcca013e2ed7be13da9"
+  },
+  {
+    "path": "src/site/images/slide/5-three-robot-faces.webp",
+    "size": 41480,
+    "mtime": "2025-09-23T15:39:48.663Z",
+    "sha1": "9cd7b03da353b3d8b988828a9601e0b32b8f5a4b"
+  },
+  {
+    "path": "src/site/images/slide/6-musikafton-hotorget.webp",
+    "size": 199680,
+    "mtime": "2025-09-23T15:39:48.663Z",
+    "sha1": "b0b16b9bfa3605c0df019918ef2948f0eb09750c"
+  },
+  {
+    "path": "src/site/images/slide/7-platon-robot-2.webp",
+    "size": 211326,
+    "mtime": "2025-09-23T15:39:48.664Z",
+    "sha1": "cb94d8ff7e1665955bee55400f71bae8975701ca"
+  },
+  {
+    "path": "src/site/images/slide/8-greg-closeup-lecture.webp",
+    "size": 24856,
+    "mtime": "2025-09-23T15:39:48.664Z",
+    "sha1": "a1e99c8fc038364735e085f4bcde8ef767e94a8c"
+  },
+  {
+    "path": "src/site/images/slide/slides.json",
+    "size": 4107,
+    "mtime": "2025-09-23T15:39:48.664Z",
+    "sha1": "4f1b1d73d8d073b4e649b102c97f70189c8bed82"
+  }
+]
