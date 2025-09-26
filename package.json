@@ -12,7 +12,11 @@
     "optimize": "node tools/optimize-images.js src/site/images/slide",
     "generate:slides": "node tools/generate-slides-manifest.js",
     "build:pages": "node tools/build-pages.js",
-    "admin": "node admin/server.js"
+    "admin": "node admin/server.js",
+    "export-db": "node tools/export-db-content.js",
+    "check-db": "node tools/db_reader.js",
+    "import-db:dry": "node tools/import_exports.js ./exports --dry",
+    "import-db": "node tools/import_exports.js ./exports"
   },
   "keywords": [],
   "author": "",
@@ -20,14 +24,19 @@
   "type": "commonjs",
   "devDependencies": {
     "autoprefixer": "^10.4.16",
+    "lighthouse": "^12.0.0",
     "postcss": "^8.4.31",
     "postcss-cli": "^10.1.0",
-    "tailwindcss": "^3.4.4",
-    "lighthouse": "^12.0.0",
-    "sharp": "^0.33.4"
+    "sharp": "^0.33.4",
+    "tailwindcss": "^3.4.4"
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.12",
-    "express": "^4.19.2"
+    "dotenv": "^16.6.1",
+    "express": "^4.19.2",
+    "pg": "^8.16.3"
+  },
+  "directories": {
+    "doc": "docs"
   }
 }

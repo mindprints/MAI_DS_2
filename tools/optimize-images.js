@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+require('dotenv').config();
 /*
   Optimize images in place with sensible defaults.
   - Targets a directory (default: src/site/images/slide)
