@@ -83,7 +83,7 @@
                 <h1 class="text-3xl md:text-5xl font-black tracking-tighter mt-4 mb-5">
                     <span class="relative inline-block">
                         <span style="position:absolute;left:50%;top:0;transform:translate(-50%,-60%);z-index:10;white-space:nowrap" class="px-2 py-0.5 text-xs leading-none font-medium uppercase tracking-wide rounded-full cta-tab text-slate-900 shadow-md pointer-events-none select-none">BOOK NOW</span>
-                        <a href="pages/plan-workshop.html" class="inline-flex items-center px-6 py-3 rounded-full cta-link cursor-pointer no-underline" aria-label="Book AI workshop"><span class="gradient-text">Learn AI with us!</span></a>
+                        <a href="pages/plan-workshop.html" class="inline-flex items-center px-6 py-3 rounded-full cta-link cursor-pointer no-underline" aria-label="Book AI workshop"><span class="gradient-text" data-key="page.home.seg.1">Learn AI with us!</span></a>
                     </span>
                 </h1>
                 <p class="text-xl text-slate-300 mb-8 max-w-3xl">Artificial intelligence is the most significant invention in human history. We make AI accessible through qualified lectures and hands-on workshops for both experienced professionals and curious beginners. Prepare for an AI-driven future with our expert guidance.</p>
@@ -94,6 +94,10 @@
                     <!-- Slideshow cards will be dynamically generated here -->
                 </div>
             </div>
+        </div>
+        <!-- DB media test image (replaced by small-loader) -->
+        <div class="container mx-auto px-4 mt-6">
+            <img data-media-key="img.ai-coding" alt="fallback" width="400">
         </div>
         
         <div class="ai-neural"></div>
@@ -481,6 +485,33 @@
     </footer>
 
     <script src="assets/js/script.js"></script>
+<script>
+(async function(){
+  const USE_DB = true; // flip to false to fall back to hardcoded
+  const LANG = (document.documentElement.lang || 'en').toLowerCase();
+  if (!USE_DB) return;
+
+  const texts = await fetch('/db/texts.json').then(r => r.json()).catch(() => ({}));
+  const media = await fetch('/db/media.json').then(r => r.json()).catch(() => ({}));
+
+  // Replace any element that has data-key=... with the DB text
+  document.querySelectorAll('[data-key]').forEach(el => {
+    const key = el.getAttribute('data-key');
+    const t = texts[key]?.[LANG] || texts[key]?.en;
+    if (t) el.textContent = t;
+  });
+
+  // Replace any <img data-media-key="img.some-key">
+  document.querySelectorAll('img[data-media-key]').forEach(img => {
+    const key = img.getAttribute('data-media-key');
+    const m = media[key];
+    if (m?.url) {
+      img.src = m.url;
+      if (m.alt_text) img.alt = m.alt_text;
+    }
+  });
+})();
+</script>
 
 
 </section></body></html>

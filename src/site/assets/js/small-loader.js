@@ -1,0 +1,27 @@
+(async function(){
+  const USE_DB = true; // flip to false to fall back to hardcoded
+  const LANG = (document.documentElement.lang || 'en').toLowerCase();
+  if (!USE_DB) return;
+
+  const texts = await fetch('/db/texts.json').then(r => r.json()).catch(() => ({}));
+  const media = await fetch('/db/media.json').then(r => r.json()).catch(() => ({}));
+
+  // Replace any element that has data-key=... with the DB text
+  document.querySelectorAll('[data-key]').forEach(el => {
+    const key = el.getAttribute('data-key');
+    const t = (texts && texts[key] && (texts[key][LANG] || texts[key].en)) || '';
+    if (t) el.textContent = t;
+  });
+
+  // Replace any <img data-media-key="img.some-key">
+  document.querySelectorAll('img[data-media-key]').forEach(img => {
+    const key = img.getAttribute('data-media-key');
+    const m = media ? media[key] : undefined;
+    if (m && m.url) {
+      img.src = m.url;
+      if (m.alt_text) img.alt = m.alt_text;
+    }
+  });
+})();
+
+
