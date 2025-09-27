@@ -16,7 +16,9 @@ const pool = new Pool({
 
 async function main() {
   const outDir = path.resolve(process.cwd(), 'public', 'db');
+  const outDirAssets = path.resolve(process.cwd(), 'public', 'assets', 'db');
   fs.mkdirSync(outDir, { recursive: true });
+  fs.mkdirSync(outDirAssets, { recursive: true });
 
   const client = await pool.connect();
 
@@ -65,9 +67,17 @@ async function main() {
   await client.release();
   await pool.end();
 
-  fs.writeFileSync(path.join(outDir, 'texts.json'), JSON.stringify(texts, null, 2));
-  fs.writeFileSync(path.join(outDir, 'media.json'), JSON.stringify(media, null, 2));
-  fs.writeFileSync(path.join(outDir, 'encyclopedia.json'), JSON.stringify(encyclopedia, null, 2));
+  const textsJson = JSON.stringify(texts, null, 2);
+  const mediaJson = JSON.stringify(media, null, 2);
+  const encyJson = JSON.stringify(encyclopedia, null, 2);
+  // primary location
+  fs.writeFileSync(path.join(outDir, 'texts.json'), textsJson);
+  fs.writeFileSync(path.join(outDir, 'media.json'), mediaJson);
+  fs.writeFileSync(path.join(outDir, 'encyclopedia.json'), encyJson);
+  // fallback location under assets
+  fs.writeFileSync(path.join(outDirAssets, 'texts.json'), textsJson);
+  fs.writeFileSync(path.join(outDirAssets, 'media.json'), mediaJson);
+  fs.writeFileSync(path.join(outDirAssets, 'encyclopedia.json'), encyJson);
 
   console.log('✓ Exported to public/db/{texts.json, media.json, encyclopedia.json}');
 }

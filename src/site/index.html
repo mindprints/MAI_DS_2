@@ -491,8 +491,18 @@
   const LANG = (document.documentElement.lang || 'en').toLowerCase();
   if (!USE_DB) return;
 
-  const texts = await fetch('/db/texts.json').then(r => r.json()).catch(() => ({}));
-  const media = await fetch('/db/media.json').then(r => r.json()).catch(() => ({}));
+  async function fetchJson(paths) {
+    for (const p of paths) {
+      try {
+        const r = await fetch(p, { cache: 'no-store' });
+        if (r.ok) return await r.json();
+      } catch {}
+    }
+    return {};
+  }
+
+  const texts = await fetchJson(['/db/texts.json','/assets/db/texts.json']);
+  const media = await fetchJson(['/db/media.json','/assets/db/media.json']);
 
   // Replace any element that has data-key=... with the DB text
   document.querySelectorAll('[data-key]').forEach(el => {
