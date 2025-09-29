@@ -1,9 +1,9 @@
 require('dotenv').config();
 const express = require('express');
 const path = require('path');
-const fs = require('fs');
 const fsp = require('fs/promises');
 const { exec } = require('child_process');
+const { Pool } = require('pg');
 const { getTextSegments, applyTextUpdates } = require('./dom');
 
 const app = express();
@@ -15,6 +15,65 @@ const SITE_DIR = path.join(ROOT, 'src', 'site');
 const SLIDES_DIR = path.join(SITE_DIR, 'images', 'slide');
 const SLIDES_MANIFEST = path.join(SLIDES_DIR, 'slides.json');
 const ENCYC_DIR = path.join(ROOT, 'src', 'content', 'encyclopedia');
+
+function createPgPool() {
+  const url = process.env.DATABASE_URL;
+  const hasDirectConfig = process.env.PGHOST || process.env.PGDATABASE || process.env.PGUSER;
+  if (!url && !hasDirectConfig) return null;
+
+  const cfg = url ? { connectionString: url } : {
+    host: process.env.PGHOST,
+    port: process.env.PGPORT ? Number(process.env.PGPORT) : undefined,
+    user: process.env.PGUSER,
+    password: process.env.PGPASSWORD,
+    database: process.env.PGDATABASE
+  };
+
+  if (process.env.PGSSL === 'require') {
+    cfg.ssl = { rejectUnauthorized: false };
+  } else if (!cfg.ssl) {
+    cfg.ssl = false;
+  }
+
+  const pool = new Pool(cfg);
+  pool.on('error', (err) => {
+    console.error('Postgres pool error:', err);
+  });
+  return pool;
+}
+
+const pgPool = createPgPool();
+
+async function withDb(res, handler) {
+  if (!pgPool) {
+    res.status(503).json({ error: 'Database not configured' });
+    return;
+  }
+  let client;
+  try {
+    client = await pgPool.connect();
+    await handler(client);
+  } catch (err) {
+    console.error('Database operation failed:', err);
+    if (!res.headersSent) res.status(500).json({ error: err.message });
+  } finally {
+    if (client) client.release();
+  }
+}
+
+function isSafeKey(key) {
+  return typeof key === 'string' && /^[a-zA-Z0-9_.:-]+$/.test(key);
+}
+
+process.on('SIGINT', async () => {
+  if (pgPool) await pgPool.end().catch(() => {});
+  process.exit(0);
+});
+
+process.on('SIGTERM', async () => {
+  if (pgPool) await pgPool.end().catch(() => {});
+  process.exit(0);
+});
 
 function assertLocale(locale) {
   if (locale !== 'en' && locale !== 'sv') {
@@ -186,6 +245,97 @@ app.delete('/api/slides', async (req, res) => {
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
+});
+
+// Database-backed text snippet endpoints
+app.get('/api/db/text-snippets', (req, res) => {
+  withDb(res, async (client) => {
+    const rawPrefix = (req.query.prefix || '').toString().trim();
+    const limit = Math.max(1, Math.min(200, parseInt(req.query.limit, 10) || 100));
+    const values = [];
+    let where = '';
+    if (rawPrefix) {
+      const escaped = rawPrefix.replace(/[\\_%]/g, (m) => `\\${m}`) + '%';
+      values.push(escaped);
+      where = `WHERE key ILIKE $1 ESCAPE '\\'`;
+    }
+    const keySql = `SELECT key FROM text_snippets ${where} GROUP BY key ORDER BY key ASC LIMIT ${limit}`;
+    const keyRows = await client.query(keySql, values);
+    const keys = keyRows.rows.map((r) => r.key);
+    if (!keys.length) {
+      res.json({ items: [] });
+      return;
+    }
+    const dataRows = await client.query(
+      'SELECT key, lang, body, updated_at FROM text_snippets WHERE key = ANY($1::text[]) ORDER BY key ASC, lang ASC',
+      [keys]
+    );
+    const grouped = new Map(keys.map((k) => [k, { key: k, values: {}, updated_at: null }]));
+    for (const row of dataRows.rows) {
+      const item = grouped.get(row.key);
+      if (!item) continue;
+      const lang = (row.lang || '').toLowerCase();
+      if (lang) item.values[lang] = row.body || '';
+      if (row.updated_at) {
+        const iso = new Date(row.updated_at).toISOString();
+        if (!item.updated_at || iso > item.updated_at) item.updated_at = iso;
+      }
+    }
+    res.json({ items: Array.from(grouped.values()) });
+  });
+});
+
+app.get('/api/db/text-snippets/:key', (req, res) => {
+  const key = req.params.key;
+  if (!isSafeKey(key)) return res.status(400).json({ error: 'bad key' });
+  withDb(res, async (client) => {
+    const rows = await client.query(
+      'SELECT lang, body, updated_at FROM text_snippets WHERE key = $1 ORDER BY lang ASC',
+      [key]
+    );
+    if (!rows.rowCount) {
+      res.status(404).json({ error: 'not found' });
+      return;
+    }
+    const out = { key, values: {}, updated_at: null };
+    for (const row of rows.rows) {
+      const lang = (row.lang || '').toLowerCase();
+      if (lang) out.values[lang] = row.body || '';
+      if (row.updated_at) {
+        const iso = new Date(row.updated_at).toISOString();
+        if (!out.updated_at || iso > out.updated_at) out.updated_at = iso;
+      }
+    }
+    res.json(out);
+  });
+});
+
+app.put('/api/db/text-snippets/:key', (req, res) => {
+  const key = req.params.key;
+  if (!isSafeKey(key)) return res.status(400).json({ error: 'bad key' });
+  const body = req.body || {};
+  const values = body.values && typeof body.values === 'object' ? body.values : null;
+  if (!values) return res.status(400).json({ error: 'values must be an object' });
+
+  const entries = Object.entries(values)
+    .map(([lang, text]) => ({ lang: String(lang || '').toLowerCase(), text }))
+    .filter(({ lang, text }) => lang && typeof text === 'string');
+
+  if (!entries.length) return res.status(400).json({ error: 'no valid updates' });
+
+  withDb(res, async (client) => {
+    for (const { lang, text } of entries) {
+      await client.query(
+        `INSERT INTO text_snippets (key, lang, body, updated_at)
+         VALUES ($1,$2,$3, now())
+         ON CONFLICT (key, lang) DO UPDATE
+         SET body = EXCLUDED.body,
+             updated_at = now()`,
+        [key, lang, text]
+      );
+    }
+    res.json({ ok: true });
+  });
 });
 
 // Trigger site build

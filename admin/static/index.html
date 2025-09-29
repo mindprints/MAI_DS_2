@@ -24,6 +24,8 @@
   <script>
     const isHosted = typeof window !== 'undefined' && location && location.hostname && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1';
     const isDokploy = typeof window !== 'undefined' && location && location.hostname === 'app.aimuseum.site';
+    const useGitHubAPI = isHosted && !isDokploy;
+    const isVercelHost = useGitHubAPI;
     const API_BASE = '';
     async function api(path, opts){ const res=await fetch(API_BASE+path,opts); const ok=res.ok; const ct=res.headers.get('content-type')||''; const data=ct.includes('application/json')?await res.json():await res.text(); if(!ok) throw new Error(typeof data==='string'?data:(data.error||'request failed')); return data; }
     function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.style.display='block'; setTimeout(()=>t.style.display='none',4000); }
@@ -33,7 +35,7 @@
     // Endpoint helpers for pages and encyclopedia
     const PagesAPI = {
       async list(){
-        if (isHosted) {
+        if (useGitHubAPI) {
           const m = await api('/api/admin-pages?list=1');
           return { slugs:m.slugs||[], home:m.home||['index'] };
         } else {
@@ -41,30 +43,144 @@
         }
       },
       async get(slug, locale){
-        if (isHosted) return api(`/api/admin-pages?slug=${encodeURIComponent(slug)}&locale=${locale}`);
+        if (useGitHubAPI) return api(`/api/admin-pages?slug=${encodeURIComponent(slug)}&locale=${locale}`);
         return api(`/api/page-segments/${encodeURIComponent(slug)}?locale=${locale}`);
       },
       async put(slug, locale, updates){
         const body = { method:'PUT', headers:{'content-type':'application/json'}, body: JSON.stringify({ updates }) };
-        if (isHosted) return api(`/api/admin-pages?slug=${encodeURIComponent(slug)}&locale=${locale}`, body);
+        if (useGitHubAPI) return api(`/api/admin-pages?slug=${encodeURIComponent(slug)}&locale=${locale}`, body);
         return api(`/api/page-segments/${encodeURIComponent(slug)}?locale=${locale}`, body);
       }
     };
     const EncyAPI = {
       async list(){
-        if (isHosted) { const m=await api('/api/admin-pages?list=1&type=ency'); return m.slugs||[]; }
+        if (useGitHubAPI) { const m=await api('/api/admin-pages?list=1&type=ency'); return m.slugs||[]; }
         const m = await api('/api/ency'); return m.slugs||[];
       },
       async get(slug, locale){
-        if (isHosted) return api(`/api/admin-pages?type=ency&slug=${encodeURIComponent(slug)}&locale=${locale}`);
+        if (useGitHubAPI) return api(`/api/admin-pages?type=ency&slug=${encodeURIComponent(slug)}&locale=${locale}`);
         return api(`/api/ency-segments/${encodeURIComponent(slug)}?locale=${locale}`);
       },
       async put(slug, locale, updates){
         const body = { method:'PUT', headers:{'content-type':'application/json'}, body: JSON.stringify({ updates }) };
-        if (isHosted) return api(`/api/admin-pages?type=ency&slug=${encodeURIComponent(slug)}&locale=${locale}`, body);
+        if (useGitHubAPI) return api(`/api/admin-pages?type=ency&slug=${encodeURIComponent(slug)}&locale=${locale}`, body);
         return api(`/api/ency-segments/${encodeURIComponent(slug)}?locale=${locale}`, body);
       }
     };
+
+    const Modes = { FILES: 'files', DB: 'db' };
+    let currentMode = Modes.FILES;
+    let currentDbKey = '';
+
+    function setMode(mode){
+      const next = mode === Modes.DB ? Modes.DB : Modes.FILES;
+      currentMode = next;
+      const filePanel = document.getElementById('file-mode');
+      const dbPanel = document.getElementById('db-mode');
+      if (filePanel) filePanel.style.display = next === Modes.FILES ? '' : 'none';
+      if (dbPanel) dbPanel.style.display = next === Modes.DB ? '' : 'none';
+      const select = document.getElementById('mode');
+      if (select && select.value !== next) select.value = next;
+      if (next === Modes.DB && dbPanel && !dbPanel.dataset.loaded){
+        loadDbKeys().catch(err => toast('Failed to load DB keys: '+err.message));
+      }
+    }
+
+    function clearDbEditor(){
+      currentDbKey = '';
+      const en = document.getElementById('db-en');
+      const sv = document.getElementById('db-sv');
+      const updated = document.getElementById('db-updated');
+      if (en) en.value = '';
+      if (sv) sv.value = '';
+      if (updated) updated.textContent = '—';
+    }
+
+    async function loadDbKeys(){
+      const panel = document.getElementById('db-mode');
+      if (!panel) return;
+      const prefixInput = document.getElementById('db-prefix');
+      const select = document.getElementById('db-key');
+      if (!select) return;
+      const prefix = prefixInput ? prefixInput.value.trim() : '';
+      let url = '/api/db/text-snippets';
+      if (prefix) url += `?prefix=${encodeURIComponent(prefix)}`;
+      try {
+        const data = await api(url);
+        const items = Array.isArray(data.items) ? data.items : [];
+        select.innerHTML = '';
+        items.forEach(item => {
+          const opt = document.createElement('option');
+          opt.value = item.key;
+          opt.textContent = item.key;
+          select.appendChild(opt);
+        });
+        panel.dataset.loaded = '1';
+        if (items.length){
+          select.value = items[0].key;
+          await loadDbEntry();
+          toast(`Loaded ${items.length} text keys.`);
+        } else {
+          clearDbEditor();
+          toast('No matching keys.');
+        }
+      } catch (e) {
+        clearDbEditor();
+        const msg = e && e.message ? e.message : String(e);
+        toast('Failed to load DB keys: '+msg);
+        const selectEl = document.getElementById('mode');
+        if (msg.toLowerCase().includes('database not configured') && selectEl){
+          const option = selectEl.querySelector('option[value="db"]');
+          if (option) option.disabled = true;
+          setMode(Modes.FILES);
+        }
+      }
+    }
+
+    async function loadDbEntry(){
+      const select = document.getElementById('db-key');
+      if (!select || !select.value){
+        clearDbEditor();
+        return;
+      }
+      const key = select.value;
+      try {
+        const data = await api(`/api/db/text-snippets/${encodeURIComponent(key)}`);
+        currentDbKey = key;
+        const en = document.getElementById('db-en');
+        const sv = document.getElementById('db-sv');
+        const updated = document.getElementById('db-updated');
+        if (en) en.value = (data.values && typeof data.values.en === 'string') ? data.values.en : '';
+        if (sv) sv.value = (data.values && typeof data.values.sv === 'string') ? data.values.sv : '';
+        if (updated) updated.textContent = data.updated_at ? new Date(data.updated_at).toLocaleString() : '—';
+      } catch (e) {
+        clearDbEditor();
+        toast('Failed to load entry: '+e.message);
+      }
+    }
+
+    async function saveDbEntry(){
+      if (!currentDbKey){
+        toast('Select a key first.');
+        return;
+      }
+      const en = document.getElementById('db-en');
+      const sv = document.getElementById('db-sv');
+      const values = {};
+      if (en && typeof en.value === 'string') values.en = en.value;
+      if (sv && typeof sv.value === 'string') values.sv = sv.value;
+      try {
+        await api(`/api/db/text-snippets/${encodeURIComponent(currentDbKey)}`, {
+          method: 'PUT',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ values })
+        });
+        toast('Saved to database.');
+        await loadDbEntry();
+      } catch (e) {
+        toast('Save failed: '+e.message);
+      }
+    }
 
     // Pages (text-only)
     let currentSlug='index';
@@ -102,15 +218,17 @@
     function renderEncySegments(locale, segs){ const box=document.getElementById('ency_'+locale); box.innerHTML=''; box.className='stack'; (segs||[]).forEach(s=>{ box.insertAdjacentHTML('beforeend', controlForSegment(locale,s)); }); }
     async function saveEncyEntry(){ const slug=document.getElementById('ency-slug').value; try{ for(const locale of ['en','sv']){ const fields=[...document.querySelectorAll(`#ency_${locale} [data-id]`)]; const updates=fields.map(i=>({id:i.dataset.id,text:i.value})); await EncyAPI.put(slug, locale, updates); } toast('Encyclopedia entry saved. Rebuild triggered.'); } catch(e){ toast('Save failed: '+e.message); } }
 
-    window.addEventListener('DOMContentLoaded', async ()=>{ 
-      if (isDokploy) {
-        // Dokploy doesn't support serverless functions - show helpful message
-        toast('Admin interface requires serverless functions. Use Vercel deployment for content editing.');
-        document.querySelector('h1').insertAdjacentHTML('afterend', '<div style="background:var(--panel2);border:1px solid var(--border);padding:12px;border-radius:8px;margin:10px 0;"><strong>Static Deployment:</strong> This admin interface requires serverless API functions. Please use the <a href="https://mai-ds-2.vercel.app/admin" style="color:var(--accent)">Vercel admin interface</a> for content editing.</div>');
-        return;
+    window.addEventListener('DOMContentLoaded', async () => {
+      const modeSelect = document.getElementById('mode');
+      if (modeSelect) {
+        if (useGitHubAPI) {
+          const opt = modeSelect.querySelector('option[value="db"]');
+          if (opt) opt.disabled = true;
+        }
+        setMode(modeSelect.value);
       }
-      await loadSlugs(); 
-      await loadEncyList(); 
+      await loadSlugs();
+      await loadEncyList();
     });
   </script>
 </head>
@@ -119,47 +237,77 @@
   <div id="toast"></div>
 
   <section class="card">
-    <h2>Pages (Text-only)</h2>
     <div class="toolbar">
-      <label for="slug">Page:</label>
-      <select id="slug" onchange="loadSegments()"></select>
-      <button onclick="saveSegments()">Save Text</button>
-      <button onclick="(async()=>{try{await fetch(API_BASE+'/admin-pages?noop=1');alert('On Vercel, builds are triggered by commit; this admin commits directly to GitHub.');}catch(_){}})()">Build</button>
+      <label for="mode">Content Mode:</label>
+      <select id="mode" onchange="setMode(this.value)">
+        <option value="files">Files (HTML)</option>
+        <option value="db">Database (Postgres)</option>
+      </select>
     </div>
-    <div class="row" style="margin-top:10px;">
-      <div class="col"><h3>English</h3><div id="seg_en"></div></div>
-      <div class="col"><h3>Svenska</h3><div id="seg_sv"></div></div>
-    </div>
-    <p class="muted">Only text content is editable; HTML structure and classes are preserved.</p>
   </section>
 
-  <section class="card">
-    <h2>Slides</h2>
-    <div class="toolbar">
-      <button onclick="loadSlides()">Load</button>
-      <input type="file" id="upload" accept=".webp,.jpg,.jpeg,.png,.avif">
-      <button onclick="uploadSlide()">Upload</button>
-      <button onclick="saveSlides()">Save Manifest</button>
-    </div>
-    <table id="slides">
-      <thead><tr><th>Preview</th><th>#</th><th>Filename</th><th>EN Title</th><th>EN Desc</th><th>SV Title</th><th>SV Desc</th><th></th></tr></thead>
-      <tbody></tbody>
-    </table>
-    <p class="muted">On Vercel, uploads/edits commit to GitHub and trigger a rebuild automatically.</p>
-  </section>
+  <div id="file-mode">
+    <section class="card">
+      <h2>Pages (Text-only)</h2>
+      <div class="toolbar">
+        <label for="slug">Page:</label>
+        <select id="slug" onchange="loadSegments()"></select>
+        <button onclick="saveSegments()">Save Text</button>
+        <button onclick="(async()=>{try{await fetch(API_BASE+'/admin-pages?noop=1');alert('On Vercel, builds are triggered by commit; this admin commits directly to GitHub.');}catch(_){}})()">Build</button>
+      </div>
+      <div class="row" style="margin-top:10px;">
+        <div class="col"><h3>English</h3><div id="seg_en"></div></div>
+        <div class="col"><h3>Svenska</h3><div id="seg_sv"></div></div>
+      </div>
+      <p class="muted">Only text content is editable; HTML structure and classes are preserved.</p>
+    </section>
 
-  <section class="card">
-    <h2>Encyclopedia</h2>
+    <section class="card">
+      <h2>Slides</h2>
+      <div class="toolbar">
+        <button onclick="loadSlides()">Load</button>
+        <input type="file" id="upload" accept=".webp,.jpg,.jpeg,.png,.avif">
+        <button onclick="uploadSlide()">Upload</button>
+        <button onclick="saveSlides()">Save Manifest</button>
+      </div>
+      <table id="slides">
+        <thead><tr><th>Preview</th><th>#</th><th>Filename</th><th>EN Title</th><th>EN Desc</th><th>SV Title</th><th>SV Desc</th><th></th></tr></thead>
+        <tbody></tbody>
+      </table>
+      <p class="muted">On Vercel, uploads/edits commit to GitHub and trigger a rebuild automatically.</p>
+    </section>
+
+    <section class="card">
+      <h2>Encyclopedia</h2>
+      <div class="toolbar">
+        <label for="ency-slug">Entry:</label>
+        <select id="ency-slug" onchange="loadEncyEntry()"></select>
+        <button onclick="saveEncyEntry()">Save Entry</button>
+      </div>
+      <div class="row" style="margin-top:10px;">
+        <div class="col"><h3>English</h3><div id="ency_en"></div></div>
+        <div class="col"><h3>Svenska</h3><div id="ency_sv"></div></div>
+      </div>
+      <p class="muted">Text-only edits; entries live in <code>src/content/encyclopedia/</code> as <code>slug.en.html</code> and <code>slug.sv.html</code>.</p>
+    </section>
+  </div>
+
+  <section id="db-mode" class="card" style="display:none">
+    <h2>Database Text Snippets</h2>
     <div class="toolbar">
-      <label for="ency-slug">Entry:</label>
-      <select id="ency-slug" onchange="loadEncyEntry()"></select>
-      <button onclick="saveEncyEntry()">Save Entry</button>
+      <label for="db-prefix">Filter:</label>
+      <input type="text" id="db-prefix" placeholder="e.g. page.home">
+      <button onclick="loadDbKeys()">Load Keys</button>
+      <label for="db-key">Key:</label>
+      <select id="db-key" onchange="loadDbEntry()"></select>
+      <button onclick="saveDbEntry()">Save Text</button>
     </div>
+    <p class="muted">Updates write directly to <code>text_snippets</code> in Postgres.</p>
     <div class="row" style="margin-top:10px;">
-      <div class="col"><h3>English</h3><div id="ency_en"></div></div>
-      <div class="col"><h3>Svenska</h3><div id="ency_sv"></div></div>
+      <div class="col"><h3>English</h3><textarea id="db-en" rows="12"></textarea></div>
+      <div class="col"><h3>Svenska</h3><textarea id="db-sv" rows="12"></textarea></div>
     </div>
-    <p class="muted">Text-only edits; entries live in <code>src/content/encyclopedia/</code> as <code>slug.en.html</code> and <code>slug.sv.html</code>.</p>
+    <p class="muted">Last updated: <span id="db-updated">—</span></p>
   </section>
 </body>
 </html>
