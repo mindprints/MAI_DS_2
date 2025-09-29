@@ -1,4 +1,22 @@
-<!DOCTYPE html><html lang="en"><head></head><body>
+<!DOCTYPE html><html lang="en"><head>
+    <!-- <script>
+        (function(){
+          const _fetch = window.fetch;
+          window.fetch = async function(input, init){
+            try {
+              const url = (typeof input === 'string') ? input : (input && input.url);
+              if (url && /\/db\/(texts|media)\.json/i.test(url)) {
+                console.groupCollapsed('%cfetch → ' + url, 'color:#0bf');
+                console.trace('Fetch initiator trace');
+                console.groupEnd();
+              }
+            } catch(e){}
+            return _fetch.apply(this, arguments);
+          };
+        })();
+        </script> -->
+        
+</head><body>
 
 
     <meta charset="UTF-8">
