@@ -1,0 +1,5 @@
+# Prevent Dokploy from treating this as a static site
+# The public directory is served by our Node.js server
+public/index.html
+public/pages/
+public/assets/
