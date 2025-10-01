@@ -17,6 +17,8 @@
     "admin": "node admin/server.js",
     "export-db": "node tools/export-db-content.js",
     "check-db": "node tools/db_reader.js",
+    "test-db": "node test-db-connection.js",
+    "setup-env": "node setup-env.js",
     "import-db:dry": "node tools/import_exports.js ./exports --dry",
     "import-db": "node tools/import_exports.js ./exports"
   },
