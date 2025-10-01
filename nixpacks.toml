@@ -1,0 +1,11 @@
+[providers]
+nodejs = "18"
+
+[build]
+cmd = "npm run build"
+
+[start]
+cmd = "node start-server.js"
+
+[variables]
+NODE_ENV = "production"
