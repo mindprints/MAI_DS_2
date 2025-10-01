@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  mai-app:
+    build: .
+    ports:
+      - "3000:3000"
+      - "5179:5179"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+    volumes:
+      - ./public:/app/public
+      - ./src:/app/src
+    restart: unless-stopped
+
+  # Optional: Add a database service if needed
+  # postgres:
+  #   image: postgres:15-alpine
+  #   environment:
+  #     POSTGRES_DB: mai_db
+  #     POSTGRES_USER: mai_user
+  #     POSTGRES_PASSWORD: mai_password
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data
+  #   ports:
+  #     - "5432:5432"
+
+# volumes:
+#   postgres_data:

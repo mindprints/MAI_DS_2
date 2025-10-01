@@ -347,9 +347,16 @@ app.post('/api/build', (_req, res) => {
 
 // Static for admin UI and slide previews
 app.use('/slides-assets', express.static(SLIDES_DIR));
-app.use(express.static(path.join(__dirname, 'static')));
+
+// Serve admin UI at /admin path
+app.use('/admin', express.static(path.join(__dirname, 'static')));
+
+// Serve the main built site from public directory
+app.use(express.static(path.join(ROOT, 'public')));
 
 const PORT = process.env.PORT || 5179;
 app.listen(PORT, () => {
   console.log(`Admin running on http://localhost:${PORT}`);
+  console.log(`Main site available at http://localhost:${PORT}`);
+  console.log(`Admin interface at http://localhost:${PORT}/admin`);
 });
