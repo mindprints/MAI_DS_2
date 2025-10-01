@@ -19,27 +19,55 @@ const ENCYC_DIR = path.join(ROOT, 'src', 'content', 'encyclopedia');
 function createPgPool() {
   const url = process.env.DATABASE_URL;
   const hasDirectConfig = process.env.PGHOST || process.env.PGDATABASE || process.env.PGUSER;
-  if (!url && !hasDirectConfig) return null;
-
-  const cfg = url ? { connectionString: url } : {
-    host: process.env.PGHOST,
-    port: process.env.PGPORT ? Number(process.env.PGPORT) : undefined,
-    user: process.env.PGUSER,
-    password: process.env.PGPASSWORD,
-    database: process.env.PGDATABASE
-  };
-
-  if (process.env.PGSSL === 'require') {
-    cfg.ssl = { rejectUnauthorized: false };
-  } else if (!cfg.ssl) {
-    cfg.ssl = false;
+  
+  if (!url && !hasDirectConfig) {
+    console.log('No database configuration found - running without database features');
+    return null;
   }
 
-  const pool = new Pool(cfg);
-  pool.on('error', (err) => {
-    console.error('Postgres pool error:', err);
-  });
-  return pool;
+  try {
+    const cfg = url ? { connectionString: url } : {
+      host: process.env.PGHOST,
+      port: process.env.PGPORT ? Number(process.env.PGPORT) : undefined,
+      user: process.env.PGUSER,
+      password: process.env.PGPASSWORD,
+      database: process.env.PGDATABASE
+    };
+
+    if (process.env.PGSSL === 'require') {
+      cfg.ssl = { rejectUnauthorized: false };
+    } else if (!cfg.ssl) {
+      cfg.ssl = false;
+    }
+
+    console.log('Attempting database connection with config:', {
+      host: cfg.host || 'from connection string',
+      database: cfg.database || 'from connection string',
+      user: cfg.user || 'from connection string',
+      ssl: !!cfg.ssl
+    });
+
+    const pool = new Pool(cfg);
+    pool.on('error', (err) => {
+      console.error('Postgres pool error:', err);
+      // Don't crash the app on database errors
+    });
+    
+    // Test the connection but don't crash if it fails
+    pool.connect()
+      .then(client => {
+        console.log('Database connection successful');
+        client.release();
+      })
+      .catch(err => {
+        console.error('Database connection failed, but continuing without database features:', err.message);
+      });
+    
+    return pool;
+  } catch (error) {
+    console.error('Failed to create database pool, continuing without database features:', error.message);
+    return null;
+  }
 }
 
 const pgPool = createPgPool();
