@@ -5,14 +5,14 @@
   "buildContext": ".",
   "ports": [
     {
-      "containerPort": 5179,
+      "containerPort": 3000,
       "hostPort": 80,
       "protocol": "tcp"
     }
   ],
   "environment": {
     "NODE_ENV": "production",
-    "PORT": "5179"
+    "PORT": "3000"
   },
   "healthCheck": {
     "enabled": true,
