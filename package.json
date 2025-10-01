@@ -5,7 +5,7 @@
   "main": "src/site/journal.js",
   "scripts": {
     "start": "node start-server.js",
-    "build": "npm run build:static && npm run build:pages && npm run build:css && echo 'Build completed - Node.js server will serve from public/'",
+    "build": "node safe-build.js",
    
     "build:static": "node tools/build-static.js",
     "build:css": "postcss src/tailwind.css -o public/assets/css/tailwind.css --env production",
