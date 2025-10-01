@@ -42,7 +42,7 @@ function runCommand(cmd, description) {
 
 async function ensureDirectories() {
   const dirs = [
-    'public',
+    'dist', // Use 'dist' instead of 'public' to avoid Dokploy static detection
     'src/content/pages',
     'src/content/encyclopedia',
     'src/site/images/slide'
@@ -69,7 +69,13 @@ async function main() {
     await runCommand('node tools/build-pages.js', 'Building pages');
     
     // Build CSS with memory limits
-    await runCommand('postcss src/tailwind.css -o public/assets/css/tailwind.css --env production', 'Building CSS');
+    await runCommand('postcss src/tailwind.css -o dist/assets/css/tailwind.css --env production', 'Building CSS');
+    
+    // Rename dist to public after build to avoid Dokploy static detection during build
+    if (fs.existsSync('public')) {
+      fs.rmSync('public', { recursive: true, force: true });
+    }
+    fs.renameSync('dist', 'public');
     
     console.log('\n🎉 Build completed successfully!');
     console.log('📁 Files are ready in public/ directory');

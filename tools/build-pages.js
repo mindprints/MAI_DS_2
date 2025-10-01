@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const rootDir = process.cwd();
-const publicDir = path.join(rootDir, 'public');
+const publicDir = path.join(rootDir, 'dist');
 const templatesDir = path.join(rootDir, 'src', 'templates', 'pages');
 const contentDir = path.join(rootDir, 'src', 'content', 'pages');
 
