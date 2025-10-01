@@ -1,10 +1,12 @@
-[providers]
-nodejs = "18"
+providers = ["nodejs"]
 
-[build]
+[phases.setup]
+nixPkgs = ["nodejs_18", "npm"]
+
+[phases.build]
 cmd = "npm run build"
 
-[start]
+[phases.start]
 cmd = "node start-server.js"
 
 [variables]
