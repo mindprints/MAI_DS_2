@@ -1,1 +1,1 @@
-web: node admin/server.js
+web: node start-server.js
