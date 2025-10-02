@@ -1,18 +1,20 @@
-# --- Build / export stage
-FROM node:20-alpine AS build
+FROM node:20-alpine
+
 WORKDIR /app
+
+# install deps
 COPY package*.json ./
 RUN npm ci
-COPY . .
-# If you have a build step, keep it; if not, this will noop if absent
-RUN npm run build || true
-# Export DB json to public/db/*
-RUN npm run export-db
 
-# --- Runtime: serve static site
-FROM nginx:alpine
-# Serve the static site from /usr/share/nginx/html
-COPY --from=build /app/public /usr/share/nginx/html
-# Optional: basic caching headers or custom nginx.conf can go here later
-EXPOSE 80
-CMD ["nginx","-g","daemon off;"]
+# app source
+COPY . .
+
+# if you have a build step, keep it; otherwise this will no-op
+RUN npm run build || true
+
+# expose the port the runtime will use
+ENV PORT=3000
+EXPOSE 3000
+
+# at container start: export db then serve /public
+CMD ["sh", "-lc", "npm run export-db && npx http-server public -p ${PORT} -a 0.0.0.0"]
