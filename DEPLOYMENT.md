@@ -52,10 +52,9 @@ ALLOWED_ORIGINS=https://yourdomain.com,https://www.yourdomain.com
 
 ### Port Configuration
 
-- The application runs on port 5179 by default
+- Runtime is Nginx on port 80 inside the container. Traefik routes 80/443 to it. No host port publishing.
 - Main site is available at `http://your-domain/`
 - Admin interface is available at `http://your-domain/admin`
-- Make sure Dokploy maps port 5179 to port 80 (or your desired external port)
 
 ## Local Docker Testing
 
