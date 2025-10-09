@@ -5,6 +5,7 @@ const fsp = require('fs/promises');
 const { exec } = require('child_process');
 const { Pool } = require('pg');
 const { getTextSegments, applyTextUpdates } = require('./dom');
+const { handleSendEmail } = require('../api/send-email-express');
 
 const app = express();
 app.use(express.json({ limit: '10mb' }));
@@ -121,6 +122,10 @@ function resolvePageFile(slug, locale) {
   }
   return path.join(CONTENT_DIR, `${slug}.${locale}.html`);
 }
+
+// Email sending endpoint (handles contact forms, workshop requests, membership)
+app.post('/api/send-email', handleSendEmail);
+app.options('/api/send-email', handleSendEmail);
 
 // Pages: list available slugs
 app.get('/api/pages', async (_req, res) => {
