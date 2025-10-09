@@ -25,23 +25,30 @@ module.exports = async function handler(req, res) {
       const manifest = Array.isArray(req.body) ? req.body : [];
       await putFile(MANIFEST_PATH, JSON.stringify(manifest, null, 2) + '\n', 'chore(admin): update slides manifest');
       await triggerDeployHook();
-      return res.status(200).json({ ok: true });
-    }
     if (method === 'POST') {
       const { name, contentBase64 } = req.body || {};
       if (!name || !/^[\w\-.]+$/.test(String(name))) return res.status(400).json({ error: 'bad name' });
+      // Ensure no path traversal
+      const safeName = require('path').basename(String(name));
+      if (safeName !== String(name)) return res.status(400).json({ error: 'invalid name' });
       const buffer = Buffer.from(String(contentBase64 || ''), 'base64');
-      await putBinary(`${SLIDES_DIR}/${name}`, buffer, `chore(admin): upload ${name}`);
-      await triggerDeployHook();
-      return res.status(200).json({ ok: true });
-    }
+      // Add file size limit (e.g., 10MB)
     if (method === 'DELETE') {
       const name = String(req.query.name || '');
       if (!name || !/^[\w\-.]+$/.test(name)) return res.status(400).json({ error: 'bad name' });
-      await deleteFile(`${SLIDES_DIR}/${name}`, `chore(admin): delete ${name}`);
+      const safeName = require('path').basename(name);
+      if (safeName !== name) return res.status(400).json({ error: 'invalid name' });
+      await deleteFile(`${SLIDES_DIR}/${safeName}`, `chore(admin): delete ${safeName}`);
       try {
         const { content } = await getFile(MANIFEST_PATH);
         const cur = JSON.parse(content);
+        const next = Array.isArray(cur) ? cur.filter(it => it && it.filename !== safeName) : [];
+        await putFile(MANIFEST_PATH, JSON.stringify(next, null, 2) + '\n', 'chore(admin): prune manifest');
+      } catch (err) {
+        console.error(`Failed to update manifest after deletion: ${err.message}`);
+      }
+      return res.status(200).json({ ok: true });
+    }        const cur = JSON.parse(content);
         const next = Array.isArray(cur) ? cur.filter(it => it && it.filename !== name) : [];
         await putFile(MANIFEST_PATH, JSON.stringify(next, null, 2) + '\n', 'chore(admin): prune manifest');
       } catch {}

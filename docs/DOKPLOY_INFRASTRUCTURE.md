@@ -218,14 +218,13 @@ Hostinger VPS (31.97.73.204)
 
 ```bash
 # Database Connection
-DATABASE_URL=postgresql://mindprints@gmail.com:PASSWORD@postgres:5432/MAI__texts
+DATABASE_URL=postgresql://mindprints@gmail.com:<db-password>@postgres:5432/MAI__texts
 # OR individual vars:
 PGHOST=postgres
 PGPORT=5432
 PGUSER=mindprints@gmail.com
-PGPASSWORD=6+ezx6+JqmrMekSNtU@v
-PGDATABASE=MAI__texts
-PGSSL=
+PGPASSWORD=<db-password>
+PGDATABASE=MAI__textsPGSSL=
 
 # Application
 NODE_ENV=production

@@ -1,4 +1,4 @@
-﻿const fs = require('fs');
+﻿﻿const fs = require('fs');
 const path = require('path');
 
 function load(part) {
@@ -24,9 +24,9 @@ module.exports = {
       lang: 'sv',
       title: 'Utforska • Museum of AI',
       assetsPrefix: '../..',
-      indexHref: '../index.html',
+      indexHref: '../../index.html',
       backLinkText: '&larr; Till startsidan',
-      headExtras: `  <link rel="alternate" hreflang="sv" href="./explore">\n  <link rel="alternate" hreflang="en" href="../../pages/explore">`,
+      headExtras: `  <link rel="alternate" hreflang="sv" href="./explore.html">\n  <link rel="alternate" hreflang="en" href="../../pages/explore.html">`,
       mainContent: load('explore.sv.html'),
       postScripts: ''
     }

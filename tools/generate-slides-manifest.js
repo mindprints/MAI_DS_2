@@ -13,9 +13,9 @@ const fsp = require('fs/promises');
 const path = require('path');
 
 const IMAGES_ROOT = path.join('src', 'site', 'images');
-const SLIDES_DIR = path.join(IMAGES_ROOT, 'slide');
+const ROOT = path.resolve(__dirname, '..');
+const SLIDES_DIR = path.join(ROOT, 'images', 'slide');
 const OUT_PATH = path.join(SLIDES_DIR, 'slides.json');
-
 function isImageFile(name) {
   const ext = path.extname(name).toLowerCase();
   return ['.webp', '.jpg', '.jpeg', '.png', '.avif'].includes(ext);

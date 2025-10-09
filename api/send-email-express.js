@@ -3,10 +3,40 @@
 
 const EMAILJS_API_URL = 'https://api.emailjs.com/api/v1.0/email/send';
 
+// Initialize fetch implementation at startup
+// Use native fetch (Node 18+) or fall back to node-fetch (Node <18)
+let fetchImpl;
+try {
+  if (typeof fetch !== 'undefined') {
+    // Native fetch available (Node.js 18+)
+    fetchImpl = fetch;
+  } else {
+    // Try to require node-fetch for older Node versions
+    fetchImpl = require('node-fetch');
+  }
+} catch (err) {
+  console.error('FATAL: No fetch implementation available. Either upgrade to Node.js 18+ or install node-fetch:', err.message);
+  throw new Error('No fetch implementation available. Please upgrade to Node.js 18+ or install node-fetch package.');
+}
+
 // Basic in-memory IP rate limiter (per runtime instance)
 const WINDOW_MS = 10 * 60 * 1000; // 10 minutes
 const LIMIT = 10; // 10 requests/10 min per IP
 const ipToTimestamps = new Map();
+
+// Periodic cleanup to prevent unbounded memory growth
+const CLEANUP_INTERVAL_MS = 10 * 60 * 1000; // 10 minutes
+setInterval(() => {
+  const now = Date.now();
+  for (const [ip, timestamps] of ipToTimestamps.entries()) {
+    const recent = timestamps.filter((t) => now - t < WINDOW_MS);
+    if (recent.length === 0) {
+      ipToTimestamps.delete(ip);
+    } else {
+      ipToTimestamps.set(ip, recent);
+    }
+  }
+}, CLEANUP_INTERVAL_MS);
 
 function getIp(req) {
   const fwd = req.headers['x-forwarded-for'];
@@ -178,9 +208,6 @@ async function handleSendEmail(req, res) {
     // Forward origin to EmailJS
     const origin = getOrigin(req) || getAllowedOrigins()[0] || 'http://localhost:3000';
 
-    // Use native fetch (available in Node.js 18+) or require node-fetch for older versions
-    const fetchImpl = typeof fetch !== 'undefined' ? fetch : require('node-fetch');
-    
     const resp = await fetchImpl(EMAILJS_API_URL, {
       method: 'POST',
       headers: {
