@@ -18,23 +18,41 @@ function getTextSegments(html) {
   const $ = cheerio.load(html, { decodeEntities: false });
   const segments = [];
 
-  $('*').each((_, el) => {
-    if (SKIP_TAGS.has(el.tagName)) return;
-    const contents = el.children || [];
-    contents.forEach((child) => {
-      if (child.type === 'text') {
-        const raw = child.data || '';
-        const text = raw.replace(/\s+/g, ' ').trim();
-        if (text) {
-          segments.push({
-            id: getNodePath(child),
-            parentTag: el.tagName,
-            text
-          });
-        }
-      }
-    });
+  // First, try to find elements with data-segment-id (new robust method)
+  $('[data-segment-id]').each((_, el) => {
+    const $el = $(el);
+    const segmentId = $el.attr('data-segment-id');
+    const text = $el.text().replace(/\s+/g, ' ').trim();
+    
+    if (text && segmentId) {
+      segments.push({
+        id: segmentId,
+        parentTag: el.tagName,
+        text
+      });
+    }
   });
+
+  // If no data-segment-id found, fall back to old DOM path method
+  if (segments.length === 0) {
+    $('*').each((_, el) => {
+      if (SKIP_TAGS.has(el.tagName)) return;
+      const contents = el.children || [];
+      contents.forEach((child) => {
+        if (child.type === 'text') {
+          const raw = child.data || '';
+          const text = raw.replace(/\s+/g, ' ').trim();
+          if (text) {
+            segments.push({
+              id: getNodePath(child),
+              parentTag: el.tagName,
+              text
+            });
+          }
+        }
+      });
+    });
+  }
 
   return segments;
 }
@@ -43,18 +61,33 @@ function applyTextUpdates(html, updates) {
   const $ = cheerio.load(html, { decodeEntities: false });
   const byId = new Map(updates.map((u) => [u.id, u.text]));
 
-  $('*').each((_, el) => {
-    if (SKIP_TAGS.has(el.tagName)) return;
-    const contents = el.children || [];
-    contents.forEach((child) => {
-      if (child.type === 'text') {
-        const id = getNodePath(child);
-        if (byId.has(id)) {
-          $(child).replaceWith(byId.get(id));
-        }
-      }
-    });
+  // First, try to update elements with data-segment-id
+  let updatedCount = 0;
+  $('[data-segment-id]').each((_, el) => {
+    const $el = $(el);
+    const segmentId = $el.attr('data-segment-id');
+    
+    if (byId.has(segmentId)) {
+      $el.text(byId.get(segmentId));
+      updatedCount++;
+    }
   });
+
+  // If no data-segment-id updates, fall back to old DOM path method
+  if (updatedCount === 0) {
+    $('*').each((_, el) => {
+      if (SKIP_TAGS.has(el.tagName)) return;
+      const contents = el.children || [];
+      contents.forEach((child) => {
+        if (child.type === 'text') {
+          const id = getNodePath(child);
+          if (byId.has(id)) {
+            $(child).replaceWith(byId.get(id));
+          }
+        }
+      });
+    });
+  }
 
   return $.root().html();
 }
