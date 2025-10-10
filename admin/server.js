@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const basicAuth = require('express-basic-auth');
 const path = require('path');
 const fsp = require('fs/promises');
 const { exec } = require('child_process');
@@ -380,6 +381,13 @@ app.post('/api/build', (_req, res) => {
 
 // Static for admin UI and slide previews
 app.use('/slides-assets', express.static(SLIDES_DIR));
+
+// Protect admin UI with basic authentication
+app.use('/admin', basicAuth({
+  users: { 'admin': process.env.ADMIN_PASSWORD || 'changeme' },
+  challenge: true,
+  realm: 'MAI Admin Area'
+}));
 
 // Serve admin UI at /admin path
 app.use('/admin', express.static(path.join(__dirname, 'static')));

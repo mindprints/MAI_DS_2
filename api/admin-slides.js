@@ -25,6 +25,8 @@ module.exports = async function handler(req, res) {
       const manifest = Array.isArray(req.body) ? req.body : [];
       await putFile(MANIFEST_PATH, JSON.stringify(manifest, null, 2) + '\n', 'chore(admin): update slides manifest');
       await triggerDeployHook();
+      return res.status(200).json({ ok: true });
+    }
     if (method === 'POST') {
       const { name, contentBase64 } = req.body || {};
       if (!name || !/^[\w\-.]+$/.test(String(name))) return res.status(400).json({ error: 'bad name' });
@@ -33,6 +35,11 @@ module.exports = async function handler(req, res) {
       if (safeName !== String(name)) return res.status(400).json({ error: 'invalid name' });
       const buffer = Buffer.from(String(contentBase64 || ''), 'base64');
       // Add file size limit (e.g., 10MB)
+      if (buffer.length > 10 * 1024 * 1024) return res.status(400).json({ error: 'file too large' });
+      await putBinary(`${SLIDES_DIR}/${safeName}`, buffer, `chore(admin): upload ${safeName}`);
+      await triggerDeployHook();
+      return res.status(200).json({ ok: true });
+    }
     if (method === 'DELETE') {
       const name = String(req.query.name || '');
       if (!name || !/^[\w\-.]+$/.test(name)) return res.status(400).json({ error: 'bad name' });
@@ -47,11 +54,6 @@ module.exports = async function handler(req, res) {
       } catch (err) {
         console.error(`Failed to update manifest after deletion: ${err.message}`);
       }
-      return res.status(200).json({ ok: true });
-    }        const cur = JSON.parse(content);
-        const next = Array.isArray(cur) ? cur.filter(it => it && it.filename !== name) : [];
-        await putFile(MANIFEST_PATH, JSON.stringify(next, null, 2) + '\n', 'chore(admin): prune manifest');
-      } catch {}
       await triggerDeployHook();
       return res.status(200).json({ ok: true });
     }
