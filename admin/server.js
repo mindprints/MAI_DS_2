@@ -17,6 +17,8 @@ const SITE_DIR = path.join(ROOT, 'src', 'site');
 const SLIDES_DIR = path.join(SITE_DIR, 'images', 'slide');
 const SLIDES_MANIFEST = path.join(SLIDES_DIR, 'slides.json');
 const ENCYC_DIR = path.join(ROOT, 'src', 'content', 'encyclopedia');
+const EVENTS_DIR_EN = path.join(SITE_DIR, 'pages', 'events');
+const EVENTS_DIR_SV = path.join(SITE_DIR, 'sv', 'pages', 'events');
 
 function createPgPool() {
   const url = process.env.DATABASE_URL;
@@ -217,6 +219,59 @@ app.put('/api/ency-segments/:slug', async (req, res) => {
     if (!isSafeSlug(slug)) return res.status(400).json({ error: 'bad slug' });
     assertLocale(locale);
     const file = path.join(ENCYC_DIR, `${slug}.${locale}.html`);
+    const { updates } = req.body || {};
+    if (!Array.isArray(updates)) return res.status(400).json({ error: 'updates must be an array' });
+    const html = await fsp.readFile(file, 'utf8');
+    const next = applyTextUpdates(html, updates);
+    await fsp.writeFile(file, next, 'utf8');
+    res.json({ ok: true });
+  } catch (e) {
+    res.status(e.status || 500).json({ error: e.message });
+  }
+});
+
+// Events: list available slugs
+app.get('/api/events', async (_req, res) => {
+  try {
+    const files = await fsp.readdir(EVENTS_DIR_EN);
+    const slugs = files
+      .filter((f) => f.endsWith('.html'))
+      .map((f) => f.replace('.html', ''))
+      .sort();
+    res.json({ slugs });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+// Events: get text-only segments
+app.get('/api/event-segments/:slug', async (req, res) => {
+  try {
+    const slug = req.params.slug;
+    const locale = (req.query.locale || 'en').toString();
+    if (!isSafeSlug(slug)) return res.status(400).json({ error: 'bad slug' });
+    assertLocale(locale);
+    const file = locale === 'sv' 
+      ? path.join(EVENTS_DIR_SV, `${slug}.html`)
+      : path.join(EVENTS_DIR_EN, `${slug}.html`);
+    const html = await fsp.readFile(file, 'utf8');
+    const segments = getTextSegments(html);
+    res.json({ slug, locale, file, segments });
+  } catch (e) {
+    res.status(e.status || 500).json({ error: e.message });
+  }
+});
+
+// Events: save text-only segments
+app.put('/api/event-segments/:slug', async (req, res) => {
+  try {
+    const slug = req.params.slug;
+    const locale = (req.query.locale || 'en').toString();
+    if (!isSafeSlug(slug)) return res.status(400).json({ error: 'bad slug' });
+    assertLocale(locale);
+    const file = locale === 'sv' 
+      ? path.join(EVENTS_DIR_SV, `${slug}.html`)
+      : path.join(EVENTS_DIR_EN, `${slug}.html`);
     const { updates } = req.body || {};
     if (!Array.isArray(updates)) return res.status(400).json({ error: 'updates must be an array' });
     const html = await fsp.readFile(file, 'utf8');

@@ -67,6 +67,21 @@
         return api(`/api/ency-segments/${encodeURIComponent(slug)}?locale=${locale}`, body);
       }
     };
+    const EventsAPI = {
+      async list(){
+        if (useGitHubAPI) { const m=await api('/api/admin-events?list=1'); return m.slugs||[]; }
+        const m = await api('/api/events'); return m.slugs||[];
+      },
+      async get(slug, locale){
+        if (useGitHubAPI) return api(`/api/admin-events?slug=${encodeURIComponent(slug)}&locale=${locale}`);
+        return api(`/api/event-segments/${encodeURIComponent(slug)}?locale=${locale}`);
+      },
+      async put(slug, locale, updates){
+        const body = { method:'PUT', headers:{'content-type':'application/json'}, body: JSON.stringify({ updates }) };
+        if (useGitHubAPI) return api(`/api/admin-events?slug=${encodeURIComponent(slug)}&locale=${locale}`, body);
+        return api(`/api/event-segments/${encodeURIComponent(slug)}?locale=${locale}`, body);
+      }
+    };
 
     const Modes = { FILES: 'files', DB: 'db' };
     let currentMode = Modes.FILES;
@@ -218,6 +233,12 @@
     function renderEncySegments(locale, segs){ const box=document.getElementById('ency_'+locale); box.innerHTML=''; box.className='stack'; (segs||[]).forEach(s=>{ box.insertAdjacentHTML('beforeend', controlForSegment(locale,s)); }); }
     async function saveEncyEntry(){ const slug=document.getElementById('ency-slug').value; try{ for(const locale of ['en','sv']){ const fields=[...document.querySelectorAll(`#ency_${locale} [data-id]`)]; const updates=fields.map(i=>({id:i.dataset.id,text:i.value})); await EncyAPI.put(slug, locale, updates); } toast('Encyclopedia entry saved. Rebuild triggered.'); } catch(e){ toast('Save failed: '+e.message); } }
 
+    // Events management
+    async function loadEventsList(){ try{ const list=await EventsAPI.list(); const sel=document.getElementById('event-slug'); sel.innerHTML=''; list.forEach(s=>{ const o=document.createElement('option'); o.value=s; o.textContent=s; sel.appendChild(o); }); if(list.length){ sel.value=list[0]; await loadEventEntry(); } } catch(e){ toast('Failed to load events list: '+e.message); } }
+    async function loadEventEntry(){ const slug=document.getElementById('event-slug').value; try{ const en=await EventsAPI.get(slug,'en'); const sv=await EventsAPI.get(slug,'sv'); renderEventSegments('en',en.segments); renderEventSegments('sv',sv.segments); } catch(e){ toast('Failed to load event: '+e.message); } }
+    function renderEventSegments(locale, segs){ const box=document.getElementById('event_'+locale); box.innerHTML=''; box.className='stack'; (segs||[]).forEach(s=>{ box.insertAdjacentHTML('beforeend', controlForSegment(locale,s)); }); }
+    async function saveEventEntry(){ const slug=document.getElementById('event-slug').value; try{ for(const locale of ['en','sv']){ const fields=[...document.querySelectorAll(`#event_${locale} [data-id]`)]; const updates=fields.map(i=>({id:i.dataset.id,text:i.value})); await EventsAPI.put(slug, locale, updates); } toast('Event page saved successfully!'); } catch(e){ toast('Save failed: '+e.message); } }
+
     window.addEventListener('DOMContentLoaded', async () => {
       const modeSelect = document.getElementById('mode');
       if (modeSelect) {
@@ -229,6 +250,7 @@
       }
       await loadSlugs();
       await loadEncyList();
+      await loadEventsList();
     });
   </script>
 </head>
@@ -289,6 +311,20 @@
         <div class="col"><h3>Svenska</h3><div id="ency_sv"></div></div>
       </div>
       <p class="muted">Text-only edits; entries live in <code>src/content/encyclopedia/</code> as <code>slug.en.html</code> and <code>slug.sv.html</code>.</p>
+    </section>
+
+    <section class="card">
+      <h2>Events</h2>
+      <div class="toolbar">
+        <label for="event-slug">Event:</label>
+        <select id="event-slug" onchange="loadEventEntry()"></select>
+        <button onclick="saveEventEntry()">Save Event</button>
+      </div>
+      <div class="row" style="margin-top:10px;">
+        <div class="col"><h3>English</h3><div id="event_en"></div></div>
+        <div class="col"><h3>Svenska</h3><div id="event_sv"></div></div>
+      </div>
+      <p class="muted">Text-only edits; event pages are dynamically discovered from <code>src/site/pages/events/</code> and copied to public during build.</p>
     </section>
   </div>
 
