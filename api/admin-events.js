@@ -62,9 +62,9 @@ function applyTextUpdates(html, updates) {
       if (child.type === 'text') {
         const id = nodePath(child);
         if (byId.has(id)) {
-          $(child).replaceWith(byId.get(id));
-        }
-      }
+          const nextText = byId.get(id);
+          child.data = typeof nextText === 'string' ? nextText : '';
+        }      }
     });
   });
 
