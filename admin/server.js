@@ -34,9 +34,32 @@ app.use((req, res, next) => {
   next();
 });
 
+// Debug middleware to log requests for CSS files
+app.use((req, res, next) => {
+  if (req.path.endsWith('.css')) {
+    console.log(`CSS request: ${req.path} - ${req.method}`);
+    const cssPath = path.join(ROOT, 'public', req.path);
+    console.log(`Looking for CSS file at: ${cssPath}`);
+    console.log(`File exists: ${require('fs').existsSync(cssPath)}`);
+  }
+  next();
+});
+
 // Serve the main built site from public directory FIRST
 // This must come before API routes to avoid conflicts
-app.use(express.static(path.join(ROOT, 'public')));
+app.use(express.static(path.join(ROOT, 'public'), {
+  setHeaders: (res, path) => {
+    // Set correct MIME types for CSS files
+    if (path.endsWith('.css')) {
+      res.setHeader('Content-Type', 'text/css');
+      console.log(`Serving CSS file: ${path}`);
+    }
+    // Set correct MIME types for JS files
+    if (path.endsWith('.js')) {
+      res.setHeader('Content-Type', 'application/javascript');
+    }
+  }
+}));
 
 function createPgPool() {
   const url = process.env.DATABASE_URL;
