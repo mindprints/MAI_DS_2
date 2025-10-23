@@ -8,6 +8,15 @@ const { Pool } = require('pg');
 const { getTextSegments, applyTextUpdates } = require('./dom');
 const { handleSendEmail } = require('../api/send-email-express');
 
+const ROOT = path.resolve(__dirname, '..');
+const CONTENT_DIR = path.join(ROOT, 'src', 'content', 'pages');
+const SITE_DIR = path.join(ROOT, 'src', 'site');
+const SLIDES_DIR = path.join(SITE_DIR, 'images', 'slide');
+const SLIDES_MANIFEST = path.join(SLIDES_DIR, 'slides.json');
+const ENCYC_DIR = path.join(ROOT, 'src', 'content', 'encyclopedia');
+const EVENTS_DIR_EN = path.join(SITE_DIR, 'pages', 'events');
+const EVENTS_DIR_SV = path.join(SITE_DIR, 'sv', 'pages', 'events');
+
 const app = express();
 app.use(express.json({ limit: '10mb' }));
 
@@ -28,15 +37,6 @@ app.use((req, res, next) => {
 // Serve the main built site from public directory FIRST
 // This must come before API routes to avoid conflicts
 app.use(express.static(path.join(ROOT, 'public')));
-
-const ROOT = path.resolve(__dirname, '..');
-const CONTENT_DIR = path.join(ROOT, 'src', 'content', 'pages');
-const SITE_DIR = path.join(ROOT, 'src', 'site');
-const SLIDES_DIR = path.join(SITE_DIR, 'images', 'slide');
-const SLIDES_MANIFEST = path.join(SLIDES_DIR, 'slides.json');
-const ENCYC_DIR = path.join(ROOT, 'src', 'content', 'encyclopedia');
-const EVENTS_DIR_EN = path.join(SITE_DIR, 'pages', 'events');
-const EVENTS_DIR_SV = path.join(SITE_DIR, 'sv', 'pages', 'events');
 
 function createPgPool() {
   const url = process.env.DATABASE_URL;
