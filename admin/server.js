@@ -11,6 +11,20 @@ const { handleSendEmail } = require('../api/send-email-express');
 const app = express();
 app.use(express.json({ limit: '10mb' }));
 
+// Set Content Security Policy to allow external resources
+app.use((req, res, next) => {
+  res.setHeader('Content-Security-Policy', 
+    "default-src 'self'; " +
+    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; " +
+    "font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; " +
+    "script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; " +
+    "img-src 'self' data: https:; " +
+    "connect-src 'self'; " +
+    "frame-src 'none';"
+  );
+  next();
+});
+
 // Serve the main built site from public directory FIRST
 // This must come before API routes to avoid conflicts
 app.use(express.static(path.join(ROOT, 'public')));
