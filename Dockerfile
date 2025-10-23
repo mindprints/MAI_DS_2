@@ -10,16 +10,9 @@ RUN npm ci
 COPY . .
 
 # Build the application - ensure CSS is generated and static files are copied
-RUN echo "Starting build process..." && \
-    npm run build:static && \
-    echo "Static files copied" && \
+RUN npm run build:static && \
     npm run build:css && \
-    echo "CSS built" && \
-    npm run build:pages && \
-    echo "Pages built" && \
-    ls -la public/ && \
-    ls -la public/assets/css/ && \
-    echo "Build completed successfully"
+    npm run build:pages
 
 # expose the port the runtime will use
 ENV PORT=3000
