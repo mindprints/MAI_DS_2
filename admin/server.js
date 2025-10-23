@@ -11,6 +11,10 @@ const { handleSendEmail } = require('../api/send-email-express');
 const app = express();
 app.use(express.json({ limit: '10mb' }));
 
+// Serve the main built site from public directory FIRST
+// This must come before API routes to avoid conflicts
+app.use(express.static(path.join(ROOT, 'public')));
+
 const ROOT = path.resolve(__dirname, '..');
 const CONTENT_DIR = path.join(ROOT, 'src', 'content', 'pages');
 const SITE_DIR = path.join(ROOT, 'src', 'site');
@@ -446,9 +450,6 @@ app.use('/admin', basicAuth({
 
 // Serve admin UI at /admin path
 app.use('/admin', express.static(path.join(__dirname, 'static')));
-
-// Serve the main built site from public directory
-app.use(express.static(path.join(ROOT, 'public')));
 
 const PORT = process.env.PORT || 5179;
 app.listen(PORT, () => {
