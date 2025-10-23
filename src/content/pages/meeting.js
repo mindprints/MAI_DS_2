@@ -6,7 +6,7 @@ function load(partial) {
 }
 
 function getDocuments() {
-  const docsDir = path.join(__dirname, '../../../docs/association-docs-for-anual-meeting');
+  const docsDir = path.join(__dirname, '../../site/documents');
   const files = fs.readdirSync(docsDir).filter(file => file.endsWith('.pdf'));
   
   return files.map(filename => {
