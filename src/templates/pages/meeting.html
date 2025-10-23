@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="{{lang}}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{title}}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="{{tailwindHref}}">
+  <link rel="stylesheet" href="{{stylesHref}}">
+{{headExtras}}
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons/css/flag-icons.min.css">
+</head>
+<body>
+  <header class="w-full">
+    <div class="container mx-auto px-4 py-6">
+      <a href="{{indexHref}}" class="text-slate-300 hover:text-white">&larr; {{navHomeText}}</a>
+    </div>
+  </header>
+  <main class="py-16">
+    <div class="container mx-auto px-4">
+      <h1 class="text-4xl font-bold mb-6">{{heroTitle}}</h1>
+      <div class="glass-card p-8 rounded-xl mb-12">
+        <p class="text-slate-300 text-lg leading-relaxed mb-4">
+          {{heroCopy}}
+        </p>
+      </div>
+
+      <!-- Documents Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {{documentCards}}
+      </div>
+
+      <!-- Info Section -->
+      <div class="glass-card p-8 rounded-xl mt-12 bg-slate-800/30">
+        <h2 class="text-2xl font-bold mb-4">{{infoTitle}}</h2>
+        <p class="text-slate-300 mb-4">
+          {{infoText}}
+        </p>
+        <ul class="space-y-3 text-slate-400">
+          {{infoPointsHtml}}
+        </ul>
+      </div>
+
+      <div class="text-center mt-12">
+        <a href="contact.html" class="glass-card hover:border-indigo-500 px-8 py-4 rounded-full font-bold transition duration-300 inline-flex items-center">
+          {{ctaText}}
+          <i class="fa-solid fa-arrow-right ml-3"></i>
+        </a>
+      </div>
+    </div>
+  </main>
+  <script src="{{scriptSrc}}"></script>
+{{postScripts}}
+</body>
+</html>
