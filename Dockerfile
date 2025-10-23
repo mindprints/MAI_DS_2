@@ -9,8 +9,17 @@ RUN npm ci
 # app source
 COPY . .
 
-# if you have a build step, keep it; otherwise this will no-op
-RUN npm run build || true
+# Build the application - ensure CSS is generated and static files are copied
+RUN echo "Starting build process..." && \
+    npm run build:static && \
+    echo "Static files copied" && \
+    npm run build:css && \
+    echo "CSS built" && \
+    npm run build:pages && \
+    echo "Pages built" && \
+    ls -la public/ && \
+    ls -la public/assets/css/ && \
+    echo "Build completed successfully"
 
 # expose the port the runtime will use
 ENV PORT=3000

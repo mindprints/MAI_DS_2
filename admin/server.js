@@ -48,17 +48,24 @@ app.use((req, res, next) => {
 // Serve the main built site from public directory FIRST
 // This must come before API routes to avoid conflicts
 app.use(express.static(path.join(ROOT, 'public'), {
-  setHeaders: (res, path) => {
+  setHeaders: (res, filePath) => {
     // Set correct MIME types for CSS files
-    if (path.endsWith('.css')) {
-      res.setHeader('Content-Type', 'text/css');
-      console.log(`Serving CSS file: ${path}`);
+    if (filePath.endsWith('.css')) {
+      res.setHeader('Content-Type', 'text/css; charset=utf-8');
+      console.log(`Serving CSS file: ${filePath}`);
     }
     // Set correct MIME types for JS files
-    if (path.endsWith('.js')) {
-      res.setHeader('Content-Type', 'application/javascript');
+    if (filePath.endsWith('.js')) {
+      res.setHeader('Content-Type', 'application/javascript; charset=utf-8');
     }
-  }
+    // Set correct MIME types for HTML files
+    if (filePath.endsWith('.html')) {
+      res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    }
+  },
+  // Ensure proper MIME type detection
+  dotfiles: 'ignore',
+  index: ['index.html']
 }));
 
 function createPgPool() {
@@ -487,6 +494,21 @@ app.use('/admin', basicAuth({
 
 // Serve admin UI at /admin path
 app.use('/admin', express.static(path.join(__dirname, 'static')));
+
+// Fallback route for missing static files - serve index.html for SPA-like behavior
+app.get('*', (req, res) => {
+  // Only handle requests that don't start with /api/ or /admin/
+  if (!req.path.startsWith('/api/') && !req.path.startsWith('/admin/')) {
+    const indexPath = path.join(ROOT, 'public', 'index.html');
+    if (require('fs').existsSync(indexPath)) {
+      res.sendFile(indexPath);
+    } else {
+      res.status(404).send('Page not found');
+    }
+  } else {
+    res.status(404).json({ error: 'Not found' });
+  }
+});
 
 const PORT = process.env.PORT || 5179;
 app.listen(PORT, () => {
