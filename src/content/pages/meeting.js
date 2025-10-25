@@ -93,14 +93,14 @@ function generateDocumentCards(documents, assetsPrefix) {
     const colorClass = categoryColors[doc.category] || 'bg-gray-900 text-gray-300';
     return `
         <!-- Document: ${doc.filename} -->
-        <a href="${assetsPrefix}/documents/${doc.filename}" target="_blank" rel="noopener noreferrer" class="glass-card p-6 rounded-xl border border-slate-700 hover:border-cyan-400 hover:shadow-lg transition-all duration-300 flex flex-col">
-          <div class="flex items-start justify-between mb-4">
-            <i class="fa-solid fa-file-pdf text-red-500 text-2xl"></i>
+        <a href="${assetsPrefix}/documents/${doc.filename}" target="_blank" rel="noopener noreferrer" class="glass-card p-4 rounded-lg border border-slate-700 hover:border-cyan-400 hover:shadow-lg transition-all duration-300 flex flex-col">
+          <div class="flex items-start justify-between mb-2">
+            <i class="fa-solid fa-file-pdf text-red-500 text-xl"></i>
             <span class="text-xs ${colorClass} px-2 py-1 rounded">${doc.category}</span>
           </div>
-          <h3 class="text-lg font-bold mb-2 text-slate-100">${doc.title}</h3>
-          <p class="text-slate-400 text-sm flex-grow mb-4">${doc.description}</p>
-          <span class="text-cyan-400 text-sm font-medium">Download PDF →</span>
+          <h3 class="text-base font-bold mb-1 text-slate-100">${doc.title}</h3>
+          <p class="text-slate-400 text-xs flex-grow mb-2">${doc.description}</p>
+          <span class="text-cyan-400 text-xs font-medium">Download PDF →</span>
         </a>`;
   }).join('\n');
 }
@@ -180,14 +180,14 @@ function generateSwedishDocumentCards(documents, assetsPrefix) {
     
     return `
         <!-- Document: ${doc.filename} -->
-        <a href="${assetsPrefix}/documents/${doc.filename}" target="_blank" rel="noopener noreferrer" class="glass-card p-6 rounded-xl border border-slate-700 hover:border-cyan-400 hover:shadow-lg transition-all duration-300 flex flex-col">
-          <div class="flex items-start justify-between mb-4">
-            <i class="fa-solid fa-file-pdf text-red-500 text-2xl"></i>
+        <a href="${assetsPrefix}/documents/${doc.filename}" target="_blank" rel="noopener noreferrer" class="glass-card p-4 rounded-lg border border-slate-700 hover:border-cyan-400 hover:shadow-lg transition-all duration-300 flex flex-col">
+          <div class="flex items-start justify-between mb-2">
+            <i class="fa-solid fa-file-pdf text-red-500 text-xl"></i>
             <span class="text-xs ${colorClass} px-2 py-1 rounded">${swedishCategory}</span>
           </div>
-          <h3 class="text-lg font-bold mb-2 text-slate-100">${swedishTitle}</h3>
-          <p class="text-slate-400 text-sm flex-grow mb-4">${swedishDescription}</p>
-          <span class="text-cyan-400 text-sm font-medium">Ladda ner PDF →</span>
+          <h3 class="text-base font-bold mb-1 text-slate-100">${swedishTitle}</h3>
+          <p class="text-slate-400 text-xs flex-grow mb-2">${swedishDescription}</p>
+          <span class="text-cyan-400 text-xs font-medium">Ladda ner PDF →</span>
         </a>`;
   }).join('\n');
 }
