@@ -497,10 +497,13 @@ app.post('/api/webhook/email', express.raw({ type: 'application/json' }), async 
     console.log('📨 Received email webhook');
     
     // SECURITY LAYER 1: Verify Resend webhook signature
-    const resendSignature = req.headers['resend-signature'];
+    const resendSignature = req.headers['resend-signature'] || req.headers['svix-signature'];
     const webhookSecret = process.env.RESEND_WEBHOOK_SECRET;
+    const testMode = process.env.WEBHOOK_TEST_MODE === 'true';
     
-    if (webhookSecret && resendSignature) {
+    if (testMode) {
+      console.warn('⚠️ WEBHOOK_TEST_MODE enabled - signature verification bypassed');
+    } else if (webhookSecret && resendSignature) {
       const isValid = verifyResendSignature(req.body, resendSignature, webhookSecret);
       if (!isValid) {
         console.error('❌ Invalid Resend webhook signature');
@@ -509,6 +512,7 @@ app.post('/api/webhook/email', express.raw({ type: 'application/json' }), async 
       console.log('✅ Resend signature verified');
     } else if (webhookSecret) {
       console.warn('⚠️ RESEND_WEBHOOK_SECRET set but no signature header - rejecting');
+      console.warn('   Set WEBHOOK_TEST_MODE=true to bypass signature for testing');
       return res.status(401).json({ error: 'Missing signature' });
     } else {
       console.warn('⚠️ RESEND_WEBHOOK_SECRET not set - webhook signature verification disabled');
@@ -516,7 +520,29 @@ app.post('/api/webhook/email', express.raw({ type: 'application/json' }), async 
     
     // Parse JSON body
     const body = JSON.parse(req.body.toString());
-    const { from, to, subject, html, text, headers } = body;
+    
+    // Handle Resend's email.received event format
+    let from, to, subject, html, text, headers;
+    
+    if (body.type === 'email.received') {
+      // Resend email.received event format
+      console.log('📧 Processing email.received event');
+      const data = body.data || body;
+      from = data.from || data.sender;
+      to = data.to || data.recipients || [data.recipient];
+      subject = data.subject;
+      html = data.html;
+      text = data.text || data.body;
+      headers = data.headers || {};
+    } else {
+      // Fallback to direct email data format
+      from = body.from;
+      to = body.to;
+      subject = body.subject;
+      html = body.html;
+      text = body.text;
+      headers = body.headers || {};
+    }
     
     console.log('From:', from);
     console.log('To:', to);
@@ -524,31 +550,50 @@ app.post('/api/webhook/email', express.raw({ type: 'application/json' }), async 
     console.log('Headers:', headers ? Object.keys(headers).join(', ') : 'none');
     
     // SECURITY LAYER 2: Verify email is sent to dedicated edit address
-    // Handle email aliases: Hostinger aliases may rewrite "to" field to final mailbox
+    // Hostinger setup: All aliases (including edit@aimuseum.se) funnel through admin@aimuseum.se
     const editEmailAddress = process.env.EDIT_EMAIL_ADDRESS || 'edit@aimuseum.se';
-    const finalMailbox = process.env.EDIT_FINAL_MAILBOX || 'admin@aimuseum.se'; // Final mailbox after alias forwarding
+    const finalMailbox = process.env.EDIT_FINAL_MAILBOX || 'admin@aimuseum.se'; // All Hostinger aliases forward here
     
     // Extract recipient from various possible fields
-    const recipientEmail = Array.isArray(to) ? to[0] : (to?.email || to);
+    // Handle both string and object formats
+    let recipientEmail;
+    if (Array.isArray(to)) {
+      recipientEmail = typeof to[0] === 'string' ? to[0] : (to[0]?.email || to[0]?.address);
+    } else if (typeof to === 'string') {
+      recipientEmail = to;
+    } else {
+      recipientEmail = to?.email || to?.address || to;
+    }
     
-    // Check headers for original recipient (common in email forwarding)
-    const originalTo = headers?.['x-original-to'] || headers?.['envelope-to'] || headers?.['x-envelope-to'];
+    // Check headers for original recipient (Hostinger preserves original "to" in headers)
+    const originalTo = headers?.['x-original-to'] || headers?.['envelope-to'] || headers?.['x-envelope-to'] || headers?.['x-forwarded-to'];
+    const toHeader = headers?.['to'];
+    
+    // Collect all possible recipient addresses
     const allRecipients = [
       recipientEmail,
       originalTo,
-      headers?.['to'],
-      headers?.['x-forwarded-to']
-    ].filter(Boolean).map(e => String(e).toLowerCase());
+      toHeader,
+      headers?.['x-forwarded-for'],
+      headers?.['delivered-to']
+    ].filter(Boolean).map(e => {
+      // Extract email from "Name <email@domain.com>" format
+      const emailMatch = String(e).match(/<?([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})>?/);
+      return emailMatch ? emailMatch[1].toLowerCase() : String(e).toLowerCase();
+    });
     
     // Normalize email addresses for comparison
     const editEmailLower = editEmailAddress.toLowerCase();
     const finalMailboxLower = finalMailbox.toLowerCase();
     
-    // Check if email was sent to edit address OR final mailbox (after alias forwarding)
+    // Check if email was originally sent to edit address OR arrived at final mailbox
+    // Since Hostinger funnels all aliases to admin@aimuseum.se, we check headers for original recipient
     const isEditAddress = allRecipients.some(r => r.includes(editEmailLower));
     const isFinalMailbox = allRecipients.some(r => r.includes(finalMailboxLower));
     
-    // Allow if sent to edit address OR if sent to final mailbox AND edit address is configured as alias
+    // Allow if:
+    // 1. Original recipient was edit@aimuseum.se (check headers), OR
+    // 2. Email arrived at admin@aimuseum.se AND we're expecting alias forwarding
     const isValidRecipient = isEditAddress || (isFinalMailbox && editEmailLower !== finalMailboxLower);
     
     if (!isValidRecipient) {
@@ -556,14 +601,16 @@ app.post('/api/webhook/email', express.raw({ type: 'application/json' }), async 
       console.log('  Recipients found:', allRecipients);
       console.log('  Expected edit address:', editEmailLower);
       console.log('  Expected final mailbox:', finalMailboxLower);
+      console.log('  Raw "to" field:', to);
+      console.log('  Headers:', JSON.stringify(headers, null, 2));
       return res.status(403).json({ error: 'Email must be sent to dedicated edit address' });
     }
     
     if (isEditAddress) {
-      console.log('✅ Email sent to edit address:', editEmailLower);
+      console.log('✅ Email sent to edit address (original recipient):', editEmailLower);
     } else if (isFinalMailbox) {
-      console.log('✅ Email sent to final mailbox (alias forwarding detected):', finalMailboxLower);
-      console.log('  Original recipients:', allRecipients);
+      console.log('✅ Email sent to final mailbox (Hostinger alias forwarding):', finalMailboxLower);
+      console.log('  Original recipients in headers:', allRecipients.filter(r => r.includes(editEmailLower)));
     }
     
     // SECURITY LAYER 3: Check if sender is in allowed list

@@ -180,22 +180,51 @@ TRIGGER_REBUILD=true
 
 ### Step 2: Configure Resend
 
-1. **Create a dedicated email address:**
-   - In Resend Dashboard → Domains
-   - Add `edit@aimuseum.se` (or your chosen address)
+1. **Get Resend's inbound email address:**
+   - Go to Resend Dashboard → Receiving Emails (or Inbound)
+   - Find your inbound address (e.g., `something@your-id.resend.app`)
+   - Copy this address - you'll need it for Hostinger filter
 
 2. **Set up webhook:**
    - Go to Resend Dashboard → Webhooks
-   - Create new webhook
-   - URL: `https://your-domain.com/api/webhook/email`
-   - Events: Select "Email Received" or "Email Bounced"
+   - Edit your existing webhook or create new one
+   - URL: `https://aimuseum.se/api/webhook/email`
+   - **IMPORTANT:** Under "LISTENING FOR", make sure `email.received` is selected
    - Copy the webhook secret → set as `RESEND_WEBHOOK_SECRET`
 
-3. **Configure email forwarding:**
-   - Set up email forwarding from `edit@aimuseum.se` to trigger the webhook
-   - **Important:** Do NOT forward emails from your public contact addresses
+### Step 3: Configure Hostinger Email Filter
 
-### Step 3: Test the Setup
+Since Hostinger funnels all aliases through `admin@aimuseum.se`, we'll use Hostinger's email filters to forward edit emails to Resend:
+
+1. **Log into Hostinger Webmail:**
+   - Go to `mail.hostinger.com`
+   - Log in with `admin@aimuseum.se`
+
+2. **Create a filter:**
+   - Go to Settings → Filters
+   - Click "Create Filter" or "Add Filter"
+
+3. **Filter configuration:**
+   - **Filter Name:** "Forward Edit Emails to Resend"
+   - **Scope:** "Any" (if using multiple conditions) or "All" (if single condition)
+   
+   **Rules (choose one or combine):**
+   - **Option A - By recipient header:**
+     - Rule: "To" contains `edit@aimuseum.se`
+   - **Option B - By subject (if using secret token in subject):**
+     - Rule: "Subject" contains `YOUR_SECRET_TOKEN`
+   - **Option C - By body (if using secret token in body):**
+     - Rule: "Body" contains `YOUR_SECRET_TOKEN`
+   
+   **Actions:**
+   - **Forward to:** `something@your-id.resend.app` (your Resend inbound address)
+   - **Keep a copy:** Unchecked (optional - if you want to keep emails in admin@aimuseum.se, check this)
+
+4. **Save the filter**
+
+**Recommended:** Use Option A (by recipient) + Option B or C (by secret token) combined with "All" scope for maximum security. This ensures only emails sent to `edit@aimuseum.se` AND containing the secret token are forwarded.
+
+### Step 4: Test the Setup
 
 Visit the test endpoint:
 ```
