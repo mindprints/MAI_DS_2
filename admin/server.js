@@ -536,17 +536,64 @@ app.post('/api/webhook/email', express.raw({ type: 'application/json', limit: '1
     let from, to, subject, html, text, headers;
     
     if (body.type === 'email.received') {
-      // Resend email.received event format
+      // Resend email.received event format - webhook only contains metadata, not body
       console.log('📧 Processing email.received event');
+      
       const data = body.data || body;
-      from = data.from || data.sender;
-      to = data.to || data.recipients || [data.recipient];
-      subject = data.subject;
-      html = data.html;
-      text = data.text || data.body;
-      headers = data.headers || {};
+      const emailId = data.email_id || data.id || body.email_id;
+      
+      // Extract metadata from webhook
+      from = data.from || data.sender || body.from;
+      to = data.to || data.recipients || [data.recipient] || body.to;
+      subject = data.subject || body.subject;
+      headers = data.headers || body.headers || {};
+      
+      // Resend webhook doesn't include body - need to fetch it via API
+      if (emailId) {
+        console.log('📥 Fetching email content from Resend API, email_id:', emailId);
+        try {
+          const resendApiKey = process.env.RESEND_API_KEY;
+          if (!resendApiKey) {
+            throw new Error('RESEND_API_KEY not configured');
+          }
+          
+          // Fetch full email content from Resend API
+          const emailResponse = await fetch(`https://api.resend.com/emails/receiving/${emailId}`, {
+            headers: {
+              'Authorization': `Bearer ${resendApiKey}`,
+              'Content-Type': 'application/json'
+            }
+          });
+          
+          if (!emailResponse.ok) {
+            const errorText = await emailResponse.text();
+            throw new Error(`Resend API error: ${emailResponse.status} - ${errorText}`);
+          }
+          
+          const emailData = await emailResponse.json();
+          console.log('✅ Email content fetched from Resend API');
+          
+          // Extract body content from API response
+          html = emailData.html || emailData.htmlBody;
+          text = emailData.text || emailData.textBody || emailData.body;
+          
+          // Update metadata if API provides more complete info
+          if (!from && emailData.from) from = emailData.from;
+          if (!to && emailData.to) to = emailData.to;
+          if (!subject && emailData.subject) subject = emailData.subject;
+          if (emailData.headers) headers = { ...headers, ...emailData.headers };
+          
+        } catch (error) {
+          console.error('❌ Failed to fetch email content from Resend API:', error.message);
+          // Continue with metadata only - might still be able to process
+        }
+      } else {
+        console.warn('⚠️ No email_id found in webhook event - cannot fetch email body');
+        console.log('📦 Event structure:', JSON.stringify(body, null, 2).substring(0, 500));
+      }
     } else {
-      // Fallback to direct email data format
+      // Fallback to direct email data format (if Resend sends full content)
+      console.log('📧 Processing direct email data format');
       from = body.from;
       to = body.to;
       subject = body.subject;
