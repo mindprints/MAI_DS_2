@@ -471,60 +471,29 @@ app.post('/api/build', (_req, res) => {
   });
 });
 
-// Static for admin UI and slide previews
-app.use('/slides-assets', express.static(SLIDES_DIR));
+// Email editing via Resend webhook - requires @anthropic-ai/sdk package
+let Anthropic;
+let anthropic;
+try {
+  Anthropic = require('@anthropic-ai/sdk');
+  anthropic = new Anthropic({
+    apiKey: process.env.ANTHROPIC_API_KEY,
+  });
+  console.log('✅ Anthropic SDK loaded - email editing enabled');
+} catch (error) {
+  console.warn('⚠️ @anthropic-ai/sdk not installed - email editing disabled');
+  console.warn('   Install with: npm install @anthropic-ai/sdk');
+}
 
-// Protect admin UI with basic authentication
-app.use('/admin', basicAuth({
-  users: { 'admin': process.env.ADMIN_PASSWORD || 'changeme' },
-  challenge: true,
-  realm: 'MAI Admin Area'
-}));
-
-// Serve admin UI at /admin path
-app.use('/admin', express.static(path.join(__dirname, 'static')));
-
-// Fallback route for missing static files - serve index.html for SPA-like behavior
-app.get('*', (req, res) => {
-  // Only handle requests that don't start with /api/ or /admin/
-  if (!req.path.startsWith('/api/') && !req.path.startsWith('/admin/')) {
-    const indexPath = path.join(ROOT, 'public', 'index.html');
-    if (require('fs').existsSync(indexPath)) {
-      res.sendFile(indexPath);
-    } else {
-      res.status(404).send('Page not found');
-    }
-  } else {
-    res.status(404).json({ error: 'Not found' });
-  }
-});
-
-const PORT = process.env.PORT || 5179;
-app.listen(PORT, () => {
-  console.log(`Admin running on http://localhost:${PORT}`);
-  console.log(`Main site available at http://localhost:${PORT}`);
-  console.log(`Admin interface at http://localhost:${PORT}/admin`);
-});
-// Add this to your admin/server.js file
-
-// 1. Add these dependencies at the top (install if needed: npm install @anthropic-ai/sdk)
-const Anthropic = require('@anthropic-ai/sdk');
-const { Pool } = require('pg');
-
-// 2. Initialize Anthropic client
-const anthropic = new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY,
-});
-
-// 3. Initialize database pool
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-});
-
-// 4. Add this webhook endpoint to your Express app
-// SECURITY: This endpoint requires multiple layers of authentication
+// Email webhook endpoint - SECURITY: This endpoint requires multiple layers of authentication
 app.post('/api/webhook/email', express.raw({ type: 'application/json' }), async (req, res) => {
   try {
+    // Check if Anthropic SDK is available
+    if (!anthropic) {
+      console.error('❌ Anthropic SDK not available - email editing disabled');
+      return res.status(503).json({ error: 'Email editing service not available' });
+    }
+    
     console.log('📨 Received email webhook');
     
     // SECURITY LAYER 1: Verify Resend webhook signature
@@ -729,10 +698,18 @@ function extractEditRequest(emailBody) {
 
 // Fetch current content from database
 async function fetchCurrentContent() {
-  const result = await pool.query(
-    'SELECT key, lang, body FROM text_snippets ORDER BY key, lang'
-  );
-  return result.rows;
+  if (!pgPool) {
+    throw new Error('Database not configured');
+  }
+  const client = await pgPool.connect();
+  try {
+    const result = await client.query(
+      'SELECT key, lang, body FROM text_snippets ORDER BY key, lang'
+    );
+    return result.rows;
+  } finally {
+    client.release();
+  }
 }
 
 // AI analysis function
@@ -802,28 +779,37 @@ Analyze this request and return ONLY a valid JSON object (no markdown, no code b
 
 // Apply edit to database
 async function applyEdit(analysis) {
+  if (!pgPool) {
+    throw new Error('Database not configured');
+  }
+  
   const { key, lang, newContent } = analysis;
+  const client = await pgPool.connect();
   
-  // Check if entry exists
-  const existingResult = await pool.query(
-    'SELECT body FROM text_snippets WHERE key = $1 AND lang = $2',
-    [key, lang]
-  );
-  
-  if (existingResult.rows.length > 0) {
-    // Update existing entry
-    await pool.query(
-      'UPDATE text_snippets SET body = $1, updated_at = NOW() WHERE key = $2 AND lang = $3',
-      [newContent, key, lang]
+  try {
+    // Check if entry exists
+    const existingResult = await client.query(
+      'SELECT body FROM text_snippets WHERE key = $1 AND lang = $2',
+      [key, lang]
     );
-    console.log('✅ Updated existing entry:', key, lang);
-  } else {
-    // Insert new entry
-    await pool.query(
-      'INSERT INTO text_snippets (key, lang, body, updated_at) VALUES ($1, $2, $3, NOW())',
-      [key, lang, newContent]
-    );
-    console.log('✅ Inserted new entry:', key, lang);
+    
+    if (existingResult.rows.length > 0) {
+      // Update existing entry
+      await client.query(
+        'UPDATE text_snippets SET body = $1, updated_at = NOW() WHERE key = $2 AND lang = $3',
+        [newContent, key, lang]
+      );
+      console.log('✅ Updated existing entry:', key, lang);
+    } else {
+      // Insert new entry
+      await client.query(
+        'INSERT INTO text_snippets (key, lang, body, updated_at) VALUES ($1, $2, $3, NOW())',
+        [key, lang, newContent]
+      );
+      console.log('✅ Inserted new entry:', key, lang);
+    }
+  } finally {
+    client.release();
   }
 }
 
@@ -924,4 +910,39 @@ app.get('/api/webhook/email/test', (req, res) => {
       editEmailAddress.toLowerCase() === finalMailbox.toLowerCase() && 'ℹ️ EDIT_EMAIL_ADDRESS and EDIT_FINAL_MAILBOX are the same - no alias forwarding detected'
     ].filter(Boolean)
   });
+});
+
+// Static for admin UI and slide previews
+app.use('/slides-assets', express.static(SLIDES_DIR));
+
+// Protect admin UI with basic authentication
+app.use('/admin', basicAuth({
+  users: { 'admin': process.env.ADMIN_PASSWORD || 'changeme' },
+  challenge: true,
+  realm: 'MAI Admin Area'
+}));
+
+// Serve admin UI at /admin path
+app.use('/admin', express.static(path.join(__dirname, 'static')));
+
+// Fallback route for missing static files - serve index.html for SPA-like behavior
+app.get('*', (req, res) => {
+  // Only handle requests that don't start with /api/ or /admin/
+  if (!req.path.startsWith('/api/') && !req.path.startsWith('/admin/')) {
+    const indexPath = path.join(ROOT, 'public', 'index.html');
+    if (require('fs').existsSync(indexPath)) {
+      res.sendFile(indexPath);
+    } else {
+      res.status(404).send('Page not found');
+    }
+  } else {
+    res.status(404).json({ error: 'Not found' });
+  }
+});
+
+const PORT = process.env.PORT || 5179;
+app.listen(PORT, () => {
+  console.log(`Admin running on http://localhost:${PORT}`);
+  console.log(`Main site available at http://localhost:${PORT}`);
+  console.log(`Admin interface at http://localhost:${PORT}/admin`);
 });
