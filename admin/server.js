@@ -4,6 +4,7 @@ const basicAuth = require('express-basic-auth');
 const path = require('path');
 const fsp = require('fs/promises');
 const { exec } = require('child_process');
+const crypto = require('crypto');
 const { Pool } = require('pg');
 const { getTextSegments, applyTextUpdates } = require('./dom');
 const { handleSendEmail } = require('../api/send-email-express');
@@ -503,4 +504,424 @@ app.listen(PORT, () => {
   console.log(`Admin running on http://localhost:${PORT}`);
   console.log(`Main site available at http://localhost:${PORT}`);
   console.log(`Admin interface at http://localhost:${PORT}/admin`);
+});
+// Add this to your admin/server.js file
+
+// 1. Add these dependencies at the top (install if needed: npm install @anthropic-ai/sdk)
+const Anthropic = require('@anthropic-ai/sdk');
+const { Pool } = require('pg');
+
+// 2. Initialize Anthropic client
+const anthropic = new Anthropic({
+  apiKey: process.env.ANTHROPIC_API_KEY,
+});
+
+// 3. Initialize database pool
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+});
+
+// 4. Add this webhook endpoint to your Express app
+// SECURITY: This endpoint requires multiple layers of authentication
+app.post('/api/webhook/email', express.raw({ type: 'application/json' }), async (req, res) => {
+  try {
+    console.log('📨 Received email webhook');
+    
+    // SECURITY LAYER 1: Verify Resend webhook signature
+    const resendSignature = req.headers['resend-signature'];
+    const webhookSecret = process.env.RESEND_WEBHOOK_SECRET;
+    
+    if (webhookSecret && resendSignature) {
+      const isValid = verifyResendSignature(req.body, resendSignature, webhookSecret);
+      if (!isValid) {
+        console.error('❌ Invalid Resend webhook signature');
+        return res.status(401).json({ error: 'Invalid signature' });
+      }
+      console.log('✅ Resend signature verified');
+    } else if (webhookSecret) {
+      console.warn('⚠️ RESEND_WEBHOOK_SECRET set but no signature header - rejecting');
+      return res.status(401).json({ error: 'Missing signature' });
+    } else {
+      console.warn('⚠️ RESEND_WEBHOOK_SECRET not set - webhook signature verification disabled');
+    }
+    
+    // Parse JSON body
+    const body = JSON.parse(req.body.toString());
+    const { from, to, subject, html, text, headers } = body;
+    
+    console.log('From:', from);
+    console.log('To:', to);
+    console.log('Subject:', subject);
+    console.log('Headers:', headers ? Object.keys(headers).join(', ') : 'none');
+    
+    // SECURITY LAYER 2: Verify email is sent to dedicated edit address
+    // Handle email aliases: Hostinger aliases may rewrite "to" field to final mailbox
+    const editEmailAddress = process.env.EDIT_EMAIL_ADDRESS || 'edit@aimuseum.se';
+    const finalMailbox = process.env.EDIT_FINAL_MAILBOX || 'admin@aimuseum.se'; // Final mailbox after alias forwarding
+    
+    // Extract recipient from various possible fields
+    const recipientEmail = Array.isArray(to) ? to[0] : (to?.email || to);
+    
+    // Check headers for original recipient (common in email forwarding)
+    const originalTo = headers?.['x-original-to'] || headers?.['envelope-to'] || headers?.['x-envelope-to'];
+    const allRecipients = [
+      recipientEmail,
+      originalTo,
+      headers?.['to'],
+      headers?.['x-forwarded-to']
+    ].filter(Boolean).map(e => String(e).toLowerCase());
+    
+    // Normalize email addresses for comparison
+    const editEmailLower = editEmailAddress.toLowerCase();
+    const finalMailboxLower = finalMailbox.toLowerCase();
+    
+    // Check if email was sent to edit address OR final mailbox (after alias forwarding)
+    const isEditAddress = allRecipients.some(r => r.includes(editEmailLower));
+    const isFinalMailbox = allRecipients.some(r => r.includes(finalMailboxLower));
+    
+    // Allow if sent to edit address OR if sent to final mailbox AND edit address is configured as alias
+    const isValidRecipient = isEditAddress || (isFinalMailbox && editEmailLower !== finalMailboxLower);
+    
+    if (!isValidRecipient) {
+      console.log('❌ Email not sent to edit address or final mailbox');
+      console.log('  Recipients found:', allRecipients);
+      console.log('  Expected edit address:', editEmailLower);
+      console.log('  Expected final mailbox:', finalMailboxLower);
+      return res.status(403).json({ error: 'Email must be sent to dedicated edit address' });
+    }
+    
+    if (isEditAddress) {
+      console.log('✅ Email sent to edit address:', editEmailLower);
+    } else if (isFinalMailbox) {
+      console.log('✅ Email sent to final mailbox (alias forwarding detected):', finalMailboxLower);
+      console.log('  Original recipients:', allRecipients);
+    }
+    
+    // SECURITY LAYER 3: Check if sender is in allowed list
+    const allowedEmails = (process.env.ALLOWED_EDITOR_EMAILS || '').split(',').map(e => e.trim().toLowerCase()).filter(Boolean);
+    const senderEmail = (from?.email || from?.address || from || '').toLowerCase();
+    
+    if (!allowedEmails.length) {
+      console.error('❌ ALLOWED_EDITOR_EMAILS not configured - rejecting all requests');
+      return res.status(500).json({ error: 'Server configuration error' });
+    }
+    
+    if (!allowedEmails.includes(senderEmail)) {
+      console.log('❌ Unauthorized sender:', senderEmail, 'Allowed:', allowedEmails);
+      return res.status(403).json({ error: 'Unauthorized sender' });
+    }
+    console.log('✅ Sender authorized:', senderEmail);
+    
+    // SECURITY LAYER 4: Require secret token in subject or body
+    const requiredToken = process.env.EDIT_SECRET_TOKEN;
+    const emailBody = text || stripHtml(html);
+    const subjectLower = (subject || '').toLowerCase();
+    const bodyLower = emailBody.toLowerCase();
+    
+    if (requiredToken) {
+      const tokenInSubject = subjectLower.includes(requiredToken.toLowerCase());
+      const tokenInBody = bodyLower.includes(requiredToken.toLowerCase());
+      
+      if (!tokenInSubject && !tokenInBody) {
+        console.log('❌ Secret token not found in email');
+        return res.status(403).json({ error: 'Secret token required' });
+      }
+      console.log('✅ Secret token verified');
+    } else {
+      console.warn('⚠️ EDIT_SECRET_TOKEN not set - token verification disabled');
+    }
+    
+    // Extract the edit request from email body
+    const editRequest = extractEditRequest(emailBody);
+    
+    if (!editRequest) {
+      console.log('❌ Could not parse edit request');
+      return res.status(400).json({ error: 'Invalid format' });
+    }
+    
+    console.log('📝 Edit request:', editRequest);
+    
+    // Use AI to understand what to edit
+    const analysisResult = await analyzeEditWithAI(editRequest);
+    
+    console.log('🤖 AI Analysis:', analysisResult);
+    
+    // Apply the edit to database
+    await applyEdit(analysisResult);
+    
+    // Trigger rebuild if needed
+    if (process.env.TRIGGER_REBUILD === 'true') {
+      console.log('🔄 Triggering rebuild...');
+      // Add your rebuild logic here (e.g., webhook to trigger npm run build)
+    }
+    
+    // Send confirmation email back
+    await sendConfirmationEmail(senderEmail, analysisResult);
+    
+    res.json({ success: true, message: 'Edit applied' });
+    
+  } catch (error) {
+    console.error('❌ Error processing email:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Verify Resend webhook signature
+function verifyResendSignature(payload, signature, secret) {
+  try {
+    // Resend uses HMAC-SHA256 for webhook signatures
+    // Format: timestamp,hash
+    const [timestamp, hash] = signature.split(',');
+    
+    if (!timestamp || !hash) {
+      return false;
+    }
+    
+    // Create expected signature
+    const expectedSignature = crypto
+      .createHmac('sha256', secret)
+      .update(timestamp + '.' + payload.toString())
+      .digest('hex');
+    
+    // Constant-time comparison to prevent timing attacks
+    return crypto.timingSafeEqual(
+      Buffer.from(hash),
+      Buffer.from(expectedSignature)
+    );
+  } catch (error) {
+    console.error('Error verifying signature:', error);
+    return false;
+  }
+}
+
+// Helper: Strip HTML tags to get plain text
+function stripHtml(html) {
+  if (!html) return '';
+  return html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
+// Helper: Extract edit request from email
+function extractEditRequest(emailBody) {
+  // Look for [key] markers like: [page.home.hero.title]
+  const sectionMatch = emailBody.match(/\[([^\]]+)\]/);
+  
+  if (sectionMatch) {
+    const key = sectionMatch[1];
+    // Extract content between [key] and [/key] or end of message
+    const contentMatch = emailBody.match(/\[([^\]]+)\]\s*([\s\S]*?)\s*(?:\[\/\1\]|$)/);
+    
+    if (contentMatch) {
+      return {
+        key: contentMatch[1],
+        newContent: contentMatch[2].trim(),
+        rawEmail: emailBody
+      };
+    }
+  }
+  
+  // Fallback: treat entire email as natural language request
+  return {
+    key: null,
+    newContent: null,
+    rawEmail: emailBody
+  };
+}
+
+// Fetch current content from database
+async function fetchCurrentContent() {
+  const result = await pool.query(
+    'SELECT key, lang, body FROM text_snippets ORDER BY key, lang'
+  );
+  return result.rows;
+}
+
+// AI analysis function
+async function analyzeEditWithAI(editRequest) {
+  const { key, newContent, rawEmail } = editRequest;
+  
+  // Fetch current content from database
+  const currentContent = await fetchCurrentContent();
+  
+  // Format current content for AI
+  const contentSummary = currentContent.slice(0, 50).map(row => 
+    `${row.key} (${row.lang}): "${row.body.substring(0, 60)}..."`
+  ).join('\n');
+  
+  const prompt = `You are helping update the Museum of Artificial Intelligence website content.
+
+Current database content (showing first 50 entries):
+${contentSummary}
+
+User's edit request from email:
+${rawEmail}
+
+${key ? `User specified key: ${key}` : 'No key provided - you need to identify which key to edit'}
+${newContent ? `New content provided:\n${newContent}` : 'User gave instructions - you need to determine what changes to make'}
+
+The database uses this schema:
+- Table: text_snippets
+- Columns: key (TEXT), lang (TEXT), body (TEXT)
+- Example keys: "page.home.hero.title", "page.about.intro.text"
+- Languages: "en" (English) or "sv" (Swedish)
+
+Analyze this request and return ONLY a valid JSON object (no markdown, no code blocks) with this exact structure:
+{
+  "key": "the database key (e.g., 'page.home.hero.title')",
+  "lang": "language code ('en' or 'sv')",
+  "newContent": "the exact text to update to",
+  "confidence": 0.95,
+  "reasoning": "brief explanation of your analysis"
+}`;
+
+  const message = await anthropic.messages.create({
+    model: 'claude-sonnet-4-20250514',
+    max_tokens: 1024,
+    messages: [{
+      role: 'user',
+      content: prompt
+    }]
+  });
+  
+  const responseText = message.content[0].text;
+  console.log('🤖 AI Raw Response:', responseText);
+  
+  // Extract JSON from response (handle markdown code blocks)
+  let jsonText = responseText;
+  const codeBlockMatch = responseText.match(/```(?:json)?\s*([\s\S]*?)\s*```/);
+  if (codeBlockMatch) {
+    jsonText = codeBlockMatch[1];
+  }
+  
+  const jsonMatch = jsonText.match(/\{[\s\S]*\}/);
+  if (!jsonMatch) {
+    throw new Error('AI did not return valid JSON');
+  }
+  
+  return JSON.parse(jsonMatch[0]);
+}
+
+// Apply edit to database
+async function applyEdit(analysis) {
+  const { key, lang, newContent } = analysis;
+  
+  // Check if entry exists
+  const existingResult = await pool.query(
+    'SELECT body FROM text_snippets WHERE key = $1 AND lang = $2',
+    [key, lang]
+  );
+  
+  if (existingResult.rows.length > 0) {
+    // Update existing entry
+    await pool.query(
+      'UPDATE text_snippets SET body = $1, updated_at = NOW() WHERE key = $2 AND lang = $3',
+      [newContent, key, lang]
+    );
+    console.log('✅ Updated existing entry:', key, lang);
+  } else {
+    // Insert new entry
+    await pool.query(
+      'INSERT INTO text_snippets (key, lang, body, updated_at) VALUES ($1, $2, $3, NOW())',
+      [key, lang, newContent]
+    );
+    console.log('✅ Inserted new entry:', key, lang);
+  }
+}
+
+// Send confirmation email via Resend
+async function sendConfirmationEmail(recipientEmail, analysis) {
+  const resendApiKey = process.env.RESEND_API_KEY;
+  
+  if (!resendApiKey) {
+    console.warn('⚠️ RESEND_API_KEY not set, skipping confirmation email');
+    return;
+  }
+  
+  // Get your Resend email from env or use default
+  const fromEmail = process.env.RESEND_FROM_EMAIL || 'edit@resend.dev';
+  
+  const response = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${resendApiKey}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      from: fromEmail,
+      to: recipientEmail,
+      subject: '✅ Edit Applied - aimuseum.se',
+      html: `
+        <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #059669;">✅ Your edit has been applied!</h2>
+          
+          <div style="background: #f3f4f6; padding: 15px; border-radius: 8px; margin: 20px 0;">
+            <p><strong>Key:</strong> <code style="background: #e5e7eb; padding: 2px 6px; border-radius: 3px;">${analysis.key}</code></p>
+            <p><strong>Language:</strong> ${analysis.lang === 'en' ? '🇬🇧 English' : '🇸🇪 Swedish'}</p>
+            <p><strong>AI Confidence:</strong> ${(analysis.confidence * 100).toFixed(0)}%</p>
+          </div>
+          
+          <div style="background: #ecfdf5; border-left: 4px solid #059669; padding: 15px; margin: 20px 0;">
+            <p style="margin: 0 0 10px 0;"><strong>New content:</strong></p>
+            <p style="margin: 0; font-style: italic;">${analysis.newContent}</p>
+          </div>
+          
+          <div style="background: #eff6ff; padding: 15px; border-radius: 8px; margin: 20px 0;">
+            <p style="margin: 0; font-size: 14px; color: #1e40af;">
+              <strong>AI Reasoning:</strong> ${analysis.reasoning}
+            </p>
+          </div>
+          
+          <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 30px 0;">
+          
+          <p style="font-size: 14px; color: #6b7280;">
+            If this edit is incorrect, please contact the administrator or make a new edit request.
+          </p>
+          
+          <p style="font-size: 12px; color: #9ca3af;">
+            Sent from Museum of Artificial Intelligence Content Management System
+          </p>
+        </div>
+      `
+    })
+  });
+  
+  if (!response.ok) {
+    const errorText = await response.text();
+    console.error('❌ Failed to send confirmation email:', errorText);
+  } else {
+    console.log('📧 Confirmation email sent to:', recipientEmail);
+  }
+}
+
+// Optional: Add a test endpoint to verify setup
+app.get('/api/webhook/email/test', (req, res) => {
+  const allowedEmails = (process.env.ALLOWED_EDITOR_EMAILS || '').split(',').map(e => e.trim());
+  const editEmailAddress = process.env.EDIT_EMAIL_ADDRESS || 'edit@aimuseum.se';
+  const finalMailbox = process.env.EDIT_FINAL_MAILBOX || 'admin@aimuseum.se';
+  const hasSecretToken = !!process.env.EDIT_SECRET_TOKEN;
+  const hasWebhookSecret = !!process.env.RESEND_WEBHOOK_SECRET;
+  
+  res.json({
+    status: 'ready',
+    security: {
+      hasAnthropicKey: !!process.env.ANTHROPIC_API_KEY,
+      hasResendKey: !!process.env.RESEND_API_KEY,
+      hasDatabaseUrl: !!process.env.DATABASE_URL,
+      hasWebhookSecret,
+      hasSecretToken,
+      editEmailAddress,
+      finalMailbox,
+      usingAlias: editEmailAddress.toLowerCase() !== finalMailbox.toLowerCase(),
+      allowedEmailsCount: allowedEmails.length,
+      // Don't expose actual emails or tokens in test endpoint
+      allowedEmailsConfigured: allowedEmails.length > 0,
+      secretTokenConfigured: hasSecretToken
+    },
+    warnings: [
+      !hasWebhookSecret && '⚠️ RESEND_WEBHOOK_SECRET not set - webhook signature verification disabled',
+      !hasSecretToken && '⚠️ EDIT_SECRET_TOKEN not set - token verification disabled',
+      allowedEmails.length === 0 && '⚠️ ALLOWED_EDITOR_EMAILS not configured',
+      !editEmailAddress && '⚠️ EDIT_EMAIL_ADDRESS not configured',
+      editEmailAddress.toLowerCase() === finalMailbox.toLowerCase() && 'ℹ️ EDIT_EMAIL_ADDRESS and EDIT_FINAL_MAILBOX are the same - no alias forwarding detected'
+    ].filter(Boolean)
+  });
 });
