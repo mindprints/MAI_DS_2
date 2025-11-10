@@ -486,7 +486,8 @@ try {
 }
 
 // Email webhook endpoint - SECURITY: This endpoint requires multiple layers of authentication
-app.post('/api/webhook/email', express.raw({ type: 'application/json' }), async (req, res) => {
+// Use express.raw() middleware BEFORE express.json() to get raw body for signature verification
+app.post('/api/webhook/email', express.raw({ type: 'application/json', limit: '10mb' }), async (req, res) => {
   try {
     // Check if Anthropic SDK is available
     if (!anthropic) {
@@ -496,6 +497,9 @@ app.post('/api/webhook/email', express.raw({ type: 'application/json' }), async 
     
     console.log('📨 Received email webhook');
     
+    // Get raw body for signature verification (Buffer)
+    const rawBody = Buffer.isBuffer(req.body) ? req.body : Buffer.from(JSON.stringify(req.body));
+    
     // SECURITY LAYER 1: Verify Resend webhook signature
     const resendSignature = req.headers['resend-signature'] || req.headers['svix-signature'];
     const webhookSecret = process.env.RESEND_WEBHOOK_SECRET;
@@ -504,7 +508,7 @@ app.post('/api/webhook/email', express.raw({ type: 'application/json' }), async 
     if (testMode) {
       console.warn('⚠️ WEBHOOK_TEST_MODE enabled - signature verification bypassed');
     } else if (webhookSecret && resendSignature) {
-      const isValid = verifyResendSignature(req.body, resendSignature, webhookSecret);
+      const isValid = verifyResendSignature(rawBody, resendSignature, webhookSecret);
       if (!isValid) {
         console.error('❌ Invalid Resend webhook signature');
         return res.status(401).json({ error: 'Invalid signature' });
@@ -518,8 +522,15 @@ app.post('/api/webhook/email', express.raw({ type: 'application/json' }), async 
       console.warn('⚠️ RESEND_WEBHOOK_SECRET not set - webhook signature verification disabled');
     }
     
-    // Parse JSON body
-    const body = JSON.parse(req.body.toString());
+    // Parse JSON body - handle both Buffer and already-parsed object
+    let body;
+    if (Buffer.isBuffer(req.body)) {
+      body = JSON.parse(req.body.toString());
+    } else if (typeof req.body === 'object') {
+      body = req.body;
+    } else {
+      body = JSON.parse(String(req.body));
+    }
     
     // Handle Resend's email.received event format
     let from, to, subject, html, text, headers;
