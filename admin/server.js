@@ -559,6 +559,13 @@ app.post('/api/webhook/email', express.raw({ type: 'application/json', limit: '1
     console.log('To:', to);
     console.log('Subject:', subject);
     console.log('Headers:', headers ? Object.keys(headers).join(', ') : 'none');
+    console.log('Body length:', text ? text.length : 0, 'chars, HTML length:', html ? html.length : 0, 'chars');
+    
+    // Validate email has content
+    if (!text && !html) {
+      console.warn('⚠️ Email has no body content (text or HTML)');
+      return res.status(400).json({ error: 'Email body is empty' });
+    }
     
     // SECURITY LAYER 2: Verify email is sent to dedicated edit address
     // Hostinger setup: All aliases (including edit@aimuseum.se) funnel through admin@aimuseum.se
