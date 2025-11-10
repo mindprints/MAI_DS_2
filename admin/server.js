@@ -535,6 +535,12 @@ app.post('/api/webhook/email', express.raw({ type: 'application/json', limit: '1
     // Handle Resend's email.received event format
     let from, to, subject, html, text, headers;
     
+    // Skip non-email.received events early
+    if (body.type && body.type !== 'email.received') {
+      console.log('⏭️ Skipping non-email.received event:', body.type);
+      return res.status(200).json({ message: 'Event type not processed' });
+    }
+    
     if (body.type === 'email.received') {
       // Resend email.received event format - webhook only contains metadata, not body
       console.log('📧 Processing email.received event');
@@ -610,8 +616,9 @@ app.post('/api/webhook/email', express.raw({ type: 'application/json', limit: '1
     
     // Validate email has content
     if (!text && !html) {
-      console.warn('⚠️ Email has no body content (text or HTML)');
-      return res.status(400).json({ error: 'Email body is empty' });
+      console.warn('⚠️ Email has no body content (text or HTML) - skipping');
+      console.log('📦 Event type:', body.type || 'unknown');
+      return res.status(200).json({ message: 'Email has no body content, skipping' });
     }
     
     // SECURITY LAYER 2: Verify email is sent to dedicated edit address
