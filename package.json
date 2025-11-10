@@ -6,7 +6,6 @@
   "scripts": {
     "start": "node start-server.js",
     "build": "npm run build:static && npm run build:pages && npm run build:css",
-   
     "build:static": "node tools/build-static.js",
     "build:css": "postcss src/tailwind.css -o public/assets/css/tailwind.css --env production",
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -35,6 +34,7 @@
     "tailwindcss": "^3.4.4"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.68.0",
     "cheerio": "^1.0.0-rc.12",
     "dotenv": "^16.6.1",
     "express": "^4.19.2",
