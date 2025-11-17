@@ -8,6 +8,7 @@ const { Pool } = require("pg");
 const { handleSendEmail } = require("../api/send-email-express");
 
 const ROOT = path.resolve(__dirname, "..");
+const EXPORT_DB_AFTER_EDIT = process.env.EXPORT_DB_AFTER_EDIT !== "false";
 const SLIDES_DIR = path.join(ROOT, "src", "site", "images", "slide");
 
 const app = express();
@@ -494,6 +495,14 @@ app.post(
       // Apply the edit to database
       await applyEdit(analysisResult);
 
+      if (EXPORT_DB_AFTER_EDIT) {
+        try {
+          await exportDbToStatic();
+        } catch (err) {
+          console.error('Failed to export database content after edit:', err.message);
+        }
+      }
+
       // Trigger rebuild if needed
       if (process.env.TRIGGER_REBUILD === "true") {
         console.log("🔄 Triggering rebuild...");
@@ -695,6 +704,24 @@ async function applyEdit(analysis) {
   } finally {
     client.release();
   }
+}
+
+async function exportDbToStatic() {
+  console.log("�Y�- Exporting database content to public/db...");
+  await new Promise((resolve, reject) => {
+    exec(
+      "npm run export-db",
+      { cwd: ROOT },
+      (error, stdout = "", stderr = "") => {
+        if (stdout.trim()) console.log(stdout.trim());
+        if (stderr.trim()) console.error(stderr.trim());
+        if (error) {
+          return reject(error);
+        }
+        resolve();
+      },
+    );
+  });
 }
 
 // Send confirmation email via Resend

@@ -36,8 +36,9 @@ RESEND_WEBHOOK_SECRET=whsec_xxxxxxxxxxxxxxxx
 ANTHROPIC_API_KEY=sk-ant-xxxxxxxxxxxxxxxx
 
 # Optional Features
-TRIGGER_REBUILD=true  # Set to false to disable automatic rebuilds
-WEBHOOK_TEST_MODE=false  # Set to true to bypass signature verification
+TRIGGER_REBUILD=true        # Set to false to disable automatic rebuilds
+EXPORT_DB_AFTER_EDIT=true   # Runs `npm run export-db` after each edit (set false to skip)
+WEBHOOK_TEST_MODE=false     # Set to true to bypass signature verification
 ```
 
 ### Resend Configuration
