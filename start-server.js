@@ -9,7 +9,6 @@ const requiredDirs = [
   'src/content/encyclopedia', 
   'src/site/images/slide',
   'public',
-  'admin/static'
 ];
 
 console.log('Checking required directories...');
@@ -20,13 +19,6 @@ for (const dir of requiredDirs) {
   } else {
     console.log(`✓ Directory exists: ${dir}`);
   }
-}
-
-// Check if admin/static/index.html exists
-const adminIndexPath = 'admin/static/index.html';
-if (!fs.existsSync(adminIndexPath)) {
-  console.error(`ERROR: Missing admin UI file: ${adminIndexPath}`);
-  process.exit(1);
 }
 
 // Set Node.js memory limits for container environment

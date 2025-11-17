@@ -6,6 +6,8 @@ const { exec } = require('child_process');
 const crypto = require('crypto');
 const { Pool } = require('pg');
 const { handleSendEmail } = require('../api/send-email-express');
+const mailpox = require('../mailpox/core');
+const mailpoxAdapter = require('../mailpox/adapter-aimuseum');
 
 const ROOT = path.resolve(__dirname, '..');
 
@@ -14,7 +16,7 @@ app.use(express.json({ limit: '10mb' }));
 
 // Set Content Security Policy to allow external resources
 app.use((req, res, next) => {
-  res.setHeader('Content-Security-Policy', 
+  res.setHeader('Content-Security-Policy',
     "default-src 'self'; " +
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; " +
     "font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; " +
@@ -51,7 +53,7 @@ app.use(express.static(path.join(ROOT, 'public'), {
 function createPgPool() {
   const url = process.env.DATABASE_URL;
   const hasDirectConfig = process.env.PGHOST || process.env.PGDATABASE || process.env.PGUSER;
-  
+
   if (!url && !hasDirectConfig) {
     console.log('No database configuration found - running without database features');
     return null;
@@ -84,7 +86,7 @@ function createPgPool() {
       console.error('Postgres pool error:', err);
       // Don't crash the app on database errors
     });
-    
+
     // Test the connection but don't crash if it fails
     pool.connect()
       .then(client => {
@@ -94,7 +96,7 @@ function createPgPool() {
       .catch(err => {
         console.error('Database connection failed, but continuing without database features:', err.message);
       });
-    
+
     return pool;
   } catch (error) {
     console.error('Failed to create database pool, continuing without database features:', error.message);
@@ -105,12 +107,12 @@ function createPgPool() {
 const pgPool = createPgPool();
 
 process.on('SIGINT', async () => {
-  if (pgPool) await pgPool.end().catch(() => {});
+  if (pgPool) await pgPool.end().catch(() => { });
   process.exit(0);
 });
 
 process.on('SIGTERM', async () => {
-  if (pgPool) await pgPool.end().catch(() => {});
+  if (pgPool) await pgPool.end().catch(() => { });
   process.exit(0);
 });
 
@@ -118,7 +120,27 @@ process.on('SIGTERM', async () => {
 app.post('/api/send-email', handleSendEmail);
 app.options('/api/send-email', handleSendEmail);
 
-
+// Mailpox simulator endpoint
+app.post('/api/mailpox/simulate', async (req, res) => {
+  try {
+// Mailpox content endpoint
+app.get('/api/mailpox/content', async (req, res) => {
+  try {
+    const content = await mailpoxAdapter.fetchAllContent(pgPool);
+    res.json(content);
+  } catch (error) {
+    console.error('❌ Error fetching Mailpox content:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+    const { content, emailBody } = req.body;
+    const analysisResult = await mailpox.processEdit(content, emailBody);
+    res.json(analysisResult);
+  } catch (error) {
+    console.error('❌ Error in Mailpox simulation:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
 
 // Trigger site build
 app.post('/api/build', (_req, res) => {
@@ -150,17 +172,17 @@ app.post('/api/webhook/email', express.raw({ type: 'application/json', limit: '1
       console.error('❌ Anthropic SDK not available - email editing disabled');
       return res.status(503).json({ error: 'Email editing service not available' });
     }
-    
+
     console.log('📨 Received email webhook');
-    
+
     // Get raw body for signature verification (Buffer)
     const rawBody = Buffer.isBuffer(req.body) ? req.body : Buffer.from(JSON.stringify(req.body));
-    
+
     // SECURITY LAYER 1: Verify Resend webhook signature
     const resendSignature = req.headers['resend-signature'] || req.headers['svix-signature'];
     const webhookSecret = process.env.RESEND_WEBHOOK_SECRET;
     const testMode = process.env.WEBHOOK_TEST_MODE === 'true';
-    
+
     if (testMode) {
       console.warn('⚠️ WEBHOOK_TEST_MODE enabled - signature verification bypassed');
     } else if (webhookSecret && resendSignature) {
@@ -177,7 +199,7 @@ app.post('/api/webhook/email', express.raw({ type: 'application/json', limit: '1
     } else {
       console.warn('⚠️ RESEND_WEBHOOK_SECRET not set - webhook signature verification disabled');
     }
-    
+
     // Parse JSON body - handle both Buffer and already-parsed object
     let body;
     if (Buffer.isBuffer(req.body)) {
@@ -187,29 +209,29 @@ app.post('/api/webhook/email', express.raw({ type: 'application/json', limit: '1
     } else {
       body = JSON.parse(String(req.body));
     }
-    
+
     // Handle Resend's email.received event format
     let from, to, subject, html, text, headers;
-    
+
     // Skip non-email.received events early
     if (body.type && body.type !== 'email.received') {
       console.log('⏭️ Skipping non-email.received event:', body.type);
       return res.status(200).json({ message: 'Event type not processed' });
     }
-    
+
     if (body.type === 'email.received') {
       // Resend email.received event format - webhook only contains metadata, not body
       console.log('📧 Processing email.received event');
-      
+
       const data = body.data || body;
       const emailId = data.email_id || data.id || body.email_id;
-      
+
       // Extract metadata from webhook
       from = data.from || data.sender || body.from;
       to = data.to || data.recipients || [data.recipient] || body.to;
       subject = data.subject || body.subject;
       headers = data.headers || body.headers || {};
-      
+
       // Resend webhook doesn't include body - need to fetch it via API
       if (emailId) {
         console.log('📥 Fetching email content from Resend API, email_id:', emailId);
@@ -218,7 +240,7 @@ app.post('/api/webhook/email', express.raw({ type: 'application/json', limit: '1
           if (!resendApiKey) {
             throw new Error('RESEND_API_KEY not configured');
           }
-          
+
           // Fetch full email content from Resend API
           const emailResponse = await fetch(`https://api.resend.com/emails/receiving/${emailId}`, {
             headers: {
@@ -226,25 +248,25 @@ app.post('/api/webhook/email', express.raw({ type: 'application/json', limit: '1
               'Content-Type': 'application/json'
             }
           });
-          
+
           if (!emailResponse.ok) {
             const errorText = await emailResponse.text();
             throw new Error(`Resend API error: ${emailResponse.status} - ${errorText}`);
           }
-          
+
           const emailData = await emailResponse.json();
           console.log('✅ Email content fetched from Resend API');
-          
+
           // Extract body content from API response
           html = emailData.html || emailData.htmlBody;
           text = emailData.text || emailData.textBody || emailData.body;
-          
+
           // Update metadata if API provides more complete info
           if (!from && emailData.from) from = emailData.from;
           if (!to && emailData.to) to = emailData.to;
           if (!subject && emailData.subject) subject = emailData.subject;
           if (emailData.headers) headers = { ...headers, ...emailData.headers };
-          
+
         } catch (error) {
           console.error('❌ Failed to fetch email content from Resend API:', error.message);
           // Continue with metadata only - might still be able to process
@@ -263,25 +285,25 @@ app.post('/api/webhook/email', express.raw({ type: 'application/json', limit: '1
       text = body.text;
       headers = body.headers || {};
     }
-    
+
     console.log('From:', from);
     console.log('To:', to);
     console.log('Subject:', subject);
     console.log('Headers:', headers ? Object.keys(headers).join(', ') : 'none');
     console.log('Body length:', text ? text.length : 0, 'chars, HTML length:', html ? html.length : 0, 'chars');
-    
+
     // Validate email has content
     if (!text && !html) {
       console.warn('⚠️ Email has no body content (text or HTML) - skipping');
       console.log('📦 Event type:', body.type || 'unknown');
       return res.status(200).json({ message: 'Email has no body content, skipping' });
     }
-    
+
     // SECURITY LAYER 2: Verify email is sent to dedicated edit address
     // Hostinger setup: All aliases (including edit@aimuseum.se) funnel through admin@aimuseum.se
     const editEmailAddress = process.env.EDIT_EMAIL_ADDRESS || 'edit@aimuseum.se';
     const finalMailbox = process.env.EDIT_FINAL_MAILBOX || 'admin@aimuseum.se'; // All Hostinger aliases forward here
-    
+
     // Extract recipient from various possible fields
     // Handle both string and object formats
     let recipientEmail;
@@ -292,11 +314,11 @@ app.post('/api/webhook/email', express.raw({ type: 'application/json', limit: '1
     } else {
       recipientEmail = to?.email || to?.address || to;
     }
-    
+
     // Check headers for original recipient (Hostinger preserves original "to" in headers)
     const originalTo = headers?.['x-original-to'] || headers?.['envelope-to'] || headers?.['x-envelope-to'] || headers?.['x-forwarded-to'];
     const toHeader = headers?.['to'];
-    
+
     // Collect all possible recipient addresses
     const allRecipients = [
       recipientEmail,
@@ -309,21 +331,21 @@ app.post('/api/webhook/email', express.raw({ type: 'application/json', limit: '1
       const emailMatch = String(e).match(/<?([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})>?/);
       return emailMatch ? emailMatch[1].toLowerCase() : String(e).toLowerCase();
     });
-    
+
     // Normalize email addresses for comparison
     const editEmailLower = editEmailAddress.toLowerCase();
     const finalMailboxLower = finalMailbox.toLowerCase();
-    
+
     // Check if email was originally sent to edit address OR arrived at final mailbox
     // Since Hostinger funnels all aliases to admin@aimuseum.se, we check headers for original recipient
     const isEditAddress = allRecipients.some(r => r.includes(editEmailLower));
     const isFinalMailbox = allRecipients.some(r => r.includes(finalMailboxLower));
-    
+
     // Allow if:
     // 1. Original recipient was edit@aimuseum.se (check headers), OR
     // 2. Email arrived at admin@aimuseum.se AND we're expecting alias forwarding
     const isValidRecipient = isEditAddress || (isFinalMailbox && editEmailLower !== finalMailboxLower);
-    
+
     if (!isValidRecipient) {
       console.log('❌ Email not sent to edit address or final mailbox');
       console.log('  Recipients found:', allRecipients);
@@ -333,39 +355,39 @@ app.post('/api/webhook/email', express.raw({ type: 'application/json', limit: '1
       console.log('  Headers:', JSON.stringify(headers, null, 2));
       return res.status(403).json({ error: 'Email must be sent to dedicated edit address' });
     }
-    
+
     if (isEditAddress) {
       console.log('✅ Email sent to edit address (original recipient):', editEmailLower);
     } else if (isFinalMailbox) {
       console.log('✅ Email sent to final mailbox (Hostinger alias forwarding):', finalMailboxLower);
       console.log('  Original recipients in headers:', allRecipients.filter(r => r.includes(editEmailLower)));
     }
-    
+
     // SECURITY LAYER 3: Check if sender is in allowed list
     const allowedEmails = (process.env.ALLOWED_EDITOR_EMAILS || '').split(',').map(e => e.trim().toLowerCase()).filter(Boolean);
     const senderEmail = (from?.email || from?.address || from || '').toLowerCase();
-    
+
     if (!allowedEmails.length) {
       console.error('❌ ALLOWED_EDITOR_EMAILS not configured - rejecting all requests');
       return res.status(500).json({ error: 'Server configuration error' });
     }
-    
+
     if (!allowedEmails.includes(senderEmail)) {
       console.log('❌ Unauthorized sender:', senderEmail, 'Allowed:', allowedEmails);
       return res.status(403).json({ error: 'Unauthorized sender' });
     }
     console.log('✅ Sender authorized:', senderEmail);
-    
+
     // SECURITY LAYER 4: Require secret token in subject or body
     const requiredToken = process.env.EDIT_SECRET_TOKEN;
     const emailBody = text || stripHtml(html);
     const subjectLower = (subject || '').toLowerCase();
     const bodyLower = emailBody.toLowerCase();
-    
+
     if (requiredToken) {
       const tokenInSubject = subjectLower.includes(requiredToken.toLowerCase());
       const tokenInBody = bodyLower.includes(requiredToken.toLowerCase());
-      
+
       if (!tokenInSubject && !tokenInBody) {
         console.log('❌ Secret token not found in email');
         return res.status(403).json({ error: 'Secret token required' });
@@ -374,36 +396,33 @@ app.post('/api/webhook/email', express.raw({ type: 'application/json', limit: '1
     } else {
       console.warn('⚠️ EDIT_SECRET_TOKEN not set - token verification disabled');
     }
-    
-    // Extract the edit request from email body
-    const editRequest = extractEditRequest(emailBody);
-    
-    if (!editRequest) {
-      console.log('❌ Could not parse edit request');
-      return res.status(400).json({ error: 'Invalid format' });
+
+    // Fetch all content from the database
+    const allContent = await mailpoxAdapter.fetchAllContent(pgPool);
+
+    // Use Mailpox to process the edit
+    const analysisResult = await mailpox.processEdit(allContent, emailBody);
+
+    console.log('🤖 Mailpox Analysis:', analysisResult);
+
+    // Apply the edits to the database
+    for (const change of analysisResult.changes) {
+      if (change.matchFound && change.confidence >= 0.7) {
+        await mailpoxAdapter.applyEdit(pgPool, change);
+      }
     }
-    
-    console.log('📝 Edit request:', editRequest);
-    
-    // Use AI to understand what to edit
-    const analysisResult = await analyzeEditWithAI(editRequest);
-    
-    console.log('🤖 AI Analysis:', analysisResult);
-    
-    // Apply the edit to database
-    await applyEdit(analysisResult);
-    
+
     // Trigger rebuild if needed
     if (process.env.TRIGGER_REBUILD === 'true') {
       console.log('🔄 Triggering rebuild...');
       // Add your rebuild logic here (e.g., webhook to trigger npm run build)
     }
-    
+
     // Send confirmation email back
     await sendConfirmationEmail(senderEmail, analysisResult);
-    
+
     res.json({ success: true, message: 'Edit applied' });
-    
+
   } catch (error) {
     console.error('❌ Error processing email:', error);
     res.status(500).json({ error: error.message });
@@ -416,17 +435,17 @@ function verifyResendSignature(payload, signature, secret) {
     // Resend uses HMAC-SHA256 for webhook signatures
     // Format: timestamp,hash
     const [timestamp, hash] = signature.split(',');
-    
+
     if (!timestamp || !hash) {
       return false;
     }
-    
+
     // Create expected signature
     const expectedSignature = crypto
       .createHmac('sha256', secret)
       .update(timestamp + '.' + payload.toString())
       .digest('hex');
-    
+
     // Constant-time comparison to prevent timing attacks
     return crypto.timingSafeEqual(
       Buffer.from(hash),
@@ -444,162 +463,18 @@ function stripHtml(html) {
   return html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
 }
 
-// Helper: Extract edit request from email
-function extractEditRequest(emailBody) {
-  // Look for [key] markers like: [page.home.hero.title]
-  const sectionMatch = emailBody.match(/\[([^\]]+)\]/);
-  
-  if (sectionMatch) {
-    const key = sectionMatch[1];
-    // Extract content between [key] and [/key] or end of message
-    const contentMatch = emailBody.match(/\[([^\]]+)\]\s*([\s\S]*?)\s*(?:\[\/\1\]|$)/);
-    
-    if (contentMatch) {
-      return {
-        key: contentMatch[1],
-        newContent: contentMatch[2].trim(),
-        rawEmail: emailBody
-      };
-    }
-  }
-  
-  // Fallback: treat entire email as natural language request
-  return {
-    key: null,
-    newContent: null,
-    rawEmail: emailBody
-  };
-}
-
-// Fetch current content from database
-async function fetchCurrentContent() {
-  if (!pgPool) {
-    throw new Error('Database not configured');
-  }
-  const client = await pgPool.connect();
-  try {
-    const result = await client.query(
-      'SELECT key, lang, body FROM text_snippets ORDER BY key, lang'
-    );
-    return result.rows;
-  } finally {
-    client.release();
-  }
-}
-
-// AI analysis function
-async function analyzeEditWithAI(editRequest) {
-  const { key, newContent, rawEmail } = editRequest;
-  
-  // Fetch current content from database
-  const currentContent = await fetchCurrentContent();
-  
-  // Format current content for AI
-  const contentSummary = currentContent.slice(0, 50).map(row => 
-    `${row.key} (${row.lang}): "${row.body.substring(0, 60)}..."`
-  ).join('\n');
-  
-  const prompt = `You are helping update the Museum of Artificial Intelligence website content.
-
-Current database content (showing first 50 entries):
-${contentSummary}
-
-User's edit request from email:
-${rawEmail}
-
-${key ? `User specified key: ${key}` : 'No key provided - you need to identify which key to edit'}
-${newContent ? `New content provided:\n${newContent}` : 'User gave instructions - you need to determine what changes to make'}
-
-The database uses this schema:
-- Table: text_snippets
-- Columns: key (TEXT), lang (TEXT), body (TEXT)
-- Example keys: "page.home.hero.title", "page.about.intro.text"
-- Languages: "en" (English) or "sv" (Swedish)
-
-Analyze this request and return ONLY a valid JSON object (no markdown, no code blocks) with this exact structure:
-{
-  "key": "the database key (e.g., 'page.home.hero.title')",
-  "lang": "language code ('en' or 'sv')",
-  "newContent": "the exact text to update to",
-  "confidence": 0.95,
-  "reasoning": "brief explanation of your analysis"
-}`;
-
-  const message = await anthropic.messages.create({
-    model: 'claude-sonnet-4-20250514',
-    max_tokens: 1024,
-    messages: [{
-      role: 'user',
-      content: prompt
-    }]
-  });
-  
-  const responseText = message.content[0].text;
-  console.log('🤖 AI Raw Response:', responseText);
-  
-  // Extract JSON from response (handle markdown code blocks)
-  let jsonText = responseText;
-  const codeBlockMatch = responseText.match(/```(?:json)?\s*([\s\S]*?)\s*```/);
-  if (codeBlockMatch) {
-    jsonText = codeBlockMatch[1];
-  }
-  
-  const jsonMatch = jsonText.match(/\{[\s\S]*\}/);
-  if (!jsonMatch) {
-    throw new Error('AI did not return valid JSON');
-  }
-  
-  return JSON.parse(jsonMatch[0]);
-}
-
-// Apply edit to database
-async function applyEdit(analysis) {
-  if (!pgPool) {
-    throw new Error('Database not configured');
-  }
-  
-  const { key, lang, newContent } = analysis;
-  const client = await pgPool.connect();
-  
-  try {
-    // Check if entry exists
-    const existingResult = await client.query(
-      'SELECT body FROM text_snippets WHERE key = $1 AND lang = $2',
-      [key, lang]
-    );
-    
-    if (existingResult.rows.length > 0) {
-      // Update existing entry
-      await client.query(
-        'UPDATE text_snippets SET body = $1, updated_at = NOW() WHERE key = $2 AND lang = $3',
-        [newContent, key, lang]
-      );
-      console.log('✅ Updated existing entry:', key, lang);
-    } else {
-      // Insert new entry
-      await client.query(
-        'INSERT INTO text_snippets (key, lang, body, updated_at) VALUES ($1, $2, $3, NOW())',
-        [key, lang, newContent]
-      );
-      console.log('✅ Inserted new entry:', key, lang);
-    }
-  } finally {
-    client.release();
-  }
-}
-
 // Send confirmation email via Resend
 async function sendConfirmationEmail(recipientEmail, analysis) {
   const resendApiKey = process.env.RESEND_API_KEY;
-  
+
   if (!resendApiKey) {
     console.warn('⚠️ RESEND_API_KEY not set, skipping confirmation email');
     return;
   }
-  
+
   // Get your Resend email from env or use default
   const fromEmail = process.env.RESEND_FROM_EMAIL || 'edit@resend.dev';
-  
+
   const response = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: {
@@ -644,7 +519,7 @@ async function sendConfirmationEmail(recipientEmail, analysis) {
       `
     })
   });
-  
+
   if (!response.ok) {
     const errorText = await response.text();
     console.error('❌ Failed to send confirmation email:', errorText);
@@ -660,7 +535,7 @@ app.get('/api/webhook/email/test', (req, res) => {
   const finalMailbox = process.env.EDIT_FINAL_MAILBOX || 'admin@aimuseum.se';
   const hasSecretToken = !!process.env.EDIT_SECRET_TOKEN;
   const hasWebhookSecret = !!process.env.RESEND_WEBHOOK_SECRET;
-  
+
   res.json({
     status: 'ready',
     security: {
@@ -686,9 +561,6 @@ app.get('/api/webhook/email/test', (req, res) => {
     ].filter(Boolean)
   });
 });
-
-// Static for admin UI and slide previews
-app.use('/slides-assets', express.static(SLIDES_DIR));
 
 // Protect admin UI with basic authentication
 app.use('/admin', basicAuth({
