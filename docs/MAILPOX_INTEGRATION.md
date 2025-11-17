@@ -41,6 +41,15 @@ EXPORT_DB_AFTER_EDIT=true   # Runs `npm run export-db` after each edit (set fals
 WEBHOOK_TEST_MODE=false     # Set to true to bypass signature verification
 ```
 
+### Demo Page Seed Script
+The Mailpox demo page in `public/pages/demo.html` mirrors our production layouts. Whenever the layout changes (new cards, timeline rows, etc.) run:
+
+```bash
+npm run seed:demo-texts
+```
+
+This script parses the demo page HTML and upserts all `[data-key="demo.*"]` entries into the `text_snippets` table so the AI has real content to reference when selecting keys. Follow it with `npm run export-db` (or let the webhook’s auto-export handle it) to refresh `public/db/texts.json`.
+
 ### Resend Configuration
 1. Create a Resend account and verify your domain
 2. Set up email receiving for your domain

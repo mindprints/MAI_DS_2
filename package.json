@@ -15,6 +15,7 @@
     "build:pages": "node tools/build-pages.js",
     "admin": "node admin/server.js",
     "export-db": "node tools/export-db-content.js",
+    "seed:demo-texts": "node tools/seed-demo-texts.js",
     "check-db": "node tools/db_reader.js",
     "test-db": "node test-db-connection.js",
     "setup-env": "node setup-env.js",
