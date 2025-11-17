@@ -3,13 +3,15 @@
 const fs = require('fs');
 const path = require('path');
 
-// Ensure required directories exist
+// Ensure required directories exist for build and runtime.
+// The 'admin/static' directory is not checked here because it is part of the
+// source code and is expected to always exist. The build process copies its
+// contents to the 'public/admin' directory.
 const requiredDirs = [
   'src/content/pages',
-  'src/content/encyclopedia', 
+  'src/content/encyclopedia',
   'src/site/images/slide',
   'public',
-  'admin/static'
 ];
 
 console.log('Checking required directories...');
@@ -20,13 +22,6 @@ for (const dir of requiredDirs) {
   } else {
     console.log(`✓ Directory exists: ${dir}`);
   }
-}
-
-// Check if admin/static/index.html exists
-const adminIndexPath = 'admin/static/index.html';
-if (!fs.existsSync(adminIndexPath)) {
-  console.error(`ERROR: Missing admin UI file: ${adminIndexPath}`);
-  process.exit(1);
 }
 
 // Set Node.js memory limits for container environment
