@@ -8,6 +8,7 @@ const { Pool } = require("pg");
 const { handleSendEmail } = require("../api/send-email-express");
 
 const ROOT = path.resolve(__dirname, "..");
+const SLIDES_DIR = path.join(ROOT, "src", "site", "images", "slide");
 
 const app = express();
 app.use(express.json({ limit: "10mb" }));
