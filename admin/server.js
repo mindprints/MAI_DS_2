@@ -28,29 +28,18 @@ app.use((req, res, next) => {
   next();
 });
 
-// Serve the main built site from public directory FIRST
-// This must come before API routes to avoid conflicts
-app.use(
-  express.static(path.join(ROOT, "public"), {
-    setHeaders: (res, filePath) => {
-      // Set correct MIME types for CSS files
-      if (filePath.endsWith(".css")) {
-        res.setHeader("Content-Type", "text/css; charset=utf-8");
-      }
-      // Set correct MIME types for JS files
-      if (filePath.endsWith(".js")) {
-        res.setHeader("Content-Type", "application/javascript; charset=utf-8");
-      }
-      // Set correct MIME types for HTML files
-      if (filePath.endsWith(".html")) {
-        res.setHeader("Content-Type", "text/html; charset=utf-8");
-      }
-    },
-    // Ensure proper MIME type detection
-    dotfiles: "ignore",
-    index: ["index.html"],
-  }),
-);
+// Serve the main built site from public directory
+app.use(express.static(path.join(ROOT, "public")));
+
+// Specific route for demo page to ensure it's accessible
+app.get("/pages/demo.html", (req, res) => {
+  const demoPath = path.join(ROOT, "public", "pages", "demo.html");
+  if (require("fs").existsSync(demoPath)) {
+    res.sendFile(demoPath);
+  } else {
+    res.status(404).send("Demo page not found");
+  }
+});
 
 function createPgPool() {
   const url = process.env.DATABASE_URL;
