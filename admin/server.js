@@ -120,6 +120,9 @@ process.on('SIGTERM', async () => {
 app.post('/api/send-email', handleSendEmail);
 app.options('/api/send-email', handleSendEmail);
 
+// Mailpox simulator endpoint
+app.post('/api/mailpox/simulate', async (req, res) => {
+  try {
 // Mailpox content endpoint
 app.get('/api/mailpox/content', async (req, res) => {
   try {

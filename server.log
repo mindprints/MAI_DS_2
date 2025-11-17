@@ -1,0 +1,23 @@
+
+> mai_ds_2@1.0.0 start
+> node start-server.js
+
+Checking required directories...
+✓ Directory exists: src/content/pages
+✓ Directory exists: src/content/encyclopedia
+✓ Directory exists: src/site/images/slide
+✓ Directory exists: public
+Node.js version: v22.21.1
+Memory limit: --max-old-space-size=512
+Starting admin server...
+Attempting database connection with config: {
+  host: 'from connection string',
+  database: 'from connection string',
+  user: 'from connection string',
+  ssl: false
+}
+✅ Anthropic SDK loaded - email editing enabled
+Admin running on http://localhost:5179
+Main site available at http://localhost:5179
+Admin interface at http://localhost:5179/admin
+Database connection successful
