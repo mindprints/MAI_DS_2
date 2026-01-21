@@ -270,5 +270,20 @@ textarea:focus-visible {
     box-shadow: 0 8px 24px rgba(0,0,0,.35);
 }
 
+/* Eventbrite CTA button */
+.cta-eventbrite {
+    display: inline-block;
+    background: #ff5a5f;
+    color: #fff;
+    padding: 12px 18px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: transform 0.2s ease;
+}
+.cta-eventbrite:hover {
+    transform: scale(1.05);
+}
+
 
 
