@@ -56,7 +56,7 @@ const template = (lang, event) => `<!DOCTYPE html>
     <div class="glass-card p-4 rounded-xl">
       <h3 class="text-sm font-semibold text-slate-400 mb-3 uppercase tracking-wide">${lang === 'en' ? 'Other Events' : 'Andra evenemang'}</h3>
       <div class="flex flex-wrap gap-3">
-        <a href="ai-ethics-symposium.html" class="px-4 py-2 bg-slate-700/50 hover:bg-slate-600/50 text-slate-300 hover:text-white rounded-full text-sm font-medium transition">${lang === 'en' ? 'AI Ethics Symposium' : 'Symposium om AI-etik'}</a>
+        <a href="vibe-coding-engineering.html" class="px-4 py-2 bg-slate-700/50 hover:bg-slate-600/50 text-slate-300 hover:text-white rounded-full text-sm font-medium transition">${lang === 'en' ? 'Vibe Coding to Vibe Engineering' : 'Vibe Coding till Vibe Engineering'}</a>
         ${event.slug === 'robotics-workshop' ? `<span class="px-4 py-2 bg-cyan-600 text-white rounded-full text-sm font-medium">${lang === 'en' ? 'Robotics Workshop' : 'Robotikworkshop'}</span>` : `<a href="robotics-workshop.html" class="px-4 py-2 bg-slate-700/50 hover:bg-slate-600/50 text-slate-300 hover:text-white rounded-full text-sm font-medium transition">${lang === 'en' ? 'Robotics Workshop' : 'Robotikworkshop'}</a>`}
         ${event.slug === 'future-of-creative-ai' ? `<span class="px-4 py-2 bg-violet-600 text-white rounded-full text-sm font-medium">${lang === 'en' ? 'Future of Creative AI' : 'Framtiden för kreativ AI'}</span>` : `<a href="future-of-creative-ai.html" class="px-4 py-2 bg-slate-700/50 hover:bg-slate-600/50 text-slate-300 hover:text-white rounded-full text-sm font-medium transition">${lang === 'en' ? 'Future of Creative AI' : 'Framtiden för kreativ AI'}</a>`}
         ${event.slug === 'ai-in-medicine' ? `<span class="px-4 py-2 bg-pink-600 text-white rounded-full text-sm font-medium">${lang === 'en' ? 'AI in Medicine' : 'AI inom medicin'}</span>` : `<a href="ai-in-medicine.html" class="px-4 py-2 bg-slate-700/50 hover:bg-slate-600/50 text-slate-300 hover:text-white rounded-full text-sm font-medium transition">${lang === 'en' ? 'AI in Medicine' : 'AI inom medicin'}</a>`}
@@ -103,10 +103,10 @@ if (!fs.existsSync(svDir)) fs.mkdirSync(svDir, { recursive: true });
 events.forEach(event => {
   const enPath = path.join(enDir, `${event.slug}.html`);
   const svPath = path.join(svDir, `${event.slug}.html`);
-  
+
   fs.writeFileSync(enPath, template('en', event));
   fs.writeFileSync(svPath, template('sv', event));
-  
+
   console.log(`Created ${event.slug} in both languages`);
 });
 
