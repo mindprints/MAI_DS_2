@@ -7,17 +7,24 @@ function load(partial) {
 
 function getDocuments() {
   const docsDir = path.join(__dirname, '../../../docs/association-docs-for-anual-meeting');
+
+  // Gracefully handle missing directory (e.g., in Docker builds where docs may not be present)
+  if (!fs.existsSync(docsDir)) {
+    console.warn(`[meeting.js] Warning: Documents directory not found at ${docsDir}. Skipping document generation.`);
+    return [];
+  }
+
   const files = fs.readdirSync(docsDir).filter(file => file.endsWith('.pdf'));
-  
+
   return files.map(filename => {
     // Extract meaningful information from filename
     const nameWithoutExt = filename.replace('.pdf', '');
-    
+
     // Create document metadata based on filename patterns
     let category = 'Document';
     let title = nameWithoutExt;
     let description = 'Official document';
-    
+
     if (filename.includes('Protokoll')) {
       category = 'Minutes';
       if (filename.includes('styrelsemöte')) {
@@ -65,7 +72,7 @@ function getDocuments() {
       title = 'First AI Museum Meeting';
       description = 'August 11 - Meeting at Moumo';
     }
-    
+
     return {
       filename,
       category,
@@ -88,7 +95,7 @@ function generateDocumentCards(documents, assetsPrefix) {
     'First Meeting': 'bg-indigo-900 text-indigo-300',
     'Document': 'bg-gray-900 text-gray-300'
   };
-  
+
   return documents.map(doc => {
     const colorClass = categoryColors[doc.category] || 'bg-gray-900 text-gray-300';
     return `
@@ -106,7 +113,7 @@ function generateDocumentCards(documents, assetsPrefix) {
 }
 
 function generateInfoPointsHtml(infoPoints) {
-  return infoPoints.map(point => 
+  return infoPoints.map(point =>
     `<li class="flex items-start space-x-3">
       <i class="fa-solid fa-check text-emerald-400 mt-1"></i>
       <span>${point}</span>
@@ -127,7 +134,7 @@ function generateSwedishDocumentCards(documents, assetsPrefix) {
     'First Meeting': 'bg-indigo-900 text-indigo-300',
     'Document': 'bg-gray-900 text-gray-300'
   };
-  
+
   // Swedish translations
   const swedishCategories = {
     'Minutes': 'Protokoll',
@@ -141,7 +148,7 @@ function generateSwedishDocumentCards(documents, assetsPrefix) {
     'First Meeting': 'Första möte',
     'Document': 'Dokument'
   };
-  
+
   const swedishTitles = {
     'Board Meeting Minutes August 2025': 'Styrelsemöte Protokoll Augusti 2025',
     'Board Meeting Minutes 2023-1': 'Styrelsemöte Protokoll 2023-1',
@@ -156,7 +163,7 @@ function generateSwedishDocumentCards(documents, assetsPrefix) {
     'Organization Number Application': 'Ansökan om organisationsnummer',
     'First AI Museum Meeting': 'AI-museens första möte'
   };
-  
+
   const swedishDescriptions = {
     'Latest board meeting protocol': 'Senaste styrelsemötesprotokoll',
     'Meeting protocol from board session': 'Mötesprotokoller från styrelsemöte',
@@ -171,13 +178,13 @@ function generateSwedishDocumentCards(documents, assetsPrefix) {
     'Official registration documentation': 'Officiell registreringsdokumentation',
     'August 11 - Meeting at Moumo': '11 augusti – Möte på Moumo'
   };
-  
+
   return documents.map(doc => {
     const colorClass = categoryColors[doc.category] || 'bg-gray-900 text-gray-300';
     const swedishCategory = swedishCategories[doc.category] || doc.category;
     const swedishTitle = swedishTitles[doc.title] || doc.title;
     const swedishDescription = swedishDescriptions[doc.description] || doc.description;
-    
+
     return `
         <!-- Document: ${doc.filename} -->
         <a href="${assetsPrefix}/documents/${doc.filename}" target="_blank" rel="noopener noreferrer" class="glass-card p-6 rounded-xl border border-slate-700 hover:border-cyan-400 hover:shadow-lg transition-all duration-300 flex flex-col">
