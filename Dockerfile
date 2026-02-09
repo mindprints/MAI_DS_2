@@ -19,3 +19,8 @@ COPY --from=build /app/dist /usr/share/nginx/html
 
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+}
