@@ -1,21 +1,21 @@
-FROM node:20-alpine
-
+# 1) Build stage
+FROM node:22-alpine AS build
 WORKDIR /app
 
-# install deps
 COPY package*.json ./
 RUN npm ci
 
-# app source
 COPY . .
+RUN npm run build
 
-# if you have a build step, keep it; otherwise this will no-op
-RUN npm run build || true
+# 2) Static serve stage
+FROM nginx:stable-alpine
 
-# expose the port the runtime will use
-ENV PORT=3000
-EXPOSE 3000
+# SPA routing (React Router etc.)
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# at container start: export db then start Express admin server
-# Express serves both static site AND provides admin API endpoints
-CMD ["sh", "-lc", "npm run export-db && npm start"]
+# Vite: dist  (if CRA, change to /app/build)
+COPY --from=build /app/dist /usr/share/nginx/html
+
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
