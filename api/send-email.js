@@ -43,32 +43,47 @@ function json(body, status = 200, extraHeaders = {}) {
   });
 }
 
+function normalizeOrigin(urlStr) {
+  if (!urlStr) return '';
+  const trimmed = urlStr.trim().replace(/\/+$/, '');
+  try {
+    return new URL(trimmed).origin;
+  } catch {
+    return trimmed;
+  }
+}
+
 function getAllowedOrigins() {
   const raw = (process.env.ALLOWED_ORIGINS || '').trim();
   if (!raw) return [];
   return raw
     .split(',')
-    .map((s) => s.trim())
+    .map(normalizeOrigin)
     .filter(Boolean);
 }
 
 function originFromHeaders(req) {
   const origin = req.headers.get('origin');
-  if (origin) return origin;
+  if (origin) return normalizeOrigin(origin);
   const ref = req.headers.get('referer') || '';
-  try {
-    return ref ? new URL(ref).origin : '';
-  } catch {
-    return '';
-  }
+  return normalizeOrigin(ref);
 }
 
 function isOriginAllowed(req) {
   const allowed = getAllowedOrigins();
   if (allowed.length === 0) return true; // allow all if not configured
   const origin = originFromHeaders(req);
-  return origin && allowed.includes(origin);
+  const allowedMatch = origin && allowed.includes(origin);
+  
+  if (!allowedMatch) {
+    console.warn('Blocked request: Origin not allowed', {
+      incomingOrigin: origin,
+      allowedOrigins: allowed
+    });
+  }
+  return allowedMatch;
 }
+
 
 function buildCorsHeaders(req) {
   const origin = originFromHeaders(req);

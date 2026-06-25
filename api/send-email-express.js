@@ -60,31 +60,45 @@ function rateLimit(ip) {
   return recent.length <= LIMIT;
 }
 
+function normalizeOrigin(urlStr) {
+  if (!urlStr) return '';
+  const trimmed = urlStr.trim().replace(/\/+$/, '');
+  try {
+    return new URL(trimmed).origin;
+  } catch {
+    return trimmed;
+  }
+}
+
 function getAllowedOrigins() {
   const raw = (process.env.ALLOWED_ORIGINS || '').trim();
   if (!raw) return [];
   return raw
     .split(',')
-    .map((s) => s.trim())
+    .map(normalizeOrigin)
     .filter(Boolean);
 }
 
 function getOrigin(req) {
   const origin = req.headers['origin'] || req.headers['referer'];
-  if (!origin) return '';
-  try {
-    return new URL(origin).origin;
-  } catch {
-    return origin;
-  }
+  return normalizeOrigin(origin);
 }
 
 function isOriginAllowed(req) {
   const allowed = getAllowedOrigins();
   if (allowed.length === 0) return true; // allow all if not configured
   const origin = getOrigin(req);
-  return origin && allowed.includes(origin);
+  const allowedMatch = origin && allowed.includes(origin);
+  
+  if (!allowedMatch) {
+    console.warn('Blocked request: Origin not allowed', {
+      incomingOrigin: origin,
+      allowedOrigins: allowed
+    });
+  }
+  return allowedMatch;
 }
+
 
 function buildCorsHeaders(req) {
   const origin = getOrigin(req);
