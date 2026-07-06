@@ -134,7 +134,8 @@ Cover a mix of what actually happened (skip categories with no real news): resea
 
 Requirements:
 - Not overly technical: explain significance in plain language.
-- 3-6 items. Lead with the most important. Attribute claims to their sources by name in the text (e.g. "according to Reuters"), but do not include raw URLs.
+- 3-6 items, ONE <p> per item. Start each item's paragraph with a short bold lead-in naming the story, e.g. <p><strong>EU approves AI liability rules.</strong> Rest of the item…</p>
+- Lead with the most important. Attribute claims to their sources by name in the text (e.g. "according to Reuters"), but do not include raw URLs.
 - Title format: "AI news, ${readable}: " / "AI-nytt, ${readable}: " followed by a short hook about the lead item.
 - Neutral tone; distinguish announcements from confirmed facts.
 

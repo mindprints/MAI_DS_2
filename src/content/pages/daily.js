@@ -162,7 +162,7 @@ function renderPostContent(post, locale) {
         <span class="${TYPE_META[post.type].badge} text-xs font-semibold px-2 py-1 rounded">${s.typeLabel[post.type].toUpperCase()}</span>
         <span class="text-slate-400 text-sm">${post.date}</span>
       </div>
-      <article class="prose-invert space-y-4 text-slate-300 daily-article">
+      <article class="prose-invert space-y-4 text-slate-300 daily-article daily-article-${post.type}">
 ${html}
       </article>
       <div class="mt-10">
