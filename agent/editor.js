@@ -156,7 +156,7 @@ async function runEditInstruction(instruction, { onProgress } = {}) {
   for (let turn = 0; turn < MAX_TURNS; turn++) {
     const response = await client.messages.create({
       model: config.model,
-      max_tokens: 8000,
+      max_tokens: 16000,
       system: SYSTEM,
       tools: TOOLS,
       messages,

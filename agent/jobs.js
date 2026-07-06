@@ -86,7 +86,9 @@ Reply with ONLY a JSON object: {"title": "...", "html": "..."} where html follow
 
   const response = await client.messages.create({
     model: config.model,
-    max_tokens: 4000,
+    // Adaptive thinking is on by default and counts against max_tokens,
+    // so leave generous headroom or the reply is all thinking and no text.
+    max_tokens: 16000,
     messages: [{ role: 'user', content: prompt }],
   });
   const text = response.content.filter((b) => b.type === 'text').map((b) => b.text).join('\n');
@@ -120,8 +122,8 @@ After your research, reply with ONLY a JSON object: {"title": "...", "html": "..
 
   const response = await client.messages.create({
     model: config.model,
-    max_tokens: 6000,
-    tools: [{ type: 'web_search_20250305', name: 'web_search', max_uses: 8 }],
+    max_tokens: 16000,
+    tools: [{ type: 'web_search_20260209', name: 'web_search', max_uses: 8 }],
     messages: [{ role: 'user', content: prompt }],
   });
   const text = response.content.filter((b) => b.type === 'text').map((b) => b.text).join('\n');
