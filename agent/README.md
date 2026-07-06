@@ -30,8 +30,8 @@ Plain message → treated as an edit instruction ("Change the hero text…").
 
 - `/status` — branch, last commit, pending changes, job times
 - `/diff` — working-tree diff stat
-- `/ontoday` — run the on-this-day job now
-- `/news` — run the AI news job now
+- `/ontoday [event]` — run the on-this-day job now; with an event, regenerate today's essay about it
+- `/news [topic]` — run the AI news job now; with a topic, regenerate today's briefing with it as lead story
 - `/approve` — merge preview branch into main (if enabled)
 - `/help`
 

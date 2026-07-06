@@ -4,10 +4,11 @@
   "description": "Website for the Museum of Artificial Intelligence (aimuseum.se)",
   "scripts": {
     "start": "node start-server.js",
-    "build": "npm run build:static && npm run build:pages && npm run build:css",
+    "build": "npm run build:static && npm run build:pages && npm run build:css && npm run build:daily",
     "build:static": "node tools/build-static.js",
     "build:pages": "node tools/build-pages.js",
     "build:css": "postcss src/tailwind.css -o public/assets/css/tailwind.css --env production",
+    "build:daily": "node tools/inject-daily.js",
     "serve": "node server/server.js",
     "optimize": "node tools/optimize-images.js src/site/images/slide",
     "generate:slides": "node tools/generate-slides-manifest.js",

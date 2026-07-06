@@ -9,10 +9,8 @@ RUN npm ci
 # app source
 COPY . .
 
-# Build the application - ensure CSS is generated and static files are copied
-RUN npm run build:static && \
-    npm run build:css && \
-    npm run build:pages
+# Build the application (static copy, pages, CSS, daily-content injection)
+RUN npm run build
 
 # expose the port the runtime will use
 ENV PORT=3000

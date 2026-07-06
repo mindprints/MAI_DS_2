@@ -28,10 +28,13 @@
         .clients-list > li:nth-child(odd) { color: rgb(241 245 249); /* slate-100 */ }
         .clients-list > li:nth-child(even) { color: rgb(148 163 184); /* slate-400 */ }
         /* Monospace title with outline for brand */
-        .brand-outline { 
+        .brand-outline {
             -webkit-text-stroke: 1px rgba(2, 6, 23, 0.8); /* slate-950 */
             text-shadow: 0 1px 2px rgba(2, 6, 23, 0.6);
         }
+        /* Pulse for the daily news card's live dot */
+        .daily-live-dot { animation: dailyPulse 2.4s ease-in-out infinite; }
+        @keyframes dailyPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
     </style>
 </head>
 <body>
@@ -52,7 +55,6 @@
                         <a href="sv/index.html" class="opacity-80 hover:opacity-100" title="Växla till svenska" aria-label="Switch to Swedish">
                             <span class="fi fi-se text-2xl"></span>
                         </a>
-                        <a href="pages/encyclopedia/index.html" class="opacity-80 hover:opacity-100 text-slate-300 text-sm ml-4" title="Encyclopedia">Encyclopedia</a>
                     </div>
                 </div>
                 
@@ -66,7 +68,6 @@
                         <a href="sv/index.html" class="opacity-80 hover:opacity-100" title="Svenska">
                             <span class="fi fi-se text-2xl"></span>
                         </a>
-                        <a href="pages/encyclopedia/index.html" class="opacity-80 hover:opacity-100 text-slate-300 text-sm" title="Encyclopedia">Encyclopedia</a>
                     </div>
                 </div>
                 
@@ -88,17 +89,23 @@
                 </h1>
                 <p class="text-xl text-slate-300 mb-8 max-w-3xl">Artificial intelligence is the most significant invention in human history. We make AI accessible through qualified lectures, seminars, and hands-on workshops — for experienced professionals and curious beginners alike. Prepare for an AI-driven future with our expert guidance.</p>
             </div>
-            <!-- rotating image section -->
+            <!-- Daily rotating image (injected at build by tools/inject-daily.js) -->
             <div class="flex-1 flex justify-center mt-8 md:mt-0">
-                <div id="slideshow-container" class="relative w-64 h-96 md:w-80 md:h-[500px]">
-                    <!-- Slideshow cards will be dynamically generated here -->
-                </div>
+                <!-- DAILY_IMAGE -->
             </div>
         </div>
         
         
         <div class="ai-neural"></div>
     </section>
+
+    <!-- Daily AI content (injected at build by tools/inject-daily.js) -->
+    <section class="pb-14 pt-2">
+        <div class="container mx-auto px-4">
+<!-- DAILY_CARDS -->
+        </div>
+    </section>
+
     <!-- Featured Exhibits Section -->
     <section class="py-20 lg:py-16 xl:py-14 2xl:pt-10 2xl:pb-12">
         <div class="container mx-auto px-4">

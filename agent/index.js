@@ -33,7 +33,9 @@ Commands:
 /status — branch, last commit, pending changes
 /diff — diff stat of the working tree
 /ontoday — run the "on this day" essay job now
+/ontoday <event> — regenerate today's essay about a specific anniversary
 /news — run the AI news summary job now
+/news <topic> — regenerate today's briefing with <topic> as the lead story
 /approve — merge the preview branch into main (if enabled)
 /help — this message
 
@@ -59,12 +61,12 @@ async function handleEdit(msg, instruction) {
   console.log(`Edit done in ${turns} turn(s); commit: ${commit ? 'yes' : 'no'}`);
 }
 
-async function runJob(msg, name, fn) {
-  await telegram.sendMessage(msg.chat.id, `Running ${name}…`);
+async function runJob(msg, name, fn, topic = '') {
+  await telegram.sendMessage(msg.chat.id, topic ? `Running ${name} (lead: ${topic})…` : `Running ${name}…`);
   await gitrepo.pull().catch(() => {});
-  const result = await fn({ force: false });
+  const result = await fn({ force: false, topic });
   if (result.skipped) {
-    await telegram.sendMessage(msg.chat.id, `Skipped: ${result.reason}. (Delete today's file to regenerate.)`);
+    await telegram.sendMessage(msg.chat.id, `Skipped: ${result.reason}. (Add a topic, e.g. "/news <topic>", to regenerate today's post.)`);
   } else {
     await telegram.sendMessage(msg.chat.id, `Published: ${result.title}\n${result.link}`);
   }
@@ -98,10 +100,10 @@ async function onMessage(msg) {
     } else if (text === '/diff') {
       const d = await gitrepo.diffStat();
       await telegram.sendMessage(msg.chat.id, d || 'Working tree clean.');
-    } else if (text === '/ontoday') {
-      await runJob(msg, 'on-this-day', jobs.runOnThisDay);
-    } else if (text === '/news') {
-      await runJob(msg, 'ai-news', jobs.runAiNews);
+    } else if (text === '/ontoday' || text.startsWith('/ontoday ')) {
+      await runJob(msg, 'on-this-day', jobs.runOnThisDay, text.slice('/ontoday'.length).trim());
+    } else if (text === '/news' || text.startsWith('/news ')) {
+      await runJob(msg, 'ai-news', jobs.runAiNews, text.slice('/news'.length).trim());
     } else if (text === '/approve') {
       if (!config.allowApprove) {
         await telegram.sendMessage(msg.chat.id, '/approve is disabled (set AGENT_ALLOW_APPROVE=true to enable). Merge the branch on GitHub instead.');

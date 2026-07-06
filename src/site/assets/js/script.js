@@ -29,8 +29,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     let imageData = [];
     
 
-    // Get slideshow container
+    // Get slideshow container (absent on pages using the static daily image)
     const container = document.getElementById('slideshow-container');
+    if (!container) return;
 
     // Determine correct base path for images depending on current page location
     const imageBasePath = (() => {
