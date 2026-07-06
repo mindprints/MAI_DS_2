@@ -1,0 +1,49 @@
+require('dotenv').config();
+const path = require('path');
+
+function list(v) {
+  return (v || '')
+    .split(',')
+    .map((s) => s.trim())
+    .filter(Boolean);
+}
+
+const config = {
+  // Telegram
+  botToken: process.env.TELEGRAM_BOT_TOKEN || '',
+  chatId: process.env.TELEGRAM_CHAT_ID || '',
+  allowedUserIds: list(process.env.TELEGRAM_ALLOWED_USER_IDS),
+
+  // Anthropic
+  anthropicApiKey: process.env.ANTHROPIC_API_KEY || '',
+  model: process.env.ANTHROPIC_MODEL || 'claude-sonnet-5',
+
+  // Git / repo
+  repoDir: path.resolve(process.env.REPO_DIR || path.join(__dirname, '..')),
+  agentBranch: process.env.AGENT_BRANCH || 'preview/telegram-agent',
+  mainBranch: process.env.MAIN_BRANCH || 'main',
+  githubRepo: process.env.GITHUB_REPO || '', // e.g. mindprints/MAI_DS_2
+  githubToken: process.env.GITHUB_TOKEN || '',
+  gitUserName: process.env.GIT_USER_NAME || 'MAI Telegram Agent',
+  gitUserEmail: process.env.GIT_USER_EMAIL || 'agent@aimuseum.se',
+
+  // Behavior
+  allowApprove: process.env.AGENT_ALLOW_APPROVE === 'true',
+  previewUrl: process.env.PREVIEW_URL || '',
+  timezone: process.env.AGENT_TIMEZONE || 'Europe/Stockholm',
+  onThisDayTime: process.env.AGENT_ONTHISDAY_TIME || '07:30',
+  newsTime: process.env.AGENT_NEWS_TIME || '17:30',
+  runBuildCheck: process.env.AGENT_BUILD_CHECK !== 'false',
+};
+
+function assertRuntimeConfig() {
+  const missing = [];
+  if (!config.botToken) missing.push('TELEGRAM_BOT_TOKEN');
+  if (!config.anthropicApiKey) missing.push('ANTHROPIC_API_KEY');
+  if (config.allowedUserIds.length === 0) missing.push('TELEGRAM_ALLOWED_USER_IDS');
+  if (missing.length) {
+    throw new Error('Missing required environment variables: ' + missing.join(', '));
+  }
+}
+
+module.exports = { config, assertRuntimeConfig };

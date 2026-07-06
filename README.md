@@ -30,6 +30,7 @@ MAI_DS_2/
 |  |- optimize-images.js
 |- server/
 |  |- server.js             # Express server: static public/ + POST /api/send-email
+|- agent/                   # Telegram editing agent + daily content jobs (see agent/README.md)
 |- api/                     # Vercel serverless endpoints
 |  |- send-email.js         # EmailJS contact form endpoint (Vercel)
 |  |- send-email-express.js # Same handler for the Express server

@@ -63,7 +63,17 @@ invalid head/body document structure repaired. EmailJS contact flow
 untouched; owner switched EmailJS template recipients to direct Gmail
 addresses (July 2026) to bypass Hostinger forwarding blocks.
 
-## Phase 4 — `preview/telegram-agent` branch
+## Phase 4 — `preview/telegram-agent` branch (built July 2026, awaiting credentials)
+
+Implemented in `agent/` (see `agent/README.md` for setup and env vars):
+Telegram long-polling bot (allowlisted chat + user ids), Claude tool-use
+editing loop scoped to `src/` and `docs/`, git commit/push to the preview
+branch only, `/approve` merge gate (off by default), and the two daily jobs
+publishing English posts into `src/content/daily/` rendered at
+`pages/daily.html`. Remaining: create the Telegram bot, deploy as a second
+Dokploy app (`agent/Dockerfile`), point a preview deployment at the branch,
+set env vars. Bilingual (EN/SV) daily posts deferred; posts are EN-only for
+now.
 
 Runs on the Dokploy server (long-running bot process; Vercel Hobby cron is too
 limited). Vercel keeps serving stable production until promotion.
