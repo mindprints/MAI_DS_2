@@ -1,87 +1,84 @@
 # Museum of Artificial Intelligence Website
 
-> **Transition Notice**: This project is currently transitioning from database-backed admin editing to the Mailpox email-based editing system. The traditional admin interface has been removed.
+A modern, responsive website for the Museum of Artificial Intelligence
+(aimuseum.se) featuring interactive slideshows, smooth animations, and
+bilingual content (English/Swedish).
 
-A modern, responsive website for the Museum of Artificial Intelligence featuring interactive slideshows, smooth animations, and a professional design. The site supports bilingual content (English/Swedish) and is optimized for content management via email workflows.
+The site is static-first: all content is authored in the repository, built
+into `public/`, and served either by Vercel (static) or by a small Express
+server on Dokploy. There is no database and no admin interface.
+
+> Looking for the old editing experiments (database admin, GitHub-commit
+> admin, Mailpox email editing)? They were removed in July 2026. See
+> `docs/PLAN.md`; the code is preserved in the `archive/editing-experiments`
+> branch and the `pre-cleanup-2026-07` tag.
 
 ## Project Layout
 
 ```
 MAI_DS_2/
-|- docs/                    # Documentation and reference materials
-|  |- reference/            # Historical reports and snapshots
 |- src/
-|  |- site/                 # Source HTML, images, JS, and CSS authored by hand
-|  |- templates/            # Shared HTML templates used for localized pages
-|  |- content/              # Localized page data (e.g., about page strings)
+|  |- site/                 # Hand-authored HTML, images, JS, CSS (incl. both home pages)
+|  |- templates/pages/      # Shared HTML templates for localized pages
+|  |- content/pages/        # Per-page modules pairing EN/SV partials with templates
+|  |- content/encyclopedia/ # Encyclopedia entry partials (EN/SV)
+|  |- tailwind.css          # Tailwind entry point
 |- tools/
 |  |- build-static.js       # Copies src/site to public/
 |  |- build-pages.js        # Renders templates + content into public/
 |  |- generate-slides-manifest.js
 |  |- optimize-images.js
-|  |- export-db-content.js  # Exports database content to JSON files
-|- admin/                   # Server-side functionality (no admin UI)
-|  |- server.js             # Express server for API endpoints and static serving
-|- public/                  # Build output (generated)
-|  |- db/                   # Database content exported as JSON
+|- server/
+|  |- server.js             # Express server: static public/ + POST /api/send-email
 |- api/                     # Vercel serverless endpoints
-|- package.json
-|- tailwind.config.js
+|  |- send-email.js         # EmailJS contact form endpoint (Vercel)
+|  |- send-email-express.js # Same handler for the Express server
+|  |- og-image.js           # OG-image lookup for journal covers (Edge)
+|  |- substack.js           # Substack RSS proxy for the journal page (Edge)
+|- public/                  # Build output (generated; do not edit)
+|- docs/                    # Documentation (see ARCHITECTURE.md, PLAN.md)
+|- config/env.example       # Environment variable template
 ```
 
-All authored input lives under `src/`. The `public/` directory is generated at build time and should not be edited by hand.
+All authored input lives under `src/`. The `public/` directory is generated
+at build time and must not be edited by hand.
 
-## Building & Deployment
+## Building
 
 ```bash
 npm install            # One-time setup
 npm run build          # Copies, renders, and compiles assets into public/
 ```
 
-The build command runs three steps:
-1. `node tools/build-static.js` copies everything in `src/site` to `public/`.
-2. `node tools/build-pages.js` renders localized templates (currently `about` in en/sv).
-3. `postcss src/tailwind.css -o public/assets/css/tailwind.css --env production` compiles Tailwind utilities.
+The build runs three steps:
+1. `tools/build-static.js` copies everything in `src/site` to `public/`.
+2. `tools/build-pages.js` renders localized templates from `src/content/`.
+3. PostCSS compiles Tailwind to `public/assets/css/tailwind.css`.
 
-On Vercel, configure the project with:
-- **Build Command:** `npm run build`
-- **Output Directory:** `public`
+## Running
 
-For local preview of the generated site:
 ```bash
+npm start              # Express server (serves public/ + email API), port 5179
+# or preview the static build alone:
 npx serve public
-# or
-python -m http.server 3000 -d public
 ```
 
-## Image Utilities
+## Deployment
 
-- `npm run optimize` � optimize slideshow images in `src/site/images/slide`
-- `npm run generate:slides` � regenerate `slides.json` manifest from the slide assets
+- **Vercel**: configured via `vercel.json` (build command `npm run build`,
+  output directory `public`). Serverless endpoints under `api/` provide the
+  contact form and journal feeds.
+- **Dokploy**: Docker build via `Dockerfile` / `dokploy.json`. The container
+  builds the site and runs the Express server (`npm start`).
 
-Artifacts and historical reports generated by those tools are archived in `docs/reference/`.
+See `DEPLOYMENT.md` for details.
 
-## Development Notes
+## Email Sending (Contact Forms)
 
-- Tailwind content scanning watches `src/site/**/*.html`, `src/templates/**/*.html`, and JS under `src/site/assets/js/**/*.js` plus `src/site/journal.js`.
-- Client-side logic lives in `src/site/assets/js/script.js` and `src/site/journal.js`.
-- Static assets added to `src/site` will automatically be copied to the build output on the next `npm run build`.
-- Localized pages can share structure by pairing entries in `src/content/` with templates in `src/templates/`; the build renders language variants into `public/`.
-
-## Content Management & Email Systems
-
-### Mailpox Email-Based Editing (Current System)
-The project is transitioning to Mailpox, an email-based content editing system that replaces the traditional admin interface. Content updates are made by sending emails to a dedicated address, which are then processed by AI and applied to the database.
-
-**Key Features:**
-- Email-based content editing workflows
-- AI-powered content analysis and application
-- Multi-layer security verification
-- Automatic database updates and site rebuilds
-
-### Email Sending (Secure)
-
-Email from contact forms is sent server-side via `api/send-email.js` using the EmailJS REST API. Configure these environment variables in your hosting provider (e.g., Vercel Project Settings ? Environment Variables) or a local `.env` file (not committed):
+Contact and workshop forms send email server-side through the EmailJS REST
+API — `api/send-email.js` on Vercel, the same handler mounted in
+`server/server.js` on Dokploy. Configure these environment variables in your
+hosting provider or a local `.env` (never commit secrets):
 
 ```
 EMAILJS_SERVICE_ID=service_xxxxxxx
@@ -92,58 +89,25 @@ EMAILJS_TEMPLATE_WORKSHOP=template_workshop_id
 ALLOWED_ORIGINS=https://aimuseum.se,https://www.aimuseum.se,http://localhost:3000
 ```
 
-Notes:
-- Do not commit secrets. The private key must only exist as an environment variable.
-- `ALLOWED_ORIGINS` is a comma-separated allowlist used by the endpoint for CORS and origin checks.
-- In the EmailJS dashboard, also enable domain restrictions for your public site domains.
-- The endpoint includes a lightweight rate limiter; adjust limits inside `api/send-email.js` if needed.
+Start from `config/env.example`. The endpoint includes a lightweight rate
+limiter and origin allowlist; in the EmailJS dashboard, also enable domain
+restrictions for the public site domains.
 
-### Email Webhook for Content Editing
-For Mailpox email-based editing, configure these additional environment variables:
+## Image Utilities
 
-```
-EDIT_EMAIL_ADDRESS=edit@aimuseum.se
-EDIT_FINAL_MAILBOX=admin@aimuseum.se
-ALLOWED_EDITOR_EMAILS=editor1@example.com,editor2@example.com
-EDIT_SECRET_TOKEN=your-secret-token-here
-RESEND_API_KEY=re_xxxxxxxxxxxxxxxxxxxxxxxx
-RESEND_WEBHOOK_SECRET=whsec_xxxxxxxxxxxxxxxx
-ANTHROPIC_API_KEY=sk-ant-xxxxxxxxxxxxxxxx
-```
+- `npm run optimize` — optimize slideshow images in `src/site/images/slide`
+- `npm run generate:slides` — regenerate the `slides.json` manifest
 
-For local development, start from the sample in `config/env.example`:
+## Development Notes
 
-```bash
-cp config/env.example .env
-# then fill in real values
-```
+- Tailwind scans `src/site/**/*.html`, `src/templates/**/*.html`, and JS under
+  `src/site/assets/js/` plus `src/site/journal.js`.
+- Client-side logic lives in `src/site/assets/js/script.js` (slideshow, UI)
+  and `src/site/journal.js` (Substack feed rendering).
+- Localized pages pair entries in `src/content/` with templates in
+  `src/templates/`; the build renders language variants into `public/`.
 
-## Deployment
+## Roadmap
 
-### Dokploy Deployment
-The primary deployment uses Dokploy with Docker containerization:
-
-```dockerfile
-FROM node:20-alpine
-WORKDIR /app
-COPY package*.json ./
-RUN npm ci
-COPY . .
-RUN npm run build:static && npm run build:css && npm run build:pages
-ENV PORT=3000
-EXPOSE 3000
-CMD ["sh", "-lc", "npm run export-db && npm start"]
-```
-
-### Development Server
-For local development with full functionality:
-
-```bash
-npm run export-db  # Export database content to JSON
-npm start          # Start Express server with API endpoints
-```
-
-The Express server (`admin/server.js`) serves:
-- Static site from `/public` directory
-- API endpoints for email sending and webhooks
-- Database content via exported JSON files
+See `docs/PLAN.md`: home page simplification and a Telegram-driven AI editing
+agent with daily content jobs are planned next.

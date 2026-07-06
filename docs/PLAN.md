@@ -17,9 +17,15 @@ Everything as it stood before this work is preserved in the
 - `DYNAMIC_WEBPAGE_CREATION.md` stays in `docs/` — it documents the current
   template build pipeline, not an experiment.
 
-## Phase 2 — Cleanup on `main`
+## Phase 2 — Cleanup on `main` (done July 2026)
 
-Remove all three abandoned editing systems:
+DB confirmed to have no consumers beyond the abandoned editing flows; the
+database layer was removed entirely and git is now the single content
+source. The Postgres instance itself should be decommissioned (credentials
+were exposed in the deleted `setup-env.js` and remain in git history —
+rotate/retire them).
+
+Removed all three abandoned editing systems:
 
 - **GitHub-commit admin**: `api/_github.js`, `api/admin-pages.js`,
   `api/admin-slides.js`, `api/admin-events.js`, `admin/static/` placeholder UI.
@@ -30,19 +36,19 @@ Remove all three abandoned editing systems:
 - **Mailpox**: the email webhook block in `admin/server.js` (~650 lines),
   `mailpox-main.zip`.
 
-Then:
+Also done:
 
-- Shrink `admin/server.js` to a plain site server (static `public/` +
-  `POST /api/send-email` + catch-all); rename directory to `server/`.
-- Delete cruft: `Dockerfile.backup`, `Dockerfile.simple`, `alternative/`,
-  stray scripts (`create-events.js`, `setup_admin.sh`, ...).
-- Prune `package.json`: `pg`, `express-basic-auth`, dead scripts
-  (`export-db`, `seed:demo-texts`, `check-db`, `test-db`, `import-db*`).
-- Rewrite `README.md` / `docs/ARCHITECTURE.md` to describe only what exists.
-- **Open decision**: drop the Postgres database entirely (git becomes the
-  single content source). Pending confirmation that nothing else reads it.
-- Verify: `npm run build`, local Docker run, deploy to both hosts, click
-  through the site, test the contact form.
+- Removed the runtime `/db/texts.json` loader scripts from both home pages
+  and deleted `small-loader.js`.
+- Shrunk the Express server to static `public/` + `POST /api/send-email` +
+  catch-all; moved from `admin/server.js` to `server/server.js`.
+- Deleted cruft (`Dockerfile.backup`, `Dockerfile.simple`, `alternative/`,
+  `Procfile`, `start.sh`, stray scripts) and pruned `package.json`
+  (`pg`, `cheerio`, `express-basic-auth`, `@anthropic-ai/sdk`, dead scripts).
+- Rewrote `README.md`, `DEPLOYMENT.md`, `docs/ARCHITECTURE.md`.
+
+Note: legacy `data-segment-id` / `data-key` attributes in authored HTML are
+left for removal during Phase 3.
 
 ## Phase 3 — Home page simplification (on `main`)
 

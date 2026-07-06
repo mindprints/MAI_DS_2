@@ -18,6 +18,5 @@ RUN npm run build:static && \
 ENV PORT=3000
 EXPOSE 3000
 
-# at container start: export db then start Express admin server
-# Express serves both static site AND provides admin API endpoints
-CMD ["sh", "-lc", "npm run export-db && npm start"]
+# at container start: run the Express server (serves public/ + /api/send-email)
+CMD ["sh", "-lc", "npm start"]

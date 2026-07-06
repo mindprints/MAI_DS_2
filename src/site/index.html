@@ -495,43 +495,5 @@
     </footer>
 
     <script src="assets/js/script.js"></script>
-<script>
-(async function(){
-  const USE_DB = true; // flip to false to fall back to hardcoded
-  const LANG = (document.documentElement.lang || 'en').toLowerCase();
-  if (!USE_DB) return;
-
-  async function fetchJson(paths) {
-    for (const p of paths) {
-      try {
-        const r = await fetch(p, { cache: 'no-store' });
-        if (r.ok) return await r.json();
-      } catch {}
-    }
-    return {};
-  }
-
-  const texts = await fetchJson(['/db/texts.json','/assets/db/texts.json']);
-  const media = await fetchJson(['/db/media.json','/assets/db/media.json']);
-
-  // Replace any element that has data-key=... with the DB text
-  document.querySelectorAll('[data-key]').forEach(el => {
-    const key = el.getAttribute('data-key');
-    const t = texts[key]?.[LANG] || texts[key]?.en;
-    if (t) el.textContent = t;
-  });
-
-  // Replace any <img data-media-key="img.some-key">
-  document.querySelectorAll('img[data-media-key]').forEach(img => {
-    const key = img.getAttribute('data-media-key');
-    const m = media[key];
-    if (m?.url) {
-      img.src = m.url;
-      if (m.alt_text) img.alt = m.alt_text;
-    }
-  });
-})();
-</script>
-
 
 </section></body></html>

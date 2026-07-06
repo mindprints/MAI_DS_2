@@ -6,7 +6,6 @@ const path = require("path");
 // Ensure required directories exist
 const requiredDirs = [
   "src/content/pages",
-  "src/content/encyclopedia",
   "src/site/images/slide",
   "public",
 ];
@@ -32,7 +31,7 @@ console.log("Starting server...");
 
 // Start the server
 try {
-  require("./admin/server.js");
+  require("./server/server.js");
 } catch (error) {
   console.error("Failed to start server:", error);
   console.error("Stack trace:", error.stack);
