@@ -21,7 +21,7 @@ module.exports = {
       heroTitle: 'Journal',
       heroCopy: 'Essays and updates from our Substack, <a class="underline" href="https://mindprints.substack.com/" target="_blank" rel="noopener">mindprints</a>.',
       mainContent: load('journal.en.html'),
-      footerText: '&copy; 2025 Museum of Artificial Intelligence.',
+      footerText: '&copy; 2026 Museum of Artificial Intelligence.',
       headExtras: `  <link rel="alternate" hreflang="en" href="../pages/journal">\n  <link rel="alternate" hreflang="sv" href="../sv/pages/journal">`,
       journalScriptSrc: '../journal.js',
       postScripts: ''
@@ -39,7 +39,7 @@ module.exports = {
       heroTitle: 'Journal',
       heroCopy: 'Essäer och uppdateringar från vår Substack, <a class="underline" href="https://mindprints.substack.com/" target="_blank" rel="noopener">mindprints</a>.',
       mainContent: load('journal.sv.html'),
-      footerText: '&copy; 2025 Museum of Artificial Intelligence.',
+      footerText: '&copy; 2026 Museum of Artificial Intelligence.',
       headExtras: `  <link rel="alternate" hreflang="en" href="../../pages/journal">\n  <link rel="alternate" hreflang="sv" href="./journal">`,
       journalScriptSrc: '../../journal.js',
       postScripts: ''

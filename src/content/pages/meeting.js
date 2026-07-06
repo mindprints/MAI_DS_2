@@ -220,7 +220,7 @@ module.exports = {
         'Click any document to open or download'
       ]),
       ctaText: 'Questions about these documents?',
-      footerText: '&copy; 2025 Museum of Artificial Intelligence.',
+      footerText: '&copy; 2026 Museum of Artificial Intelligence.',
       headExtras: `  <link rel="alternate" hreflang="en" href="../pages/meeting">
   <link rel="alternate" hreflang="sv" href="../sv/pages/meeting">`,
       postScripts: ''
@@ -248,7 +248,7 @@ module.exports = {
         'Klicka på vilket dokument som helst för att öppna eller ladda ner'
       ]),
       ctaText: 'Frågor om dessa dokument?',
-      footerText: '&copy; 2025 Museum of Artificial Intelligence.',
+      footerText: '&copy; 2026 Museum of Artificial Intelligence.',
       headExtras: `  <link rel="alternate" hreflang="sv" href="./meeting">
   <link rel="alternate" hreflang="en" href="../../pages/meeting">`,
       postScripts: ''
