@@ -32,6 +32,65 @@ app.use(express.static(PUBLIC_DIR));
 app.post("/api/send-email", handleSendEmail);
 app.options("/api/send-email", handleSendEmail);
 
+// Substack RSS proxy for the journal page (avoids CORS). Mirrors the
+// Vercel Edge function api/substack.js.
+app.get("/api/substack", async (req, res) => {
+  try {
+    const feed = req.query.feed || "https://mindprints.substack.com/feed";
+    const r = await fetch(feed, {
+      headers: { "user-agent": "MAI-Website/1.0 (+https://mindprints.substack.com)" },
+    });
+    if (!r.ok) return res.status(502).send(`Upstream failed: ${r.status}`);
+    const xml = await r.text();
+    res
+      .set({
+        "content-type": "application/rss+xml; charset=utf-8",
+        "cache-control": "public, s-maxage=600, max-age=60",
+        "access-control-allow-origin": "*",
+      })
+      .send(xml);
+  } catch (err) {
+    res.status(500).send("Error: " + (err?.message || "unknown"));
+  }
+});
+
+// OG-image lookup for journal covers. Mirrors the Vercel Edge function
+// api/og-image.js: fetches a page and returns { image } from its meta tags.
+function extractOgImage(html) {
+  const tags = [...html.matchAll(/<meta[^>]*>/gi)].map((m) => m[0]);
+  for (const tag of tags) {
+    const hasOg =
+      /property\s*=\s*["']og:image(?::secure_url)?["']/i.test(tag) ||
+      /name\s*=\s*["']twitter:image(?::src)?["']/i.test(tag);
+    if (!hasOg) continue;
+    const m = tag.match(/content\s*=\s*["']([^"']+)["']/i);
+    if (m && m[1]) return m[1].trim();
+  }
+  return null;
+}
+
+app.get("/api/og-image", async (req, res) => {
+  res.set({
+    "cache-control": "public, s-maxage=86400, max-age=600",
+    "access-control-allow-origin": "*",
+  });
+  try {
+    const url = req.query.url;
+    if (!url || !/^https?:\/\//i.test(url)) {
+      return res.status(400).json({ image: null, error: "Missing or invalid url" });
+    }
+    const r = await fetch(url, {
+      headers: { "user-agent": "MAI-Website/1.0" },
+      redirect: "follow",
+    });
+    if (!r.ok) return res.status(502).json({ image: null, error: `Upstream ${r.status}` });
+    const html = await r.text();
+    res.json({ image: extractOgImage(html) });
+  } catch (err) {
+    res.status(500).json({ image: null, error: err?.message || "unknown" });
+  }
+});
+
 // Fallback: serve index.html for unknown non-API paths
 app.get("*", (req, res) => {
   if (req.path.startsWith("/api/")) {
