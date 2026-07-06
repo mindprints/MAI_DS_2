@@ -1,5 +1,7 @@
 # Mailpox Integration Guide
 
+> **ARCHIVED (July 2026)**: The Mailpox email-based editing system was never completed and has been abandoned, superseded by the Telegram-based AI editing agent (see `docs/PLAN.md`). This document is kept for reference only; the code it describes has been removed from `main`. The full implementation is preserved in the `archive/editing-experiments` branch and the `pre-cleanup-2026-07` tag.
+
 ## Overview
 
 Mailpox is an email-based content editing system that replaces the traditional web-based admin interface. It allows content editors to update website content by sending emails to a dedicated address, which are then processed by AI and automatically applied to the database.

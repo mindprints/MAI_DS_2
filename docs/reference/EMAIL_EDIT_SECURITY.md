@@ -1,5 +1,7 @@
 # Email-Based Text Editing - Security Guide
 
+> **ARCHIVED (July 2026)**: The email-based editing feature was never completed and has been abandoned, superseded by the Telegram-based AI editing agent (see `docs/PLAN.md`). The security model described here (sender allowlists, secret tokens, multi-layer verification) remains a useful reference for the Telegram agent's authorization design. Code is preserved in the `archive/editing-experiments` branch and the `pre-cleanup-2026-07` tag.
+
 ## Overview
 
 The email-based text editing feature allows authorized users to edit website content via email. This document explains the security measures in place to prevent unauthorized access.
