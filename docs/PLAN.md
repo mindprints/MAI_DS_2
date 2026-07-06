@@ -50,14 +50,18 @@ Also done:
 Note: legacy `data-segment-id` / `data-key` attributes in authored HTML are
 left for removal during Phase 3.
 
-## Phase 3 — Home page simplification (on `main`)
+## Phase 3 — Home page simplification (done July 2026)
 
-- Restructure `src/site/index.html` and `src/site/sv/index.html` around
-  **Lectures / Seminars / Workshops**: hero → offerings → upcoming events →
-  contact CTA. Demote or fold in "Clients", "Good/Bad/Ugly of AI", membership.
-- Strip now-meaningless `data-segment-id` attributes.
-- Contact/workshop forms: simplify markup and styling only. The EmailJS flow
-  (`api/send-email.js`, env vars, rate limiter, CORS allowlist) is unchanged.
+Both home pages restructured: hero (copy names all three formats) →
+offering cards re-badged LECTURE / WORKSHOP / SEMINAR → compact clients
+band (all 23 names; owner prefers logos eventually) → events announcement
+panel (the four placeholder event cards were removed; this section is the
+landing spot for Phase 4 agent content) → compact membership + contact
+cards → footer. "Good/Bad/Ugly" section removed (page still linked from
+footer). Legacy `data-segment-id`/`data-key` attributes stripped and the
+invalid head/body document structure repaired. EmailJS contact flow
+untouched; owner switched EmailJS template recipients to direct Gmail
+addresses (July 2026) to bypass Hostinger forwarding blocks.
 
 ## Phase 4 — `preview/telegram-agent` branch
 
