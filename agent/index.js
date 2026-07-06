@@ -61,6 +61,7 @@ async function handleEdit(msg, instruction) {
 
 async function runJob(msg, name, fn) {
   await telegram.sendMessage(msg.chat.id, `Running ${name}…`);
+  await gitrepo.pull().catch(() => {});
   const result = await fn({ force: false });
   if (result.skipped) {
     await telegram.sendMessage(msg.chat.id, `Skipped: ${result.reason}. (Delete today's file to regenerate.)`);
