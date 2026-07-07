@@ -9,6 +9,12 @@ sending instructions to a Telegram bot, and that publishes two daily posts:
   day's AI news (research, products, regulation, finance), written with
   live web search.
 
+It also refreshes a small data snapshot daily (default 07:00 Stockholm):
+the top LLMs by [Artificial Analysis](https://artificialanalysis.ai/)
+Intelligence Index, split into closed vs open weights, saved to
+`src/content/llm-index.json` and rendered as a card on the home page by
+`tools/inject-daily.js`. Requires `AA_API_KEY`; the job is skipped if unset.
+
 Posts land in `src/content/daily/` and are rendered by the existing build
 into `pages/daily.html` (index) and `pages/daily/<date>-<type>.html`.
 
@@ -34,6 +40,7 @@ Plain message → treated as an edit instruction ("Change the hero text…").
 - `/diff` — working-tree diff stat
 - `/ontoday [event]` — run the on-this-day job now; with an event, regenerate today's essay about it
 - `/news [topic]` — run the AI news job now; with a topic, regenerate today's briefing with it as lead story
+- `/llmindex` — refresh the LLM leaderboard card now
 - `/approve` — merge preview branch into main (if enabled)
 - `/help`
 
@@ -67,6 +74,8 @@ TELEGRAM_CHAT_ID=-1001234567890      # lock the bot to one chat
 PREVIEW_URL=https://preview.aimuseum.se
 
 # Optional (defaults shown)
+AA_API_KEY=aa_...                    # Artificial Analysis; enables the LLM leaderboard card
+AGENT_LLMINDEX_TIME=07:00
 ANTHROPIC_MODEL=claude-sonnet-5
 AGENT_BRANCH=preview/telegram-agent
 MAIN_BRANCH=main

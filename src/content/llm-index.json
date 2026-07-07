@@ -1,0 +1,39 @@
+{
+  "fetched_at": "2026-07-07",
+  "source": "Artificial Analysis Intelligence Index",
+  "source_url": "https://artificialanalysis.ai/",
+  "closed": [
+    {
+      "name": "Claude Fable 5",
+      "creator": "Anthropic",
+      "score": 59.9
+    },
+    {
+      "name": "Claude Opus 4.8",
+      "creator": "Anthropic",
+      "score": 55.7
+    },
+    {
+      "name": "GPT-5.5",
+      "creator": "OpenAI",
+      "score": 54.8
+    }
+  ],
+  "open": [
+    {
+      "name": "GLM-5.2",
+      "creator": "Z AI",
+      "score": 51.1
+    },
+    {
+      "name": "MiniMax-M3",
+      "creator": "MiniMax",
+      "score": 44.4
+    },
+    {
+      "name": "DeepSeek V4 Pro",
+      "creator": "DeepSeek",
+      "score": 44.3
+    }
+  ]
+}

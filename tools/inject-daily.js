@@ -9,6 +9,7 @@ const path = require('path');
 const rootDir = process.cwd();
 const dailyDir = path.join(rootDir, 'src', 'content', 'daily');
 const slidesManifest = path.join(rootDir, 'src', 'site', 'images', 'slide', 'slides.json');
+const llmIndexFile = path.join(rootDir, 'src', 'content', 'llm-index.json');
 
 const STRINGS = {
   en: {
@@ -21,6 +22,10 @@ const STRINGS = {
     dailyBase: 'pages/daily',
     from: 'from',
     dateLocale: 'en-GB',
+    llmLabel: 'MOST INTELLIGENT LLMS RIGHT NOW',
+    llmClosed: 'Closed weights',
+    llmOpen: 'Open weights',
+    llmSource: 'Source: Artificial Analysis Intelligence Index',
   },
   sv: {
     archiveLabel: 'UR ARKIVET — PÅ DENNA DAG',
@@ -32,6 +37,10 @@ const STRINGS = {
     dailyBase: '/sv/pages/daily',
     from: 'från',
     dateLocale: 'sv-SE',
+    llmLabel: 'SMARTASTE AI-MODELLERNA JUST NU',
+    llmClosed: 'Slutna vikter',
+    llmOpen: 'Öppna vikter',
+    llmSource: 'Källa: Artificial Analysis Intelligence Index',
   },
 };
 
@@ -106,6 +115,51 @@ function newsCard(post, locale) {
         </a>`;
 }
 
+// Compact leaderboard strip: top models by Artificial Analysis Intelligence
+// Index, closed vs open weights. Reads the snapshot committed by the agent's
+// daily job (tools/fetch-llm-index.js); renders nothing if it is missing.
+function llmColumn(title, models) {
+  const rows = models
+    .map(
+      (m, i) => `
+            <div style="display:flex;align-items:baseline;gap:10px;padding:4px 0;">
+              <span style="font-size:0.8rem;color:#7c6f9c;width:1rem;text-align:right;">${i + 1}</span>
+              <span style="font-size:0.95rem;color:#ece7f8;font-weight:600;">${m.name}</span>
+              <span style="font-size:0.78rem;color:#8d81ad;">${m.creator}</span>
+              <span style="font-size:0.9rem;color:#c4b5fd;font-weight:700;margin-left:auto;">${m.score}</span>
+            </div>`,
+    )
+    .join('');
+  return `
+          <div style="flex:1;min-width:15rem;">
+            <div style="font-size:0.7rem;letter-spacing:0.15em;color:#8d81ad;text-transform:uppercase;border-bottom:1px solid #3b2f5e;padding-bottom:6px;margin-bottom:6px;">${title}</div>
+${rows}
+          </div>`;
+}
+
+function llmIndexCard(locale) {
+  const s = STRINGS[locale];
+  let snap;
+  try {
+    snap = JSON.parse(fs.readFileSync(llmIndexFile, 'utf8'));
+  } catch (e) {
+    return '';
+  }
+  if (!snap.closed?.length || !snap.open?.length) return '';
+  const stale = staleDate({ date: snap.fetched_at }, locale);
+  return `
+      <div class="max-w-6xl mx-auto mt-6 rounded-xl" style="background:#1c1730;border:1px solid #4c3a80;border-left:3px solid #a78bfa;padding:18px 24px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:12px;">
+          <span style="font-size:0.7rem;letter-spacing:0.2em;color:#c4b5fd;">${s.llmLabel}${stale}</span>
+          <a href="${snap.source_url}" target="_blank" rel="noopener" style="font-size:0.7rem;color:#8d81ad;" class="hover:text-violet-300 transition">${s.llmSource} ↗</a>
+        </div>
+        <div style="display:flex;gap:28px;flex-wrap:wrap;">
+${llmColumn(s.llmClosed, snap.closed)}
+${llmColumn(s.llmOpen, snap.open)}
+        </div>
+      </div>`;
+}
+
 function cardsSection(locale) {
   const s = STRINGS[locale];
   const onthisday = latestPost('onthisday', locale);
@@ -116,6 +170,7 @@ function cardsSection(locale) {
 ${archiveCard(onthisday, locale)}
 ${newsCard(ainews, locale)}
       </div>
+${llmIndexCard(locale)}
       <div class="max-w-6xl mx-auto flex justify-between items-center mt-3 px-1">
         <span style="font-size:0.72rem;color:#64748b;letter-spacing:0.06em;">${s.credit}</span>
         <a href="${s.dailyBase}.html" style="font-size:0.72rem;color:#64748b;" class="hover:text-cyan-400 transition">${s.allPosts}</a>

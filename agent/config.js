@@ -18,6 +18,9 @@ const config = {
   anthropicApiKey: process.env.ANTHROPIC_API_KEY || '',
   model: process.env.ANTHROPIC_MODEL || 'claude-sonnet-5',
 
+  // Artificial Analysis (LLM leaderboard card)
+  aaApiKey: process.env.AA_API_KEY || '',
+
   // Git / repo
   repoDir: path.resolve(process.env.REPO_DIR || path.join(__dirname, '..')),
   agentBranch: process.env.AGENT_BRANCH || 'preview/telegram-agent',
@@ -33,6 +36,7 @@ const config = {
   timezone: process.env.AGENT_TIMEZONE || 'Europe/Stockholm',
   onThisDayTime: process.env.AGENT_ONTHISDAY_TIME || '07:30',
   newsTime: process.env.AGENT_NEWS_TIME || '17:30',
+  llmIndexTime: process.env.AGENT_LLMINDEX_TIME || '07:00',
   runBuildCheck: process.env.AGENT_BUILD_CHECK !== 'false',
 };
 

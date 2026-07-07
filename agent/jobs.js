@@ -156,4 +156,21 @@ ${BILINGUAL_RULES}`;
   return { skipped: false, title: post.title_en, link, commit };
 }
 
-module.exports = { runOnThisDay, runAiNews, todayParts };
+// Refreshes the LLM leaderboard snapshot (home page card) by running
+// tools/fetch-llm-index.js and committing the result if it changed.
+async function runLlmIndex() {
+  const { execFile } = require('child_process');
+  await new Promise((resolve, reject) => {
+    execFile(
+      process.execPath,
+      [path.join(config.repoDir, 'tools', 'fetch-llm-index.js')],
+      { cwd: config.repoDir, env: { ...process.env, AA_API_KEY: config.aaApiKey } },
+      (err, stdout, stderr) => (err ? reject(new Error(stderr || err.message)) : resolve(stdout)),
+    );
+  });
+  const commit = await gitrepo.commitAndPush(`Daily data: LLM intelligence index (${todayParts().iso})`);
+  if (!commit) return { skipped: true, reason: 'Leaderboard unchanged since last snapshot' };
+  return { skipped: false, title: 'LLM intelligence index updated', link: config.previewUrl || '', commit };
+}
+
+module.exports = { runOnThisDay, runAiNews, runLlmIndex, todayParts };

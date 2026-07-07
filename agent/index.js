@@ -36,6 +36,7 @@ Commands:
 /ontoday <event> — regenerate today's essay about a specific anniversary
 /news — run the AI news summary job now
 /news <topic> — regenerate today's briefing with <topic> as the lead story
+/llmindex — refresh the LLM leaderboard card now
 /approve — merge the preview branch into main (if enabled)
 /help — this message
 
@@ -104,6 +105,8 @@ async function onMessage(msg) {
       await runJob(msg, 'on-this-day', jobs.runOnThisDay, text.slice('/ontoday'.length).trim());
     } else if (text === '/news' || text.startsWith('/news ')) {
       await runJob(msg, 'ai-news', jobs.runAiNews, text.slice('/news'.length).trim());
+    } else if (text === '/llmindex') {
+      await runJob(msg, 'llm-index', jobs.runLlmIndex);
     } else if (text === '/approve') {
       if (!config.allowApprove) {
         await telegram.sendMessage(msg.chat.id, '/approve is disabled (set AGENT_ALLOW_APPROVE=true to enable). Merge the branch on GitHub instead.');
@@ -146,6 +149,16 @@ async function main() {
           await gitrepo.pull().catch(() => {});
           const r = await jobs.runAiNews();
           if (!r.skipped) await notify(`Published: ${r.title}\n${r.link}`);
+        },
+      },
+      {
+        name: 'llmindex',
+        time: config.llmIndexTime,
+        run: async () => {
+          if (!config.aaApiKey) return;
+          await gitrepo.pull().catch(() => {});
+          const r = await jobs.runLlmIndex();
+          if (!r.skipped) await notify(`Updated: LLM intelligence index card`);
         },
       },
     ],
