@@ -170,11 +170,11 @@ function cardsSection(locale) {
 ${archiveCard(onthisday, locale)}
 ${newsCard(ainews, locale)}
       </div>
-${llmIndexCard(locale)}
       <div class="max-w-6xl mx-auto flex justify-between items-center mt-3 px-1">
         <span style="font-size:0.72rem;color:#64748b;letter-spacing:0.06em;">${s.credit}</span>
         <a href="${s.dailyBase}.html" style="font-size:0.72rem;color:#64748b;" class="hover:text-cyan-400 transition">${s.allPosts}</a>
-      </div>`;
+      </div>
+${llmIndexCard(locale)}`;
 }
 
 // Daily rotating hero image from the slide bank (deterministic by date).
