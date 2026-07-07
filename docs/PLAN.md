@@ -97,8 +97,17 @@ limited). Vercel keeps serving stable production until promotion.
 Needs from the site owner: Telegram bot token + channel ID; Anthropic API key
 already in use.
 
-## Phase 5 — Rollout
+## Phase 5 — Rollout (went live July 2026)
 
-- Run the preview branch for ~2 weeks; tune prompts and guardrails.
-- Merge to `main` when stable; then decide whether to consolidate hosting
-  (Dokploy for everything vs keeping the Vercel mirror).
+Merged `preview/telegram-agent` to `main` on 2026-07-07. The agent now
+targets `main` directly: daily posts (bilingual EN/SV) and Telegram edits
+auto-deploy to production, with every change announced in the Telegram
+chat as the veto mechanism. Hosting is consolidated on Dokploy
+(apex + www + preview domains); Vercel is out of the serving path.
+
+Remaining loose ends:
+- Retire the Vercel project.
+- Decommission the old MAI Postgres container on the VPS (leaked
+  credentials in git history; container not publicly exposed).
+- Client logos to replace the text list (owner preference).
+- Encyclopedia: removed July 2026, future project (in git history).

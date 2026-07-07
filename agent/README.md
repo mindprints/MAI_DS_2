@@ -14,15 +14,17 @@ into `pages/daily.html` (index) and `pages/daily/<date>-<type>.html`.
 
 ## Safety model
 
-- The agent only ever pushes to the **preview branch**
-  (`AGENT_BRANCH`, default `preview/telegram-agent`). The live site deploys
-  from `main` and is untouched.
+- The agent pushes to `AGENT_BRANCH`. In production (since July 2026)
+  that is `main`, so daily posts and edits go live directly — the
+  after-the-fact veto is that every change is announced in the Telegram
+  chat and can be reverted by instruction. Point `AGENT_BRANCH` at a
+  preview branch instead to restore approval-gated publishing
+  (`/approve` merges it into `MAIN_BRANCH` when
+  `AGENT_ALLOW_APPROVE=true`).
 - Only messages from `TELEGRAM_ALLOWED_USER_IDS` in `TELEGRAM_CHAT_ID` are
   accepted; everything else is silently ignored.
-- File edits are restricted to `src/` and `docs/`.
-- `/approve` (merge preview → main) is disabled unless
-  `AGENT_ALLOW_APPROVE=true`; without it, promote changes by merging the
-  branch on GitHub.
+- File edits are restricted to `src/` and `docs/`, and the agent
+  validates the site build before pushing.
 
 ## Telegram commands
 
