@@ -103,7 +103,10 @@ Merged `preview/telegram-agent` to `main` on 2026-07-07. The agent now
 targets `main` directly: daily posts (bilingual EN/SV) and Telegram edits
 auto-deploy to production, with every change announced in the Telegram
 chat as the veto mechanism. Hosting is consolidated on Dokploy
-(apex + www + preview domains); Vercel is out of the serving path.
+(apex + www); Vercel is out of the serving path. The dedicated preview
+deployment (preview.aimuseum.se, Dokploy app `mai-preview`) was retired
+on 2026-07-08 — the preview branch is dormant and daily content resets
+each morning at 06:00–06:20 Stockholm directly on production.
 
 Remaining loose ends:
 - Retire the Vercel project.

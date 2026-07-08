@@ -28,7 +28,12 @@ function todayParts() {
     day: 'numeric',
     month: 'long',
   }).format(new Date()); // e.g. "6 July"
-  return { iso, readable };
+  const readableSv = new Intl.DateTimeFormat('sv-SE', {
+    timeZone: config.timezone,
+    day: 'numeric',
+    month: 'long',
+  }).format(new Date()); // e.g. "6 juli"
+  return { iso, readable, readableSv };
 }
 
 // Extract the last JSON object from a model response, tolerating code fences
@@ -119,7 +124,7 @@ ${BILINGUAL_RULES}`;
 }
 
 async function runAiNews({ force = false, topic = '' } = {}) {
-  const { iso, readable } = todayParts();
+  const { iso, readable, readableSv } = todayParts();
   if (!force && !topic && postExists(iso, 'ainews')) {
     return { skipped: true, reason: `Post for ${iso} already exists` };
   }
@@ -136,7 +141,7 @@ Requirements:
 - Not overly technical: explain significance in plain language.
 - 3-6 items, ONE <p> per item. Start each item's paragraph with a short bold lead-in naming the story, e.g. <p><strong>EU approves AI liability rules.</strong> Rest of the item…</p>
 - Lead with the most important. Attribute claims to their sources by name in the text (e.g. "according to Reuters"), but do not include raw URLs.
-- Title format: "AI news, ${readable}: " / "AI-nytt, ${readable}: " followed by a short hook about the lead item.
+- Title format: "AI news, ${readable}: " (English) / "AI-nytt, ${readableSv}: " (Swedish, lowercase Swedish month name) followed by a short hook about the lead item.
 - Neutral tone; distinguish announcements from confirmed facts.
 
 ${HTML_RULES}

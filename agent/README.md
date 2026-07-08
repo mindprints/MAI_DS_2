@@ -3,13 +3,15 @@
 A long-running Node service that lets museum staff edit the website by
 sending instructions to a Telegram bot, and that publishes two daily posts:
 
-- **On this day** (default 07:30 Stockholm) — a short essay on a
-  computing/robotics/ML/AI milestone that happened on today's date.
-- **AI news** (default 17:30 Stockholm) — a general-audience roundup of the
+- **AI news** (default 06:00 Stockholm) — a general-audience roundup of the
   day's AI news (research, products, regulation, finance), written with
   live web search.
+- **On this day** (default 06:10 Stockholm) — a short essay on a
+  computing/robotics/ML/AI milestone that happened on today's date.
 
-It also refreshes a small data snapshot daily (default 07:00 Stockholm):
+The whole home page therefore resets in the morning before 06:30.
+
+It also refreshes a small data snapshot daily (default 06:20 Stockholm):
 the top LLMs by [Artificial Analysis](https://artificialanalysis.ai/)
 Intelligence Index, split into closed vs open weights, saved to
 `src/content/llm-index.json` and rendered as a card on the home page by
@@ -54,10 +56,10 @@ Plain message → treated as an edit instruction ("Change the hero text…").
 3. Get each editor's numeric Telegram user id (also via @userinfobot).
 4. Create a fine-grained GitHub token with Contents read/write on this repo.
 5. Deploy on Dokploy as a **second application** from this repo with
-   Dockerfile path `agent/Dockerfile`, on the preview branch, with the
-   environment variables below.
-6. Point a preview deployment (Vercel preview or a third Dokploy app) at
-   the preview branch and set `PREVIEW_URL` to its address.
+   Dockerfile path `agent/Dockerfile`, on `AGENT_BRANCH`, with the
+   environment variables below. In production that is `main` and
+   `PREVIEW_URL` is the live site (the dedicated preview deployment was
+   retired in July 2026).
 
 ## Environment variables
 
@@ -71,18 +73,18 @@ GITHUB_TOKEN=github_pat_...          # required in Docker
 
 # Strongly recommended
 TELEGRAM_CHAT_ID=-1001234567890      # lock the bot to one chat
-PREVIEW_URL=https://preview.aimuseum.se
+PREVIEW_URL=https://aimuseum.se      # where published links point
 
 # Optional (defaults shown)
 AA_API_KEY=aa_...                    # Artificial Analysis; enables the LLM leaderboard card
-AGENT_LLMINDEX_TIME=07:00
+AGENT_LLMINDEX_TIME=06:20
 ANTHROPIC_MODEL=claude-sonnet-5
 AGENT_BRANCH=preview/telegram-agent
 MAIN_BRANCH=main
 AGENT_ALLOW_APPROVE=false
 AGENT_TIMEZONE=Europe/Stockholm
-AGENT_ONTHISDAY_TIME=07:30
-AGENT_NEWS_TIME=17:30
+AGENT_ONTHISDAY_TIME=06:10
+AGENT_NEWS_TIME=06:00
 GIT_USER_NAME=MAI Telegram Agent
 GIT_USER_EMAIL=agent@aimuseum.se
 REPO_DIR=/work                       # set automatically in Docker

@@ -34,9 +34,9 @@ const config = {
   allowApprove: process.env.AGENT_ALLOW_APPROVE === 'true',
   previewUrl: process.env.PREVIEW_URL || '',
   timezone: process.env.AGENT_TIMEZONE || 'Europe/Stockholm',
-  onThisDayTime: process.env.AGENT_ONTHISDAY_TIME || '07:30',
-  newsTime: process.env.AGENT_NEWS_TIME || '17:30',
-  llmIndexTime: process.env.AGENT_LLMINDEX_TIME || '07:00',
+  onThisDayTime: process.env.AGENT_ONTHISDAY_TIME || '06:10',
+  newsTime: process.env.AGENT_NEWS_TIME || '06:00',
+  llmIndexTime: process.env.AGENT_LLMINDEX_TIME || '06:20',
   runBuildCheck: process.env.AGENT_BUILD_CHECK !== 'false',
 };
 

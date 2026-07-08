@@ -40,7 +40,7 @@ Commands:
 /approve — merge the preview branch into main (if enabled)
 /help — this message
 
-Edits are committed to ${config.agentBranch} and appear on the preview site. Nothing reaches the live site without /approve.`;
+Edits are committed to ${config.agentBranch} and deploy to ${config.previewUrl || 'the site'}.`;
 
 async function handleEdit(msg, instruction) {
   await telegram.sendMessage(msg.chat.id, 'Working on it…');
