@@ -161,21 +161,43 @@ ${BILINGUAL_RULES}`;
   return { skipped: false, title: post.title_en, link, commit };
 }
 
-// Refreshes the LLM leaderboard snapshot (home page card) by running
-// tools/fetch-llm-index.js and committing the result if it changed.
-async function runLlmIndex() {
+// Runs one of the tools/fetch-*.js snapshot scripts and commits the result
+// if it changed.
+async function runSnapshotTool(script, extraEnv, commitMessage, title, unchangedReason) {
   const { execFile } = require('child_process');
   await new Promise((resolve, reject) => {
     execFile(
       process.execPath,
-      [path.join(config.repoDir, 'tools', 'fetch-llm-index.js')],
-      { cwd: config.repoDir, env: { ...process.env, AA_API_KEY: config.aaApiKey } },
+      [path.join(config.repoDir, 'tools', script)],
+      { cwd: config.repoDir, env: { ...process.env, ...extraEnv } },
       (err, stdout, stderr) => (err ? reject(new Error(stderr || err.message)) : resolve(stdout)),
     );
   });
-  const commit = await gitrepo.commitAndPush(`Daily data: LLM intelligence index (${todayParts().iso})`);
-  if (!commit) return { skipped: true, reason: 'Leaderboard unchanged since last snapshot' };
-  return { skipped: false, title: 'LLM intelligence index updated', link: config.previewUrl || '', commit };
+  const commit = await gitrepo.commitAndPush(commitMessage);
+  if (!commit) return { skipped: true, reason: unchangedReason };
+  return { skipped: false, title, link: config.previewUrl || '', commit };
 }
 
-module.exports = { runOnThisDay, runAiNews, runLlmIndex, todayParts };
+// Refreshes the LLM leaderboard snapshot (home page card).
+async function runLlmIndex() {
+  return runSnapshotTool(
+    'fetch-llm-index.js',
+    { AA_API_KEY: config.aaApiKey },
+    `Daily data: LLM intelligence index (${todayParts().iso})`,
+    'LLM intelligence index updated',
+    'Leaderboard unchanged since last snapshot',
+  );
+}
+
+// Refreshes the OpenRouter usage snapshot (home page card).
+async function runLlmUsage() {
+  return runSnapshotTool(
+    'fetch-openrouter-usage.js',
+    { OPENROUTER_API_KEY: config.openRouterApiKey },
+    `Daily data: LLM usage via OpenRouter (${todayParts().iso})`,
+    'LLM usage card updated',
+    'Usage shares unchanged since last snapshot',
+  );
+}
+
+module.exports = { runOnThisDay, runAiNews, runLlmIndex, runLlmUsage, todayParts };

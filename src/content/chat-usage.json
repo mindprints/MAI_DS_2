@@ -1,0 +1,12 @@
+{
+  "as_of": "May 2026",
+  "as_of_sv": "maj 2026",
+  "source": "Sensor Tower via TechCrunch",
+  "source_url": "https://techcrunch.com/2026/06/16/chatgpts-market-share-slips-below-50-for-first-time/",
+  "metric": "share of worldwide monthly active users",
+  "apps": [
+    { "name": "ChatGPT", "maker": "OpenAI", "share": 46.4 },
+    { "name": "Gemini", "maker": "Google", "share": 27.7 },
+    { "name": "Claude", "maker": "Anthropic", "share": 10.3 }
+  ]
+}

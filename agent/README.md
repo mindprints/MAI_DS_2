@@ -11,11 +11,19 @@ sending instructions to a Telegram bot, and that publishes two daily posts:
 
 The whole home page therefore resets in the morning before 06:30.
 
-It also refreshes a small data snapshot daily (default 06:20 Stockholm):
-the top LLMs by [Artificial Analysis](https://artificialanalysis.ai/)
-Intelligence Index, split into closed vs open weights, saved to
-`src/content/llm-index.json` and rendered as a card on the home page by
-`tools/inject-daily.js`. Requires `AA_API_KEY`; the job is skipped if unset.
+It also refreshes two small data snapshots daily, rendered as home page
+cards by `tools/inject-daily.js`:
+
+- **LLM intelligence** (default 06:20 Stockholm) — top LLMs by
+  [Artificial Analysis](https://artificialanalysis.ai/) Intelligence Index,
+  closed vs open weights, saved to `src/content/llm-index.json`.
+  Requires `AA_API_KEY`; skipped if unset.
+- **LLM usage** (default 06:25 Stockholm) — share of tokens routed through
+  [OpenRouter](https://openrouter.ai/rankings) over the last 7 complete
+  days, top models and top AI labs, saved to `src/content/llm-usage.json`.
+  Deliberately one named lens (developer/agent API traffic), not a claim
+  about world usage; OpenRouter's required citation is rendered on the
+  card. Requires `OPENROUTER_API_KEY` (any valid key); skipped if unset.
 
 Posts land in `src/content/daily/` and are rendered by the existing build
 into `pages/daily.html` (index) and `pages/daily/<date>-<type>.html`.
@@ -43,6 +51,7 @@ Plain message → treated as an edit instruction ("Change the hero text…").
 - `/ontoday [event]` — run the on-this-day job now; with an event, regenerate today's essay about it
 - `/news [topic]` — run the AI news job now; with a topic, regenerate today's briefing with it as lead story
 - `/llmindex` — refresh the LLM leaderboard card now
+- `/llmusage` — refresh the OpenRouter usage card now
 - `/approve` — merge preview branch into main (if enabled)
 - `/help`
 
@@ -78,6 +87,8 @@ PREVIEW_URL=https://aimuseum.se      # where published links point
 # Optional (defaults shown)
 AA_API_KEY=aa_...                    # Artificial Analysis; enables the LLM leaderboard card
 AGENT_LLMINDEX_TIME=06:20
+OPENROUTER_API_KEY=sk-or-...         # OpenRouter; enables the LLM usage card
+AGENT_LLMUSAGE_TIME=06:25
 ANTHROPIC_MODEL=claude-sonnet-5
 AGENT_BRANCH=preview/telegram-agent
 MAIN_BRANCH=main

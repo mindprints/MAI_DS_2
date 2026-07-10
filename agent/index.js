@@ -37,6 +37,7 @@ Commands:
 /news — run the AI news summary job now
 /news <topic> — regenerate today's briefing with <topic> as the lead story
 /llmindex — refresh the LLM leaderboard card now
+/llmusage — refresh the OpenRouter usage card now
 /approve — merge the preview branch into main (if enabled)
 /help — this message
 
@@ -107,6 +108,8 @@ async function onMessage(msg) {
       await runJob(msg, 'ai-news', jobs.runAiNews, text.slice('/news'.length).trim());
     } else if (text === '/llmindex') {
       await runJob(msg, 'llm-index', jobs.runLlmIndex);
+    } else if (text === '/llmusage') {
+      await runJob(msg, 'llm-usage', jobs.runLlmUsage);
     } else if (text === '/approve') {
       if (!config.allowApprove) {
         await telegram.sendMessage(msg.chat.id, '/approve is disabled (set AGENT_ALLOW_APPROVE=true to enable). Merge the branch on GitHub instead.');
@@ -159,6 +162,16 @@ async function main() {
           await gitrepo.pull().catch(() => {});
           const r = await jobs.runLlmIndex();
           if (!r.skipped) await notify(`Updated: LLM intelligence index card`);
+        },
+      },
+      {
+        name: 'llmusage',
+        time: config.llmUsageTime,
+        run: async () => {
+          if (!config.openRouterApiKey) return;
+          await gitrepo.pull().catch(() => {});
+          const r = await jobs.runLlmUsage();
+          if (!r.skipped) await notify(`Updated: LLM usage card`);
         },
       },
     ],

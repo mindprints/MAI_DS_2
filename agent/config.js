@@ -21,6 +21,9 @@ const config = {
   // Artificial Analysis (LLM leaderboard card)
   aaApiKey: process.env.AA_API_KEY || '',
 
+  // OpenRouter (LLM usage card; any valid key works, datasets are read-only)
+  openRouterApiKey: process.env.OPENROUTER_API_KEY || '',
+
   // Git / repo
   repoDir: path.resolve(process.env.REPO_DIR || path.join(__dirname, '..')),
   agentBranch: process.env.AGENT_BRANCH || 'preview/telegram-agent',
@@ -37,6 +40,7 @@ const config = {
   onThisDayTime: process.env.AGENT_ONTHISDAY_TIME || '06:10',
   newsTime: process.env.AGENT_NEWS_TIME || '06:00',
   llmIndexTime: process.env.AGENT_LLMINDEX_TIME || '06:20',
+  llmUsageTime: process.env.AGENT_LLMUSAGE_TIME || '06:25',
   runBuildCheck: process.env.AGENT_BUILD_CHECK !== 'false',
 };
 
