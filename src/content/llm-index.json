@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-07-09",
+  "fetched_at": "2026-07-10",
   "source": "Artificial Analysis Intelligence Index",
   "source_url": "https://artificialanalysis.ai/",
   "closed": [
@@ -9,14 +9,14 @@
       "score": 59.9
     },
     {
+      "name": "GPT-5.6 Sol",
+      "creator": "OpenAI",
+      "score": 58.9
+    },
+    {
       "name": "Claude Opus 4.8",
       "creator": "Anthropic",
       "score": 55.7
-    },
-    {
-      "name": "GPT-5.5",
-      "creator": "OpenAI",
-      "score": 54.8
     }
   ],
   "open": [
