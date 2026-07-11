@@ -1,19 +1,16 @@
 <!DOCTYPE html>
-<html lang="sv">
-<head><meta charset="UTF-8">
+<html lang="sv" class="no-js">
+<head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Museum of Artificial Intelligence</title>
+    <title>Museum of Artificial Intelligence — Stockholm</title>
+    <meta name="description" content="Ett oberoende ideellt museum i Stockholm. Föreläsningar, seminarier och praktiska workshops som utbildar om AI — dess möjligheter och fallgropar.">
+    <script>document.documentElement.classList.remove('no-js');</script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;900&amp;display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin="">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons/css/flag-icons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/tailwind.css">
-
-    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="../assets/css/home.css">
     <link rel="alternate" hreflang="en" href="../index.html">
     <link rel="alternate" hreflang="sv" href="./index.html">
     <!-- Favicon -->
@@ -23,316 +20,315 @@
     <link rel="icon" type="image/png" sizes="192x192" href="../favicon/web-app-manifest-192x192.png">
     <link rel="icon" type="image/png" sizes="512x512" href="../favicon/web-app-manifest-512x512.png">
     <link rel="icon" href="../favicon/favicon.ico" sizes="any">
-    <style>
-        /* Alternating text colors for client list (higher contrast) */
-        .clients-list > li:nth-child(odd) { color: rgb(241 245 249); /* slate-100 */ }
-        .clients-list > li:nth-child(even) { color: rgb(148 163 184); /* slate-400 */ }
-        /* Monospace title with outline for brand */
-        .brand-outline {
-            -webkit-text-stroke: 1px rgba(2, 6, 23, 0.8); /* slate-950 */
-            text-shadow: 0 1px 2px rgba(2, 6, 23, 0.6);
-        }
-        /* Pulse for the daily news card's live dot */
-        /* Info popover on data cards */
-        .card-info summary::-webkit-details-marker { display: none; }
-        .card-info summary::marker { content: ''; }
-        .daily-live-dot { animation: dailyPulse 2.4s ease-in-out infinite; }
-        @keyframes dailyPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
-    </style>
 </head>
-<body>
+<body class="wall">
 
-    <!-- Header Navigation -->
-    <header class="w-full z-50">
-        <div class="container mx-auto px-0 py-0">
-            <nav class="py-1 px-4 bg-transparent flex flex-col md:flex-row md:justify-between md:items-center">
-                <div class="flex items-center space-x-2">
-                    <div class="select-none">
-                        <img src="../images/mai-logos/logo_in_3d_2_darkened.avif" alt="Museum of Artificial Intelligence" class="w-[360px] md:w-[560px] lg:w-[720px] h-auto object-contain" loading="lazy" draggable="false">
-                    </div>
-                    <!-- Desktop/tablet language flags -->
-                    <div class="hidden md:flex items-center ml-3 space-x-3">
-                        <a href="../index.html" class="opacity-80 hover:opacity-100" title="English">
-                            <span class="fi fi-gb text-2xl"></span>
-                        </a>
-                        <a href="index.html" class="opacity-80 hover:opacity-100" title="Svenska">
-                            <span class="fi fi-se text-2xl"></span>
-                        </a>
-                    </div>
-                </div>
-                <div class="flex flex-wrap gap-6 justify-center md:justify-start mt-3 md:mt-0">
-                    <!-- Menylänkar flyttade till fotens resurssektion; språkflaggor finns kvar nedan för mobil -->
-                    <!-- Mobile language flags (shown below links) -->
-                    <div class="flex md:hidden items-center gap-4 w-full justify-center">
-                        <a href="../index.html" class="opacity-80 hover:opacity-100" title="English">
-                            <span class="fi fi-gb text-2xl"></span>
-                        </a>
-                        <a href="index.html" class="opacity-80 hover:opacity-100" title="Svenska">
-                            <span class="fi fi-se text-2xl"></span>
-                        </a>
+    <a href="#main" class="skip-link">Hoppa till innehållet</a>
+
+    <!-- Header -->
+    <header class="site-header sticky top-0 z-50" role="banner">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between gap-4 py-3.5">
+                <a href="/sv/index.html" class="flex items-center gap-3 no-underline min-w-0" aria-label="Museum of Artificial Intelligence — startsida">
+                    <span class="brand-mark" aria-hidden="true">MAI</span>
+                    <span class="font-mono-ui leading-tight min-w-0">
+                        <span class="block text-[0.72rem] tracking-[0.18em] uppercase text-[var(--ink)]">Museum of Artificial Intelligence</span>
+                        <span class="hidden sm:block text-[0.62rem] tracking-[0.28em] uppercase text-[var(--ink-faint)]">Stockholm — ideell förening</span>
+                    </span>
+                </a>
+                <nav class="hidden lg:flex items-center gap-7" role="navigation" aria-label="Huvudnavigation">
+                    <a href="#program" class="nav-link-m">Program</a>
+                    <a href="#today" class="nav-link-m">Idag</a>
+                    <a href="/sv/pages/about.html" class="nav-link-m">Om oss</a>
+                    <a href="/sv/pages/journal.html" class="nav-link-m">Journal</a>
+                    <a href="/sv/pages/contact.html" class="nav-link-m">Kontakt</a>
+                </nav>
+                <div class="flex items-center gap-5">
+                    <a href="/sv/pages/plan-workshop.html" class="btn-primary btn-compact header-cta">Boka en workshop</a>
+                    <div class="lang-toggle flex items-center gap-1.5" role="group" aria-label="Språkval">
+                        <a href="../index.html" lang="en" title="Switch to English">EN</a>
+                        <span aria-hidden="true">/</span>
+                        <span class="active" aria-current="true" lang="sv">SV</span>
                     </div>
                 </div>
+            </div>
+            <!-- Mobile wayfinding row -->
+            <nav class="lg:hidden flex items-center gap-6 overflow-x-auto pb-3 -mt-0.5" aria-label="Huvudnavigation (mobil)">
+                <a href="#program" class="nav-link-m">Program</a>
+                <a href="#today" class="nav-link-m">Idag</a>
+                <a href="/sv/pages/about.html" class="nav-link-m">Om oss</a>
+                <a href="/sv/pages/journal.html" class="nav-link-m">Journal</a>
+                <a href="/sv/pages/contact.html" class="nav-link-m">Kontakt</a>
+                <a href="/sv/pages/plan-workshop.html" class="nav-link-m" style="color:var(--brass)">Boka&nbsp;→</a>
             </nav>
         </div>
     </header>
 
-    <!-- Hero Section -->
+    <main id="main">
 
-
-    <section class="flex items-center py-6 md:py-8">
-        <div class="container mx-auto px-4 pt-4 md:pt-6 pb-8 md:pb-10 lg:pb-12 flex flex-col items-center md:items-start md:flex-row">
-            <div class="flex-1 text-center md:text-left">
-                
-                <h1 class="text-3xl md:text-5xl font-black tracking-tighter mt-4 mb-5">
-                    <span class="relative inline-block">
-                        <span style="position:absolute;left:50%;top:0;transform:translate(-50%,-60%);z-index:10;white-space:nowrap" class="px-2 py-0.5 text-xs leading-none font-medium uppercase tracking-wide rounded-full cta-tab text-slate-900 shadow-md pointer-events-none select-none">BOKA NU</span>
-                        <a href="/sv/pages/plan-workshop.html" class="inline-flex items-center px-6 py-3 rounded-full cta-link cursor-pointer no-underline"><span class="gradient-text">Lär dig AI med oss!</span></a>
-                    </span>
-                </h1>
-                <p class="text-xl text-slate-300 mb-6 max-w-3xl">Alla har en åsikt om AI. Få har en oberoende. Museum of Artificial Intelligence är en ideell organisation med ett enda uppdrag: att utbilda, inte att sälja. Våra föreläsningar, seminarier och praktiska workshops utforskar både AI:s möjligheter och fallgropar – för erfarna yrkesverksamma såväl som nyfikna nybörjare.</p>
-                <a href="/sv/pages/learn-more.html" class="inline-flex items-center gap-2 px-5 py-2.5 mb-8 rounded-full border border-cyan-400/50 text-cyan-300 hover:bg-cyan-400/10 hover:border-cyan-300 transition no-underline text-base font-medium">Läs mer <span aria-hidden="true">→</span></a>
-            </div>
-            <!-- Daily rotating image (injected at build by tools/inject-daily.js) -->
-            <div class="flex-1 flex justify-center mt-8 md:mt-0">
-                <!-- DAILY_IMAGE -->
-            </div>
-        </div>
-        <div class="ai-neural"></div>
-    </section>
-
-    <!-- Daily AI content (injected at build by tools/inject-daily.js) -->
-    <section class="pb-14 pt-2">
-        <div class="container mx-auto px-4">
-<!-- DAILY_CARDS -->
-        </div>
-    </section>
-
-    <!-- Featured Exhibits Section -->
-    <section class="py-20 lg:py-16 xl:py-14 2xl:pt-10 2xl:pb-12">
-        <div class="container mx-auto px-4">
-            <h2 class="section-title text-4xl font-bold text-center mb-20 lg:mb-16 xl:mb-14 2xl:mb-12">Föreläsningar, seminarier och workshops</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="feature-card glass-card rounded-xl overflow-hidden transition duration-500 hover:shadow-xl">
-                    <div class="h-56 relative overflow-hidden">
-                        <img src="../images/evolution-AI.avif" alt="" class="w-full h-full object-cover object-center pointer-events-none select-none" loading="lazy" draggable="false">
-                        <div class="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/20"></div>
-                    </div>
-                    <div class="p-6">
-                        <span class="bg-cyan-900 text-cyan-300 text-xs font-semibold px-2 py-1 rounded">FÖRELÄSNING</span>
-                        <h3 class="text-xl font-bold mt-4">AI:s utveckling</h3>
-                        <p class="text-slate-400 mt-2">En koncentrerad historia från filosofiska rötter till dagens teknik</p>
-                        <div class="mt-6 flex justify-end items-center">
-                            <a href="/sv/pages/explore.html" class="text-cyan-400 hover:text-cyan-300 transition">Utforska »</a>
+        <!-- Hero -->
+        <section class="pt-14 md:pt-20 pb-16 md:pb-24">
+            <div class="container mx-auto px-4">
+                <div class="flex flex-col lg:flex-row items-center lg:items-start gap-12 lg:gap-16">
+                    <div class="flex-1 max-w-2xl">
+                        <p class="kicker flex items-center gap-4 mb-7">
+                            <span class="hero-rule" aria-hidden="true"></span>
+                            Oberoende · Ideell · Stockholm
+                        </p>
+                        <h1 class="hero-display mb-7">
+                            Alla har en åsikt om&nbsp;AI. <em>Få har en oberoende.</em>
+                        </h1>
+                        <p class="lede mb-9">
+                            Museum of Artificial Intelligence är en ideell organisation med ett enda uppdrag:
+                            att utbilda, inte att sälja. Våra föreläsningar, seminarier och praktiska workshops
+                            utforskar både AI:s möjligheter och fallgropar — för erfarna yrkesverksamma såväl
+                            som nyfikna nybörjare.
+                        </p>
+                        <div class="flex flex-wrap items-center gap-4 mb-10">
+                            <a href="/sv/pages/plan-workshop.html" class="btn-primary">Boka en workshop <span aria-hidden="true">→</span></a>
+                            <a href="/sv/pages/learn-more.html" class="btn-ghost">AI på gott och ont</a>
                         </div>
+                        <p class="hero-footnote">Besök efter överenskommelse — Närkesgatan 6, Stockholm</p>
                     </div>
-                </div>
-
-                <div class="feature-card glass-card rounded-xl overflow-hidden transition duration-500 hover:shadow-xl">
-                    <div class="h-56 relative overflow-hidden">
-                        <img src="../images/hands-on-workshops.avif" alt="" class="w-full h-full object-cover object-center pointer-events-none select-none" loading="lazy" draggable="false">
-                        <div class="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/20"></div>
-                    </div>
-                    <div class="p-6">
-                        <span class="bg-cyan-900 text-cyan-300 text-xs font-semibold px-2 py-1 rounded">WORKSHOP</span>
-                        <h3 class="text-xl font-bold mt-4">Praktiska Workshops</h3>
-                        <p class="text-slate-400 mt-2">Lär dig använda AI-verktyg för verkliga problem.</p>
-                        <div class="mt-6 flex justify-end items-center">
-                            <a href="/sv/pages/explore.html" class="text-cyan-400 hover:text-cyan-300 transition">Utforska »</a>
+                    <!-- Daily rotating image (injected at build by tools/inject-daily.js) -->
+                    <div class="flex-none flex flex-col items-center gap-4 reveal">
+                        <div class="artwork-frame">
+                            <!-- DAILY_IMAGE -->
                         </div>
-                    </div>
-                </div>
-
-                <div class="feature-card glass-card rounded-xl overflow-hidden transition duration-500 hover:shadow-xl">
-                    <div class="h-56 relative overflow-hidden">
-                        <img src="../images/Human-AI-Interaction.avif" alt="" class="w-full h-full object-cover object-center pointer-events-none select-none" loading="lazy" draggable="false">
-                        <div class="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/20"></div>
-                    </div>
-                    <div class="p-6">
-                        <span class="bg-cyan-900 text-cyan-300 text-xs font-semibold px-2 py-1 rounded">SEMINARIUM</span>
-                        <h3 class="text-xl font-bold mt-4">Människa och AI</h3>
-                        <p class="text-slate-400 mt-2">Hur kan AI förändra hur vi lever och arbetar?</p>
-                        <div class="mt-6 flex justify-end items-center">
-                            <a href="/sv/pages/explore.html" class="text-cyan-400 hover:text-cyan-300 transition">Utforska »</a>
-                        </div>
+                        <p class="artwork-plaque">Ur samlingen · byts varje dag</p>
                     </div>
                 </div>
             </div>
+        </section>
 
-            <div class="text-center mt-12">
-                <a href="/sv/pages/tailored.html" class="glass-card hover:border-indigo-500 px-8 py-4 rounded-full font-bold transition duration-300 inline-flex items-center">Föreläsningar och workshops anpassade efter dina behov<i class="fa-solid fa-arrow-right ml-3"></i>
+        <!-- Hall 01 — Program -->
+        <section id="program" class="py-16 md:py-24 scroll-mt-24">
+            <div class="container mx-auto px-4">
+                <div class="hall-header pt-8 md:pt-10 mb-12 md:mb-16 flex flex-col md:flex-row md:items-end gap-3 md:gap-10">
+                    <span class="hall-no">Sal 01 — Program</span>
+                    <h2 class="hall-title text-3xl md:text-5xl">Föreläsningar, seminarier &amp; workshops</h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+                    <article class="plaque reveal">
+                        <div class="plaque-media">
+                            <img src="../images/evolution-AI.avif" alt="" loading="lazy" draggable="false">
+                        </div>
+                        <div class="p-7 flex flex-col flex-1">
+                            <div class="flex items-baseline justify-between">
+                                <span class="plaque-label">Föreläsning</span>
+                                <span class="plaque-no">№ 1</span>
+                            </div>
+                            <h3>AI:s utveckling</h3>
+                            <p class="mt-3 flex-1">En koncentrerad historia från filosofiska rötter till dagens teknik.</p>
+                            <div class="mt-7">
+                                <a href="/sv/pages/explore.html" class="link-m">Utforska <span aria-hidden="true">→</span></a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="plaque reveal reveal-d1">
+                        <div class="plaque-media">
+                            <img src="../images/hands-on-workshops.avif" alt="" loading="lazy" draggable="false">
+                        </div>
+                        <div class="p-7 flex flex-col flex-1">
+                            <div class="flex items-baseline justify-between">
+                                <span class="plaque-label">Workshop</span>
+                                <span class="plaque-no">№ 2</span>
+                            </div>
+                            <h3>Praktiska workshops</h3>
+                            <p class="mt-3 flex-1">Lär dig använda AI-verktyg för verkliga problem.</p>
+                            <div class="mt-7">
+                                <a href="/sv/pages/explore.html" class="link-m">Utforska <span aria-hidden="true">→</span></a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="plaque reveal reveal-d2">
+                        <div class="plaque-media">
+                            <img src="../images/Human-AI-Interaction.avif" alt="" loading="lazy" draggable="false">
+                        </div>
+                        <div class="p-7 flex flex-col flex-1">
+                            <div class="flex items-baseline justify-between">
+                                <span class="plaque-label">Seminarium</span>
+                                <span class="plaque-no">№ 3</span>
+                            </div>
+                            <h3>Människa och AI</h3>
+                            <p class="mt-3 flex-1">Hur kan AI förändra hur vi lever och arbetar?</p>
+                            <div class="mt-7">
+                                <a href="/sv/pages/explore.html" class="link-m">Utforska <span aria-hidden="true">→</span></a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+
+                <a href="/sv/pages/tailored.html" class="plaque-bar reveal mt-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4 px-7 py-6 no-underline">
+                    <span class="font-serif-display text-xl md:text-2xl" style="color:var(--ink)">Föreläsningar och workshops anpassade efter era behov</span>
+                    <span class="link-m">Planera med oss <span aria-hidden="true">→</span></span>
                 </a>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Clients Section -->
-    <section class="py-20 lg:py-16 xl:py-14 2xl:py-12">
-        <div class="container mx-auto px-4">
-            <h2 class="section-title text-3xl font-bold text-center mb-6">Kunder</h2>
-            <div class="glass-card p-6 rounded-xl">
-                <ul class="columns-2 md:columns-4 gap-6 [column-fill:balance] text-slate-300 text-sm clients-list">
-                    <li class="mb-2 text-slate-300">Aahus Business College</li>
-                    <li class="mb-2 text-slate-200">Biblioteksutveckling</li>
-                    <li class="mb-2 text-slate-300">DIS Stockholm</li>
-                    <li class="mb-2 text-slate-200">Dramaten</li>
-                    <li class="mb-2 text-slate-300">Förenningen Media</li>
-                    <li class="mb-2 text-slate-200">Fryshuset Stockholm</li>
-                    <li class="mb-2 text-slate-300">Handelshögskola Stockholm</li>
-                    <li class="mb-2 text-slate-200">Länsstyrelsen Örebro Län</li>
-                    <li class="mb-2 text-slate-300">Lundbergs Fastighets AB</li>
-                    <li class="mb-2 text-slate-200">Grenspecialisten</li>
-                    <li class="mb-2 text-slate-300">MTA</li>
-                    <li class="mb-2 text-slate-200">Praktiskagymnasiet</li>
-                    <li class="mb-2 text-slate-300">Scarab AB</li>
-                    <li class="mb-2 text-slate-200">Skeppsholmens Folkhögskola</li>
-                    <li class="mb-2 text-slate-300">Söderköpings kommun</li>
-                    <li class="mb-2 text-slate-200">Stiftelsen institutt for journalistikk (Norway)</li>
-                    <li class="mb-2 text-slate-300">Stockholm AI</li>
-                    <li class="mb-2 text-slate-200">Stockholm International School</li>
-                    <li class="mb-2 text-slate-300">Sweco Sverige AB</li>
-                    <li class="mb-2 text-slate-200">Travel Service</li>
-                    <li class="mb-2 text-slate-300">Utrikesdepartements Konstförening</li>
-                    <li class="mb-2 text-slate-200">Viktor Rydberg gymnasium</li>
-                    <li class="mb-2 text-slate-300">Violet AI</li>
+        <!-- Hall 02 — Idag på museet (daily AI content) -->
+        <section id="today" class="py-16 md:py-24 scroll-mt-24">
+            <div class="container mx-auto px-4">
+                <div class="hall-header pt-8 md:pt-10 mb-6 md:mb-8 flex flex-col md:flex-row md:items-end gap-3 md:gap-10">
+                    <span class="hall-no">Sal 02 — Live</span>
+                    <h2 class="hall-title text-3xl md:text-5xl">Idag på museet</h2>
+                </div>
+                <p class="lede mb-12 md:max-w-3xl">
+                    Nytt varje morgon: en essä ur AI-historien, en nyhetssammanfattning och färska
+                    avläsningar av modellandskapet — framtaget dagligen av museets egen AI-agent.
+                </p>
+<!-- DAILY_CARDS -->
+            </div>
+        </section>
+
+        <!-- Hall 03 — Gästbok (kunder) -->
+        <section class="py-16 md:py-24">
+            <div class="container mx-auto px-4">
+                <div class="hall-header pt-8 md:pt-10 mb-12 flex flex-col md:flex-row md:items-end gap-3 md:gap-10">
+                    <span class="hall-no">Sal 03 — Gästbok</span>
+                    <h2 class="hall-title text-3xl md:text-5xl">De har lärt sig med oss</h2>
+                </div>
+                <ul class="guest-list columns-1 sm:columns-2 lg:columns-4 gap-10 [column-fill:balance] reveal">
+                    <li>Aahus Business College</li>
+                    <li>Biblioteksutveckling</li>
+                    <li>DIS Stockholm</li>
+                    <li>Dramaten</li>
+                    <li>Förenningen Media</li>
+                    <li>Fryshuset Stockholm</li>
+                    <li>Handelshögskola Stockholm</li>
+                    <li>Länsstyrelsen Örebro Län</li>
+                    <li>Lundbergs Fastighets AB</li>
+                    <li>Grenspecialisten</li>
+                    <li>MTA</li>
+                    <li>Praktiskagymnasiet</li>
+                    <li>Scarab AB</li>
+                    <li>Skeppsholmens Folkhögskola</li>
+                    <li>Söderköpings kommun</li>
+                    <li>Stiftelsen institutt for journalistikk (Norge)</li>
+                    <li>Stockholm AI</li>
+                    <li>Stockholm International School</li>
+                    <li>Sweco Sverige AB</li>
+                    <li>Travel Service</li>
+                    <li>Utrikesdepartements Konstförening</li>
+                    <li>Viktor Rydberg gymnasium</li>
+                    <li>Violet AI</li>
                 </ul>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Upcoming Events -->
-    <section id="events" class="py-20 lg:py-16 xl:py-14 2xl:py-12">
-        <div class="container mx-auto px-4">
-            <h2 class="section-title text-4xl font-bold text-center mb-6">Kommande evenemang</h2>
-            <p class="text-center text-xl text-slate-400 max-w-2xl mx-auto mb-10">Nya föreläsningar, seminarier och workshops annonseras här och i vårt nyhetsbrev.</p>
-            <div class="max-w-3xl mx-auto glass-card p-8 rounded-xl text-center">
-                <p class="text-slate-300 mb-6">Vill ni att vi kommer till er under tiden? Vi skräddarsyr föreläsningar och workshops för företag, skolor och organisationer.</p>
-                <div class="flex flex-wrap gap-4 justify-center">
-                    <a href="/sv/pages/plan-workshop.html" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-full font-medium transition duration-300">Planera en workshop</a>
-                    <a href="/sv/pages/journal.html" class="glass-card hover:border-indigo-400 px-6 py-3 rounded-full font-medium transition duration-300">Läs vårt nyhetsbrev</a>
+        <!-- Hall 04 — Besök & delta -->
+        <section id="events" class="py-16 md:py-24 scroll-mt-24">
+            <div class="container mx-auto px-4">
+                <div class="hall-header pt-8 md:pt-10 mb-6 md:mb-8 flex flex-col md:flex-row md:items-end gap-3 md:gap-10">
+                    <span class="hall-no">Sal 04 — Besök</span>
+                    <h2 class="hall-title text-3xl md:text-5xl">Delta</h2>
                 </div>
-            </div>
-        </div>
-    </section>
+                <p class="lede mb-12 md:max-w-3xl">
+                    Nya föreläsningar, seminarier och workshops annonseras här och i vårt nyhetsbrev.
+                    Vill ni att vi kommer till er under tiden? Vi skräddarsyr för företag, skolor och organisationer.
+                </p>
 
-    <!-- Membership & Contact -->
-    <section class="py-12 lg:py-10">
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-                <div class="glass-card p-8 rounded-2xl flex flex-col">
-                    <h2 class="text-2xl font-bold mb-3">Bli medlem</h2>
-                    <p class="text-slate-300 mb-6 flex-1">Fri tillgång till utställningar, förtur till bokning och 20 % rabatt på betalda evenemang. Medlemmar får tidig tillgång till våra "Vibe Coding"-workshops med start i mars 2026.</p>
-                    <a href="/sv/pages/membership.html" class="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white px-6 py-3 rounded-full font-bold transition-all duration-300 inline-flex items-center self-start">Utforska medlemskap<i class="fa-solid fa-gem ml-3"></i></a>
-                </div>
-                <div class="glass-card p-8 rounded-2xl flex flex-col">
-                    <h2 class="text-2xl font-bold mb-3">Planera ett besök hos er</h2>
-                    <p class="text-slate-300 mb-6 flex-1">Berätta om er grupp så skräddarsyr vi en föreläsning, ett seminarium eller en workshop efter era behov.</p>
-                    <a href="/sv/pages/contact.html" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-full font-bold transition duration-300 inline-flex items-center self-start">Kontakta oss<i class="fa-solid fa-arrow-right ml-3"></i></a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer class="pt-20 lg:pt-16 xl:pt-14 2xl:pt-12 pb-10 lg:pb-8 xl:pb-7 2xl:pb-6 border-t border-slate-800">
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
-                <div class="md:col-span-2">
-                    <div class="flex items-center space-x-3 mb-6">
-                        <div class="bg-indigo-600 rounded-lg w-8 h-8 p-1 flex items-center justify-center">
-                            <img src="../images/mai-logos/logo_in_3d_2_darkened.avif" alt="MAI logo" class="w-full h-full object-contain" loading="lazy">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+                    <article class="plaque reveal">
+                        <div class="p-7 flex flex-col flex-1">
+                            <span class="plaque-label">För er grupp</span>
+                            <h3>Planera ett besök hos er</h3>
+                            <p class="mt-3 flex-1">Berätta om er grupp så skräddarsyr vi en föreläsning, ett seminarium eller en workshop efter era behov.</p>
+                            <div class="mt-7">
+                                <a href="/sv/pages/contact.html" class="link-m">Kontakta oss <span aria-hidden="true">→</span></a>
+                            </div>
                         </div>
-                        <span class="font-bold text-xl">Museum of Artificial Intelligence</span>
+                    </article>
+
+                    <article class="plaque reveal reveal-d1">
+                        <div class="p-7 flex flex-col flex-1">
+                            <span class="plaque-label">Medlemskap</span>
+                            <h3>Bli medlem</h3>
+                            <p class="mt-3 flex-1">Fri tillgång till utställningar, förtur till bokning och 20 % rabatt på betalda evenemang. Medlemmar får tidig tillgång till våra "Vibe Coding"-workshops med start i mars 2026.</p>
+                            <div class="mt-7">
+                                <a href="/sv/pages/membership.html" class="link-m">Utforska medlemskap <span aria-hidden="true">→</span></a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="plaque reveal reveal-d2">
+                        <div class="p-7 flex flex-col flex-1">
+                            <span class="plaque-label">Journal</span>
+                            <h3>Läs vårt nyhetsbrev</h3>
+                            <p class="mt-3 flex-1">Essäer, evenemang och oberoende kommentarer om vart AI är på väg — direkt till din inkorg.</p>
+                            <div class="mt-7">
+                                <a href="/sv/pages/journal.html" class="link-m">Läs journalen <span aria-hidden="true">→</span></a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer pt-16 pb-10 mt-10" role="contentinfo">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+                <div class="md:col-span-2">
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="brand-mark" aria-hidden="true">MAI</span>
+                        <span class="font-mono-ui text-[0.72rem] tracking-[0.18em] uppercase" style="color:var(--ink)">Museum of Artificial Intelligence</span>
                     </div>
-                    <p class="text-slate-400 max-w-md">Museum of Artificial Intelligence drivs av en ideell organisation som utforskar det förflutna, nutiden och framtiden för artificiell intelligens genom uppslukande utställningar, utbildningsprogram och publika evenemang.</p>
-                    <div class="flex space-x-4 mt-6">
-                        <a href="#" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-slate-700">
-                            <i class="fa-brands fa-twitter text-cyan-400"></i>
+                    <p class="max-w-md" style="color:var(--ink-dim);line-height:1.7">
+                        Museum of Artificial Intelligence drivs av en ideell organisation som utforskar
+                        AI:s historia, nutid och framtid genom utställningar, utbildning och publika evenemang.
+                    </p>
+                    <div class="flex gap-3 mt-7">
+                        <a href="#" class="social-link" aria-label="X (Twitter)">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.47l8.6-9.83L0 1.15h7.6l5.24 6.93 6.06-6.93Zm-1.29 19.5h2.04L6.49 3.24H4.3l13.31 17.41Z"/></svg>
                         </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-slate-700">
-                            <i class="fa-brands fa-linkedin-in text-cyan-400"></i>
+                        <a href="#" class="social-link" aria-label="LinkedIn">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13Zm1.78 13.02H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0Z"/></svg>
                         </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-slate-700">
-                            <i class="fa-brands fa-instagram text-cyan-400"></i>
+                        <a href="#" class="social-link" aria-label="Instagram">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.72 3.72 0 0 1-1.38-.9 3.72 3.72 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41 1.27-.06 1.65-.07 4.85-.07ZM12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63a5.88 5.88 0 0 0-2.13 1.38A5.88 5.88 0 0 0 .63 4.14C.33 4.9.13 5.78.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.31.8.72 1.47 1.38 2.13a5.88 5.88 0 0 0 2.13 1.38c.76.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56a5.88 5.88 0 0 0 2.13-1.38 5.88 5.88 0 0 0 1.38-2.13c.3-.76.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91a5.88 5.88 0 0 0-1.38-2.13A5.88 5.88 0 0 0 19.86.63c-.76-.3-1.64-.5-2.91-.56C15.67.01 15.26 0 12 0Zm0 5.84a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32ZM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8Zm7.85-10.4a1.44 1.44 0 1 1-2.88 0 1.44 1.44 0 0 1 2.88 0Z"/></svg>
                         </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-slate-700">
-                            <i class="fa-brands fa-youtube text-cyan-400"></i>
+                        <a href="#" class="social-link" aria-label="YouTube">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.51 3.55 12 3.55 12 3.55s-7.51 0-9.38.5A3.02 3.02 0 0 0 .5 6.19C0 8.07 0 12 0 12s0 3.93.5 5.81a3.02 3.02 0 0 0 2.12 2.14c1.87.5 9.38.5 9.38.5s7.51 0 9.38-.5a3.02 3.02 0 0 0 2.12-2.14C24 15.93 24 12 24 12s0-3.93-.5-5.81ZM9.55 15.57V8.43L15.82 12l-6.27 3.57Z"/></svg>
                         </a>
                     </div>
                 </div>
 
                 <div>
-                    <h3 class="font-bold text-lg mb-6">Vi finns på</h3>
-                    <ul class="space-y-4 text-slate-400">
-                        <li class="flex space-x-3">
-                            <i class="fa-solid fa-location-dot mt-1.5 text-blue-500"></i>
-                            <span><span>Närkesgatan 6</span><br>Stockholm, Sverige</span>
-                        </li>
-                        <li class="flex space-x-3">
-                            <i class="fa-solid fa-clock mt-1.5 text-purple-500"></i>
-                            <span>Besök endast efter överenskommelse<br></span>
-                        </li>
+                    <h3 class="footer-h mb-6">Adress</h3>
+                    <ul class="space-y-3" style="color:var(--ink-dim)">
+                        <li>Närkesgatan 6<br>Stockholm</li>
+                        <li>Besök efter överenskommelse</li>
                     </ul>
                 </div>
 
                 <div>
-                    <h3 class="font-bold text-lg mb-6">Resurser</h3>
-                    <ul class="space-y-4 text-slate-400">
-                        <li>
-                            <a href="/sv/pages/events.html" class="hover:text-cyan-400 transition">
-                                <i class="fa-solid fa-chevron-right mr-2 text-xs text-slate-600"></i>Evenemang</a>
-                        </li>
-                        <li>
-                            <a href="/sv/pages/about.html" class="hover:text-cyan-400 transition">
-                                <i class="fa-solid fa-chevron-right mr-2 text-xs text-slate-600"></i>Om</a>
-                        </li>
-                        <li>
-                            <a href="/sv/pages/journal.html" class="hover:text-cyan-400 transition">
-                                <i class="fa-solid fa-chevron-right mr-2 text-xs text-slate-600"></i>Nyhetsbrev</a>
-                        </li>
-                        <li>
-                            <a href="/sv/pages/learn-more.html" class="hover:text-cyan-400 transition">
-                                <i class="fa-solid fa-chevron-right mr-2 text-xs text-slate-600"></i>Den gode, den onde, den fule</a>
-                        </li>
-                       <!--  <li>
-                            <a href="sv/pages/resources.html#educational-resources" class="hover:text-cyan-400 transition">
-                                <i class="fa-solid fa-chevron-right mr-2 text-xs text-slate-600"></i>
-                                Utbildningsresurser
-                            </a>
-                        </li> -->
-                       <!--  <li>
-                            <a href="sv/pages/resources.html#research-publications" class="hover:text-cyan-400 transition">
-                                <i class="fa-solid fa-chevron-right mr-2 text-xs text-slate-600"></i>
-                                Forskningspublikationer
-                            </a>
-                        </li> -->
-                        <li>
-                            <a href="/sv/pages/meeting.html" class="hover:text-cyan-400 transition">
-                                <i class="fa-solid fa-chevron-right mr-2 text-xs text-slate-600"></i>Mötes- och föreningsdokument</a>
-                        </li>
-                        <li>
-                            <a href="/sv/pages/resources.html#press-center" class="hover:text-cyan-400 transition">
-                                <i class="fa-solid fa-chevron-right mr-2 text-xs text-slate-600"></i>Press</a>
-                        </li>
-                        <li>
-                            <a href="/sv/pages/resources.html#careers" class="hover:text-cyan-400 transition">
-                                <i class="fa-solid fa-chevron-right mr-2 text-xs text-slate-600"></i>Anmäla dig som volontär</a>
-                        </li>
-                        <li>
-                            <a href="/sv/pages/resources.html#faqs" class="hover:text-cyan-400 transition">
-                                <i class="fa-solid fa-chevron-right mr-2 text-xs text-slate-600"></i>Vanliga frågor</a>
-                        </li>
-                        <li>
-                            <a href="/sv/pages/contact.html" class="hover:text-cyan-400 transition">
-                                <i class="fa-solid fa-chevron-right mr-2 text-xs text-slate-600"></i>Kontakta oss</a>
-                        </li>
+                    <h3 class="footer-h mb-6">Resurser</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/sv/pages/events.html" class="footer-link">Evenemang</a></li>
+                        <li><a href="/sv/pages/about.html" class="footer-link">Om oss</a></li>
+                        <li><a href="/sv/pages/journal.html" class="footer-link">Nyhetsbrev</a></li>
+                        <li><a href="/sv/pages/learn-more.html" class="footer-link">AI på gott och ont</a></li>
+                        <li><a href="/sv/pages/meeting.html" class="footer-link">Mötesdokument</a></li>
+                        <li><a href="/sv/pages/resources.html#press-center" class="footer-link">Press</a></li>
+                        <li><a href="/sv/pages/resources.html#careers" class="footer-link">Volontär!</a></li>
+                        <li><a href="/sv/pages/resources.html#faqs" class="footer-link">Vanliga frågor</a></li>
+                        <li><a href="/sv/pages/contact.html" class="footer-link">Kontakta oss</a></li>
                     </ul>
                 </div>
             </div>
 
-            <div class="border-t border-slate-800 mt-16 lg:mt-12 xl:mt-10 2xl:mt-8 pt-8 lg:pt-6 xl:pt-5 2xl:pt-4 text-center text-slate-500">
-                <p><span>© 2026 Museum of Artificial Intelligence. Alla rättigheter förbehållna. | Designad med</span><i class="fa-solid fa-heart text-rose-500"></i>för mänsklighetens framtid.</p>
+            <div class="colophon border-t mt-14 pt-7 flex flex-col sm:flex-row justify-between gap-2" style="border-color:var(--hairline)">
+                <p>© 2026 Museum of Artificial Intelligence. Alla rättigheter förbehållna.</p>
+                <p>Formgivet med omsorg om mänsklighetens framtid.</p>
             </div>
         </div>
     </footer>
 
-    <script src="../assets/js/script.js"></script>
-</body></html>
+    <script src="../assets/js/home.js" defer></script>
+</body>
+</html>
