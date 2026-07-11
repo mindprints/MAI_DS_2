@@ -3,7 +3,10 @@ module.exports = {
     './src/site/**/*.html',
     './src/templates/**/*.html',
     './src/site/assets/js/**/*.js',
-    './src/site/journal.js'
+    './src/site/journal.js',
+    // Daily home-page cards are injected into public/ after the CSS build,
+    // so their utility classes must be scanned here to survive purging.
+    './tools/inject-daily.js'
   ],
   safelist: [
     // Classes used at runtime in JS or conditionally

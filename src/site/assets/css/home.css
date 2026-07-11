@@ -1,0 +1,427 @@
+/* ------------------------------------------------------------------
+   Home page design system — "gallery hall" redesign (preview).
+   Loaded only by index.html and sv/index.html; interior pages keep
+   styles.css. The daily cards injected by tools/inject-daily.js carry
+   their own inline colors and are designed to sit on this background.
+   ------------------------------------------------------------------ */
+
+:root {
+    --bg:          #0b0c0f;   /* gallery wall, near-black with warm cast */
+    --bg-raise:    #12141a;   /* raised panel */
+    --bg-plaque:   #14161c;   /* card body */
+    --ink:         #eae4d6;   /* warm ivory */
+    --ink-dim:     #a9a08c;   /* secondary text */
+    --ink-faint:   #736c5d;   /* tertiary / colophon */
+    --hairline:    rgba(234, 228, 214, 0.14);
+    --hairline-strong: rgba(234, 228, 214, 0.28);
+    --brass:       #d4a04f;   /* accent — matches the archive card gold */
+    --brass-bright:#e8c583;
+    --brass-ink:   #191204;   /* text on brass */
+    --serif: 'Fraunces', Georgia, 'Times New Roman', serif;
+    --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    --sans: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--ink);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Faint architectural grid, like gallery wall panelling */
+.wall {
+    background-image:
+        linear-gradient(rgba(234, 228, 214, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(234, 228, 214, 0.025) 1px, transparent 1px);
+    background-size: 72px 72px;
+}
+
+::selection { background: var(--brass); color: var(--brass-ink); }
+
+.font-serif-display { font-family: var(--serif); }
+.font-mono-ui { font-family: var(--mono); }
+
+/* ---------- wayfinding ------------------------------------------- */
+
+.kicker {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--brass);
+}
+
+.hall-header { border-top: 1px solid var(--hairline-strong); }
+
+.hall-no {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    color: var(--ink-faint);
+    white-space: nowrap;
+}
+
+.hall-title {
+    font-family: var(--serif);
+    font-weight: 420;
+    font-variation-settings: 'opsz' 60;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    text-wrap: balance;
+}
+
+/* ---------- header ------------------------------------------------ */
+
+.site-header {
+    background: rgba(11, 12, 15, 0.88);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--hairline);
+}
+
+.brand-mark {
+    width: 34px;
+    height: 34px;
+    border: 1px solid var(--brass);
+    color: var(--brass);
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.08em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+}
+
+.nav-link-m {
+    font-family: var(--mono);
+    font-size: 0.74rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    padding: 0.4rem 0.15rem;
+    border-bottom: 1px solid transparent;
+    transition: color 0.2s ease, border-color 0.2s ease;
+    white-space: nowrap;
+}
+.nav-link-m:hover { color: var(--ink); border-bottom-color: var(--brass); }
+.nav-link-m[aria-current="true"] { color: var(--brass); }
+
+.lang-toggle {
+    font-family: var(--mono);
+    font-size: 0.74rem;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+}
+.lang-toggle a { color: var(--ink-dim); transition: color 0.2s ease; }
+.lang-toggle a:hover { color: var(--brass-bright); }
+.lang-toggle .active { color: var(--brass); }
+
+/* ---------- buttons ----------------------------------------------- */
+
+.btn-primary {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: var(--brass);
+    color: var(--brass-ink);
+    padding: 0.85rem 1.6rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    border: 1px solid var(--brass);
+    transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
+}
+.btn-primary:hover { background: var(--brass-bright); border-color: var(--brass-bright); transform: translateY(-1px); }
+
+.btn-ghost {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    padding: 0.85rem 1.6rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    border: 1px solid var(--hairline-strong);
+    transition: color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+}
+.btn-ghost:hover { color: var(--ink); border-color: var(--brass); transform: translateY(-1px); }
+
+.btn-compact { padding: 0.55rem 1.05rem; font-size: 0.72rem; }
+
+/* Header CTA: hidden on small screens (the mobile nav row has a Book link).
+   Kept here because .btn-primary's display would override Tailwind's .hidden. */
+.header-cta { display: none; }
+@media (min-width: 640px) { .header-cta { display: inline-flex; } }
+
+/* Mono text link with animated underline */
+.link-m {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--brass);
+    position: relative;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.45rem;
+}
+.link-m::after {
+    content: '';
+    position: absolute;
+    left: 0; bottom: -4px;
+    width: 100%; height: 1px;
+    background: var(--brass);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s ease;
+}
+.link-m:hover::after { transform: scaleX(1); }
+
+/* ---------- hero --------------------------------------------------- */
+
+.hero-display {
+    font-family: var(--serif);
+    font-weight: 380;
+    font-variation-settings: 'opsz' 144;
+    font-size: clamp(2.4rem, 5.4vw, 4.4rem);
+    line-height: 1.06;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    text-wrap: balance;
+}
+.hero-display em {
+    font-style: italic;
+    font-weight: 420;
+    color: var(--brass-bright);
+}
+
+.hero-rule {
+    width: 56px;
+    height: 1px;
+    background: var(--brass);
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.lede {
+    font-size: 1.08rem;
+    line-height: 1.75;
+    color: var(--ink-dim);
+    max-width: 34rem;
+}
+
+.hero-footnote {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    color: var(--ink-faint);
+}
+
+/* ---------- framed daily artwork ----------------------------------- */
+
+.artwork-frame {
+    background: var(--bg-raise);
+    border: 1px solid var(--hairline-strong);
+    padding: 14px;                       /* the mat */
+    box-shadow: 0 30px 60px -25px rgba(0, 0, 0, 0.8);
+    position: relative;
+}
+.artwork-frame::after {                  /* inner mat line */
+    content: '';
+    position: absolute;
+    inset: 7px;
+    border: 1px solid var(--hairline);
+    pointer-events: none;
+}
+
+.daily-artwork {
+    display: block;
+    width: min(72vw, 340px);
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+}
+@media (min-width: 768px) {
+    .daily-artwork { width: 340px; }
+}
+
+.artwork-plaque {
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    border: 1px solid var(--hairline);
+    padding: 0.55rem 0.9rem;
+    display: inline-block;
+    background: var(--bg-raise);
+}
+
+/* ---------- plaque cards (program, visit) --------------------------- */
+
+.plaque {
+    background: var(--bg-plaque);
+    border: 1px solid var(--hairline);
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.25s ease, transform 0.25s ease;
+}
+.plaque:hover { border-color: var(--brass); transform: translateY(-3px); }
+
+.plaque-media {
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+    border-bottom: 1px solid var(--hairline);
+    position: relative;
+}
+.plaque-media img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    filter: saturate(0.82) contrast(1.02);
+    transition: transform 0.6s ease, filter 0.4s ease;
+}
+.plaque:hover .plaque-media img { transform: scale(1.035); filter: saturate(1) contrast(1.02); }
+
+.plaque-label {
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--brass);
+}
+
+.plaque-no {
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+}
+
+.plaque h3 {
+    font-family: var(--serif);
+    font-weight: 460;
+    font-size: 1.45rem;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    margin-top: 0.7rem;
+    color: var(--ink);
+}
+
+.plaque p { color: var(--ink-dim); line-height: 1.65; font-size: 0.95rem; }
+
+/* Wide plaque bar (tailored sessions) */
+.plaque-bar {
+    border: 1px solid var(--hairline-strong);
+    background: var(--bg-plaque);
+    transition: border-color 0.25s ease;
+}
+.plaque-bar:hover { border-color: var(--brass); }
+
+/* ---------- guestbook (clients) ------------------------------------ */
+
+.guest-list {
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    line-height: 2.1;
+    letter-spacing: 0.02em;
+}
+.guest-list li { break-inside: avoid; color: var(--ink-dim); }
+.guest-list li::before { content: '— '; color: var(--ink-faint); }
+
+/* ---------- footer -------------------------------------------------- */
+
+.site-footer { border-top: 1px solid var(--hairline-strong); background: #090a0c; }
+
+.footer-h {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+}
+
+.footer-link {
+    color: var(--ink-dim);
+    font-size: 0.9rem;
+    transition: color 0.2s ease;
+}
+.footer-link:hover { color: var(--brass-bright); }
+
+.social-link {
+    width: 38px; height: 38px;
+    border: 1px solid var(--hairline);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ink-dim);
+    transition: color 0.2s ease, border-color 0.2s ease;
+}
+.social-link:hover { color: var(--brass); border-color: var(--brass); }
+.social-link svg { width: 15px; height: 15px; fill: currentColor; }
+
+.colophon {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    color: var(--ink-faint);
+}
+
+/* ---------- reveal on scroll ---------------------------------------- */
+
+.reveal {
+    opacity: 0;
+    transform: translateY(26px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.is-visible { opacity: 1; transform: none; }
+.reveal-d1 { transition-delay: 0.1s; }
+.reveal-d2 { transition-delay: 0.2s; }
+
+/* No-JS and reduced-motion: content is always visible */
+.no-js .reveal { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+    }
+    .reveal { opacity: 1; transform: none; }
+}
+
+/* ---------- injected daily content support -------------------------- */
+
+/* Live dot on the news card (markup from tools/inject-daily.js) */
+.daily-live-dot { animation: dailyPulse 2.4s ease-in-out infinite; }
+@keyframes dailyPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+/* Info popover on data cards */
+.card-info summary::-webkit-details-marker { display: none; }
+.card-info summary::marker { content: ''; }
+
+/* ---------- a11y ----------------------------------------------------- */
+
+.skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    z-index: 100;
+    background: var(--brass);
+    color: var(--brass-ink);
+    font-family: var(--mono);
+    padding: 0.7rem 1.2rem;
+}
+.skip-link:focus { left: 0; }
+
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible {
+    outline: 2px solid var(--brass);
+    outline-offset: 3px;
+}

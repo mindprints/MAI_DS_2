@@ -315,7 +315,7 @@ function dailyImage(locale) {
   const slide = slides[dayNumber % slides.length];
   const prefix = locale === 'sv' ? '../images/slide/' : 'images/slide/';
   const alt = (slide.title || 'Museum of AI').replace(/"/g, '&quot;');
-  return `<img src="${prefix}${slide.filename}" alt="${alt}" class="w-64 h-96 md:w-80 md:h-[500px] object-cover rounded-xl shadow-2xl" loading="eager">`;
+  return `<img src="${prefix}${slide.filename}" alt="${alt}" class="daily-artwork" loading="eager">`;
 }
 
 function inject(file, locale) {
