@@ -1,25 +1,53 @@
 ﻿:root {
-    /* Brand gradient stops derived from header logo */
-    --brand-start: #f9f7f7;  /* indigo */
-    --brand-mid:   #ebe9f0;  /* blue */
-    --brand-end:   #faf4f4;  /* cyan */
+    /* Gallery-hall palette — kept in sync with assets/css/home.css */
+    --bg:          #0b0c0f;   /* gallery wall, near-black with warm cast */
+    --bg-raise:    #12141a;   /* raised panel */
+    --bg-plaque:   #14161c;   /* card body */
+    --ink:         #eae4d6;   /* warm ivory */
+    --ink-dim:     #a9a08c;   /* secondary text */
+    --ink-faint:   #736c5d;   /* tertiary / colophon */
+    --hairline:    rgba(234, 228, 214, 0.14);
+    --hairline-strong: rgba(234, 228, 214, 0.28);
+    --brass:       #d4a04f;   /* accent */
+    --brass-bright:#e8c583;
+    --brass-ink:   #191204;   /* text on brass */
+    --serif: 'Fraunces', Georgia, 'Times New Roman', serif;
+    --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    --sans: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    /* Legacy brand gradient stops, remapped to brass */
+    --brand-start: #e8c583;
+    --brand-mid:   #d4a04f;
+    --brand-end:   #b9853a;
 }
 
 body {
-    font-family: 'Exo 2', sans-serif;
-    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0c4a6e 100%);
-    background-attachment: fixed;
-    color: #f1f5f9;
+    font-family: var(--sans);
+    background-color: var(--bg);
+    /* Faint architectural grid, like gallery wall panelling */
+    background-image:
+        linear-gradient(rgba(234, 228, 214, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(234, 228, 214, 0.025) 1px, transparent 1px);
+    background-size: 72px 72px;
+    color: var(--ink);
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
 }
-.heading-mono, h1, h2, h3, .section-title, .btn-brand {
-    font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+::selection { background: var(--brass); color: var(--brass-ink); }
+
+.heading-mono, .btn-brand {
+    font-family: var(--mono);
+}
+h1, h2, h3, .section-title {
+    font-family: var(--serif);
+    font-weight: 460;
+    letter-spacing: -0.01em;
 }
 
 /* Plan-workshop page background: image blended under the base gradient */
 .plan-workshop-page {
-    /* Layer the site gradient with the workshop image using multiply blend */
-    background-image: linear-gradient(135deg, rgba(15,23,42,0.96) 0%, rgba(30,41,59,0.92) 45%, rgba(12,74,110,0.88) 100%), url('../../images/slide/20-greg-lecture-narkesg.webp');
+    /* Layer the gallery-wall tone with the workshop image using multiply blend */
+    background-image: linear-gradient(135deg, rgba(11,12,15,0.96) 0%, rgba(18,20,26,0.93) 45%, rgba(11,12,15,0.9) 100%), url('../../images/slide/20-greg-lecture-narkesg.webp');
     background-size: cover;            /* landscape image covers viewport */
     background-position: center;       /* center focus */
     background-repeat: no-repeat;
@@ -30,9 +58,9 @@ body {
 .hero-bg {
     /* Darker, more subdued gradient to match other sections */
     background: linear-gradient(135deg,
-        rgba(15, 23, 42, 0.94) 0%,      /* slate-900 */
-        rgba(30, 41, 59, 0.92) 55%,     /* slate-800 */
-        rgba(12, 74, 110, 0.88) 100%    /* sky-900 teal tint */
+        rgba(11, 12, 15, 0.94) 0%,
+        rgba(18, 20, 26, 0.92) 55%,
+        rgba(11, 12, 15, 0.88) 100%
     );
     background-size: cover;
     background-position: center;
@@ -40,13 +68,15 @@ body {
 }
 
 .glass-card {
-    background: rgba(30, 41, 59, 0.7);
+    background: var(--bg-plaque);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(148, 163, 184, 0.2);
-    border-radius: 16px;
-    box-shadow: 0 8px 32px rgba(2, 8, 20, 0.4);
+    border: 1px solid var(--hairline);
+    border-radius: 0;
+    box-shadow: 0 30px 60px -35px rgba(0, 0, 0, 0.8);
+    transition: border-color 0.25s ease;
 }
+.glass-card:hover { border-color: var(--hairline-strong); }
 
 /* Form input shading (restored) */
 input[type="text"],
@@ -56,9 +86,9 @@ input[type="tel"],
 input[type="url"],
 select,
 textarea {
-    background-color: rgba(15, 23, 42, 0.5); /* slate-900/50 */
-    border: 1px solid rgba(51, 65, 85, 0.9);  /* slate-700 */
-    color: #e2e8f0; /* slate-200 */
+    background-color: rgba(9, 10, 12, 0.6);
+    border: 1px solid var(--hairline-strong);
+    color: var(--ink);
 }
 /* Ensure native form controls use dark-themed system UI (select dropdown, etc.) */
 input,
@@ -68,14 +98,18 @@ textarea {
 }
 input::placeholder,
 textarea::placeholder {
-    color: #64748b; /* slate-500 */
+    color: var(--ink-faint);
 }
 input:focus,
 select:focus,
 textarea:focus {
     outline: none;
-    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.35); /* indigo-500 */
-    border-color: #6366f1;
+    box-shadow: 0 0 0 2px rgba(212, 160, 79, 0.35);
+    border-color: var(--brass);
+}
+input[type="radio"],
+input[type="checkbox"] {
+    accent-color: var(--brass);
 }
 
 .feature-card {
@@ -84,7 +118,7 @@ textarea:focus {
 }
 
 .model-bg {
-    background: linear-gradient(rgba(15,23,42,0.9), rgba(15,23,42,0.9));
+    background: linear-gradient(rgba(11,12,15,0.9), rgba(11,12,15,0.9));
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -108,7 +142,7 @@ textarea:focus {
     height: 2px;
     bottom: -4px;
     left: 0;
-    background: #1e3a8a; /* dark blue */
+    background: var(--brass);
     transition: width 0.3s;
 }
 
@@ -126,8 +160,8 @@ textarea:focus {
     content: '';
     position: absolute;
     width: 60px;
-    height: 4px;
-    background: #1e3a8a; /* dark blue */
+    height: 1px;
+    background: var(--brass);
     bottom: -10px;
     left: 50%;
     transform: translateX(-50%);
@@ -136,11 +170,12 @@ textarea:focus {
 
 /* Brand buttons/text utilities */
 .btn-brand {
-    background-image: linear-gradient(90deg, var(--brand-start), var(--brand-end));
-    color: #ffffff;
+    background-image: none;
+    background-color: var(--brass);
+    color: var(--brass-ink);
 }
 .btn-brand:hover {
-    filter: brightness(1.07);
+    background-color: var(--brass-bright);
 }
 .text-brand-gradient {
     background-image: linear-gradient(90deg, var(--brand-start), var(--brand-mid), var(--brand-end));
@@ -158,7 +193,7 @@ textarea:focus {
     transform: translateY(-50%);
     opacity: 0.2;
     z-index: -1;
-    background: radial-gradient(circle, rgba(96,165,250,0.3) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(212,160,79,0.25) 0%, transparent 70%);
     border-radius: 50%;
 }
 
@@ -167,9 +202,9 @@ textarea:focus {
 }
 
 @keyframes pulse {
-    0% { box-shadow: 0 0 0 0 rgba(96, 165, 250, 0.4); }
-    70% { box-shadow: 0 0 0 15px rgba(96, 165, 250, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(96, 165, 250, 0); }
+    0% { box-shadow: 0 0 0 0 rgba(212, 160, 79, 0.4); }
+    70% { box-shadow: 0 0 0 15px rgba(212, 160, 79, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(212, 160, 79, 0); }
 }
 
 .slide-in {
@@ -240,7 +275,7 @@ textarea:focus {
     transform: rotate(-12deg) translate(-40px, -5px) scale(0.8) !important;
 }
 /* Journal cards */
-.blog-card .cover { height: 180px; background: radial-gradient(ellipse at top, #37415155, #111827aa); }
+.blog-card .cover { height: 180px; background: radial-gradient(ellipse at top, #14161caa, #0b0c0fdd); }
 .blog-card h3 { line-height: 1.2 }
 .blog-card p { display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 
@@ -251,21 +286,21 @@ button:focus-visible,
 input:focus-visible,
 select:focus-visible,
 textarea:focus-visible {
-    outline: 2px solid #6366f1; /* indigo-500 */
+    outline: 2px solid var(--brass);
     outline-offset: 2px;
 }
 
 /* Hero CTA styling (independent of Tailwind variants) */
 .cta-tab {
-    background: linear-gradient(90deg, #fbbf24, #f43f5e);
+    background: linear-gradient(90deg, var(--brass-bright), var(--brass));
 }
 .cta-link {
-    border: 1px solid rgba(34, 211, 238, 0.7); /* cyan-400/70 */
+    border: 1px solid rgba(212, 160, 79, 0.7);
     background: rgba(255, 255, 255, 0.05);
     transition: background-color .2s ease, border-color .2s ease, box-shadow .2s ease;
 }
 .cta-link:hover {
-    border-color: rgba(34, 211, 238, 0.8); /* cyan-300/80-ish */
+    border-color: rgba(232, 197, 131, 0.8);
     background: rgba(255, 255, 255, 0.10);
     box-shadow: 0 8px 24px rgba(0,0,0,.35);
 }
@@ -277,5 +312,51 @@ textarea:focus-visible {
 .daily-article-ainews p + p {
     margin-top: 1.1rem;
     padding-top: 1.1rem;
-    border-top: 1px solid rgba(148, 163, 184, 0.18);
+    border-top: 1px solid var(--hairline);
 }
+
+/* ------------------------------------------------------------------
+   Tailwind utility remap — gallery-hall palette on interior pages.
+   These classes live in the page content fragments; remapping them
+   here (styles.css loads after tailwind.css) recolors every subpage
+   without touching the markup. Keep rules single-class so order,
+   not specificity, decides.
+   ------------------------------------------------------------------ */
+
+/* Text */
+.text-white,
+.text-gray-200,
+.text-slate-200 { color: var(--ink); }
+.text-slate-300,
+.text-slate-400 { color: var(--ink-dim); }
+.text-slate-500 { color: var(--ink-faint); }
+.text-indigo-300,
+.text-cyan-400 { color: var(--brass); }
+.hover\:text-white:hover,
+.hover\:text-indigo-400:hover,
+.hover\:text-cyan-300:hover { color: var(--brass-bright); }
+
+/* Borders and dividers */
+.border-slate-700,
+.border-slate-800 { border-color: var(--hairline); }
+.border-indigo-500,
+.border-indigo-500\/60 { border-color: var(--brass); }
+.hover\:border-indigo-500:hover { border-color: var(--brass); }
+
+/* Panels */
+.bg-slate-900\/50,
+.bg-slate-900\/60 { background-color: rgba(9, 10, 12, 0.6); }
+.bg-slate-800\/60,
+.bg-slate-800\/30 { background-color: var(--bg-raise); }
+
+/* Buttons — placed after the text remap so --brass-ink wins over
+   .text-white on the same element */
+.bg-indigo-500,
+.bg-indigo-600 { background-color: var(--brass); color: var(--brass-ink); }
+.hover\:bg-indigo-700:hover { background-color: var(--brass-bright); color: var(--brass-ink); }
+
+/* Form accents and focus rings */
+.text-indigo-600 { color: var(--brass); accent-color: var(--brass); }
+.ring-indigo-500,
+.focus\:ring-indigo-500:focus { --tw-ring-color: rgba(212, 160, 79, 0.45); }
+.ring-indigo-400\/20 { --tw-ring-color: rgba(212, 160, 79, 0.2); }
