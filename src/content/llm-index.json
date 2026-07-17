@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-07-16",
+  "fetched_at": "2026-07-17",
   "source": "Artificial Analysis Intelligence Index",
   "source_url": "https://artificialanalysis.ai/",
   "closed": [
@@ -21,6 +21,11 @@
   ],
   "open": [
     {
+      "name": "Kimi K3",
+      "creator": "Kimi",
+      "score": 57.1
+    },
+    {
       "name": "GLM-5.2",
       "creator": "Z AI",
       "score": 51.1
@@ -29,11 +34,6 @@
       "name": "MiniMax-M3",
       "creator": "MiniMax",
       "score": 44.4
-    },
-    {
-      "name": "DeepSeek V4 Pro",
-      "creator": "DeepSeek",
-      "score": 44.3
     }
   ]
 }
