@@ -136,13 +136,15 @@ async function main() {
 
   startScheduler(
     [
+      // Scheduled runs are silent on success — Telegram only carries replies
+      // to the editor's own messages and critical errors (onError below).
       {
         name: 'onthisday',
         time: config.onThisDayTime,
         run: async () => {
           await gitrepo.pull().catch(() => {});
           const r = await jobs.runOnThisDay();
-          if (!r.skipped) await notify(`Published: ${r.title}\n${r.link}`);
+          if (!r.skipped) console.log(`onthisday published: ${r.title}`);
         },
       },
       {
@@ -151,7 +153,7 @@ async function main() {
         run: async () => {
           await gitrepo.pull().catch(() => {});
           const r = await jobs.runAiNews();
-          if (!r.skipped) await notify(`Published: ${r.title}\n${r.link}`);
+          if (!r.skipped) console.log(`ainews published: ${r.title}`);
         },
       },
       {
@@ -160,8 +162,7 @@ async function main() {
         run: async () => {
           if (!config.aaApiKey) return;
           await gitrepo.pull().catch(() => {});
-          const r = await jobs.runLlmIndex();
-          if (!r.skipped) await notify(`Updated: LLM intelligence index card`);
+          await jobs.runLlmIndex();
         },
       },
       {
@@ -170,8 +171,7 @@ async function main() {
         run: async () => {
           if (!config.openRouterApiKey) return;
           await gitrepo.pull().catch(() => {});
-          const r = await jobs.runLlmUsage();
-          if (!r.skipped) await notify(`Updated: LLM usage card`);
+          await jobs.runLlmUsage();
         },
       },
     ],
@@ -183,7 +183,6 @@ async function main() {
     },
   );
 
-  await notify(`Agent online. Branch: ${s.branch}. Send /help for commands.`);
   await telegram.poll(onMessage);
 }
 

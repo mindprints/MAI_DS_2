@@ -23,6 +23,10 @@ const config = {
 
   // OpenRouter (LLM usage card; any valid key works, datasets are read-only)
   openRouterApiKey: process.env.OPENROUTER_API_KEY || '',
+  // When set (e.g. "x-ai/grok-4.5"), the daily content jobs generate via
+  // OpenRouter instead of the Anthropic API — cost experiment. Unset to
+  // revert to config.model on Anthropic. Telegram edits always use Anthropic.
+  openRouterModel: process.env.OPENROUTER_MODEL || '',
 
   // Git / repo
   repoDir: path.resolve(process.env.REPO_DIR || path.join(__dirname, '..')),

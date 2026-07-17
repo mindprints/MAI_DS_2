@@ -14,6 +14,53 @@ function anthropic() {
   return new Anthropic({ apiKey: config.anthropicApiKey });
 }
 
+// Generation backend for the two content jobs: Anthropic (config.model) by
+// default; OpenRouter when OPENROUTER_MODEL is set (cost experiment).
+// Returns the reply text.
+async function generate(prompt, { search = false } = {}) {
+  if (config.openRouterModel) return generateOpenRouter(prompt, { search });
+  const client = anthropic();
+  // Adaptive thinking is on by default and counts against max_tokens,
+  // so leave generous headroom or the reply is all thinking and no text.
+  const response = await client.messages.create({
+    model: config.model,
+    max_tokens: 16000,
+    ...(search ? { tools: [{ type: 'web_search_20260209', name: 'web_search', max_uses: 8 }] } : {}),
+    messages: [{ role: 'user', content: prompt }],
+  });
+  return response.content.filter((b) => b.type === 'text').map((b) => b.text).join('\n');
+}
+
+async function generateOpenRouter(prompt, { search = false } = {}) {
+  if (!config.openRouterApiKey) throw new Error('OPENROUTER_MODEL is set but OPENROUTER_API_KEY is missing');
+  const body = {
+    model: config.openRouterModel,
+    max_tokens: 16000,
+    messages: [{ role: 'user', content: prompt }],
+  };
+  // OpenRouter web plugin (Exa): ~$0.005/request for up to 10 results,
+  // injected into context and cited via url_citation annotations.
+  if (search) body.plugins = [{ id: 'web', max_results: 8 }];
+  const resp = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      authorization: `Bearer ${config.openRouterApiKey}`,
+      'content-type': 'application/json',
+      'HTTP-Referer': 'https://aimuseum.se',
+      'X-Title': 'MAI daily jobs',
+    },
+    body: JSON.stringify(body),
+  });
+  if (!resp.ok) {
+    const detail = await resp.text().catch(() => '');
+    throw new Error(`OpenRouter ${resp.status}: ${detail.slice(0, 300)}`);
+  }
+  const data = await resp.json();
+  const text = data.choices?.[0]?.message?.content;
+  if (!text) throw new Error(`OpenRouter reply contained no content (finish: ${data.choices?.[0]?.finish_reason || 'unknown'})`);
+  return text;
+}
+
 // Today's date parts in the configured timezone.
 function todayParts() {
   const fmt = new Intl.DateTimeFormat('en-CA', {
@@ -93,7 +140,6 @@ async function runOnThisDay({ force = false, topic = '' } = {}) {
     return { skipped: true, reason: `Post for ${iso} already exists` };
   }
 
-  const client = anthropic();
   const steer = topic
     ? `\nThe museum's editor has requested that this essay be about: "${topic}". Write about that event if it is genuinely connected to this calendar date (or explain the closest true date connection honestly).`
     : '';
@@ -109,14 +155,7 @@ ${HTML_RULES}
 
 ${BILINGUAL_RULES}`;
 
-  // Adaptive thinking is on by default and counts against max_tokens,
-  // so leave generous headroom or the reply is all thinking and no text.
-  const response = await client.messages.create({
-    model: config.model,
-    max_tokens: 16000,
-    messages: [{ role: 'user', content: prompt }],
-  });
-  const text = response.content.filter((b) => b.type === 'text').map((b) => b.text).join('\n');
+  const text = await generate(prompt);
   const post = parseBilingual(text);
 
   const { commit, link } = await publishPost(iso, 'onthisday', post, `Daily post: on this day (${iso})\n\n${post.title_en}`);
@@ -129,7 +168,6 @@ async function runAiNews({ force = false, topic = '' } = {}) {
     return { skipped: true, reason: `Post for ${iso} already exists` };
   }
 
-  const client = anthropic();
   const steer = topic
     ? `\nThe museum's editor has requested that the LEAD story of today's briefing be: "${topic}". Research it, make it the opening item with the most depth, and cover other significant AI news after it.`
     : '';
@@ -148,13 +186,7 @@ ${HTML_RULES}
 
 ${BILINGUAL_RULES}`;
 
-  const response = await client.messages.create({
-    model: config.model,
-    max_tokens: 16000,
-    tools: [{ type: 'web_search_20260209', name: 'web_search', max_uses: 8 }],
-    messages: [{ role: 'user', content: prompt }],
-  });
-  const text = response.content.filter((b) => b.type === 'text').map((b) => b.text).join('\n');
+  const text = await generate(prompt, { search: true });
   const post = parseBilingual(text);
 
   const { commit, link } = await publishPost(iso, 'ainews', post, `Daily post: AI news (${iso})\n\n${post.title_en}`);
