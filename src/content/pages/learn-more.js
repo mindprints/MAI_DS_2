@@ -15,7 +15,7 @@ module.exports = {
     en: {
       output: 'pages/learn-more.html',
       lang: 'en',
-      title: 'Learn More • Museum of AI',
+      title: 'The Good, the Bad and the Ugly • Museum of AI',
       assetsPrefix: '..',
       indexHref: '../index.html',
       backLinkText: '&larr; Back to Home',
@@ -26,7 +26,7 @@ module.exports = {
     sv: {
       output: 'sv/pages/learn-more.html',
       lang: 'sv',
-      title: 'Fördjupning • Museum of AI',
+      title: 'Det goda, det onda och det fula • Museum of AI',
       assetsPrefix: '../..',
       indexHref: '../index.html',
       backLinkText: '&larr; Till startsidan',
