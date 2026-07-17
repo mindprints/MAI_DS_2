@@ -3,6 +3,20 @@
 (function () {
   var prefersReducedMotion =
     window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Clients & Partners marquee: duplicate the track once so the CSS
+  // animation loops seamlessly. Skipped under reduced motion, where the
+  // row stays statically scrollable instead.
+  var track = document.querySelector('.logo-track');
+  if (track && !prefersReducedMotion) {
+    Array.prototype.slice.call(track.children).forEach(function (item) {
+      var clone = item.cloneNode(true);
+      clone.setAttribute('aria-hidden', 'true');
+      track.appendChild(clone);
+    });
+    track.parentElement.classList.add('is-cloned');
+  }
+
   var items = document.querySelectorAll('.reveal');
   if (prefersReducedMotion || !('IntersectionObserver' in window)) {
     items.forEach(function (el) { el.classList.add('is-visible'); });

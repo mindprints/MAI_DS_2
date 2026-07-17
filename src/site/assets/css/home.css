@@ -324,16 +324,94 @@ body {
 }
 .plaque-bar:hover { border-color: var(--brass); }
 
-/* ---------- guestbook (clients) ------------------------------------ */
+/* ---------- clients & partners (logo carousel) --------------------- */
 
-.guest-list {
-    font-family: var(--mono);
-    font-size: 0.82rem;
-    line-height: 2.1;
-    letter-spacing: 0.02em;
+/* Full-bleed marquee. Each logo hangs as a framed exhibit: dark and
+   colored artwork on a warm ivory mat, near-white artwork on a raised
+   charcoal mat — same frame throughout, so no logo goes black-on-black
+   (or white-on-ivory) and no artwork file needs altering. */
+.logo-marquee {
+    overflow: hidden;
+    padding: 0.25rem 0 0.5rem;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
 }
-.guest-list li { break-inside: avoid; color: var(--ink-dim); }
-.guest-list li::before { content: '— '; color: var(--ink-faint); }
+
+.logo-track {
+    display: flex;
+    align-items: stretch;
+    width: max-content;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+/* ~4 exhibits visible on desktop, ~2 on mobile (next one peeking in) */
+.logo-card {
+    flex: none;
+    width: min(44vw, 264px);
+    margin-right: clamp(0.9rem, 2vw, 1.5rem);
+}
+
+.logo-mat {
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.3rem 1.5rem;
+    border: 1px solid var(--hairline);
+    position: relative;
+    transition: border-color 0.25s ease;
+}
+.logo-mat::after {                       /* inner mat line, like the frames */
+    content: '';
+    position: absolute;
+    inset: 6px;
+    border: 1px solid rgba(115, 108, 93, 0.18);
+    pointer-events: none;
+}
+.logo-card:hover .logo-mat { border-color: var(--brass); }
+
+.mat-light .logo-mat { background: #ece7da; }
+.mat-dark .logo-mat { background: var(--bg-raise); }
+.mat-dark .logo-mat::after { border-color: rgba(234, 228, 214, 0.08); }
+
+.logo-mat img {
+    max-width: 100%;
+    max-height: 78px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+}
+
+.logo-label {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    text-align: center;
+    margin-top: 0.6rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* The marquee runs only once home.js has cloned the track for a
+   seamless loop; otherwise (no JS, reduced motion) it is a plain
+   scrollable row. */
+.is-cloned .logo-track { animation: logoScroll 95s linear infinite; }
+.logo-marquee:hover .logo-track,
+.logo-marquee:focus-within .logo-track { animation-play-state: paused; }
+.logo-marquee:not(.is-cloned) { overflow-x: auto; }
+
+@keyframes logoScroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .logo-marquee { overflow-x: auto; }
+}
 
 /* ---------- footer -------------------------------------------------- */
 
