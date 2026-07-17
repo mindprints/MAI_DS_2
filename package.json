@@ -12,6 +12,8 @@
     "serve": "node server/server.js",
     "optimize": "node tools/optimize-images.js src/site/images/slide",
     "generate:slides": "node tools/generate-slides-manifest.js",
+    "slides:add": "node tools/slides-add.js",
+    "slides:remove": "node tools/slides-remove.js",
     "audit": "lighthouse http://localhost:3000 --output=json --output-path=reports/lighthouse.json",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

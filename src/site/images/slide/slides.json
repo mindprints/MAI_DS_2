@@ -3,186 +3,496 @@
     "number": 1,
     "filename": "1-museums-logo.webp",
     "title": "Museums Logo",
-    "description": ""
+    "description": "",
+    "i18n": {
+      "en": {
+        "title": "",
+        "description": ""
+      },
+      "sv": {
+        "title": "",
+        "description": ""
+      }
+    }
   },
   {
     "number": 2,
     "filename": "2-hotorget-exterior.webp",
     "title": "Hotorget Exterior",
-    "description": ""
+    "description": "",
+    "i18n": {
+      "en": {
+        "title": "",
+        "description": ""
+      },
+      "sv": {
+        "title": "",
+        "description": ""
+      }
+    }
   },
   {
     "number": 3,
     "filename": "3-greg-lecturing-in-museum.webp",
     "title": "Greg Lecturing In Museum",
-    "description": ""
+    "description": "",
+    "i18n": {
+      "en": {
+        "title": "",
+        "description": ""
+      },
+      "sv": {
+        "title": "",
+        "description": ""
+      }
+    }
   },
   {
     "number": 4,
     "filename": "4-max-demonstrate-for-gregor.webp",
     "title": "Max Demonstrate For Gregor",
-    "description": ""
+    "description": "",
+    "i18n": {
+      "en": {
+        "title": "",
+        "description": ""
+      },
+      "sv": {
+        "title": "",
+        "description": ""
+      }
+    }
   },
   {
     "number": 5,
     "filename": "5-three-robot-faces.webp",
     "title": "Three Robot Faces",
-    "description": ""
+    "description": "",
+    "i18n": {
+      "en": {
+        "title": "",
+        "description": ""
+      },
+      "sv": {
+        "title": "",
+        "description": ""
+      }
+    }
   },
   {
     "number": 6,
     "filename": "6-musikafton-hotorget.webp",
     "title": "Musikafton Hotorget",
-    "description": ""
+    "description": "",
+    "i18n": {
+      "en": {
+        "title": "",
+        "description": ""
+      },
+      "sv": {
+        "title": "",
+        "description": ""
+      }
+    }
   },
   {
     "number": 7,
     "filename": "7-platon-robot-2.webp",
     "title": "Platon Robot 2",
-    "description": ""
+    "description": "",
+    "i18n": {
+      "en": {
+        "title": "",
+        "description": ""
+      },
+      "sv": {
+        "title": "",
+        "description": ""
+      }
+    }
   },
   {
     "number": 8,
     "filename": "8-greg-closeup-lecture.webp",
     "title": "Greg Closeup Lecture",
-    "description": ""
+    "description": "",
+    "i18n": {
+      "en": {
+        "title": "",
+        "description": ""
+      },
+      "sv": {
+        "title": "",
+        "description": ""
+      }
+    }
   },
   {
     "number": 10,
     "filename": "10-tidnings-articel-invigning.webp",
     "title": "Tidnings Articel Invigning",
-    "description": ""
+    "description": "",
+    "i18n": {
+      "en": {
+        "title": "",
+        "description": ""
+      },
+      "sv": {
+        "title": "",
+        "description": ""
+      }
+    }
   },
   {
     "number": 12,
     "filename": "12-music-afton-hotorget.webp",
     "title": "Music Afton Hotorget",
-    "description": ""
+    "description": "",
+    "i18n": {
+      "en": {
+        "title": "",
+        "description": ""
+      },
+      "sv": {
+        "title": "",
+        "description": ""
+      }
+    }
   },
   {
     "number": 13,
     "filename": "13-storefront-skrapan.webp",
     "title": "Storefront Skrapan",
-    "description": ""
+    "description": "",
+    "i18n": {
+      "en": {
+        "title": "",
+        "description": ""
+      },
+      "sv": {
+        "title": "",
+        "description": ""
+      }
+    }
   },
   {
     "number": 14,
     "filename": "14-invigning-skrapan.webp",
     "title": "Invigning Skrapan",
-    "description": ""
+    "description": "",
+    "i18n": {
+      "en": {
+        "title": "",
+        "description": ""
+      },
+      "sv": {
+        "title": "",
+        "description": ""
+      }
+    }
   },
   {
     "number": 16,
     "filename": "16-public-hotorget.webp",
     "title": "Public Hotorget",
-    "description": ""
+    "description": "",
+    "i18n": {
+      "en": {
+        "title": "",
+        "description": ""
+      },
+      "sv": {
+        "title": "",
+        "description": ""
+      }
+    }
   },
   {
     "number": 17,
     "filename": "17-hologram-building.webp",
     "title": "Hologram Building",
-    "description": ""
+    "description": "",
+    "i18n": {
+      "en": {
+        "title": "",
+        "description": ""
+      },
+      "sv": {
+        "title": "",
+        "description": ""
+      }
+    }
   },
   {
     "number": 18,
     "filename": "18-evenemang-at-narkesgatan.webp",
     "title": "Evenemang At Narkesgatan",
-    "description": ""
+    "description": "",
+    "i18n": {
+      "en": {
+        "title": "",
+        "description": ""
+      },
+      "sv": {
+        "title": "",
+        "description": ""
+      }
+    }
   },
   {
     "number": 19,
     "filename": "19-exterior-skrapan.webp",
     "title": "Exterior Skrapan",
-    "description": ""
+    "description": "",
+    "i18n": {
+      "en": {
+        "title": "",
+        "description": ""
+      },
+      "sv": {
+        "title": "",
+        "description": ""
+      }
+    }
   },
   {
     "number": 20,
     "filename": "20-greg-lecture-narkesg.webp",
     "title": "Greg Lecture Narkesg",
-    "description": ""
+    "description": "",
+    "i18n": {
+      "en": {
+        "title": "",
+        "description": ""
+      },
+      "sv": {
+        "title": "",
+        "description": ""
+      }
+    }
   },
   {
     "number": 21,
     "filename": "21-happybirthday-at-narkesgtan.webp",
     "title": "Happybirthday At Narkesgtan",
-    "description": ""
+    "description": "",
+    "i18n": {
+      "en": {
+        "title": "",
+        "description": ""
+      },
+      "sv": {
+        "title": "",
+        "description": ""
+      }
+    }
   },
   {
     "number": 23,
     "filename": "23-veiwing-screen-hotorget.webp",
     "title": "Veiwing Screen Hotorget",
-    "description": ""
+    "description": "",
+    "i18n": {
+      "en": {
+        "title": "",
+        "description": ""
+      },
+      "sv": {
+        "title": "",
+        "description": ""
+      }
+    }
   },
   {
     "number": 24,
     "filename": "24-jubelium-pix-genom-skarmen-patrick.webp",
     "title": "Jubelium Pix Genom Skarmen Patrick",
-    "description": ""
+    "description": "",
+    "i18n": {
+      "en": {
+        "title": "",
+        "description": ""
+      },
+      "sv": {
+        "title": "",
+        "description": ""
+      }
+    }
   },
   {
     "number": 25,
     "filename": "25-interior-skrappan.webp",
     "title": "Interior Skrappan",
-    "description": ""
+    "description": "",
+    "i18n": {
+      "en": {
+        "title": "",
+        "description": ""
+      },
+      "sv": {
+        "title": "",
+        "description": ""
+      }
+    }
   },
   {
     "number": 26,
     "filename": "26-greg-skollecture-hotorget.webp",
     "title": "Greg Skollecture Hotorget",
-    "description": ""
+    "description": "",
+    "i18n": {
+      "en": {
+        "title": "",
+        "description": ""
+      },
+      "sv": {
+        "title": "",
+        "description": ""
+      }
+    }
   },
   {
     "number": 27,
     "filename": "27-mai-interior-nov-15.webp",
     "title": "Mai Interior Nov 15",
-    "description": ""
+    "description": "",
+    "i18n": {
+      "en": {
+        "title": "",
+        "description": ""
+      },
+      "sv": {
+        "title": "",
+        "description": ""
+      }
+    }
   },
   {
     "number": 28,
     "filename": "28-survielence-camera.webp",
     "title": "Survielence Camera",
-    "description": ""
+    "description": "",
+    "i18n": {
+      "en": {
+        "title": "",
+        "description": ""
+      },
+      "sv": {
+        "title": "",
+        "description": ""
+      }
+    }
   },
   {
     "number": 29,
     "filename": "29-stockholm-ai-hotorget.webp",
     "title": "Stockholm Ai Hotorget",
-    "description": ""
+    "description": "",
+    "i18n": {
+      "en": {
+        "title": "",
+        "description": ""
+      },
+      "sv": {
+        "title": "",
+        "description": ""
+      }
+    }
   },
   {
     "number": 30,
     "filename": "30-closeup-aws-poster.webp",
     "title": "Closeup Aws Poster",
-    "description": ""
+    "description": "",
+    "i18n": {
+      "en": {
+        "title": "",
+        "description": ""
+      },
+      "sv": {
+        "title": "",
+        "description": ""
+      }
+    }
   },
   {
     "number": 31,
     "filename": "31-bob-lecture.webp",
     "title": "Bob Lecture",
-    "description": ""
+    "description": "",
+    "i18n": {
+      "en": {
+        "title": "",
+        "description": ""
+      },
+      "sv": {
+        "title": "",
+        "description": ""
+      }
+    }
   },
   {
     "number": 32,
     "filename": "32-big-screens-at-hotorget.webp",
     "title": "Big Screens At Hotorget",
-    "description": ""
+    "description": "",
+    "i18n": {
+      "en": {
+        "title": "",
+        "description": ""
+      },
+      "sv": {
+        "title": "",
+        "description": ""
+      }
+    }
   },
   {
     "number": 33,
     "filename": "33-public-hotorget.webp",
     "title": "Public Hotorget",
-    "description": ""
+    "description": "",
+    "i18n": {
+      "en": {
+        "title": "",
+        "description": ""
+      },
+      "sv": {
+        "title": "",
+        "description": ""
+      }
+    }
   },
   {
     "number": 35,
     "filename": "35-ai-och-music-seminar.webp",
     "title": "Ai Och Music Seminar",
-    "description": ""
+    "description": "",
+    "i18n": {
+      "en": {
+        "title": "",
+        "description": ""
+      },
+      "sv": {
+        "title": "",
+        "description": ""
+      }
+    }
   },
   {
     "number": 37,
     "filename": "37-aws-poster.webp",
     "title": "Aws Poster",
-    "description": ""
+    "description": "",
+    "i18n": {
+      "en": {
+        "title": "",
+        "description": ""
+      },
+      "sv": {
+        "title": "",
+        "description": ""
+      }
+    }
   }
 ]
