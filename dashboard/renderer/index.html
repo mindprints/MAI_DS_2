@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' file:; style-src 'self'" />
+  <title>MAI Site Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <h1>MAI Site Dashboard</h1>
+      <div id="repo-line" class="muted">Loading repository…</div>
+    </div>
+    <div class="header-actions">
+      <button id="btn-refresh" title="Re-read everything from disk">Refresh</button>
+      <button id="btn-choose-repo" title="Point the dashboard at your clone of the site repository">Choose repo…</button>
+    </div>
+  </header>
+
+  <div id="publish-bar" hidden>
+    <span id="pending-summary"></span>
+    <input id="publish-message" type="text" placeholder="Describe the change (commit message)" />
+    <button id="btn-publish" class="primary">Publish to site</button>
+  </div>
+
+  <nav id="tabs">
+    <button class="tab active" data-tab="slides">Slideshow</button>
+    <button class="tab" data-tab="prompts">Prompts</button>
+    <button class="tab" data-tab="models">Models &amp; costs</button>
+  </nav>
+
+  <main>
+    <section id="tab-slides" class="tab-panel">
+      <div class="toolbar">
+        <button id="btn-add-slides" class="primary">Add photos…</button>
+        <button id="btn-save-titles">Save titles</button>
+        <span class="muted">Photos are converted to WebP and numbered automatically. Remember to Publish when done.</span>
+      </div>
+      <div id="slides-grid" class="grid"></div>
+    </section>
+
+    <section id="tab-prompts" class="tab-panel" hidden>
+      <div class="split">
+        <aside id="prompt-list"></aside>
+        <div class="editor-pane">
+          <div class="toolbar">
+            <strong id="prompt-name">Select a prompt</strong>
+            <button id="btn-save-prompt" disabled>Save prompt</button>
+          </div>
+          <p class="muted">Pieces in double curly braces like <code>{{readable}}</code> are filled in automatically — keep them.</p>
+          <textarea id="prompt-editor" spellcheck="false" disabled></textarea>
+        </div>
+      </div>
+    </section>
+
+    <section id="tab-models" class="tab-panel" hidden>
+      <h2>Which AI writes what</h2>
+      <p class="muted">Empty means "use the server default". Changes apply from the next morning run after you publish.</p>
+      <div id="model-rows"></div>
+      <div class="toolbar"><button id="btn-save-settings">Save model choices</button></div>
+
+      <h2>Costs</h2>
+      <div id="stat-tiles" class="tiles"></div>
+      <div class="viz-root">
+        <h3>Daily cost, last 30 days (USD)</h3>
+        <div id="cost-chart"></div>
+      </div>
+      <h3>By model (all time)</h3>
+      <table id="model-table">
+        <thead>
+          <tr><th>Model</th><th>Provider</th><th class="num">Calls</th><th class="num">Tokens in</th><th class="num">Tokens out</th><th class="num">Cost (USD)</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <datalist id="models-anthropic"></datalist>
+      <datalist id="models-openrouter"></datalist>
+    </section>
+  </main>
+
+  <div id="toast" hidden></div>
+  <div id="chart-tooltip" hidden></div>
+  <script src="app.js"></script>
+</body>
+</html>

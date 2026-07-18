@@ -1,0 +1,17 @@
+{
+  "name": "mai-dashboard",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Desktop admin dashboard for aimuseum.se — slides, prompts, models, costs (docs/DASHBOARD_PLAN.md)",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "node test/dashlib.test.js"
+  },
+  "dependencies": {
+    "simple-git": "^3.27.0"
+  },
+  "devDependencies": {
+    "electron": "^33.2.0"
+  }
+}
