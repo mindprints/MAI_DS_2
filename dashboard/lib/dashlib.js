@@ -9,6 +9,7 @@ const WRITABLE_PREFIXES = [
   'agent/prompts/',
   'agent/settings.json',
   'src/site/images/slide/slides.json',
+  'src/site/content/notice.json',
 ];
 
 function safeAbs(repo, rel) {
@@ -81,6 +82,31 @@ function writeSettings(repo, settingsObj) {
   const text = JSON.stringify(settingsObj, null, 2) + '\n';
   JSON.parse(text);
   fs.writeFileSync(safeAbs(repo, SETTINGS_REL), text, 'utf8');
+}
+
+// ---------- Flash notice ----------
+
+const NOTICE_REL = 'src/site/content/notice.json';
+const EMPTY_NOTICE = { active: false, until: null, en: '', sv: '' };
+
+function readNotice(repo) {
+  const file = path.join(repo, NOTICE_REL);
+  if (!fs.existsSync(file)) return { ...EMPTY_NOTICE };
+  return { ...EMPTY_NOTICE, ...JSON.parse(fs.readFileSync(file, 'utf8')) };
+}
+
+function writeNotice(repo, notice) {
+  const clean = {
+    active: Boolean(notice.active),
+    until: notice.until ? String(notice.until) : null,
+    en: String(notice.en || ''),
+    sv: String(notice.sv || ''),
+  };
+  if (clean.until && !/^\d{4}-\d{2}-\d{2}$/.test(clean.until)) {
+    throw new Error(`"until" must be a YYYY-MM-DD date, got: ${clean.until}`);
+  }
+  fs.writeFileSync(safeAbs(repo, NOTICE_REL), JSON.stringify(clean, null, 2) + '\n', 'utf8');
+  return clean;
 }
 
 // ---------- Usage log ----------
@@ -164,6 +190,8 @@ module.exports = {
   writeRepoFile,
   readSettings,
   writeSettings,
+  readNotice,
+  writeNotice,
   readUsage,
   aggregateUsage,
   safeAbs,

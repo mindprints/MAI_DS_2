@@ -99,7 +99,11 @@ handle('repo:info', async () => {
 });
 
 handle('repo:choose', async () => {
-  const res = await dialog.showOpenDialog(win, { properties: ['openDirectory'] });
+  const res = await dialog.showOpenDialog(win, {
+    title: 'Choose the site folder (your copy of the website files)',
+    defaultPath: repoPath() || app.getPath('home'),
+    properties: ['openDirectory'],
+  });
   if (res.canceled || !res.filePaths[0]) return null;
   const chosen = res.filePaths[0];
   if (!lib.looksLikeSiteRepo(chosen)) {
@@ -173,6 +177,9 @@ handle('prompts:write', (rel, content) => {
   lib.writeRepoFile(repoPath(), rel, content);
   return true;
 });
+
+handle('notice:read', () => lib.readNotice(repoPath()));
+handle('notice:write', (notice) => lib.writeNotice(repoPath(), notice));
 
 handle('settings:read', () => lib.readSettings(repoPath()));
 handle('settings:write', (settings) => {

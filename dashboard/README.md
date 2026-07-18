@@ -34,6 +34,11 @@ repo automatically; otherwise use **Choose repo…** to point it at your clone.
   the same pipeline as `npm run slides:add` (WebP conversion, max 1920px,
   numbering, manifest regeneration). *Remove* runs `slides-remove.js`.
   EN/SV titles edit `slides.json`.
+- **Notice** — the flash banner on both home pages ("Tonight's lecture is
+  fully booked"). On/off switch, EN/SV text, optional last-shown day with
+  quick-set buttons; expiry is checked in the visitor's browser
+  (`src/site/assets/js/notice.js` reading `/content/notice.json`), so a
+  dated notice disappears on its own without a rebuild.
 - **Prompts** — edit the daily-job prompts and the Telegram editor's system
   prompt (`agent/prompts/*.md`). `{{placeholders}}` must be kept.
 - **Models & costs** — per-job provider/model choice written to

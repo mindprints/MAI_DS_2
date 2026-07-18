@@ -83,6 +83,15 @@ main { padding: 16px 20px 40px; }
 .slide-card label { font-size: 11px; color: var(--text-secondary); display: flex; flex-direction: column; gap: 2px; }
 .slide-card .row { display: flex; justify-content: space-between; align-items: center; }
 
+/* Notice */
+.notice-form { display: flex; flex-direction: column; gap: 12px; max-width: 640px; }
+.notice-form label { display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: var(--text-secondary); }
+.notice-form textarea { resize: vertical; }
+.check-row { flex-direction: row !important; align-items: center; gap: 8px !important; color: var(--text-primary) !important; }
+.until-row { display: flex; align-items: end; gap: 8px; flex-wrap: wrap; }
+#notice-status { font-weight: 600; }
+#notice-status.on { color: var(--good); }
+
 /* Prompts */
 .split { display: grid; grid-template-columns: 260px 1fr; gap: 16px; }
 #prompt-list { display: flex; flex-direction: column; gap: 4px; }

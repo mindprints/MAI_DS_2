@@ -30,6 +30,21 @@ assert.throws(() => lib.safeAbs(REPO, 'agent/prompts/../../package.json'), /not 
 const settings = lib.readSettings(REPO);
 assert(settings.generation && settings.prices, 'settings.json missing sections');
 
+// Notice: read defaults, write validation (in a temp repo so the real file is untouched)
+const os = require('os');
+const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'mai-notice-'));
+fs.mkdirSync(path.join(tmp, 'src', 'site', 'content'), { recursive: true });
+const n0 = lib.readNotice(tmp);
+assert.strictEqual(n0.active, false, 'missing notice should read as inactive');
+lib.writeNotice(tmp, { active: true, en: 'Fully booked', sv: 'Fullbokat', until: '2026-07-20' });
+const n1 = lib.readNotice(tmp);
+assert.strictEqual(n1.active, true);
+assert.strictEqual(n1.sv, 'Fullbokat');
+assert.strictEqual(n1.until, '2026-07-20');
+assert.throws(() => lib.writeNotice(tmp, { active: true, en: 'x', until: 'next week' }), /YYYY-MM-DD/);
+const realNotice = lib.readNotice(REPO);
+assert.strictEqual(typeof realNotice.active, 'boolean', 'repo notice.json unreadable');
+
 // Usage aggregation on synthetic entries
 const now = new Date('2026-07-18T12:00:00Z');
 const entries = [

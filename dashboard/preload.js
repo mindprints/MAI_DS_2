@@ -20,6 +20,8 @@ contextBridge.exposeInMainWorld('mai', {
   promptsList: () => invoke('prompts:list'),
   promptsRead: (rel) => invoke('prompts:read', rel),
   promptsWrite: (rel, content) => invoke('prompts:write', rel, content),
+  noticeRead: () => invoke('notice:read'),
+  noticeWrite: (n) => invoke('notice:write', n),
   settingsRead: () => invoke('settings:read'),
   settingsWrite: (s) => invoke('settings:write', s),
   usageSummary: () => invoke('usage:summary'),

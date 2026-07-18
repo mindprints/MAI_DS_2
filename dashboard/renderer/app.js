@@ -157,6 +157,38 @@ async function openPrompt(rel) {
   }
 }
 
+// ---------- Flash notice ----------
+
+function todayIso(offsetDays = 0) {
+  const d = new Date(Date.now() + offsetDays * 86400000);
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+}
+
+function noticeStatusLine() {
+  const active = $('#notice-active').checked;
+  const until = $('#notice-until').value;
+  const el = $('#notice-status');
+  if (!active) {
+    el.textContent = 'Hidden — visitors see nothing.';
+    el.classList.remove('on');
+  } else if (until && until < todayIso()) {
+    el.textContent = `Was visible until ${until} — now expired and hidden.`;
+    el.classList.remove('on');
+  } else {
+    el.textContent = until ? `Visible through ${until}.` : 'Visible until you switch it off.';
+    el.classList.add('on');
+  }
+}
+
+async function loadNotice() {
+  const n = await window.mai.noticeRead();
+  $('#notice-active').checked = n.active;
+  $('#notice-en').value = n.en || '';
+  $('#notice-sv').value = n.sv || '';
+  $('#notice-until').value = n.until || '';
+  noticeStatusLine();
+}
+
 // ---------- Models & costs ----------
 
 function modelRow(job) {
@@ -389,7 +421,7 @@ function showTab(name) {
 
 async function refreshAll() {
   await refreshRepo();
-  await Promise.all([loadSlides(), loadPrompts(), loadModels(), loadCosts()]);
+  await Promise.all([loadSlides(), loadNotice(), loadPrompts(), loadModels(), loadCosts()]);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -424,6 +456,32 @@ document.addEventListener('DOMContentLoaded', () => {
   $('#btn-save-titles').addEventListener('click', (e) => run(e.target, async () => {
     await window.mai.slidesSaveManifest(slides);
     toast('Titles saved. Publish to put them live.');
+    await refreshRepo();
+  }));
+
+  $('#notice-active').addEventListener('change', noticeStatusLine);
+  $('#notice-until').addEventListener('change', noticeStatusLine);
+  for (const b of document.querySelectorAll('.until-row button[data-days]')) {
+    b.addEventListener('click', () => {
+      $('#notice-until').value = todayIso(Number(b.dataset.days) - 1);
+      noticeStatusLine();
+    });
+  }
+  $('#notice-clear-until').addEventListener('click', () => {
+    $('#notice-until').value = '';
+    noticeStatusLine();
+  });
+
+  $('#btn-save-notice').addEventListener('click', (e) => run(e.target, async () => {
+    const active = $('#notice-active').checked;
+    const en = $('#notice-en').value.trim();
+    const sv = $('#notice-sv').value.trim();
+    if (active && !en && !sv) {
+      throw new Error('The notice is switched on but has no text — write something or switch it off.');
+    }
+    await window.mai.noticeWrite({ active, en, sv, until: $('#notice-until').value || null });
+    toast('Notice saved. Publish to put it live.');
+    noticeStatusLine();
     await refreshRepo();
   }));
 
