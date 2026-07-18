@@ -5,6 +5,9 @@ const path = require('path');
 const { execFile } = require('child_process');
 const Anthropic = require('@anthropic-ai/sdk');
 const { config } = require('./config');
+const prompts = require('./prompts');
+const settings = require('./settings');
+const usage = require('./usage');
 
 const EDITABLE_PREFIXES = ['src/', 'docs/'];
 const MAX_TURNS = 30;
@@ -130,43 +133,38 @@ async function execTool(name, input) {
   }
 }
 
-const SYSTEM = `You are the website editing agent for the Museum of Artificial Intelligence (aimuseum.se).
-You edit the site's source files based on instructions the museum staff send via Telegram.
-
-Repository conventions:
-- src/site/ holds hand-authored HTML (including the home pages src/site/index.html in English and src/site/sv/index.html in Swedish), CSS, JS, and images. The site is bilingual: when you change user-visible text on one home page, make the equivalent change on the other language's page.
-- src/content/pages/*.js are build modules pairing EN/SV HTML partials (in the same directory) with templates in src/templates/pages/. Daily generated posts live in src/content/daily/.
-- public/ is build output — never edit it (you cannot; it is outside your allowed paths).
-- Styling is Tailwind CSS utility classes plus src/site/assets/css/styles.css. Match the existing look (glass-card, section-title, slate/cyan/indigo palette).
-
-Working method:
-1. Locate the right file(s) with list_files/read_file before writing.
-2. Make the smallest change that fulfils the instruction; preserve surrounding markup and formatting.
-3. Run run_build to validate after your edits.
-4. Finish with a short plain-text summary of what you changed and in which files. If the instruction is ambiguous or risky, say so in the summary instead of guessing wildly.
-
-You cannot run git; committing and pushing happens automatically after you finish.`;
-
-// Returns { summary, turns }.
+// Returns { summary, turns }. The system prompt lives in
+// agent/prompts/editor-system.md and the model in agent/settings.json — both
+// read from the repo clone at call time, so committed changes apply to the
+// next instruction without a redeploy.
 async function runEditInstruction(instruction, { onProgress } = {}) {
   const client = anthropic();
+  const system = prompts.render('editor-system');
+  const model = settings.editorModel();
   const messages = [{ role: 'user', content: instruction }];
   let summary = '';
+  let inputTokens = 0;
+  let outputTokens = 0;
+  const recordUsage = (turns) =>
+    usage.record({ job: 'edit', provider: 'anthropic', model, inputTokens, outputTokens, turns });
 
   for (let turn = 0; turn < MAX_TURNS; turn++) {
     const response = await client.messages.create({
-      model: config.model,
+      model,
       max_tokens: 16000,
-      system: SYSTEM,
+      system,
       tools: TOOLS,
       messages,
     });
+    inputTokens += response.usage?.input_tokens || 0;
+    outputTokens += response.usage?.output_tokens || 0;
 
     const toolUses = response.content.filter((b) => b.type === 'tool_use');
     const texts = response.content.filter((b) => b.type === 'text').map((b) => b.text);
 
     if (toolUses.length === 0) {
       summary = texts.join('\n').trim();
+      recordUsage(turn + 1);
       return { summary, turns: turn + 1 };
     }
 
@@ -185,6 +183,7 @@ async function runEditInstruction(instruction, { onProgress } = {}) {
     messages.push({ role: 'user', content: results });
   }
 
+  recordUsage(MAX_TURNS);
   return { summary: summary || 'Stopped after reaching the tool-use turn limit.', turns: MAX_TURNS };
 }
 

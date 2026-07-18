@@ -28,6 +28,35 @@ cards by `tools/inject-daily.js`:
 Posts land in `src/content/daily/` and are rendered by the existing build
 into `pages/daily.html` (index) and `pages/daily/<date>-<type>.html`.
 
+## Prompts, settings, and usage log (repo-driven)
+
+Three things are read from the **working repo clone** (not the agent image)
+at job time, so committing a change to `main` reconfigures the agent on its
+next run with no redeploy:
+
+- **Prompts** — `agent/prompts/*.md`. The daily-job prompts
+  (`on-this-day.md`, `ai-news.md`, shared fragments under `shared/`) and the
+  Telegram editor's system prompt (`editor-system.md`). `{{placeholders}}`
+  are filled in by `agent/prompts.js`; an unknown placeholder throws rather
+  than publishing a broken post.
+- **Settings** — `agent/settings.json`. Per-job provider/model
+  (`generation.onthisday`, `generation.ainews`; provider `anthropic` or
+  `openrouter`), the editor model (`editorModel`), and the price table used
+  for cost logging. Empty strings mean "fall back to the env vars"
+  (`ANTHROPIC_MODEL`, `OPENROUTER_MODEL`), which preserves the original
+  behavior when the file is absent.
+- **Usage log** — every LLM call appends one JSON line to
+  `reports/llm-usage.jsonl` (timestamp, job, provider, model, tokens,
+  searches, estimated USD cost) and it is committed together with the post
+  or edit it belongs to. OpenRouter calls log the exact cost reported by
+  OpenRouter; Anthropic calls compute cost from the `prices` table in
+  `agent/settings.json` (web search billed at `webSearchPer1000`, currently
+  $10/1000 searches).
+
+These three are the groundwork for the planned desktop admin dashboard
+(see `docs/DASHBOARD_PLAN.md`): the dashboard edits/commits these files and
+charts the usage log, without any server-side admin surface.
+
 ## Safety model
 
 - The agent pushes to `AGENT_BRANCH`. In production (since July 2026)
