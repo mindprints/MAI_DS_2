@@ -7,6 +7,9 @@ const path = require('path');
 const Anthropic = require('@anthropic-ai/sdk');
 const { config } = require('./config');
 const gitrepo = require('./gitrepo');
+const prompts = require('./prompts');
+const settings = require('./settings');
+const usage = require('./usage');
 
 const DAILY_DIR = () => path.join(config.repoDir, 'src', 'content', 'daily');
 
@@ -14,29 +17,41 @@ function anthropic() {
   return new Anthropic({ apiKey: config.anthropicApiKey });
 }
 
-// Generation backend for the two content jobs: Anthropic (config.model) by
-// default; OpenRouter when OPENROUTER_MODEL is set (cost experiment).
-// Returns the reply text.
-async function generate(prompt, { search = false } = {}) {
-  if (config.openRouterModel) return generateOpenRouter(prompt, { search });
+// Generation backend for the two content jobs. Provider + model come from
+// agent/settings.json (falling back to ANTHROPIC_MODEL / OPENROUTER_MODEL env
+// vars — see agent/settings.js). Records token usage to reports/llm-usage.jsonl
+// and returns the reply text.
+async function generate(prompt, { search = false, job } = {}) {
+  const gen = settings.generationFor(job);
+  if (gen.provider === 'openrouter') return generateOpenRouter(gen.model, prompt, { search, job });
   const client = anthropic();
   // Adaptive thinking is on by default and counts against max_tokens,
   // so leave generous headroom or the reply is all thinking and no text.
   const response = await client.messages.create({
-    model: config.model,
+    model: gen.model,
     max_tokens: 16000,
     ...(search ? { tools: [{ type: 'web_search_20260209', name: 'web_search', max_uses: 8 }] } : {}),
     messages: [{ role: 'user', content: prompt }],
   });
+  usage.record({
+    job,
+    provider: 'anthropic',
+    model: gen.model,
+    inputTokens: response.usage?.input_tokens || 0,
+    outputTokens: response.usage?.output_tokens || 0,
+    searches: response.usage?.server_tool_use?.web_search_requests || 0,
+  });
   return response.content.filter((b) => b.type === 'text').map((b) => b.text).join('\n');
 }
 
-async function generateOpenRouter(prompt, { search = false } = {}) {
-  if (!config.openRouterApiKey) throw new Error('OPENROUTER_MODEL is set but OPENROUTER_API_KEY is missing');
+async function generateOpenRouter(model, prompt, { search = false, job } = {}) {
+  if (!config.openRouterApiKey) throw new Error('OpenRouter model configured but OPENROUTER_API_KEY is missing');
   const body = {
-    model: config.openRouterModel,
+    model,
     max_tokens: 16000,
     messages: [{ role: 'user', content: prompt }],
+    // Ask OpenRouter to report token counts and cost on the response.
+    usage: { include: true },
   };
   // OpenRouter web plugin (Exa): ~$0.005/request for up to 10 results,
   // injected into context and cited via url_citation annotations.
@@ -58,6 +73,14 @@ async function generateOpenRouter(prompt, { search = false } = {}) {
   const data = await resp.json();
   const text = data.choices?.[0]?.message?.content;
   if (!text) throw new Error(`OpenRouter reply contained no content (finish: ${data.choices?.[0]?.finish_reason || 'unknown'})`);
+  usage.record({
+    job,
+    provider: 'openrouter',
+    model,
+    inputTokens: data.usage?.prompt_tokens || 0,
+    outputTokens: data.usage?.completion_tokens || 0,
+    costUsd: typeof data.usage?.cost === 'number' ? data.usage.cost : null,
+  });
   return text;
 }
 
@@ -116,15 +139,13 @@ async function publishPost(dateIso, type, post, commitMessage) {
   return { commit, link };
 }
 
-const HTML_RULES = `Format each post as a clean HTML fragment (no <html>, <head>, or <body>):
-- exactly one <h1> with the title
-- then 3-6 <p> paragraphs; you may use one <ul> with <li> items where it genuinely helps
-- no inline styles, no scripts, no images, no headings other than the single <h1>`;
-
-const BILINGUAL_RULES = `Produce the post in BOTH English and Swedish. The Swedish version is a natural, idiomatic translation (not word-for-word) with the same structure and facts. Keep proper nouns, product names, and quoted titles as-is.
-
-Reply with ONLY a JSON object:
-{"title_en": "...", "html_en": "...", "title_sv": "...", "html_sv": "..."}`;
+// Shared prompt fragments, loaded from agent/prompts/shared/ in the repo.
+function sharedRules() {
+  return {
+    htmlRules: prompts.render('shared/html-rules'),
+    bilingualRules: prompts.render('shared/bilingual-rules'),
+  };
+}
 
 function parseBilingual(text) {
   const post = parseJsonReply(text);
@@ -143,25 +164,9 @@ async function runOnThisDay({ force = false, topic = '' } = {}) {
   const steer = topic
     ? `\nThe museum's editor has requested that this essay be about: "${topic}". Write about that event if it is genuinely connected to this calendar date (or explain the closest true date connection honestly).`
     : '';
-  const prompt = `Today is ${readable}. Write a short essay (300-450 words) for the Museum of Artificial Intelligence's "On this day" series about ONE well-documented event that happened on ${readable} (any year), drawn from the long intellectual history that led to artificial intelligence.${steer}
+  const prompt = prompts.render('on-this-day', { readable, steer, ...sharedRules() });
 
-The scope is deliberately wide — all of these qualify:
-- milestones in computing, robotics, machine learning, and AI (demonstrations, launches, landmark systems);
-- publication dates of influential papers and books in logic, mathematics, computation, linguistics, or cognitive science;
-- births and deaths of thinkers whose work fed into AI, however tangentially: philosophers, logicians, mathematicians, engineers, and scientists (Leibniz, Boole, Frege, Russell, Carnap, Gödel, Church, Turing, von Neumann, Shannon, Wiener, McCulloch, Lovelace, Babbage, Hopper — and their many lesser-known peers).
-
-Requirements:
-- Date accuracy is paramount: choose an event you are confident is documented on exactly this calendar date. With the scope above, every date of the year has a genuine anniversary — NEVER write that nothing happened on this day, and never present an adjacent date's event as today's.
-- If the connection to AI is indirect, tracing that thread IS the essay's charm: show how the idea travelled from its origin into today's AI.
-- Audience: curious general public. Engaging, accurate, no hype.
-- Connect the event briefly to today's AI landscape at the end.
-- Title format: start with the year, e.g. "1956: The Dartmouth workshop convenes" / "1956: Dartmouth-konferensen inleds".
-
-${HTML_RULES}
-
-${BILINGUAL_RULES}`;
-
-  const text = await generate(prompt);
+  const text = await generate(prompt, { job: 'onthisday' });
   const post = parseBilingual(text);
 
   const { commit, link } = await publishPost(iso, 'onthisday', post, `Daily post: on this day (${iso})\n\n${post.title_en}`);
@@ -177,22 +182,15 @@ async function runAiNews({ force = false, topic = '' } = {}) {
   const steer = topic
     ? `\nThe museum's editor has requested that the LEAD story of today's briefing be: "${topic}". Research it, make it the opening item with the most depth, and cover other significant AI news after it.`
     : '';
-  const prompt = `Today is ${readable} ${iso.slice(0, 4)}. Use web search to find the most significant AI news from the last 24-48 hours, then write a daily AI news summary (350-500 words) for the Museum of Artificial Intelligence's general-audience readers.${steer}
+  const prompt = prompts.render('ai-news', {
+    readable,
+    readableSv,
+    year: iso.slice(0, 4),
+    steer,
+    ...sharedRules(),
+  });
 
-Cover a mix of what actually happened (skip categories with no real news): research breakthroughs, product releases, laws and regulation, business and finance, and notable public debate.
-
-Requirements:
-- Not overly technical: explain significance in plain language.
-- 3-6 items, ONE <p> per item. Start each item's paragraph with a short bold lead-in naming the story, e.g. <p><strong>EU approves AI liability rules.</strong> Rest of the item…</p>
-- Lead with the most important. Attribute claims to their sources by name in the text (e.g. "according to Reuters"), but do not include raw URLs.
-- Title format: "AI news, ${readable}: " (English) / "AI-nytt, ${readableSv}: " (Swedish, lowercase Swedish month name) followed by a short hook about the lead item.
-- Neutral tone; distinguish announcements from confirmed facts.
-
-${HTML_RULES}
-
-${BILINGUAL_RULES}`;
-
-  const text = await generate(prompt, { search: true });
+  const text = await generate(prompt, { search: true, job: 'ainews' });
   const post = parseBilingual(text);
 
   const { commit, link } = await publishPost(iso, 'ainews', post, `Daily post: AI news (${iso})\n\n${post.title_en}`);
