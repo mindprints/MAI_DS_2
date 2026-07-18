@@ -1,11 +1,14 @@
 <script>
-// Client-side helper only; email is sent via /api/send-email
+// Client-side helper only; email is sent via /api/send-email.
+// The full enquiry is composed into `message` (so it survives any template)
+// AND sent as individual fields (for templates that reference them).
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('plan-form');
   if (!form) return;
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
+    const feedback = document.getElementById('plan-feedback');
 
     const name = document.getElementById('name')?.value.trim();
     const email = document.getElementById('email')?.value.trim();
@@ -19,8 +22,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const aiExpRaw = form.querySelector('input[name="ai_experience"]:checked')?.value || '';
     const notes = document.getElementById('experience-notes')?.value.trim() || '';
 
+    // Backstop only — the browser enforces the required fields (form has no novalidate).
     if (!name || !email || !needs) {
-      alert('Please fill in your name, email, and describe your needs.');
+      feedback.textContent = 'Please fill in your name, email, and describe your needs.';
       return;
     }
 
@@ -33,9 +37,28 @@ document.addEventListener('DOMContentLoaded', () => {
       aiExpRaw === 'intermediate' ? 'Intermediate' :
       aiExpRaw === 'advanced' ? 'Advanced' : '';
 
+    // English field labels regardless of page language, so enquiries read
+    // uniformly in the museum's inbox.
+    const fullMessage = [
+      'Workshop/Lecture enquiry',
+      '',
+      `Name: ${name}`,
+      `Email: ${email}`,
+      organization ? `Organization: ${organization}` : null,
+      participants ? `Participants: ${participants}` : null,
+      location ? `Location: ${location}` : null,
+      level ? `Experience with AI: ${level}` : null,
+      desiredDT ? `Desired dates/times: ${desiredDT}` : null,
+      notes ? `Experience details: ${notes}` : null,
+      '',
+      'Needs:',
+      needs,
+    ].filter((line) => line !== null).join('\n');
+
     const submitBtn = form.querySelector('button[type="submit"]');
     submitBtn.disabled = true;
     submitBtn.textContent = 'Sending…';
+    feedback.textContent = '';
 
     const payload = {
       kind: 'workshop',
@@ -48,6 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
       location,
       level,
       experience_details: notes,
+      message: fullMessage,
       reply_to: email,
       from_name: 'MAI Website',
       from_email: 'info@aimuseum.se'
@@ -63,11 +87,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const data = await resp.json().catch(() => ({}));
         throw new Error(data?.error || 'Failed to send');
       }
-      alert('Thank you! Your workshop/lecture enquiry has been sent.');
+      feedback.textContent = 'Thank you! Your enquiry has been sent.';
       form.reset();
     } catch (err) {
       console.error('Send error:', err);
-      alert('Sorry, we could not send your enquiry right now.');
+      feedback.textContent = 'Sorry, we could not send your enquiry right now.';
     } finally {
       submitBtn.disabled = false;
       submitBtn.textContent = 'Submit';
@@ -75,4 +99,3 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 </script>
-

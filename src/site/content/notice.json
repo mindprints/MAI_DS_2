@@ -1,6 +1,6 @@
 {
-  "active": true,
-  "until": "2026-07-18",
-  "en": "We're offering agentic coding classes in September",
-  "sv": "Vi erbjuder agentic coding kurser och utbildningar i September"
+  "active": false,
+  "until": null,
+  "en": "",
+  "sv": ""
 }

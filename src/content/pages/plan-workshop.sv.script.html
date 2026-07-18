@@ -1,11 +1,14 @@
 <script>
-// Klientlogik; e-post skickas via /api/send-email
+// Klientlogik; e-post skickas via /api/send-email.
+// Hela förfrågan komponeras till `message` (så den överlever alla mallar)
+// OCH skickas som separata fält (för mallar som refererar dem).
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('plan-form');
   if (!form) return;
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
+    const feedback = document.getElementById('plan-feedback');
 
     const name = document.getElementById('name')?.value.trim();
     const email = document.getElementById('email')?.value.trim();
@@ -19,8 +22,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const aiExpRaw = form.querySelector('input[name="ai_experience"]:checked')?.value || '';
     const notes = document.getElementById('experience-notes')?.value.trim() || '';
 
+    // Endast reserv — webbläsaren upprätthåller obligatoriska fält (formuläret har inte novalidate).
     if (!name || !email || !needs) {
-      alert('Fyll i namn, e-post och beskrivning av behov.');
+      feedback.textContent = 'Fyll i namn, e-post och beskrivning av behov.';
       return;
     }
 
@@ -33,8 +37,28 @@ document.addEventListener('DOMContentLoaded', () => {
       aiExpRaw === 'intermediate' ? 'Intermediate' :
       aiExpRaw === 'advanced' ? 'Advanced' : '';
 
-    const btn = form.querySelector('button[type="submit"]');
-    btn.disabled = true; btn.textContent = 'Skickar…';
+    // Engelska fältetiketter oavsett sidspråk, så förfrågningarna läses
+    // enhetligt i museets inkorg.
+    const fullMessage = [
+      'Workshop/Lecture enquiry',
+      '',
+      `Name: ${name}`,
+      `Email: ${email}`,
+      organization ? `Organization: ${organization}` : null,
+      participants ? `Participants: ${participants}` : null,
+      location ? `Location: ${location}` : null,
+      level ? `Experience with AI: ${level}` : null,
+      desiredDT ? `Desired dates/times: ${desiredDT}` : null,
+      notes ? `Experience details: ${notes}` : null,
+      '',
+      'Needs:',
+      needs,
+    ].filter((line) => line !== null).join('\n');
+
+    const submitBtn = form.querySelector('button[type="submit"]');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Skickar…';
+    feedback.textContent = '';
 
     const payload = {
       kind: 'workshop',
@@ -47,6 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
       location,
       level,
       experience_details: notes,
+      message: fullMessage,
       reply_to: email,
       from_name: 'MAI Website',
       from_email: 'info@aimuseum.se'
@@ -62,15 +87,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const data = await resp.json().catch(() => ({}));
         throw new Error(data?.error || 'Failed to send');
       }
-      alert('Tack! Din förfrågan har skickats.');
+      feedback.textContent = 'Tack! Din förfrågan har skickats.';
       form.reset();
     } catch (err) {
       console.error('Send error:', err);
-      alert('Tyvärr kunde vi inte skicka din förfrågan just nu.');
+      feedback.textContent = 'Tyvärr kunde vi inte skicka din förfrågan just nu.';
     } finally {
-      btn.disabled = false; btn.textContent = 'Skicka';
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Skicka';
     }
   });
 });
 </script>
-

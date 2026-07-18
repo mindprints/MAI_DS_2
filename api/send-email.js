@@ -131,7 +131,12 @@ export default async function handler(req) {
 
   try {
     const body = await req.json().catch(() => ({}));
-    const { kind, name, email, profession, message, reply_to, from_name, from_email, hp } = body || {};
+    const {
+      kind, name, email, profession, message, reply_to, from_name, from_email, hp,
+      // Workshop-enquiry fields — must be forwarded to the template (they used
+      // to be silently dropped here, so workshop emails arrived nearly empty).
+      organization, needs, dates, participants, location, level, experience_details,
+    } = body || {};
 
     // Honeypot trap
     if (hp) {
@@ -172,6 +177,13 @@ export default async function handler(req) {
       email: safeEmail,
       profession: safeProfession,
       message: safeMessage,
+      organization: sanitize(organization),
+      needs: sanitize(needs),
+      dates: sanitize(dates),
+      participants: sanitize(String(participants ?? '')),
+      location: sanitize(location),
+      level: sanitize(level),
+      experience_details: sanitize(experience_details),
       reply_to: sanitize(reply_to) || safeEmail,
       from_name: sanitize(from_name) || 'MAI Website',
       from_email: sanitize(from_email) || 'info@aimuseum.se',
