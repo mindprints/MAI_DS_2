@@ -1,83 +1,118 @@
 <html><head></head><body><div class="container mx-auto px-4 max-w-3xl">
-      <h1 class="text-4xl font-bold mb-6" data-segment-id="contact-div-h1-0">Kontakt</h1>
-      <p class="text-slate-300 mb-8" data-segment-id="contact-div-p-1">Berätta hur vi kan hjälpa till. Vi återkommer så snart vi kan.</p>
+      <h1 class="text-4xl font-bold mb-6">Kontakt</h1>
+      <p class="text-slate-300 mb-8">Berätta hur vi kan hjälpa till. Vi återkommer så snart vi kan.</p>
 
       <div class="glass-card p-6 md:p-8 rounded-xl">
-        <form id="contact-form" class="space-y-6" novalidate="">
+        <form id="contact-form" class="space-y-6">
           <!-- Ämne -->
           <div>
-            <label for="topic" class="block text-sm font-medium text-slate-300 mb-2" data-segment-id="contact-div-label-2">Ämne</label>
+            <label for="topic" class="block text-sm font-medium text-slate-300 mb-2">Ämne</label>
             <select id="topic" name="topic" class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-              <option data-segment-id="contact-select-option-3">Allmän kontakt</option>
-              <option data-segment-id="contact-select-option-4">Medlemsansökan</option>
-              <option data-segment-id="contact-select-option-5">Workshop/Föreläsning</option>
-              <option data-segment-id="contact-select-option-6">Press Center</option>
-              <option data-segment-id="contact-select-option-7">Karriär</option>
-              <option data-segment-id="contact-select-option-8">Partnerskap</option>
-              <option data-segment-id="contact-select-option-9">Donation/Sponsring</option>
-              <option data-segment-id="contact-select-option-10">Lokaluthyrning</option>
-              <option data-segment-id="contact-select-option-11">Tillgänglighet</option>
-              <option data-segment-id="contact-select-option-12">Annat</option>
+              <option>Allmän kontakt</option>
+              <option>Medlemsansökan</option>
+              <option>Workshop/Föreläsning</option>
+              <option>Press Center</option>
+              <option>Karriär</option>
+              <option>Partnerskap</option>
+              <option>Donation/Sponsring</option>
+              <option>Lokaluthyrning</option>
+              <option>Tillgänglighet</option>
+              <option>Annat</option>
             </select>
           </div>
 
           <!-- Namn / E-post -->
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label for="name" class="block text-sm font-medium text-slate-300 mb-2" data-segment-id="contact-div-label-13">Namn</label>
-              <input id="name" name="name" type="text" required="" autocomplete="name" class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+              <label for="name" class="block text-sm font-medium text-slate-300 mb-2">Namn</label>
+              <input id="name" name="name" type="text" required autocomplete="name" class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500">
             </div>
             <div>
-              <label for="email" class="block text-sm font-medium text-slate-300 mb-2" data-segment-id="contact-div-label-14">E-post</label>
-              <input id="email" name="email" type="email" required="" autocomplete="email" inputmode="email" class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+              <label for="email" class="block text-sm font-medium text-slate-300 mb-2">E-post</label>
+              <input id="email" name="email" type="email" required autocomplete="email" inputmode="email" class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500">
             </div>
           </div>
 
           <!-- Valfria uppgifter -->
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label for="organization" class="block text-sm font-medium text-slate-300 mb-2" data-segment-id="contact-div-label-15">Organisation (valfritt)</label>
+              <label for="organization" class="block text-sm font-medium text-slate-300 mb-2">Organisation (valfritt)</label>
               <input id="organization" name="organization" type="text" autocomplete="organization" class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500">
             </div>
             <div>
-              <label for="phone" class="block text-sm font-medium text-slate-300 mb-2" data-segment-id="contact-div-label-16">Telefon (valfritt)</label>
+              <label for="phone" class="block text-sm font-medium text-slate-300 mb-2">Telefon (valfritt)</label>
               <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500">
             </div>
           </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label for="website" class="block text-sm font-medium text-slate-300 mb-2" data-segment-id="contact-div-label-17">Webbplats (valfritt)</label>
-              <input id="website" name="website" type="url" inputmode="url" placeholder="https://" class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+          <!-- Workshop/Föreläsning — visas när det ämnet väljs -->
+          <div id="workshop-fields" hidden class="space-y-6 border-t border-slate-700/60 pt-6">
+            <p class="text-sm text-slate-400">Några detaljer hjälper oss att skräddarsy tillfället:</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div>
+                <label for="participants" class="block text-sm font-medium text-slate-300 mb-2">Antal deltagare</label>
+                <input id="participants" name="participants" type="number" min="1" step="1" placeholder="t.ex. 25" class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+              </div>
+              <div>
+                <label for="desired-datetime" class="block text-sm font-medium text-slate-300 mb-2">Önskade datum/tider</label>
+                <input id="desired-datetime" name="desired_datetime" type="text" placeholder="t.ex. vecka 20, kvällar" class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+              </div>
+              <div>
+                <label for="budget" class="block text-sm font-medium text-slate-300 mb-2">Budget (valfritt)</label>
+                <input id="budget" name="budget" type="text" placeholder="t.ex. 20–50 tkr" class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+              </div>
             </div>
-            <div>
-              <label for="geo" class="block text-sm font-medium text-slate-300 mb-2" data-segment-id="contact-div-label-18">Plats (valfritt)</label>
-              <input id="geo" name="location" type="text" placeholder="Stad, land" class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-            </div>
-          </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label for="budget" class="block text-sm font-medium text-slate-300 mb-2" data-segment-id="contact-div-label-19">Budget (valfritt)</label>
-              <input id="budget" name="budget" type="text" placeholder="t.ex. 20–50 tkr" class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <span class="block text-sm font-medium text-slate-300 mb-2">Plats</span>
+                <div class="space-y-2">
+                  <label class="flex items-center space-x-3">
+                    <input type="radio" name="location" value="visit-mai" class="text-indigo-600 focus:ring-indigo-500">
+                    <span>Besök oss på MAI (Närkesgatan 6, Stockholm)</span>
+                  </label>
+                  <label class="flex items-center space-x-3">
+                    <input type="radio" name="location" value="host-own-premises" class="text-indigo-600 focus:ring-indigo-500">
+                    <span>I era egna lokaler</span>
+                  </label>
+                </div>
+              </div>
+              <div>
+                <span class="block text-sm font-medium text-slate-300 mb-2">Erfarenhet av AI</span>
+                <div class="space-y-2">
+                  <label class="flex items-center space-x-3">
+                    <input type="radio" name="ai_experience" value="beginner" class="text-indigo-600 focus:ring-indigo-500">
+                    <span>Nybörjare</span>
+                  </label>
+                  <label class="flex items-center space-x-3">
+                    <input type="radio" name="ai_experience" value="intermediate" class="text-indigo-600 focus:ring-indigo-500">
+                    <span>Medel</span>
+                  </label>
+                  <label class="flex items-center space-x-3">
+                    <input type="radio" name="ai_experience" value="advanced" class="text-indigo-600 focus:ring-indigo-500">
+                    <span>Avancerad</span>
+                  </label>
+                </div>
+              </div>
             </div>
+
             <div>
-              <label for="timeline" class="block text-sm font-medium text-slate-300 mb-2" data-segment-id="contact-div-label-20">Tidplan (valfritt)</label>
-              <input id="timeline" name="timeline" type="text" placeholder="t.ex. okt–nov 2025" class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+              <label for="experience-notes" class="block text-sm font-medium text-slate-300 mb-2">Mer om er erfarenhet (valfritt)</label>
+              <textarea id="experience-notes" name="experience_notes" rows="3" placeholder="Relevanta verktyg, plattformar eller tidigare utbildningar" class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
             </div>
           </div>
 
           <!-- Meddelande -->
           <div>
-            <label for="message" class="block text-sm font-medium text-slate-300 mb-2" data-segment-id="contact-div-label-21">Meddelande</label>
-            <textarea id="message" name="message" rows="6" required="" class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+            <label for="message" id="message-label" class="block text-sm font-medium text-slate-300 mb-2">Meddelande</label>
+            <textarea id="message" name="message" rows="6" required class="w-full rounded-lg bg-slate-900/50 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
           </div>
 
-          <p class="text-xs text-slate-400" data-segment-id="contact-form-p-23"><span data-segment-id="contact-form-p-22">Vi använder dina uppgifter endast för att besvara din förfrågan. Se vår</span><a href="./privacy.html" class="underline hover:text-indigo-400" data-segment-id="contact-p-a-24">Integritetspolicy</a>.
+          <p class="text-xs text-slate-400"><span>Vi använder dina uppgifter endast för att besvara din förfrågan. Se vår </span><a href="./privacy.html" class="underline hover:text-indigo-400">Integritetspolicy</a>.
           </p>
 
           <div class="flex items-center justify-between gap-4">
-            <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-full font-medium transition duration-300" data-segment-id="contact-div-button-25">
+            <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-full font-medium transition duration-300">
               Skicka meddelande
             </button>
             <span id="contact-feedback" class="text-sm text-slate-400"></span>
