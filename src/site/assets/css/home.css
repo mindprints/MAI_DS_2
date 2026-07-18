@@ -503,3 +503,33 @@ summary:focus-visible {
     outline: 2px solid var(--brass);
     outline-offset: 3px;
 }
+
+/* ---------- Flash notice banner (content/notice.json via assets/js/notice.js) ---------- */
+.flash-notice { padding-top: 1.25rem; }
+.flash-notice-card {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    border: 1px solid var(--brass);
+    border-left: 4px solid var(--brass);
+    background: color-mix(in srgb, var(--brass) 10%, transparent);
+    padding: 0.85rem 1.2rem;
+    border-radius: 6px;
+}
+.flash-notice-label {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--brass);
+    white-space: nowrap;
+}
+.flash-notice-text {
+    margin: 0;
+    color: var(--ink);
+    font-size: 1rem;
+    line-height: 1.5;
+}
+@media (max-width: 640px) {
+    .flash-notice-card { flex-direction: column; gap: 0.35rem; }
+}

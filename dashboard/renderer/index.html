@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' file:; style-src 'self'" />
+  <title>MAI Site Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <h1>MAI Site Dashboard</h1>
+      <div id="repo-line" class="muted">Loading repository…</div>
+    </div>
+    <div class="header-actions">
+      <button id="btn-refresh" title="Re-read everything from disk">Refresh</button>
+      <button id="btn-choose-repo" title="Only needed if the dashboard can't find the website files by itself">Site folder…</button>
+    </div>
+  </header>
+
+  <div id="publish-bar" hidden>
+    <span id="pending-summary"></span>
+    <input id="publish-message" type="text" placeholder="Describe the change (commit message)" />
+    <button id="btn-publish" class="primary">Publish to site</button>
+  </div>
+
+  <nav id="tabs">
+    <button class="tab active" data-tab="slides">Slideshow</button>
+    <button class="tab" data-tab="notice">Notice</button>
+    <button class="tab" data-tab="prompts">Prompts</button>
+    <button class="tab" data-tab="models">Models &amp; costs</button>
+  </nav>
+
+  <main>
+    <section id="tab-slides" class="tab-panel">
+      <div class="toolbar">
+        <button id="btn-add-slides" class="primary">Add photos…</button>
+        <button id="btn-save-titles">Save titles</button>
+        <span class="muted">Photos are converted to WebP and numbered automatically. Remember to Publish when done.</span>
+      </div>
+      <div id="slides-grid" class="grid"></div>
+    </section>
+
+    <section id="tab-notice" class="tab-panel" hidden>
+      <h2>Flash notice on the home page</h2>
+      <p class="muted">A short banner at the top of both home pages — for things like "Tonight's lecture is fully booked" or puffing a seminar. It only shows while it's switched on (and, if you set a last day, until that day ends).</p>
+      <div class="notice-form">
+        <label class="check-row">
+          <input type="checkbox" id="notice-active" />
+          <strong>Show the notice on the website</strong>
+        </label>
+        <span id="notice-status" class="muted"></span>
+        <label>Text (English)
+          <textarea id="notice-en" rows="3" placeholder="Tonight's lecture is fully booked."></textarea>
+        </label>
+        <label>Text (Swedish)
+          <textarea id="notice-sv" rows="3" placeholder="Kvällens föreläsning är fullbokad."></textarea>
+        </label>
+        <div class="until-row">
+          <label>Show until (last day, optional)
+            <input type="date" id="notice-until" />
+          </label>
+          <span class="muted">or quick-set:</span>
+          <button data-days="1">Today only</button>
+          <button data-days="3">3 days</button>
+          <button data-days="7">1 week</button>
+          <button data-days="14">2 weeks</button>
+          <button id="notice-clear-until">No end date</button>
+        </div>
+        <div class="toolbar">
+          <button id="btn-save-notice" class="primary">Save notice</button>
+          <span class="muted">Then press Publish — it's live a couple of minutes later.</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="tab-prompts" class="tab-panel" hidden>
+      <div class="split">
+        <aside id="prompt-list"></aside>
+        <div class="editor-pane">
+          <div class="toolbar">
+            <strong id="prompt-name">Select a prompt</strong>
+            <button id="btn-save-prompt" disabled>Save prompt</button>
+          </div>
+          <p class="muted">Pieces in double curly braces like <code>{{readable}}</code> are filled in automatically — keep them.</p>
+          <textarea id="prompt-editor" spellcheck="false" disabled></textarea>
+        </div>
+      </div>
+    </section>
+
+    <section id="tab-models" class="tab-panel" hidden>
+      <h2>Which AI writes what</h2>
+      <p class="muted">Empty means "use the server default". Changes apply from the next morning run after you publish.</p>
+      <div id="model-rows"></div>
+      <div class="toolbar"><button id="btn-save-settings">Save model choices</button></div>
+
+      <h2>Costs</h2>
+      <div id="stat-tiles" class="tiles"></div>
+      <div class="viz-root">
+        <h3>Daily cost, last 30 days (USD)</h3>
+        <div id="cost-chart"></div>
+      </div>
+      <h3>By model (all time)</h3>
+      <table id="model-table">
+        <thead>
+          <tr><th>Model</th><th>Provider</th><th class="num">Calls</th><th class="num">Tokens in</th><th class="num">Tokens out</th><th class="num">Cost (USD)</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <datalist id="models-anthropic"></datalist>
+      <datalist id="models-openrouter"></datalist>
+    </section>
+  </main>
+
+  <div id="toast" hidden></div>
+  <div id="chart-tooltip" hidden></div>
+  <script src="app.js"></script>
+</body>
+</html>

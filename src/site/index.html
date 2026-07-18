@@ -66,6 +66,16 @@
 
     <main id="main">
 
+        <!-- Flash notice (content from /content/notice.json, shown by assets/js/notice.js) -->
+        <section id="flash-notice" class="flash-notice" hidden aria-live="polite">
+            <div class="container mx-auto px-4">
+                <div class="flash-notice-card">
+                    <span class="flash-notice-label">Notice</span>
+                    <p class="flash-notice-text"></p>
+                </div>
+            </div>
+        </section>
+
         <!-- Hero -->
         <section class="pt-14 md:pt-20 pb-16 md:pb-24">
             <div class="container mx-auto px-4">
@@ -409,5 +419,6 @@
     </footer>
 
     <script src="assets/js/home.js" defer></script>
+    <script src="assets/js/notice.js" defer></script>
 </body>
 </html>

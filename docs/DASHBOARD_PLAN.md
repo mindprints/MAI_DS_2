@@ -49,7 +49,11 @@ No GUI; makes the repo dashboard-ready and is useful on its own:
    it produced. The agent self-reports — no Anthropic admin key ever needs
    to exist on an admin's machine.
 
-### Phase B — dashboard MVP
+### Phase B — dashboard MVP (first cut July 2026: `dashboard/`)
+
+Implemented as an Electron app in `dashboard/` (see its README). Runs from
+source (`npm start`) against a local clone for now; packaged installers and
+git-less operation for non-technical admins are the remaining Phase B work.
 
 - **Slides manager**: thumbnail grid from `slides.json`; drag-and-drop add
   (reuses `tools/slides-add.js` pipeline: WebP conversion, numbering,
