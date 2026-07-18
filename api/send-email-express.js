@@ -143,7 +143,12 @@ async function handleSendEmail(req, res) {
   const reqId = Math.random().toString(36).slice(2);
 
   try {
-    const { kind, name, email, profession, message, reply_to, from_name, from_email, hp } = req.body || {};
+    const {
+      kind, name, email, profession, message, reply_to, from_name, from_email, hp,
+      // Workshop-enquiry fields — must be forwarded to the template (they used
+      // to be silently dropped here, so workshop emails arrived nearly empty).
+      organization, needs, dates, participants, location, level, experience_details,
+    } = req.body || {};
 
     // Honeypot trap
     if (hp) {
@@ -191,6 +196,13 @@ async function handleSendEmail(req, res) {
       email: safeEmail,
       profession: safeProfession,
       message: safeMessage,
+      organization: sanitize(organization),
+      needs: sanitize(needs),
+      dates: sanitize(dates),
+      participants: sanitize(String(participants ?? '')),
+      location: sanitize(location),
+      level: sanitize(level),
+      experience_details: sanitize(experience_details),
       reply_to: sanitize(reply_to) || safeEmail,
       from_name: sanitize(from_name) || 'MAI Website',
       from_email: sanitize(from_email) || 'info@aimuseum.se',

@@ -1,5 +1,9 @@
 <script>
-// Client-side helper only; email is sent via /api/send-email
+// Client-side helper only; email is sent via /api/send-email.
+// One unified enquiry form: choosing the Workshop/Lecture topic reveals the
+// workshop-specific fields and routes the email through the workshop template.
+
+    const WORKSHOP_TOPIC = 'Workshop/Lecture Enquiry';
 
     // Normalize helper: strip accents, lowercase, trim
     function norm(s) {
@@ -26,7 +30,6 @@
       [norm('Allmän kontakt')]: 'General Contact',
       [norm('Medlemsansökan')]: 'Membership Application',
       [norm('Workshop/Föreläsning')]: 'Workshop/Lecture Enquiry',
-      [norm('Press Center')]: 'Press Center',
       [norm('Karriär')]: 'Careers',
       [norm('Partnerskap')]: 'Partnerships',
       [norm('Donation/Sponsring')]: 'Donations/Sponsorship',
@@ -35,77 +38,114 @@
       [norm('Annat')]: 'Other'
     };
 
+    const topicSelect = document.getElementById('topic');
+
+    // Show/hide the workshop section; its radio groups are required only
+    // while visible (required + hidden would block submission invisibly).
+    function isWorkshop() {
+      return topicSelect.value === WORKSHOP_TOPIC;
+    }
+
+    function toggleWorkshopFields() {
+      const on = isWorkshop();
+      const section = document.getElementById('workshop-fields');
+      section.hidden = !on;
+      const locationFirst = section.querySelector('input[name="location"]');
+      const expFirst = section.querySelector('input[name="ai_experience"]');
+      locationFirst.required = on;
+      expFirst.required = on;
+      document.getElementById('message-label').textContent = on ? 'Describe your needs' : 'Message';
+    }
+
+    topicSelect.addEventListener('change', toggleWorkshopFields);
+
     // Prefill Topic from ?topic= (supports Swedish or English values, accent-insensitive)
     (function prefillTopic() {
       const params = new URLSearchParams(location.search);
       const raw = params.get('topic');
-      if (!raw) return;
-      const mapped = TOPIC_ALIASES[norm(raw)];
-      const select = document.getElementById('topic');
-      if (mapped) {
-        select.value = mapped;
-      } else {
-        // Fallback to "Other"
-        select.value = 'Other';
+      if (raw) {
+        topicSelect.value = TOPIC_ALIASES[norm(raw)] || 'Other';
       }
+      toggleWorkshopFields();
     })();
 
-    // Build a rich message while keeping the EmailJS template minimal
-    function composeMessage() {
-      const get = id => document.getElementById(id)?.value.trim();
-      const topic = get('topic');
-      const name = get('name');
-      const email = get('email');
-      const org = get('organization');
-      const phone = get('phone');
-      const website = get('website');
-      const location = get('location');
-      const budget = get('budget');
-      const timeline = get('timeline');
-      const message = get('message');
+    // Build a rich message while keeping the EmailJS template minimal.
+    // English field labels regardless of page language, so enquiries read
+    // uniformly in the museum's inbox.
+    function collectFields() {
+      const get = (id) => document.getElementById(id)?.value.trim() || '';
+      const radio = (name) => document.querySelector(`input[name="${name}"]:checked`)?.value || '';
+      const location = radio('location') === 'visit-mai'
+        ? 'Visit MAI'
+        : (radio('location') === 'host-own-premises' ? 'Host at your premises' : '');
+      const levelRaw = radio('ai_experience');
+      const level = levelRaw ? levelRaw.charAt(0).toUpperCase() + levelRaw.slice(1) : '';
+      return {
+        topic: topicSelect.value,
+        name: get('name'),
+        email: get('email'),
+        organization: get('organization'),
+        phone: get('phone'),
+        participants: get('participants'),
+        dates: get('desired-datetime'),
+        budget: get('budget'),
+        location,
+        level,
+        notes: get('experience-notes'),
+        message: get('message'),
+      };
+    }
 
-      const lines = [
-        `Topic: ${topic || '—'}`,
-        `Name: ${name || '—'}`,
-        `Email: ${email || '—'}`,
-        org ? `Organization: ${org}` : null,
-        phone ? `Phone: ${phone}` : null,
-        website ? `Website: ${website}` : null,
-        location ? `Location: ${location}` : null,
-        budget ? `Budget: ${budget}` : null,
-        timeline ? `Timeline: ${timeline}` : null,
+    function composeMessage(f) {
+      const workshop = isWorkshop();
+      return [
+        `Topic: ${f.topic || '—'}`,
+        `Name: ${f.name || '—'}`,
+        `Email: ${f.email || '—'}`,
+        f.organization ? `Organization: ${f.organization}` : null,
+        f.phone ? `Phone: ${f.phone}` : null,
+        workshop && f.participants ? `Participants: ${f.participants}` : null,
+        workshop && f.dates ? `Desired dates/times: ${f.dates}` : null,
+        workshop && f.budget ? `Budget: ${f.budget}` : null,
+        workshop && f.location ? `Location: ${f.location}` : null,
+        workshop && f.level ? `Experience with AI: ${f.level}` : null,
+        workshop && f.notes ? `Experience details: ${f.notes}` : null,
         '',
-        'Message:',
-        message || '—'
-      ].filter(Boolean);
-
-      return lines.join('\n');
+        workshop ? 'Needs:' : 'Message:',
+        f.message || '—',
+      ].filter((line) => line !== null && line !== false).join('\n');
     }
 
     document.getElementById('contact-form').addEventListener('submit', async (e) => {
       e.preventDefault();
       const form = e.target;
       const feedback = document.getElementById('contact-feedback');
+      const f = collectFields();
 
-      const name = form.name.value.trim();
-      const email = form.email.value.trim();
-      const msg = form.message.value.trim();
-
-      if (!name || !email || !msg) {
-        alert('Please fill in your name, email, and message.');
+      // Backstop only — the browser enforces the required fields.
+      if (!f.name || !f.email || !f.message) {
+        feedback.textContent = 'Please fill in your name, email, and message.';
         return;
       }
 
-      const fullMessage = composeMessage();
-
+      const workshop = isWorkshop();
       const payload = {
-        kind: 'contact',
-        name,
-        email,
-        message: fullMessage,
-        reply_to: email,
+        kind: workshop ? 'workshop' : 'contact',
+        name: f.name,
+        email: f.email,
+        message: composeMessage(f),
+        reply_to: f.email,
         from_name: 'MAI Website',
-        from_email: 'info@aimuseum.se'
+        from_email: 'info@aimuseum.se',
+        ...(workshop ? {
+          organization: f.organization,
+          needs: f.message,
+          dates: f.dates,
+          participants: f.participants,
+          location: f.location,
+          level: f.level,
+          experience_details: f.notes,
+        } : {}),
       };
 
       const btn = form.querySelector('button[type="submit"]');
@@ -123,6 +163,7 @@
         }
         feedback.textContent = 'Thanks! Your message has been sent.';
         form.reset();
+        toggleWorkshopFields();
       } catch (err) {
         console.error('Send error:', err);
         feedback.textContent = 'Sorry, there was a problem sending your message.';
