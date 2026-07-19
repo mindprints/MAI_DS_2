@@ -127,6 +127,31 @@ function postExists(dateIso, type) {
   return fs.existsSync(postPath(dateIso, type, 'en'));
 }
 
+// Titles of the most recent published posts of a type, strictly before
+// beforeIso, newest first. Scans the directory (rather than just checking
+// "yesterday") so a skipped day doesn't hide the last real post.
+function recentPostTitles(type, { limit = 2, beforeIso } = {}) {
+  const dir = DAILY_DIR();
+  if (!fs.existsSync(dir)) return [];
+  const re = new RegExp(`^(\\d{4}-\\d{2}-\\d{2})\\.${type}\\.en\\.html$`);
+  return fs
+    .readdirSync(dir)
+    .map((f) => {
+      const m = f.match(re);
+      return m ? { date: m[1], file: f } : null;
+    })
+    .filter((d) => d && (!beforeIso || d.date < beforeIso))
+    .sort((a, b) => b.date.localeCompare(a.date))
+    .slice(0, limit)
+    .map((d) => {
+      const html = fs.readFileSync(path.join(dir, d.file), 'utf8');
+      const m = html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i);
+      const title = m ? m[1].replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim() : '';
+      return title ? { date: d.date, title } : null;
+    })
+    .filter(Boolean);
+}
+
 async function publishPost(dateIso, type, post, commitMessage) {
   fs.mkdirSync(DAILY_DIR(), { recursive: true });
   fs.writeFileSync(postPath(dateIso, type, 'en'), post.html_en.trim() + '\n', 'utf8');
@@ -182,11 +207,21 @@ async function runAiNews({ force = false, topic = '' } = {}) {
   const steer = topic
     ? `\nThe museum's editor has requested that the LEAD story of today's briefing be: "${topic}". Research it, make it the opening item with the most depth, and cover other significant AI news after it.`
     : '';
+
+  // Multi-day stories (a launch that keeps generating coverage) can look
+  // like "today's top news" on consecutive mornings with no other signal.
+  // Tell the model what it already led with so it doesn't repeat itself.
+  const recent = recentPostTitles('ainews', { limit: 2, beforeIso: iso });
+  const recentLeads = recent.length
+    ? `\nThe lead stor${recent.length === 1 ? 'y' : 'ies'} from your last ${recent.length} AI news briefing${recent.length === 1 ? '' : 's'} ${recent.length === 1 ? 'was' : 'were'}:\n${recent.map((r) => `- "${r.title}" (${r.date})`).join('\n')}\nDo not lead with the same story again unless something materially new and significant has happened since — if so, frame it explicitly as a fresh development ("update:", a new number, a new decision), not a recap. If it's still relevant but not today's biggest development, cover it briefly as a non-lead item instead of opening with it.\n`
+    : '';
+
   const prompt = prompts.render('ai-news', {
     readable,
     readableSv,
     year: iso.slice(0, 4),
     steer,
+    recentLeads,
     ...sharedRules(),
   });
 
