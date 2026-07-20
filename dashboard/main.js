@@ -2,16 +2,24 @@
 // sandboxed); the dashboard is a git client over the site repo — it edits
 // content files, runs the existing tools/slides-*.js pipeline, and publishes
 // by commit + push to main (Dokploy deploys from there).
-const { app, BrowserWindow, ipcMain, dialog } = require('electron');
+//
+// Two modes (see docs/DASHBOARD_PLAN.md):
+//  - "managed" (recommended, for non-technical admins): the app owns a private
+//    clone in its userData dir and authenticates with a stored GitHub token —
+//    no terminal, no shared checkout, always publishes to main.
+//  - "local" (dev): point at an existing clone and use its ambient git creds.
+const { app, BrowserWindow, ipcMain, dialog, safeStorage } = require('electron');
 const { execFile } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 const simpleGit = require('simple-git');
 const lib = require('./lib/dashlib');
+const secretsLib = require('./lib/secrets');
 
+const MAIN_BRANCH = 'main';
 let win;
 
-// ---------- Config (repo path) ----------
+// ---------- Config + secrets ----------
 
 function configFile() {
   return path.join(app.getPath('userData'), 'config.json');
@@ -30,21 +38,68 @@ function saveConfig(cfg) {
   fs.writeFileSync(configFile(), JSON.stringify(cfg, null, 2), 'utf8');
 }
 
+function managedClonePath() {
+  return path.join(app.getPath('userData'), 'site-clone');
+}
+
+const secrets = secretsLib.makeSecrets(
+  {
+    isAvailable: () => safeStorage.isEncryptionAvailable(),
+    encrypt: (s) => safeStorage.encryptString(s),
+    decrypt: (buf) => safeStorage.decryptString(buf),
+  },
+  () => path.join(app.getPath('userData'), 'github-token.enc'),
+);
+
+// Resolve the active repo path for the configured mode. managed → the private
+// clone (once it exists); local → configured path or the dev default (the
+// dashboard living inside the site repo).
 function repoPath() {
   const cfg = loadConfig();
+  if (cfg.mode === 'managed') {
+    const clone = managedClonePath();
+    return lib.looksLikeSiteRepo(clone) ? clone : null;
+  }
   if (cfg.repoPath && lib.looksLikeSiteRepo(cfg.repoPath)) return cfg.repoPath;
-  // Dev default: the dashboard lives inside the site repo.
   const parent = path.resolve(__dirname, '..');
   if (lib.looksLikeSiteRepo(parent)) return parent;
   return null;
 }
 
+function isManaged() {
+  return loadConfig().mode === 'managed';
+}
+
 // ---------- Helpers ----------
 
-function git() {
-  const repo = repoPath();
+// Non-interactive git in `dir`: GIT_TERMINAL_PROMPT=0 makes a missing/expired
+// credential fail fast with an error instead of hanging the app on a hidden
+// prompt (the reported "everything freezes" symptom); GCM_INTERACTIVE=never
+// suppresses any Git Credential Manager popup.
+function git(dir) {
+  const repo = dir || repoPath();
   if (!repo) throw new Error('No site repository configured');
-  return simpleGit(repo);
+  return simpleGit(repo).env({
+    ...process.env,
+    GIT_TERMINAL_PROMPT: '0',
+    GCM_INTERACTIVE: 'never',
+  });
+}
+
+// Args that inject the stored token as an auth header for a remote git op in
+// managed mode. In local mode there's no token; git uses ambient credentials.
+function authArgs() {
+  if (!isManaged()) return [];
+  const token = secrets.load();
+  if (!token) throw new Error('Not connected — no GitHub token stored. Use Connect to set it up.');
+  return secretsLib.authHeaderArgs(token);
+}
+
+function scrub(err) {
+  const token = isManaged() ? secrets.load() : null;
+  const msg = secretsLib.redact(err && err.message ? err.message : String(err), token);
+  const e = new Error(msg);
+  return e;
 }
 
 // Run a repo tool (tools/slides-add.js etc.) with the Electron binary in
@@ -69,28 +124,88 @@ function runTool(script, args) {
 }
 
 const ok = (data) => ({ ok: true, data });
-const fail = (err) => ({ ok: false, error: err.message || String(err) });
 
 function handle(channel, fn) {
   ipcMain.handle(channel, async (event, ...args) => {
     try {
       return ok(await fn(...args));
     } catch (err) {
-      return fail(err);
+      return { ok: false, error: scrub(err).message };
     }
   });
 }
 
+const NONINTERACTIVE_ENV = () => ({ ...process.env, GIT_TERMINAL_PROMPT: '0', GCM_INTERACTIVE: 'never' });
+
 // ---------- IPC ----------
+
+// Connection / setup state for the header and the setup panel.
+handle('setup:status', () => {
+  const cfg = loadConfig();
+  const repo = repoPath();
+  return {
+    mode: cfg.mode === 'managed' ? 'managed' : 'local',
+    githubRepo: cfg.githubRepo || '',
+    connected: Boolean(repo),
+    hasToken: secrets.has(),
+    secureStorage: secrets.available(),
+    repoPath: repo,
+  };
+});
+
+// Managed mode: clone the repo into the app's private dir using the token,
+// verify it's the museum site, then store the token encrypted. The token is
+// used only as an auth header (never written to .git/config or shown back).
+handle('setup:connectManaged', async ({ githubRepo, token }) => {
+  if (!secrets.available()) {
+    throw new Error('This computer has no secure storage available, so the access token cannot be stored safely. Use "Site folder…" with a local copy instead.');
+  }
+  const repo = secretsLib.normalizeRepo(githubRepo);
+  const t = String(token || '').trim();
+  if (!t) throw new Error('Please paste your GitHub access token.');
+
+  const clone = managedClonePath();
+  fs.rmSync(clone, { recursive: true, force: true });
+  fs.mkdirSync(path.dirname(clone), { recursive: true });
+
+  // Clone with the token injected as a header; store the plain URL as origin.
+  await simpleGit(path.dirname(clone))
+    .env(NONINTERACTIVE_ENV())
+    .raw([...secretsLib.authHeaderArgs(t), 'clone', '--branch', MAIN_BRANCH, secretsLib.publicRemoteUrl(repo), clone]);
+
+  if (!lib.looksLikeSiteRepo(clone)) {
+    fs.rmSync(clone, { recursive: true, force: true });
+    throw new Error('That repository does not look like the museum website (missing src/site or agent/). Check the owner/name.');
+  }
+
+  const g = simpleGit(clone);
+  await g.addConfig('user.name', 'MAI Dashboard');
+  await g.addConfig('user.email', 'dashboard@aimuseum.se');
+
+  secrets.save(t);
+  saveConfig({ ...loadConfig(), mode: 'managed', githubRepo: repo });
+  return { connected: true, githubRepo: repo };
+});
+
+handle('setup:disconnect', () => {
+  secrets.clear();
+  fs.rmSync(managedClonePath(), { recursive: true, force: true });
+  saveConfig({ ...loadConfig(), mode: 'local' });
+  return true;
+});
 
 handle('repo:info', async () => {
   const repo = repoPath();
-  if (!repo) return { repo: null };
-  const status = await git().status();
-  const log = await git().log({ maxCount: 1 });
+  if (!repo) return { repo: null, mode: loadConfig().mode === 'managed' ? 'managed' : 'local' };
+  const g = git(repo);
+  const status = await g.status();
+  const log = await g.log({ maxCount: 1 });
   return {
     repo,
+    mode: isManaged() ? 'managed' : 'local',
+    githubRepo: loadConfig().githubRepo || '',
     branch: status.current,
+    onMainBranch: status.current === MAIN_BRANCH,
     dirty: status.files.map((f) => `${f.working_dir}${f.index} ${f.path}`.trim()),
     behind: status.behind,
     ahead: status.ahead,
@@ -98,6 +213,7 @@ handle('repo:info', async () => {
   };
 });
 
+// Local (dev) mode only: point at an existing checkout.
 handle('repo:choose', async () => {
   const res = await dialog.showOpenDialog(win, {
     title: 'Choose the site folder (your copy of the website files)',
@@ -109,39 +225,53 @@ handle('repo:choose', async () => {
   if (!lib.looksLikeSiteRepo(chosen)) {
     throw new Error('That folder does not look like the site repository (missing src/site or agent/).');
   }
-  saveConfig({ ...loadConfig(), repoPath: chosen });
+  saveConfig({ ...loadConfig(), mode: 'local', repoPath: chosen });
   return chosen;
 });
 
 handle('repo:pull', async () => {
-  await git().pull('origin', undefined, { '--ff-only': null });
+  await git().raw([...authArgs(), 'pull', '--ff-only', 'origin', MAIN_BRANCH]);
   return true;
 });
 
+// Publish = commit local edits, integrate remote main, push to main. Always
+// targets main so the deploy branch is what changes. Managed mode owns its
+// clone and keeps it on main; local mode refuses to publish off-main rather
+// than silently pushing a feature branch.
 handle('repo:publish', async (message) => {
-  const g = git();
-  const before = await g.status();
-  if (before.files.length === 0 && before.ahead === 0) {
+  const repo = repoPath();
+  if (!repo) throw new Error('No site repository configured.');
+  const g = git(repo);
+
+  const branch = (await g.revparse(['--abbrev-ref', 'HEAD'])).trim();
+  if (branch !== MAIN_BRANCH) {
+    if (isManaged()) {
+      await g.checkout(MAIN_BRANCH);
+    } else {
+      throw new Error(`The site folder is on branch "${branch}", but the dashboard publishes to "${MAIN_BRANCH}". Switch it to ${MAIN_BRANCH}, or use Connect to set up a managed copy.`);
+    }
+  }
+
+  const status = await g.status();
+  if (status.files.length === 0 && status.ahead === 0) {
     return { published: false, reason: 'No changes to publish.' };
   }
-  // Pull first so the push is a fast-forward for the remote.
-  await g.fetch();
-  const status = await g.status();
-  if (status.behind > 0 && status.files.length > 0) {
-    await g.stash();
-    try {
-      await g.pull('origin', undefined, { '--ff-only': null });
-    } finally {
-      await g.stash(['pop']);
-    }
-  } else if (status.behind > 0) {
-    await g.pull('origin', undefined, { '--ff-only': null });
-  }
-  if ((await g.status()).files.length > 0) {
+  if (status.files.length > 0) {
     await g.add(['-A']);
     await g.commit(message || 'Dashboard edit');
   }
-  await g.push('origin');
+
+  // Integrate anything new on origin/main (agent posts, other admins) before
+  // pushing. Rebase keeps history linear; on conflict, abort and report
+  // cleanly rather than leaving the clone mid-rebase.
+  try {
+    await g.raw([...authArgs(), 'pull', '--rebase', 'origin', MAIN_BRANCH]);
+  } catch (err) {
+    await g.raw(['rebase', '--abort']).catch(() => {});
+    throw new Error('Could not merge the latest site changes automatically — someone may have edited the same content. Nothing was published; please try again in a moment.');
+  }
+
+  await g.raw([...authArgs(), 'push', 'origin', `HEAD:${MAIN_BRANCH}`]);
   const log = await g.log({ maxCount: 1 });
   return { published: true, commit: `${log.latest.hash.slice(0, 7)} ${log.latest.message}` };
 });
