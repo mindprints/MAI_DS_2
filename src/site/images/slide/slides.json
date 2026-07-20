@@ -48,22 +48,6 @@
     }
   },
   {
-    "number": 5,
-    "filename": "5-three-robot-faces.webp",
-    "title": "Three Robot Faces",
-    "description": "",
-    "i18n": {
-      "en": {
-        "title": "",
-        "description": ""
-      },
-      "sv": {
-        "title": "",
-        "description": ""
-      }
-    }
-  },
-  {
     "number": 6,
     "filename": "6-musikafton-hotorget.webp",
     "title": "Musikafton Hotorget",
@@ -176,22 +160,6 @@
     }
   },
   {
-    "number": 17,
-    "filename": "17-hologram-building.webp",
-    "title": "Hologram Building",
-    "description": "",
-    "i18n": {
-      "en": {
-        "title": "",
-        "description": ""
-      },
-      "sv": {
-        "title": "",
-        "description": ""
-      }
-    }
-  },
-  {
     "number": 18,
     "filename": "18-evenemang-at-narkesgatan.webp",
     "title": "Evenemang At Narkesgatan",
@@ -259,22 +227,6 @@
     "number": 23,
     "filename": "23-veiwing-screen-hotorget.webp",
     "title": "Veiwing Screen Hotorget",
-    "description": "",
-    "i18n": {
-      "en": {
-        "title": "",
-        "description": ""
-      },
-      "sv": {
-        "title": "",
-        "description": ""
-      }
-    }
-  },
-  {
-    "number": 24,
-    "filename": "24-jubelium-pix-genom-skarmen-patrick.webp",
-    "title": "Jubelium Pix Genom Skarmen Patrick",
     "description": "",
     "i18n": {
       "en": {
