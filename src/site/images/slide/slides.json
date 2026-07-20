@@ -1,21 +1,5 @@
 [
   {
-    "number": 1,
-    "filename": "1-museums-logo.webp",
-    "title": "Museums Logo",
-    "description": "",
-    "i18n": {
-      "en": {
-        "title": "",
-        "description": ""
-      },
-      "sv": {
-        "title": "",
-        "description": ""
-      }
-    }
-  },
-  {
     "number": 2,
     "filename": "2-hotorget-exterior.webp",
     "title": "Hotorget Exterior",
@@ -64,22 +48,6 @@
     }
   },
   {
-    "number": 5,
-    "filename": "5-three-robot-faces.webp",
-    "title": "Three Robot Faces",
-    "description": "",
-    "i18n": {
-      "en": {
-        "title": "",
-        "description": ""
-      },
-      "sv": {
-        "title": "",
-        "description": ""
-      }
-    }
-  },
-  {
     "number": 6,
     "filename": "6-musikafton-hotorget.webp",
     "title": "Musikafton Hotorget",
@@ -96,41 +64,9 @@
     }
   },
   {
-    "number": 7,
-    "filename": "7-platon-robot-2.webp",
-    "title": "Platon Robot 2",
-    "description": "",
-    "i18n": {
-      "en": {
-        "title": "",
-        "description": ""
-      },
-      "sv": {
-        "title": "",
-        "description": ""
-      }
-    }
-  },
-  {
     "number": 8,
     "filename": "8-greg-closeup-lecture.webp",
     "title": "Greg Closeup Lecture",
-    "description": "",
-    "i18n": {
-      "en": {
-        "title": "",
-        "description": ""
-      },
-      "sv": {
-        "title": "",
-        "description": ""
-      }
-    }
-  },
-  {
-    "number": 10,
-    "filename": "10-tidnings-articel-invigning.webp",
-    "title": "Tidnings Articel Invigning",
     "description": "",
     "i18n": {
       "en": {
@@ -195,22 +131,6 @@
     "number": 16,
     "filename": "16-public-hotorget.webp",
     "title": "Public Hotorget",
-    "description": "",
-    "i18n": {
-      "en": {
-        "title": "",
-        "description": ""
-      },
-      "sv": {
-        "title": "",
-        "description": ""
-      }
-    }
-  },
-  {
-    "number": 17,
-    "filename": "17-hologram-building.webp",
-    "title": "Hologram Building",
     "description": "",
     "i18n": {
       "en": {
@@ -368,22 +288,6 @@
     }
   },
   {
-    "number": 28,
-    "filename": "28-survielence-camera.webp",
-    "title": "Survielence Camera",
-    "description": "",
-    "i18n": {
-      "en": {
-        "title": "",
-        "description": ""
-      },
-      "sv": {
-        "title": "",
-        "description": ""
-      }
-    }
-  },
-  {
     "number": 29,
     "filename": "29-stockholm-ai-hotorget.webp",
     "title": "Stockholm Ai Hotorget",
@@ -419,22 +323,6 @@
     "number": 31,
     "filename": "31-bob-lecture.webp",
     "title": "Bob Lecture",
-    "description": "",
-    "i18n": {
-      "en": {
-        "title": "",
-        "description": ""
-      },
-      "sv": {
-        "title": "",
-        "description": ""
-      }
-    }
-  },
-  {
-    "number": 32,
-    "filename": "32-big-screens-at-hotorget.webp",
-    "title": "Big Screens At Hotorget",
     "description": "",
     "i18n": {
       "en": {
