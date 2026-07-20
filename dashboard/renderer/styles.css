@@ -52,7 +52,9 @@ header {
 .conn-pill.disconnected { color: var(--critical); }
 
 /* Setup overlay */
-#setup-overlay {
+/* :not([hidden]) so the `hidden` attribute actually hides it — an ID rule
+   setting `display` otherwise overrides the browser's [hidden]{display:none}. */
+#setup-overlay:not([hidden]) {
   position: fixed; inset: 0; z-index: 50;
   background: rgba(0, 0, 0, 0.55);
   display: flex; align-items: center; justify-content: center; padding: 20px;
@@ -75,7 +77,7 @@ button:disabled { opacity: 0.5; cursor: default; }
 button.primary { background: var(--series-1); border-color: var(--series-1); color: #fff; }
 button.danger { color: var(--critical); }
 
-#publish-bar {
+#publish-bar:not([hidden]) {
   display: flex; gap: 10px; align-items: center;
   padding: 10px 20px; background: var(--surface-1); border-bottom: 1px solid var(--border);
 }
