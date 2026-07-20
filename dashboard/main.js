@@ -19,6 +19,14 @@ const secretsLib = require('./lib/secrets');
 const MAIN_BRANCH = 'main';
 let win;
 
+// Make every git subprocess non-interactive so a bad/expired token fails fast
+// instead of hanging on a hidden credential prompt. Set on THIS process (git
+// children inherit it) rather than via simple-git's .env() — passing an env to
+// simple-git triggers its block-unsafe-operations guard, which refuses when the
+// inherited env contains editor/ssh/pager vars a normal dev shell has.
+process.env.GIT_TERMINAL_PROMPT = '0';
+process.env.GCM_INTERACTIVE = 'never';
+
 // ---------- Config + secrets ----------
 
 function configFile() {
@@ -72,27 +80,23 @@ function isManaged() {
 
 // ---------- Helpers ----------
 
-// Non-interactive git in `dir`: GIT_TERMINAL_PROMPT=0 makes a missing/expired
-// credential fail fast with an error instead of hanging the app on a hidden
-// prompt (the reported "everything freezes" symptom); GCM_INTERACTIVE=never
-// suppresses any Git Credential Manager popup.
+// git client for `dir` (no .env() — see the process.env note above).
 function git(dir) {
   const repo = dir || repoPath();
   if (!repo) throw new Error('No site repository configured');
-  return simpleGit(repo).env({
-    ...process.env,
-    GIT_TERMINAL_PROMPT: '0',
-    GCM_INTERACTIVE: 'never',
-  });
+  return simpleGit(repo);
 }
 
-// Args that inject the stored token as an auth header for a remote git op in
-// managed mode. In local mode there's no token; git uses ambient credentials.
-function authArgs() {
-  if (!isManaged()) return [];
+// The remote for a PUSH: in managed mode, the token-bearing URL as an argument
+// (authenticates without persisting the token); in local mode, "origin" with
+// the user's ambient git credentials. Reads (clone/fetch/pull) use the public
+// "origin" — the museum site repo is public, so read needs no token and can
+// never hang on credentials.
+function pushRemote() {
+  if (!isManaged()) return 'origin';
   const token = secrets.load();
   if (!token) throw new Error('Not connected — no GitHub token stored. Use Connect to set it up.');
-  return secretsLib.authHeaderArgs(token);
+  return secretsLib.authedRemoteUrl(loadConfig().githubRepo, token);
 }
 
 function scrub(err) {
@@ -135,8 +139,6 @@ function handle(channel, fn) {
   });
 }
 
-const NONINTERACTIVE_ENV = () => ({ ...process.env, GIT_TERMINAL_PROMPT: '0', GCM_INTERACTIVE: 'never' });
-
 // ---------- IPC ----------
 
 // Connection / setup state for the header and the setup panel.
@@ -164,14 +166,22 @@ handle('setup:connectManaged', async ({ githubRepo, token }) => {
   const t = String(token || '').trim();
   if (!t) throw new Error('Please paste your GitHub access token.');
 
+  // Validate the token can push before we commit to managed mode: a dry-run
+  // push to a throwaway ref authenticates without changing anything. This turns
+  // a bad/expired token into a clear error at Connect time instead of at the
+  // first Publish.
+  const publicUrl = secretsLib.publicRemoteUrl(repo);
+  const authUrl = secretsLib.authedRemoteUrl(repo, t);
+
   const clone = managedClonePath();
   fs.rmSync(clone, { recursive: true, force: true });
   fs.mkdirSync(path.dirname(clone), { recursive: true });
 
-  // Clone with the token injected as a header; store the plain URL as origin.
+  // Clone via the PUBLIC url — the site repo is public, so read needs no token
+  // and can't hang on credentials. Origin stays public; only push carries the
+  // token (as a URL argument), so the token is never written to .git/config.
   await simpleGit(path.dirname(clone))
-    .env(NONINTERACTIVE_ENV())
-    .raw([...secretsLib.authHeaderArgs(t), 'clone', '--branch', MAIN_BRANCH, secretsLib.publicRemoteUrl(repo), clone]);
+    .raw(['clone', '--branch', MAIN_BRANCH, publicUrl, clone]);
 
   if (!lib.looksLikeSiteRepo(clone)) {
     fs.rmSync(clone, { recursive: true, force: true });
@@ -181,6 +191,15 @@ handle('setup:connectManaged', async ({ githubRepo, token }) => {
   const g = simpleGit(clone);
   await g.addConfig('user.name', 'MAI Dashboard');
   await g.addConfig('user.email', 'dashboard@aimuseum.se');
+
+  // Verify the token actually works for pushing (no-op dry run), so a bad token
+  // is caught now, not on first publish.
+  try {
+    await g.raw(['push', '--dry-run', authUrl, `${MAIN_BRANCH}:${MAIN_BRANCH}`]);
+  } catch (err) {
+    fs.rmSync(clone, { recursive: true, force: true });
+    throw new Error('Connected to the repository, but that access code could not push. Check the token has "Contents: read and write" permission on this repository and has not expired.');
+  }
 
   secrets.save(t);
   saveConfig({ ...loadConfig(), mode: 'managed', githubRepo: repo });
@@ -230,7 +249,7 @@ handle('repo:choose', async () => {
 });
 
 handle('repo:pull', async () => {
-  await git().raw([...authArgs(), 'pull', '--ff-only', 'origin', MAIN_BRANCH]);
+  await git().raw(['pull', '--ff-only', 'origin', MAIN_BRANCH]);
   return true;
 });
 
@@ -262,16 +281,16 @@ handle('repo:publish', async (message) => {
   }
 
   // Integrate anything new on origin/main (agent posts, other admins) before
-  // pushing. Rebase keeps history linear; on conflict, abort and report
-  // cleanly rather than leaving the clone mid-rebase.
+  // pushing — a public read, no token. Rebase keeps history linear; on
+  // conflict, abort and report cleanly rather than leaving a mid-rebase clone.
   try {
-    await g.raw([...authArgs(), 'pull', '--rebase', 'origin', MAIN_BRANCH]);
+    await g.raw(['pull', '--rebase', 'origin', MAIN_BRANCH]);
   } catch (err) {
     await g.raw(['rebase', '--abort']).catch(() => {});
     throw new Error('Could not merge the latest site changes automatically — someone may have edited the same content. Nothing was published; please try again in a moment.');
   }
 
-  await g.raw([...authArgs(), 'push', 'origin', `HEAD:${MAIN_BRANCH}`]);
+  await g.raw(['push', pushRemote(), `HEAD:${MAIN_BRANCH}`]);
   const log = await g.log({ maxCount: 1 });
   return { published: true, commit: `${log.latest.hash.slice(0, 7)} ${log.latest.message}` };
 });

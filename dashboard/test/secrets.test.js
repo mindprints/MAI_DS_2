@@ -5,7 +5,7 @@ const assert = require('assert');
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
-const { makeSecrets, normalizeRepo, authHeaderArgs, publicRemoteUrl, redact } = require('../lib/secrets');
+const { makeSecrets, normalizeRepo, authedRemoteUrl, publicRemoteUrl, redact } = require('../lib/secrets');
 
 const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'mai-secrets-'));
 const tokenFile = path.join(tmp, 'github-token.enc');
@@ -50,15 +50,18 @@ assert.throws(() => normalizeRepo(''), /owner\/name/);
 // publicRemoteUrl carries no token
 assert.strictEqual(publicRemoteUrl('mindprints/MAI_DS_2'), 'https://github.com/mindprints/MAI_DS_2.git');
 
-// authHeaderArgs: -c http.extraHeader with base64(x-access-token:token), and
-// the raw token must not appear in the argument.
-const args = authHeaderArgs('ghp_ABC');
-assert.strictEqual(args[0], '-c');
-assert(args[1].startsWith('http.extraHeader=Authorization: Basic '), `unexpected header arg: ${args[1]}`);
-const b64 = args[1].split('Basic ')[1];
-assert.strictEqual(Buffer.from(b64, 'base64').toString('utf8'), 'x-access-token:ghp_ABC');
-assert(!args[1].includes('ghp_ABC'), 'raw token must not appear un-encoded in git args');
-assert.throws(() => authHeaderArgs(''), /No token/);
+// authedRemoteUrl: token embedded as x-access-token password, repo normalized,
+// token URL-encoded (so tokens with special chars are safe in the URL).
+assert.strictEqual(
+  authedRemoteUrl('mindprints/MAI_DS_2', 'ghp_ABC'),
+  'https://x-access-token:ghp_ABC@github.com/mindprints/MAI_DS_2.git',
+);
+assert.strictEqual(
+  authedRemoteUrl('https://github.com/mindprints/MAI_DS_2.git', 'ghp_ABC'),
+  'https://x-access-token:ghp_ABC@github.com/mindprints/MAI_DS_2.git',
+);
+assert(authedRemoteUrl('a/b', 'tok+/=en').includes(encodeURIComponent('tok+/=en')), 'token must be URL-encoded');
+assert.throws(() => authedRemoteUrl('a/b', ''), /No token/);
 
 // redact scrubs the token from error text
 assert.strictEqual(redact('fatal: bad creds ghp_ABC at end', 'ghp_ABC'), 'fatal: bad creds *** at end');

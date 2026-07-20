@@ -63,14 +63,17 @@ function normalizeRepo(githubRepo) {
   return repo;
 }
 
-// Per-command git args that inject the token as an HTTP Authorization header,
-// so the managed clone authenticates without an interactive credential helper
-// and WITHOUT persisting the token in .git/config. GitHub accepts a PAT via
-// Basic auth with the x-access-token username.
-function authHeaderArgs(token) {
+// Authenticated remote URL, passed as a command ARGUMENT to clone/fetch/push
+// (never stored as origin), so git authenticates non-interactively without a
+// credential helper and the token is never written to .git/config. GitHub
+// accepts a PAT as the password with the x-access-token username.
+//
+// Passing the token this way (vs. simple-git's .env() or a `-c` config) avoids
+// simple-git's block-unsafe-operations guard, which scans any explicitly
+// passed env and refuses when it sees editor/ssh/pager vars a dev shell has.
+function authedRemoteUrl(githubRepo, token) {
   if (!token) throw new Error('No token available for authenticated git operation');
-  const b64 = Buffer.from(`x-access-token:${token}`).toString('base64');
-  return ['-c', `http.extraHeader=Authorization: Basic ${b64}`];
+  return `https://x-access-token:${encodeURIComponent(token)}@github.com/${normalizeRepo(githubRepo)}.git`;
 }
 
 // Public remote URL (no token) — stored as the clone's origin and shown in UI.
@@ -85,4 +88,4 @@ function redact(text, token) {
   return String(text).split(token).join('***');
 }
 
-module.exports = { makeSecrets, normalizeRepo, authHeaderArgs, publicRemoteUrl, redact };
+module.exports = { makeSecrets, normalizeRepo, authedRemoteUrl, publicRemoteUrl, redact };
