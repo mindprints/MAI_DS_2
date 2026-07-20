@@ -18,10 +18,16 @@ job).
   first launch it shows a **Connect** panel: enter the repository
   (`owner/name`) and a fine-grained personal access token with **Contents:
   read and write** on that repo. The token is encrypted at rest with the OS
-  keychain (Windows DPAPI) via Electron `safeStorage`, and is sent only as an
-  HTTP auth header — never written to `.git/config`, never shown again. All
-  git runs non-interactively (`GIT_TERMINAL_PROMPT=0`), so a bad/expired
-  token fails with a clear message instead of hanging on a hidden prompt.
+  keychain (Windows DPAPI) via Electron `safeStorage`. Reads (clone, pull)
+  use the public repository URL — no token, so they can't hang on
+  credentials; the token is used **only for push**, passed as a URL argument
+  so it is never written to `.git/config` and never shown again. Connect
+  does a no-op dry-run push to verify the token can write before saving it,
+  so a bad/expired or under-scoped token fails at Connect with a clear
+  message. Git runs non-interactively (`GIT_TERMINAL_PROMPT=0`,
+  `GCM_INTERACTIVE=never`, set on the app process — not via simple-git's
+  `.env()`, which would trip its unsafe-operations guard on a dev shell's
+  editor/ssh env vars).
 - **Local (developer).** "Use a local folder instead" points the dashboard
   at an existing checkout and uses ambient git credentials. In this mode it
   **only publishes when the checkout is on `main`** — if you've left it on a
@@ -66,6 +72,14 @@ has had `npm install` run (the slide pipeline uses the repo's own `sharp`).
 ## Not yet done (Phase B follow-ups)
 
 - Packaged installers (electron-builder) so admins don't need Node/npm.
+- **Add Photos in managed mode**: the managed clone has no `node_modules`, so
+  the `slides:add` image pipeline (which needs the repo's `sharp`) can't run
+  there yet — it needs the dashboard to bundle its own image tooling
+  (electron-rebuilt `sharp`). Everything else (notice, prompts, models,
+  removing slides, editing titles, publish) works in managed mode. In local
+  mode Add Photos uses the checkout's `sharp`.
+- Managed mode currently assumes the site repo is **public** for read (true
+  for aimuseum.se); a private repo would need the token on read too.
 - Automatic token-expiry detection with a re-connect prompt.
 - Richer merge-conflict resolution (today a conflicting concurrent edit is
   reported and left for a retry, not resolved in-app).
