@@ -1,21 +1,5 @@
 [
   {
-    "number": 1,
-    "filename": "1-museums-logo.webp",
-    "title": "Museums Logo",
-    "description": "",
-    "i18n": {
-      "en": {
-        "title": "",
-        "description": ""
-      },
-      "sv": {
-        "title": "",
-        "description": ""
-      }
-    }
-  },
-  {
     "number": 2,
     "filename": "2-hotorget-exterior.webp",
     "title": "Hotorget Exterior",
@@ -83,22 +67,6 @@
     "number": 6,
     "filename": "6-musikafton-hotorget.webp",
     "title": "Musikafton Hotorget",
-    "description": "",
-    "i18n": {
-      "en": {
-        "title": "",
-        "description": ""
-      },
-      "sv": {
-        "title": "",
-        "description": ""
-      }
-    }
-  },
-  {
-    "number": 7,
-    "filename": "7-platon-robot-2.webp",
-    "title": "Platon Robot 2",
     "description": "",
     "i18n": {
       "en": {
@@ -355,22 +323,6 @@
     "number": 27,
     "filename": "27-mai-interior-nov-15.webp",
     "title": "Mai Interior Nov 15",
-    "description": "",
-    "i18n": {
-      "en": {
-        "title": "",
-        "description": ""
-      },
-      "sv": {
-        "title": "",
-        "description": ""
-      }
-    }
-  },
-  {
-    "number": 28,
-    "filename": "28-survielence-camera.webp",
-    "title": "Survielence Camera",
     "description": "",
     "i18n": {
       "en": {
