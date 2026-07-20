@@ -36,6 +36,41 @@ async function run(btn, fn) {
   }
 }
 
+// ---------- Connection / setup ----------
+
+let connected = false;
+
+async function refreshConnection() {
+  const s = await window.mai.setupStatus();
+  connected = s.connected;
+  const pill = $('#conn-state');
+  const managed = s.mode === 'managed';
+
+  if (connected) {
+    pill.textContent = managed ? `Connected: ${s.githubRepo}` : 'Local folder';
+    pill.className = 'conn-pill connected';
+  } else {
+    pill.textContent = 'Not connected';
+    pill.className = 'conn-pill disconnected';
+  }
+
+  // The overlay only blocks the app when there's no usable repo at all.
+  $('#setup-overlay').hidden = connected;
+  // Connect stays available in local/dev mode so a checkout can be upgraded to
+  // a managed connection; it's only hidden once managed-connected.
+  $('#btn-connect').hidden = managed && connected;
+  $('#btn-disconnect').hidden = !(managed && connected);
+  // The local-folder picker is a dev affordance reached from the setup panel
+  // ("Use a local folder instead"); keep it out of the header.
+  $('#btn-choose-repo').hidden = true;
+  return s;
+}
+
+function showSetup() {
+  $('#setup-overlay').hidden = false;
+  $('#setup-feedback').textContent = '';
+}
+
 // ---------- Repo header / publish bar ----------
 
 async function refreshRepo() {
@@ -420,6 +455,12 @@ function showTab(name) {
 }
 
 async function refreshAll() {
+  const status = await refreshConnection();
+  if (!status.connected) {
+    // Nothing to load until the dashboard is linked to the site.
+    $('#publish-bar').hidden = true;
+    return;
+  }
   await refreshRepo();
   await Promise.all([loadSlides(), loadNotice(), loadPrompts(), loadModels(), loadCosts()]);
 }
@@ -430,6 +471,35 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   $('#btn-refresh').addEventListener('click', (e) => run(e.target, refreshAll));
+
+  $('#btn-connect').addEventListener('click', showSetup);
+
+  $('#btn-do-connect').addEventListener('click', (e) => run(e.target, async () => {
+    const githubRepo = $('#setup-repo').value.trim();
+    const token = $('#setup-token').value;
+    if (!githubRepo || !token) {
+      $('#setup-feedback').textContent = 'Enter both the repository and the access code.';
+      return;
+    }
+    $('#setup-feedback').textContent = 'Connecting… (downloading the site, this can take a moment)';
+    await window.mai.connectManaged({ githubRepo, token });
+    $('#setup-token').value = '';
+    $('#setup-feedback').textContent = '';
+    toast('Connected. You can now edit and publish.');
+    await refreshAll();
+  }));
+
+  $('#btn-setup-local').addEventListener('click', (e) => run(e.target, async () => {
+    const chosen = await window.mai.repoChoose();
+    if (chosen) await refreshAll();
+  }));
+
+  $('#btn-disconnect').addEventListener('click', (e) => run(e.target, async () => {
+    if (!confirm('Disconnect this computer from the website? Your saved access code will be removed and the local copy deleted. You can reconnect anytime with the access code.')) return;
+    await window.mai.disconnect();
+    toast('Disconnected.');
+    await refreshAll();
+  }));
 
   $('#btn-choose-repo').addEventListener('click', (e) => run(e.target, async () => {
     const chosen = await window.mai.repoChoose();

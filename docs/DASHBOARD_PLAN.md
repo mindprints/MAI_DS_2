@@ -52,8 +52,21 @@ No GUI; makes the repo dashboard-ready and is useful on its own:
 ### Phase B — dashboard MVP (first cut July 2026: `dashboard/`)
 
 Implemented as an Electron app in `dashboard/` (see its README). Runs from
-source (`npm start`) against a local clone for now; packaged installers and
-git-less operation for non-technical admins are the remaining Phase B work.
+source (`npm start`); packaged installers are the remaining Phase B work.
+
+**Connection (July 2026):** two modes. *Managed* — the app owns a private
+clone in its user-data folder and authenticates with a GitHub fine-grained
+token stored encrypted via `safeStorage` (OS keychain), injected only as an
+HTTP auth header and never persisted to `.git/config`; all git runs
+non-interactively so a bad token fails fast instead of hanging. This is the
+"access outside the CLI" path for non-technical admins — a first-run Connect
+panel takes a repo + token and clones. *Local* — a developer points at an
+existing checkout. Both modes publish only to `main` (managed keeps its clone
+on main; local refuses to publish off-main), committing then rebasing onto
+`origin/main` before pushing, so concurrent agent posts and other admins'
+edits are integrated. This replaced the original shared-dev-clone assumption,
+which made the dashboard see the developer's uncommitted files as "pending"
+and could push the wrong branch.
 
 - **Slides manager**: thumbnail grid from `slides.json`; drag-and-drop add
   (reuses `tools/slides-add.js` pipeline: WebP conversion, numbering,

@@ -9,6 +9,9 @@ async function invoke(channel, ...args) {
 }
 
 contextBridge.exposeInMainWorld('mai', {
+  setupStatus: () => invoke('setup:status'),
+  connectManaged: (opts) => invoke('setup:connectManaged', opts),
+  disconnect: () => invoke('setup:disconnect'),
   repoInfo: () => invoke('repo:info'),
   repoChoose: () => invoke('repo:choose'),
   repoPull: () => invoke('repo:pull'),
