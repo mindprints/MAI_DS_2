@@ -86,6 +86,11 @@ function writeSettings(repo, settingsObj) {
 
 // ---------- Flash notice ----------
 
+// agent/notice.js writes this same file for the Telegram /notice commands and
+// keeps its own copy of this logic, because the agent image cannot depend on
+// this Electron app. The file shape below is the shared contract — change it
+// here and you must change it there too.
+
 const NOTICE_REL = 'src/site/content/notice.json';
 const EMPTY_NOTICE = { active: false, until: null, en: '', sv: '' };
 

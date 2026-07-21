@@ -6,6 +6,7 @@ const telegram = require('./telegram');
 const gitrepo = require('./gitrepo');
 const { runEditInstruction } = require('./editor');
 const jobs = require('./jobs');
+const notice = require('./notice');
 const { startScheduler, nowInZone } = require('./scheduler');
 
 let busy = false;
@@ -41,6 +42,14 @@ Commands:
 /approve — merge the preview branch into main (if enabled)
 /help — this message
 
+Flash notice on the home pages (one at a time):
+/notice — show what is up right now
+/notice content <text> — set the text (English and Swedish)
+/notice sv <text> — correct the Swedish version
+/notice post — put it up; it stays until removed
+/notice remove — take it down
+Expiry dates stay in the dashboard; /notice post clears any date it finds.
+
 Edits are committed to ${config.agentBranch} and deploy to ${config.previewUrl || 'the site'}.`;
 
 async function handleEdit(msg, instruction) {
@@ -72,6 +81,66 @@ async function runJob(msg, name, fn, topic = '') {
   } else {
     await telegram.sendMessage(msg.chat.id, `Published: ${result.title}\n${result.link}`);
   }
+}
+
+const NOTICE_USAGE =
+  'Use: /notice · /notice content <text> · /notice sv <text> · /notice post · /notice remove';
+
+// The flash notice is a single file, so these subcommands edit one notice
+// rather than managing a list. Durations stay in the dashboard: /notice post
+// clears "until", so a posted notice runs until /notice remove takes it down.
+async function handleNotice(msg, arg) {
+  // Pull first — the dashboard writes this same file, and clobbering an edit
+  // made there would be silent.
+  await gitrepo.pull().catch(() => {});
+  const current = notice.read();
+
+  const sub = arg.split(/\s+/)[0] || '';
+  const body = arg.slice(sub.length).trim();
+
+  if (!sub) {
+    await telegram.sendMessage(msg.chat.id, notice.describe(current));
+    return;
+  }
+
+  let next;
+  let what;
+  if (sub === 'content' || sub === 'sv') {
+    if (!body) {
+      await telegram.sendMessage(msg.chat.id, `Send the text too, e.g. "/notice ${sub} Doors open at 18:00".`);
+      return;
+    }
+    next = sub === 'sv' ? { ...current, sv: body } : { ...current, en: body, sv: body };
+    what = sub === 'sv' ? 'Swedish text updated.' : 'Text set, in both languages.';
+    if (!current.active) what += ' Not posted yet — send /notice post when you want it up.';
+  } else if (sub === 'post') {
+    if (!current.en.trim() && !current.sv.trim()) {
+      await telegram.sendMessage(msg.chat.id, 'Nothing to post yet — set the text first with /notice content <text>.');
+      return;
+    }
+    next = { ...current, active: true, until: null };
+    what = notice.isExpired(current)
+      ? `Expiry date (${current.until}) cleared and the notice is back up.`
+      : 'Notice is up.';
+  } else if (sub === 'remove') {
+    if (!current.active) {
+      await telegram.sendMessage(msg.chat.id, `Nothing is posted right now.\n\n${notice.describe(current)}`);
+      return;
+    }
+    next = { ...current, active: false };
+    what = 'Notice taken down. The text is kept, so /notice post puts it back.';
+  } else {
+    await telegram.sendMessage(msg.chat.id, `Unknown notice command "${sub}".\n\n${NOTICE_USAGE}`);
+    return;
+  }
+
+  notice.write(next);
+  const commit = await gitrepo.commitAndPush(`Notice: ${sub} via Telegram`);
+  let reply = `${what}\n\n${notice.describe(notice.read())}`;
+  reply += commit
+    ? `\n\n— Pushed to ${config.agentBranch}; live once the site redeploys.`
+    : '\n\n— Already in that state, nothing to push.';
+  await telegram.sendMessage(msg.chat.id, reply);
 }
 
 async function onMessage(msg) {
@@ -110,6 +179,8 @@ async function onMessage(msg) {
       await runJob(msg, 'llm-index', jobs.runLlmIndex);
     } else if (text === '/llmusage') {
       await runJob(msg, 'llm-usage', jobs.runLlmUsage);
+    } else if (text === '/notice' || text.startsWith('/notice ')) {
+      await handleNotice(msg, text.slice('/notice'.length).trim());
     } else if (text === '/approve') {
       if (!config.allowApprove) {
         await telegram.sendMessage(msg.chat.id, '/approve is disabled (set AGENT_ALLOW_APPROVE=true to enable). Merge the branch on GitHub instead.');
@@ -186,7 +257,14 @@ async function main() {
   await telegram.poll(onMessage);
 }
 
-main().catch((err) => {
-  console.error('Fatal:', err);
-  process.exit(1);
-});
+// Guarded so the message handlers can be required from a test without the
+// bot starting to poll. The entrypoint runs `node /app/agent/index.js`, so
+// this holds in production.
+if (require.main === module) {
+  main().catch((err) => {
+    console.error('Fatal:', err);
+    process.exit(1);
+  });
+}
+
+module.exports = { onMessage, handleNotice };
