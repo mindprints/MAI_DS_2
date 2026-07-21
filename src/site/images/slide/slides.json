@@ -382,5 +382,21 @@
         "description": ""
       }
     }
+  },
+  {
+    "number": 38,
+    "filename": "38-mai-hotorget-location.webp",
+    "title": "Mai Hotorget Location",
+    "description": "",
+    "i18n": {
+      "en": {
+        "title": "MAI Exterior 2024",
+        "description": ""
+      },
+      "sv": {
+        "title": "MAI Exterior 2024",
+        "description": ""
+      }
+    }
   }
 ]
