@@ -78,4 +78,11 @@ async function poll(onMessage, { signal } = {}) {
   }
 }
 
-module.exports = { sendMessage, poll, escapeHtml };
+// Register the command list Telegram shows in the "/" menu. Purely cosmetic —
+// the bot answers a command whether or not it is registered — so a failure
+// here must never stop the agent from starting.
+async function setCommands(commands) {
+  return api('setMyCommands', { commands });
+}
+
+module.exports = { sendMessage, poll, escapeHtml, setCommands };

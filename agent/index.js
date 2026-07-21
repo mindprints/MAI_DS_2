@@ -52,6 +52,29 @@ Expiry dates stay in the dashboard; /notice post clears any date it finds.
 
 Edits are committed to ${config.agentBranch} and deploy to ${config.previewUrl || 'the site'}.`;
 
+// What Telegram offers in the "/" menu. Only top-level commands exist as far
+// as Telegram is concerned, so /notice carries its subcommands in the
+// description. Ordered by how often they get used, since that is the order
+// the menu shows. Keep in step with HELP — a test asserts they agree.
+const COMMANDS = [
+  { command: 'notice', description: 'Flash notice — /notice, content <text>, sv <text>, post, remove' },
+  { command: 'status', description: 'Branch, last commit, pending changes' },
+  { command: 'news', description: 'Run the AI news summary now (/news <topic> to steer the lead)' },
+  { command: 'ontoday', description: 'Run the "on this day" essay now (/ontoday <event> to steer it)' },
+  { command: 'diff', description: 'Diff stat of the working tree' },
+  { command: 'llmindex', description: 'Refresh the LLM leaderboard card' },
+  { command: 'llmusage', description: 'Refresh the OpenRouter usage card' },
+  { command: 'help', description: 'What I can do' },
+];
+
+// /approve is only listed when it is actually enabled — offering a command
+// that answers "that is disabled" is worse than not offering it.
+function menuCommands() {
+  return config.allowApprove
+    ? [...COMMANDS, { command: 'approve', description: `Merge ${config.agentBranch} into ${config.mainBranch}` }]
+    : COMMANDS;
+}
+
 async function handleEdit(msg, instruction) {
   await telegram.sendMessage(msg.chat.id, 'Working on it…');
   await gitrepo.pull().catch(() => {});
@@ -205,6 +228,15 @@ async function main() {
   const s = await gitrepo.status();
   console.log(`Agent starting on branch ${s.branch} (${s.last}) in ${config.repoDir}`);
 
+  // Cosmetic, and Telegram is a third party that can be having a bad day —
+  // never let this stop the bot from coming up.
+  try {
+    await telegram.setCommands(menuCommands());
+    console.log(`Registered ${menuCommands().length} commands with Telegram.`);
+  } catch (err) {
+    console.warn('Could not register the Telegram command menu:', err.message);
+  }
+
   startScheduler(
     [
       // Scheduled runs are silent on success — Telegram only carries replies
@@ -267,4 +299,4 @@ if (require.main === module) {
   });
 }
 
-module.exports = { onMessage, handleNotice };
+module.exports = { onMessage, handleNotice, COMMANDS, menuCommands, HELP };
