@@ -3,15 +3,46 @@
   "version": "0.1.0",
   "private": true,
   "description": "Desktop admin dashboard for aimuseum.se — slides, prompts, models, costs (docs/DASHBOARD_PLAN.md)",
+  "author": "Museum of AI",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
+    "dist": "electron-builder --win",
     "test": "node test/dashlib.test.js && node test/secrets.test.js"
   },
   "dependencies": {
+    "sharp": "^0.33.5",
     "simple-git": "^3.27.0"
   },
   "devDependencies": {
-    "electron": "^33.2.0"
+    "electron": "^33.2.0",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "se.aimuseum.dashboard",
+    "productName": "MAI Dashboard",
+    "directories": { "output": "dist" },
+    "files": [
+      "main.js",
+      "preload.js",
+      "lib/**/*",
+      "renderer/**/*",
+      "!renderer/__mockharness.html",
+      "node_modules/**/*"
+    ],
+    "asarUnpack": [
+      "node_modules/**"
+    ],
+    "win": {
+      "target": ["nsis", "portable"]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "artifactName": "${productName}-${version}-setup.${ext}"
+    },
+    "portable": {
+      "artifactName": "${productName}-${version}-portable.${ext}"
+    }
   }
 }

@@ -1,2 +1,5 @@
 # Local dev/test scratch (mock backend harness for the renderer UI)
 renderer/__mockharness.html
+
+# electron-builder output (installers are release artifacts, not source)
+dist/

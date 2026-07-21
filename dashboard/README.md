@@ -69,15 +69,47 @@ has had `npm install` run (the slide pipeline uses the repo's own `sharp`).
 - **Publish** — commit → rebase onto `origin/main` → push, with your message.
   Until you publish, changes are only in the (managed or local) clone.
 
+## Building the Windows app
+
+```bash
+cd dashboard
+npm install
+npm run dist
+```
+
+Output lands in `dashboard/dist/` (gitignored):
+
+- `MAI Dashboard-0.1.0-nsis.exe` — installer, for handing to an admin.
+- `MAI Dashboard-0.1.0-portable.exe` — single file, no install, for a USB
+  stick or a quick trial.
+
+Neither needs Node, npm, or a checkout on the target machine — only **git**,
+which the app shells out to.
+
+If the build dies with `Cannot create symbolic link: A required privilege is
+not held by the client`, electron-builder is unpacking its `winCodeSign`
+bundle, which contains macOS symlinks Windows won't create without elevation
+or Developer Mode. It is only needed for signing, which we don't do, so
+pre-populate its cache without the macOS half instead of elevating:
+
+```bash
+CACHE="$LOCALAPPDATA/electron-builder/Cache/winCodeSign"
+node_modules/7zip-bin/win/x64/7za.exe x "$CACHE/<downloaded>.7z" \
+  -o"$CACHE/winCodeSign-2.6.0" '-xr!darwin' -y
+```
+
+The app bundles its own `sharp`, so **Add Photos works in managed mode**: the
+tool runner puts the bundled `node_modules` on `NODE_PATH`, which Node
+searches only *after* the repo's own `node_modules` — so a local checkout
+still uses its copy and the managed clone (which has none) falls back to the
+bundled one. `sharp` 0.33 ships N-API prebuilt binaries, so it needs no
+`electron-rebuild`; it is only `asarUnpack`ed, since a `.node` binary can't
+be loaded from inside an asar.
+
 ## Not yet done (Phase B follow-ups)
 
-- Packaged installers (electron-builder) so admins don't need Node/npm.
-- **Add Photos in managed mode**: the managed clone has no `node_modules`, so
-  the `slides:add` image pipeline (which needs the repo's `sharp`) can't run
-  there yet — it needs the dashboard to bundle its own image tooling
-  (electron-rebuilt `sharp`). Everything else (notice, prompts, models,
-  removing slides, editing titles, publish) works in managed mode. In local
-  mode Add Photos uses the checkout's `sharp`.
+- Code signing — Windows SmartScreen will warn on first run until the
+  installer is signed.
 - Managed mode currently assumes the site repo is **public** for read (true
   for aimuseum.se); a private repo would need the token on read too.
 - Automatic token-expiry detection with a re-connect prompt.
