@@ -106,6 +106,18 @@ function scrub(err) {
   return e;
 }
 
+// The dashboard's own node_modules. When packaged these live outside the asar
+// (build.asarUnpack), so point at that copy. The whole tree is unpacked, not
+// just sharp: runTool spawns with ELECTRON_RUN_AS_NODE, which turns OFF
+// Electron's asar support, so the child cannot read into app.asar at all — an
+// unpacked sharp whose deps (detect-libc, color, semver…) were still archived
+// failed at require time.
+function bundledModulesDir() {
+  const dir = path.join(__dirname, 'node_modules');
+  const packed = `app.asar${path.sep}`;
+  return dir.includes(packed) ? dir.replace(packed, `app.asar.unpacked${path.sep}`) : dir;
+}
+
 // Run a repo tool (tools/slides-add.js etc.) with the Electron binary in
 // plain-Node mode, so it works the same in dev and when packaged.
 function runTool(script, args) {
@@ -116,7 +128,16 @@ function runTool(script, args) {
       [path.join(repo, 'tools', script), ...args],
       {
         cwd: repo,
-        env: { ...process.env, ELECTRON_RUN_AS_NODE: '1' },
+        env: {
+          ...process.env,
+          ELECTRON_RUN_AS_NODE: '1',
+          // The managed clone has no node_modules, so slides-add.js can't
+          // resolve sharp from the repo. NODE_PATH is searched only after the
+          // repo's own node_modules, so a local checkout still uses its copy.
+          NODE_PATH: [bundledModulesDir(), process.env.NODE_PATH]
+            .filter(Boolean)
+            .join(path.delimiter),
+        },
         maxBuffer: 10 * 1024 * 1024,
         timeout: 5 * 60 * 1000,
       },
