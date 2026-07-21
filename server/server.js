@@ -25,8 +25,36 @@ app.use((req, res, next) => {
   next();
 });
 
-// Serve the built site from public/
-app.use(express.static(PUBLIC_DIR));
+// Resolve a request path to a file inside PUBLIC_DIR, or null if it escapes.
+function resolvePublic(urlPath, suffix = "") {
+  let decoded;
+  try {
+    decoded = decodeURIComponent(urlPath);
+  } catch {
+    return null;
+  }
+  const rel = decoded.replace(/^\/+/, "").replace(/\/+$/, "");
+  if (!rel) return null;
+  const file = path.join(PUBLIC_DIR, rel + suffix);
+  if (file !== PUBLIC_DIR && !file.startsWith(PUBLIC_DIR + path.sep)) return null;
+  return file;
+}
+
+// Emulate Vercel's `cleanUrls` (see vercel.json): extensionless URLs map to
+// the matching .html file. Runs before express.static so that where both
+// pages/daily.html and pages/daily/ exist, the page wins over the directory.
+app.use((req, res, next) => {
+  if (req.method !== "GET" && req.method !== "HEAD") return next();
+  if (req.path.startsWith("/api/") || path.extname(req.path)) return next();
+  const file = resolvePublic(req.path, ".html");
+  if (file && fs.existsSync(file)) return res.sendFile(file);
+  next();
+});
+
+// Serve the built site from public/. `redirect: false` stops bare directory
+// URLs (/pages) from 301-ing to /pages/, where relative asset paths in the
+// fallback page would resolve one level too deep.
+app.use(express.static(PUBLIC_DIR, { redirect: false }));
 
 // Email sending endpoint (contact forms, workshop requests, membership)
 app.post("/api/send-email", handleSendEmail);
@@ -91,17 +119,34 @@ app.get("/api/og-image", async (req, res) => {
   }
 });
 
-// Fallback: serve index.html for unknown non-API paths
+// Fallback for paths nothing above matched.
 app.get("*", (req, res) => {
   if (req.path.startsWith("/api/")) {
     return res.status(404).json({ error: "Not found" });
   }
-  const indexPath = path.join(PUBLIC_DIR, "index.html");
-  if (fs.existsSync(indexPath)) {
-    res.sendFile(indexPath);
-  } else {
-    res.status(404).send("Page not found");
+
+  // A missing asset must 404. Answering a .css/.js request with index.html
+  // (200, text/html) is what made pages render unstyled.
+  if (path.extname(req.path)) {
+    return res.status(404).type("text/plain").send("Not found");
   }
+
+  // Directory that has its own index.html (/sv) — add the trailing slash so
+  // relative links inside it resolve correctly.
+  const dirIndex = resolvePublic(req.path, "/index.html");
+  if (dirIndex && fs.existsSync(dirIndex)) {
+    return res.redirect(301, req.path.replace(/\/+$/, "") + "/");
+  }
+
+  // Mistyped or listing-style URL (/pages): the 404 page, in the language of
+  // the branch that was missed. Its asset paths are absolute, so it renders
+  // correctly at whatever depth the visitor landed on.
+  const notFound = /^\/sv(\/|$)/.test(req.path) ? "sv/404.html" : "404.html";
+  const notFoundPath = path.join(PUBLIC_DIR, notFound);
+  if (fs.existsSync(notFoundPath)) {
+    return res.status(404).sendFile(notFoundPath);
+  }
+  res.status(404).type("text/plain").send("Page not found");
 });
 
 const PORT = process.env.PORT || 5179;
