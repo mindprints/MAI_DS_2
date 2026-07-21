@@ -47,7 +47,17 @@ app.use((req, res, next) => {
   if (req.method !== "GET" && req.method !== "HEAD") return next();
   if (req.path.startsWith("/api/") || path.extname(req.path)) return next();
   const file = resolvePublic(req.path, ".html");
-  if (file && fs.existsSync(file)) return res.sendFile(file);
+  if (file && fs.existsSync(file)) {
+    // /pages/daily/ must not serve daily.html as-is: the page's relative
+    // paths (../assets, daily/…) would resolve one level too deep, leaving it
+    // unstyled with dead edition links. Send the browser to the canonical
+    // slash-less URL first so the base is right.
+    if (req.path.length > 1 && req.path.endsWith("/")) {
+      const query = req.originalUrl.slice(req.path.length);
+      return res.redirect(301, req.path.replace(/\/+$/, "") + query);
+    }
+    return res.sendFile(file);
+  }
   next();
 });
 
