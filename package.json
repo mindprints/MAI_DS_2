@@ -15,7 +15,7 @@
     "slides:add": "node tools/slides-add.js",
     "slides:remove": "node tools/slides-remove.js",
     "audit": "lighthouse http://localhost:3000 --output=json --output-path=reports/lighthouse.json",
-    "test": "node agent/test/notice.test.js"
+    "test": "node agent/test/run.js"
   },
   "keywords": [],
   "author": "",
