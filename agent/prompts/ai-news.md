@@ -1,5 +1,5 @@
 Today is {{readable}} {{year}}. Use web search to find the most significant AI news from the last 24-48 hours, then write a daily AI news summary (350-500 words) for the Museum of Artificial Intelligence's general-audience readers.{{steer}}
-
+{{recentLeads}}
 Cover a mix of what actually happened (skip categories with no real news): research breakthroughs, product releases, laws and regulation, business and finance, and notable public debate.
 
 Requirements:
