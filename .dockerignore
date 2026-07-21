@@ -1,4 +1,8 @@
 node_modules
+# Nested installs need their own pattern — a bare "node_modules" only matches
+# the top level, so dashboard/node_modules (Electron, a few hundred MB) was
+# being copied into both images.
+**/node_modules
 npm-debug.log
 .git
 .gitignore
