@@ -56,6 +56,7 @@ Quiz (the rotating current-events questions; the evergreen ones are hand-written
 /quiz draft <topic> — draft them about a particular subject
 /quiz publish — put the drafted questions on the site
 /quiz discard — throw the draft away
+A draft is made automatically once a month and sent to you here.
 Nothing reaches the site until you send /quiz publish.
 
 Edits are committed to ${config.agentBranch} and deploy to ${config.previewUrl || 'the site'}.`;
@@ -249,7 +250,7 @@ async function onMessage(msg) {
       const { date, time } = nowInZone();
       await telegram.sendMessage(
         msg.chat.id,
-        `Branch: ${s.branch}\nLast commit: ${s.last}\nPending changes: ${s.dirty || 'none'}\nAgent time: ${date} ${time} (${config.timezone})\nJobs: onthisday ${config.onThisDayTime}, news ${config.newsTime}`,
+        `Branch: ${s.branch}\nLast commit: ${s.last}\nPending changes: ${s.dirty || 'none'}\nAgent time: ${date} ${time} (${config.timezone})\nJobs: onthisday ${config.onThisDayTime}, news ${config.newsTime}, quiz draft ${config.quizTime} on day ${config.quizDay} of each month`,
       );
     } else if (text === '/diff') {
       const d = await gitrepo.diffStat();
@@ -328,6 +329,26 @@ async function main() {
           if (!config.aaApiKey) return;
           await gitrepo.pull().catch(() => {});
           await jobs.runLlmIndex();
+        },
+      },
+      {
+        // Monthly, and it drafts only — never publishes. A schedule that put
+        // unreviewed questions on the site would defeat the whole point of
+        // splitting draft from publish.
+        //
+        // This is also the one scheduled job that speaks up on success. The
+        // others are silent because nothing is waiting on them; a draft nobody
+        // is told about is a draft nobody reviews, so it would sit in
+        // quiz-pending.json forever.
+        name: 'quizdraft',
+        time: config.quizTime,
+        day: config.quizDay,
+        run: async () => {
+          await gitrepo.pull().catch(() => {});
+          const r = await jobs.runQuizDraft();
+          await notify(
+            `Monthly quiz draft — ${r.count} question(s) for review. ✓ marks the answer I believe is correct; check the facts.\n\n${r.preview}\n\nNothing is on the site yet. Send /quiz publish to put these up, or /quiz discard.`,
+          );
         },
       },
       {
