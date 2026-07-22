@@ -45,6 +45,10 @@ const config = {
   newsTime: process.env.AGENT_NEWS_TIME || '06:00',
   llmIndexTime: process.env.AGENT_LLMINDEX_TIME || '06:20',
   llmUsageTime: process.env.AGENT_LLMUSAGE_TIME || '06:25',
+  // The quiz draft is monthly, not daily. Day is clamped to 1-28 by the
+  // scheduler so it fires in February too.
+  quizTime: process.env.AGENT_QUIZ_TIME || '06:40',
+  quizDay: Number(process.env.AGENT_QUIZ_DAY || 1),
   runBuildCheck: process.env.AGENT_BUILD_CHECK !== 'false',
 };
 

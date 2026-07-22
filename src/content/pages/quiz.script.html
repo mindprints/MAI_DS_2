@@ -1,0 +1,191 @@
+<script>
+(function(){
+  var root = document.getElementById('quiz');
+  if (!root) return;
+
+  var intro = document.getElementById('quiz-intro');
+  var play = document.getElementById('quiz-play');
+  var results = document.getElementById('quiz-results');
+  var errorEl = document.getElementById('quiz-error');
+  var progressEl = document.getElementById('quiz-progress');
+  var questionEl = document.getElementById('quiz-question');
+  var optionsEl = document.getElementById('quiz-options');
+  var feedbackEl = document.getElementById('quiz-feedback');
+  var nextBtn = document.getElementById('quiz-next');
+  var startBtn = document.getElementById('quiz-start');
+  var restartBtn = document.getElementById('quiz-restart');
+  var scoreEl = document.getElementById('quiz-score');
+  var tierLabelEl = document.getElementById('quiz-tier-label');
+  var tierBlurbEl = document.getElementById('quiz-tier-blurb');
+
+  // Every visitor-facing string lives in the localised partial, so this file is
+  // shared by both languages.
+  var text = root.dataset;
+  var lang = (document.documentElement.lang || 'en').indexOf('sv') === 0 ? 'sv' : 'en';
+  var wanted = parseInt(text.count, 10) || 10;
+
+  // At most this many of the rotating "current events" questions per round, so
+  // a stale or thin `current` set can never crowd out the verified core.
+  var MAX_CURRENT = 2;
+
+  var bank = null;
+  var questions = [];
+  var index = 0;
+  var score = 0;
+
+  var OPTION_BASE = 'w-full text-left px-4 py-3 rounded-lg ring-1 transition duration-300';
+  var OPTION_IDLE = 'ring-slate-600 bg-slate-800/60 hover:ring-indigo-400';
+  var OPTION_CORRECT = 'ring-emerald-400 bg-emerald-900/30';
+  var OPTION_WRONG = 'ring-rose-400 bg-rose-900/30';
+  var OPTION_MUTED = 'ring-slate-700 bg-slate-800/30 opacity-60';
+
+  function show(el, visible) {
+    if (el) el.hidden = !visible;
+  }
+
+  function shuffle(list) {
+    var out = list.slice();
+    for (var i = out.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = out[i]; out[i] = out[j]; out[j] = tmp;
+    }
+    return out;
+  }
+
+  function fill(template, values) {
+    return String(template || '').replace(/\{(\w+)\}/g, function(match, key){
+      return Object.prototype.hasOwnProperty.call(values, key) ? values[key] : match;
+    });
+  }
+
+  // Draw a round: mostly hand-verified evergreen questions, topped up with a
+  // couple of rotating ones, then shuffled so the rotating pair is not always
+  // at the end.
+  function draw() {
+    var evergreen = shuffle(bank.evergreen || []);
+    var current = shuffle(bank.current || []);
+    var fromCurrent = current.slice(0, Math.min(MAX_CURRENT, current.length));
+    var fromEvergreen = evergreen.slice(0, Math.max(0, wanted - fromCurrent.length));
+    return shuffle(fromCurrent.concat(fromEvergreen));
+  }
+
+  function renderQuestion() {
+    var item = questions[index];
+    var copy = item[lang] || item.en;
+
+    progressEl.textContent = fill(text.progress, { n: index + 1, total: questions.length });
+    questionEl.textContent = copy.q;
+    feedbackEl.textContent = '';
+    optionsEl.textContent = '';
+    show(nextBtn, false);
+
+    copy.options.forEach(function(label, i){
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = OPTION_BASE + ' ' + OPTION_IDLE;
+      // textContent, never innerHTML: `current` questions may be written by the
+      // agent, and its output is data, not markup.
+      btn.textContent = label;
+      btn.addEventListener('click', function(){ answer(i); });
+      optionsEl.appendChild(btn);
+    });
+  }
+
+  function answer(chosen) {
+    var item = questions[index];
+    var copy = item[lang] || item.en;
+    var correct = item.answer;
+    var buttons = optionsEl.querySelectorAll('button');
+
+    Array.prototype.forEach.call(buttons, function(btn, i){
+      btn.disabled = true;
+      if (i === correct) {
+        btn.className = OPTION_BASE + ' ' + OPTION_CORRECT;
+      } else if (i === chosen) {
+        btn.className = OPTION_BASE + ' ' + OPTION_WRONG;
+      } else {
+        btn.className = OPTION_BASE + ' ' + OPTION_MUTED;
+      }
+    });
+
+    if (chosen === correct) score++;
+
+    var verdict = document.createElement('p');
+    verdict.className = chosen === correct
+      ? 'font-semibold mb-2 text-emerald-400'
+      : 'font-semibold mb-2 text-rose-400';
+    verdict.textContent = chosen === correct ? text.correct : text.incorrect;
+
+    var why = document.createElement('p');
+    why.className = 'text-slate-400 text-sm md:text-base leading-relaxed';
+    why.textContent = copy.why;
+
+    feedbackEl.appendChild(verdict);
+    feedbackEl.appendChild(why);
+
+    nextBtn.textContent = index + 1 < questions.length ? text.next : text.finish;
+    show(nextBtn, true);
+    nextBtn.focus();
+  }
+
+  function finish() {
+    show(play, false);
+    show(results, true);
+    scoreEl.textContent = fill(text.score, { score: score, total: questions.length });
+
+    // Tiers live in the partial as <li data-min>; pick the best one reached.
+    var tiers = document.querySelectorAll('#quiz-tiers li');
+    var chosen = null;
+    Array.prototype.forEach.call(tiers, function(li){
+      var min = parseInt(li.getAttribute('data-min'), 10);
+      if (score >= min && (!chosen || min > parseInt(chosen.getAttribute('data-min'), 10))) {
+        chosen = li;
+      }
+    });
+    if (chosen) {
+      tierLabelEl.textContent = chosen.getAttribute('data-label');
+      tierBlurbEl.textContent = chosen.textContent.trim();
+    }
+    results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function begin() {
+    questions = draw();
+    if (!questions.length) { show(errorEl, true); return; }
+    index = 0;
+    score = 0;
+    show(intro, false);
+    show(results, false);
+    show(play, true);
+    renderQuestion();
+  }
+
+  nextBtn.addEventListener('click', function(){
+    if (index + 1 < questions.length) {
+      index++;
+      renderQuestion();
+    } else {
+      finish();
+    }
+  });
+
+  startBtn.addEventListener('click', begin);
+  restartBtn.addEventListener('click', begin);
+
+  startBtn.disabled = true;
+  fetch(root.getAttribute('data-src'))
+    .then(function(res){
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      return res.json();
+    })
+    .then(function(data){
+      bank = data;
+      if (!bank.evergreen || !bank.evergreen.length) throw new Error('empty bank');
+      startBtn.disabled = false;
+    })
+    .catch(function(){
+      show(intro, false);
+      show(errorEl, true);
+    });
+})();
+</script>

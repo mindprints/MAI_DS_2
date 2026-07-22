@@ -40,7 +40,16 @@ require.cache[require.resolve('../gitrepo')] = {
 const stubJob = async () => ({ skipped: true, reason: 'stubbed' });
 require.cache[require.resolve('../jobs')] = {
   id: 'stub-jobs', filename: 'stub-jobs', loaded: true, children: [], paths: [],
-  exports: { runOnThisDay: stubJob, runAiNews: stubJob, runLlmIndex: stubJob, runLlmUsage: stubJob },
+  exports: {
+    runOnThisDay: stubJob,
+    runAiNews: stubJob,
+    runLlmIndex: stubJob,
+    runLlmUsage: stubJob,
+    runQuizDraft: async () => ({ count: 0, preview: '', commit: '' }),
+    runQuizPublish: stubJob,
+    runQuizDiscard: stubJob,
+    quizStatus: () => 'stub quiz status',
+  },
 };
 
 const { onMessage, COMMANDS, menuCommands, HELP } = require('../index');

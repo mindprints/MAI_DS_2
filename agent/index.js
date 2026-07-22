@@ -50,6 +50,15 @@ Flash notice on the home pages (one at a time):
 /notice remove — take it down
 Expiry dates stay in the dashboard; /notice post clears any date it finds.
 
+Quiz (the rotating current-events questions; the evergreen ones are hand-written and untouched):
+/quiz — what is drafted or live right now
+/quiz draft — research and draft new questions for review
+/quiz draft <topic> — draft them about a particular subject
+/quiz publish — put the drafted questions on the site
+/quiz discard — throw the draft away
+A draft is made automatically once a month and sent to you here.
+Nothing reaches the site until you send /quiz publish.
+
 Edits are committed to ${config.agentBranch} and deploy to ${config.previewUrl || 'the site'}.`;
 
 // What Telegram offers in the "/" menu. Only top-level commands exist as far
@@ -62,6 +71,7 @@ const COMMANDS = [
   { command: 'news', description: 'Run the AI news summary now (/news <topic> to steer the lead)' },
   { command: 'ontoday', description: 'Run the "on this day" essay now (/ontoday <event> to steer it)' },
   { command: 'diff', description: 'Diff stat of the working tree' },
+  { command: 'quiz', description: 'Quiz questions — /quiz, draft [topic], publish, discard' },
   { command: 'llmindex', description: 'Refresh the LLM leaderboard card' },
   { command: 'llmusage', description: 'Refresh the OpenRouter usage card' },
   { command: 'help', description: 'What I can do' },
@@ -166,6 +176,57 @@ async function handleNotice(msg, arg) {
   await telegram.sendMessage(msg.chat.id, reply);
 }
 
+const QUIZ_USAGE = 'Use: /quiz · /quiz draft [topic] · /quiz publish · /quiz discard';
+
+// Two steps on purpose. The evergreen questions are hand-verified; these are
+// not, so drafting and publishing are separate commands with the editor's
+// reading in between. /quiz draft only ever writes quiz-pending.json, which
+// the site does not read.
+async function handleQuiz(msg, arg) {
+  await gitrepo.pull().catch(() => {});
+  const sub = arg.split(/\s+/)[0] || '';
+  const body = arg.slice(sub.length).trim();
+
+  if (!sub) {
+    await telegram.sendMessage(msg.chat.id, jobs.quizStatus());
+    return;
+  }
+
+  if (sub === 'draft') {
+    await telegram.sendMessage(
+      msg.chat.id,
+      body ? `Researching quiz questions about "${body}"…` : 'Researching current AI news for quiz questions…',
+    );
+    const r = await jobs.runQuizDraft({ topic: body });
+    await telegram.sendMessage(
+      msg.chat.id,
+      `Drafted ${r.count} question(s). ✓ marks the answer I believe is correct — check the facts before publishing.\n\n${r.preview}\n\nSend /quiz publish to put these on the site, or /quiz discard to bin them.`,
+    );
+    return;
+  }
+
+  if (sub === 'publish') {
+    const r = await jobs.runQuizPublish();
+    if (r.skipped) {
+      await telegram.sendMessage(msg.chat.id, r.reason);
+      return;
+    }
+    await telegram.sendMessage(
+      msg.chat.id,
+      `Published ${r.published} question(s)${r.replaced ? `, replacing the previous ${r.replaced}` : ''}. Live once the site redeploys.`,
+    );
+    return;
+  }
+
+  if (sub === 'discard') {
+    const r = await jobs.runQuizDiscard();
+    await telegram.sendMessage(msg.chat.id, r.skipped ? r.reason : 'Draft discarded. The live quiz is unchanged.');
+    return;
+  }
+
+  await telegram.sendMessage(msg.chat.id, `Unknown quiz command "${sub}".\n\n${QUIZ_USAGE}`);
+}
+
 async function onMessage(msg) {
   const text = (msg.text || '').trim();
   if (!text) return;
@@ -189,7 +250,7 @@ async function onMessage(msg) {
       const { date, time } = nowInZone();
       await telegram.sendMessage(
         msg.chat.id,
-        `Branch: ${s.branch}\nLast commit: ${s.last}\nPending changes: ${s.dirty || 'none'}\nAgent time: ${date} ${time} (${config.timezone})\nJobs: onthisday ${config.onThisDayTime}, news ${config.newsTime}`,
+        `Branch: ${s.branch}\nLast commit: ${s.last}\nPending changes: ${s.dirty || 'none'}\nAgent time: ${date} ${time} (${config.timezone})\nJobs: onthisday ${config.onThisDayTime}, news ${config.newsTime}, quiz draft ${config.quizTime} on day ${config.quizDay} of each month`,
       );
     } else if (text === '/diff') {
       const d = await gitrepo.diffStat();
@@ -204,6 +265,8 @@ async function onMessage(msg) {
       await runJob(msg, 'llm-usage', jobs.runLlmUsage);
     } else if (text === '/notice' || text.startsWith('/notice ')) {
       await handleNotice(msg, text.slice('/notice'.length).trim());
+    } else if (text === '/quiz' || text.startsWith('/quiz ')) {
+      await handleQuiz(msg, text.slice('/quiz'.length).trim());
     } else if (text === '/approve') {
       if (!config.allowApprove) {
         await telegram.sendMessage(msg.chat.id, '/approve is disabled (set AGENT_ALLOW_APPROVE=true to enable). Merge the branch on GitHub instead.');
@@ -266,6 +329,26 @@ async function main() {
           if (!config.aaApiKey) return;
           await gitrepo.pull().catch(() => {});
           await jobs.runLlmIndex();
+        },
+      },
+      {
+        // Monthly, and it drafts only — never publishes. A schedule that put
+        // unreviewed questions on the site would defeat the whole point of
+        // splitting draft from publish.
+        //
+        // This is also the one scheduled job that speaks up on success. The
+        // others are silent because nothing is waiting on them; a draft nobody
+        // is told about is a draft nobody reviews, so it would sit in
+        // quiz-pending.json forever.
+        name: 'quizdraft',
+        time: config.quizTime,
+        day: config.quizDay,
+        run: async () => {
+          await gitrepo.pull().catch(() => {});
+          const r = await jobs.runQuizDraft();
+          await notify(
+            `Monthly quiz draft — ${r.count} question(s) for review. ✓ marks the answer I believe is correct; check the facts.\n\n${r.preview}\n\nNothing is on the site yet. Send /quiz publish to put these up, or /quiz discard.`,
+          );
         },
       },
       {

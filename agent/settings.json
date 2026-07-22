@@ -2,7 +2,8 @@
   "_readme": "Runtime agent settings, read fresh before every job — edit, commit, push and the next run picks it up (no redeploy). Empty provider/model strings mean 'use the env vars' (ANTHROPIC_MODEL / OPENROUTER_MODEL), which preserves pre-settings behavior. provider is 'anthropic' or 'openrouter'; openrouter models are OpenRouter ids like 'x-ai/grok-4.5'. prices feed the cost column of reports/llm-usage.jsonl (USD per million tokens; webSearchPer1000 in USD per 1000 searches) — OpenRouter reports cost itself, so prices only cover Anthropic.",
   "generation": {
     "onthisday": { "provider": "", "model": "" },
-    "ainews": { "provider": "", "model": "" }
+    "ainews": { "provider": "", "model": "" },
+    "quiz": { "provider": "", "model": "" }
   },
   "editorModel": "",
   "prices": {
