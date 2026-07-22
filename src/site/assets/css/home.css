@@ -461,6 +461,7 @@ body {
 .reveal.is-visible { opacity: 1; transform: none; }
 .reveal-d1 { transition-delay: 0.1s; }
 .reveal-d2 { transition-delay: 0.2s; }
+.reveal-d3 { transition-delay: 0.3s; }
 
 /* No-JS and reduced-motion: content is always visible */
 .no-js .reveal { opacity: 1; transform: none; }
