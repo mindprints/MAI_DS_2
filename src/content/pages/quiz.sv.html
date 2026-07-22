@@ -1,0 +1,58 @@
+<html><head></head><body><div class="container mx-auto px-4">
+      <h1 class="text-4xl font-bold mb-4">Testa dina AI-kunskaper</h1>
+      <p class="text-slate-400 text-sm md:text-base leading-relaxed max-w-2xl mb-10">Tio frågor om hur AI faktiskt fungerar, var tekniken kommer ifrån och vad orden alla använder egentligen betyder. Du får svaret och en kort förklaring efter hand — förklaringen är det viktiga, resultatet är bara på skoj.</p>
+
+      <div id="quiz"
+           class="max-w-2xl"
+           data-src="/content/quiz.json"
+           data-count="10"
+           data-progress="Fråga {n} av {total}"
+           data-correct="Rätt"
+           data-incorrect="Inte riktigt"
+           data-next="Nästa fråga"
+           data-finish="Se ditt resultat"
+           data-score="Du svarade rätt på {score} av {total}.">
+
+        <section id="quiz-intro" class="glass-card p-6 rounded-xl">
+          <h2 class="text-2xl font-bold mb-2">Redo?</h2>
+          <p class="text-slate-400 text-sm md:text-base leading-relaxed mb-5">Tio frågor med fyra alternativ vardera, slumpmässigt valda ur en större uppsättning — så det är värt ett andra försök. Inget du svarar lämnar din webbläsare, och inget resultat sparas någonstans.</p>
+          <button type="button" id="quiz-start" class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-lg font-semibold text-sm md:text-base transition duration-300 inline-flex items-center justify-center gap-2">
+            <i class="fa-solid fa-play"></i>
+            Starta testet
+          </button>
+        </section>
+
+        <section id="quiz-play" class="glass-card p-6 rounded-xl" hidden>
+          <p id="quiz-progress" class="text-indigo-300 text-xs font-semibold uppercase tracking-wide mb-3"></p>
+          <h2 id="quiz-question" class="text-2xl font-bold mb-5"></h2>
+          <div id="quiz-options" class="space-y-3" role="group"></div>
+          <div id="quiz-feedback" class="mt-5" aria-live="polite"></div>
+          <button type="button" id="quiz-next" class="mt-5 bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-lg font-semibold text-sm md:text-base transition duration-300 inline-flex items-center justify-center gap-2" hidden></button>
+        </section>
+
+        <section id="quiz-results" class="glass-card p-6 rounded-xl" hidden>
+          <h2 id="quiz-tier-label" class="text-2xl font-bold mb-2"></h2>
+          <p id="quiz-score" class="text-indigo-300 font-semibold mb-2"></p>
+          <p id="quiz-tier-blurb" class="text-slate-400 text-sm md:text-base leading-relaxed mb-5"></p>
+          <div class="flex flex-wrap gap-3">
+            <button type="button" id="quiz-restart" class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-lg font-semibold text-sm md:text-base transition duration-300 inline-flex items-center justify-center gap-2">
+              <i class="fa-solid fa-rotate-right"></i>
+              Försök med tio nya
+            </button>
+            <a href="explore.html" class="bg-slate-700 hover:bg-slate-600 text-white px-5 py-2.5 rounded-lg font-semibold text-sm md:text-base transition duration-300 inline-flex items-center justify-center gap-2">
+              <i class="fa-solid fa-compass"></i>
+              Utforska museet
+            </a>
+          </div>
+        </section>
+
+        <p id="quiz-error" class="text-slate-400 text-sm md:text-base leading-relaxed" hidden>Testet kunde inte laddas just nu. Försök igen senare.</p>
+
+        <ul id="quiz-tiers" hidden>
+          <li data-min="9" data-label="Verkligt insatt">Du gissar inte. Du skulle kunna följa — eller ifrågasätta — det mesta som skrivs om AI i pressen i år.</li>
+          <li data-min="7" data-label="På stadig grund">Du har greppet och vokabulären som hör till. Luckorna som återstår är de intressanta.</li>
+          <li data-min="4" data-label="Börjar hitta rätt">Du känner igen landmärkena. Lite till, så blir rubrikerna inte brus utan påståenden du kan väga.</li>
+          <li data-min="0" data-label="Alla börjar här">Värt att veta: de flesta av de här begreppen är mindre mystiska än de låter. Läs förklaringarna och kör igen — det är hela idén.</li>
+        </ul>
+      </div>
+    </div></body></html>

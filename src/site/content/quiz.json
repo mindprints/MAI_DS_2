@@ -1,0 +1,488 @@
+{
+  "version": 1,
+  "updated": "2026-07-22",
+  "note": "Question bank for /pages/quiz. 'answer' is the index into options and is shared by every language, so a translation edit can never desync which option is correct — keep the option order identical in en and sv. 'evergreen' is hand-verified and stable; 'current' is the rotating set (recent events) and may be refreshed by the agent, so nothing in it should be assumed permanent.",
+  "evergreen": [
+    {
+      "id": "gpt-acronym",
+      "answer": 1,
+      "en": {
+        "q": "What does the \"GPT\" in ChatGPT stand for?",
+        "options": [
+          "General Processing Technology",
+          "Generative Pre-trained Transformer",
+          "Global Prediction Toolkit",
+          "Guided Parameter Tuning"
+        ],
+        "why": "Generative — it produces new text. Pre-trained — the bulk of its learning happened before you ever typed anything. Transformer — the network architecture published in 2017 that made all of this practical."
+      },
+      "sv": {
+        "q": "Vad står \"GPT\" för i ChatGPT?",
+        "options": [
+          "General Processing Technology",
+          "Generative Pre-trained Transformer",
+          "Global Prediction Toolkit",
+          "Guided Parameter Tuning"
+        ],
+        "why": "Generative — den skapar ny text. Pre-trained — det mesta av inlärningen skedde innan du skrev något. Transformer — den nätverksarkitektur som publicerades 2017 och gjorde allt detta möjligt."
+      }
+    },
+    {
+      "id": "token",
+      "answer": 1,
+      "en": {
+        "q": "When a language model reads your text, what is a \"token\"?",
+        "options": [
+          "A single letter",
+          "A chunk of text — often a word, or a piece of one",
+          "A complete sentence",
+          "A security key that authorises the request"
+        ],
+        "why": "Models read text in chunks rather than letters or whole words. Common words are usually one token; rarer ones get split. This is why models are priced per token, and why they sometimes miscount the letters in a word."
+      },
+      "sv": {
+        "q": "När en språkmodell läser din text — vad är en \"token\"?",
+        "options": [
+          "En enskild bokstav",
+          "En bit text — ofta ett ord, eller en del av ett ord",
+          "En hel mening",
+          "En säkerhetsnyckel som godkänner anropet"
+        ],
+        "why": "Modeller läser text i bitar snarare än bokstäver eller hela ord. Vanliga ord är oftast en token; ovanligare ord delas upp. Det är därför modeller prissätts per token, och därför de ibland räknar fel på bokstäverna i ett ord."
+      }
+    },
+    {
+      "id": "hallucination",
+      "answer": 0,
+      "en": {
+        "q": "What do people mean when they say a language model \"hallucinates\"?",
+        "options": [
+          "It states something false with complete confidence",
+          "It refuses to answer the question",
+          "It runs out of memory mid-sentence",
+          "It produces images instead of text"
+        ],
+        "why": "The model is predicting plausible text, not looking facts up. A fluent, confident, wrong answer looks exactly like a fluent, confident, right one — which is precisely what makes it worth checking."
+      },
+      "sv": {
+        "q": "Vad menar man när man säger att en språkmodell \"hallucinerar\"?",
+        "options": [
+          "Den påstår något falskt med full säkerhet",
+          "Den vägrar att svara på frågan",
+          "Den får slut på minne mitt i en mening",
+          "Den skapar bilder i stället för text"
+        ],
+        "why": "Modellen förutsäger trolig text — den slår inte upp fakta. Ett flytande, självsäkert och felaktigt svar ser precis ut som ett flytande, självsäkert och korrekt svar. Just därför är det värt att kontrollera."
+      }
+    },
+    {
+      "id": "attention-paper",
+      "answer": 1,
+      "en": {
+        "q": "Which 2017 paper introduced the Transformer architecture that today's language models are built on?",
+        "options": [
+          "Computing Machinery and Intelligence",
+          "Attention Is All You Need",
+          "ImageNet Classification with Deep Convolutional Neural Networks",
+          "Playing Atari with Deep Reinforcement Learning"
+        ],
+        "why": "Published by researchers at Google in 2017. Its \"attention\" mechanism lets a model weigh every part of the input against every other part, which is what made training on today's scale practical."
+      },
+      "sv": {
+        "q": "Vilken artikel från 2017 introducerade Transformer-arkitekturen som dagens språkmodeller bygger på?",
+        "options": [
+          "Computing Machinery and Intelligence",
+          "Attention Is All You Need",
+          "ImageNet Classification with Deep Convolutional Neural Networks",
+          "Playing Atari with Deep Reinforcement Learning"
+        ],
+        "why": "Publicerad av forskare på Google 2017. Dess \"attention\"-mekanism låter modellen väga varje del av indata mot varje annan del, vilket gjorde träning i dagens skala praktiskt möjlig."
+      }
+    },
+    {
+      "id": "training-inference",
+      "answer": 0,
+      "en": {
+        "q": "What is the difference between training and inference?",
+        "options": [
+          "Training builds the model from data; inference is using the finished model to answer",
+          "Training is done by users; inference by researchers",
+          "They are two words for the same process",
+          "Inference happens first, then training refines it"
+        ],
+        "why": "Training is the expensive, one-off part — months of computation on enormous datasets. Inference is what happens in the second it takes to answer you. The model does not learn from your conversation while doing it."
+      },
+      "sv": {
+        "q": "Vad är skillnaden mellan träning och inferens?",
+        "options": [
+          "Träning bygger modellen utifrån data; inferens är att använda den färdiga modellen för att svara",
+          "Träning görs av användare; inferens av forskare",
+          "Det är två ord för samma sak",
+          "Inferens sker först, sedan förfinar träningen den"
+        ],
+        "why": "Träningen är den dyra engångsdelen — månader av beräkningar på enorma datamängder. Inferens är det som sker under sekunden det tar att svara dig. Modellen lär sig inte av ditt samtal medan det pågår."
+      }
+    },
+    {
+      "id": "parameters",
+      "answer": 1,
+      "en": {
+        "q": "What are a model's \"parameters\"?",
+        "options": [
+          "The settings you adjust in the interface",
+          "The numerical weights adjusted during training",
+          "The rules its developers wrote by hand",
+          "The list of topics it is allowed to discuss"
+        ],
+        "why": "They are the numbers that encode what the model learned — billions of them. Nobody writes them individually; training adjusts them all. \"A 70-billion-parameter model\" is a rough measure of capacity, not of quality."
+      },
+      "sv": {
+        "q": "Vad är en modells \"parametrar\"?",
+        "options": [
+          "Inställningarna du justerar i gränssnittet",
+          "De numeriska vikter som justeras under träningen",
+          "Reglerna som utvecklarna skrev för hand",
+          "Listan över ämnen den får diskutera"
+        ],
+        "why": "Det är talen som kodar vad modellen lärt sig — miljarder av dem. Ingen skriver dem en och en; träningen justerar alla. \"En modell med 70 miljarder parametrar\" är ett grovt mått på kapacitet, inte på kvalitet."
+      }
+    },
+    {
+      "id": "context-window",
+      "answer": 1,
+      "en": {
+        "q": "What does a model's \"context window\" limit?",
+        "options": [
+          "How many people can use it at once",
+          "How much text it can hold in view at one time",
+          "How quickly it replies",
+          "How many languages it understands"
+        ],
+        "why": "Everything the model considers — your question, the conversation so far, any documents you pasted — has to fit inside it. Exceed it and the earliest material falls out of view, which is why long chats start to feel forgetful."
+      },
+      "sv": {
+        "q": "Vad begränsar en modells \"kontextfönster\"?",
+        "options": [
+          "Hur många som kan använda den samtidigt",
+          "Hur mycket text den kan ha i blickfånget samtidigt",
+          "Hur snabbt den svarar",
+          "Hur många språk den förstår"
+        ],
+        "why": "Allt modellen tar hänsyn till — din fråga, samtalet hittills, dokument du klistrat in — måste rymmas där. Överskrids det faller det äldsta ur blickfånget, vilket är varför långa samtal börjar kännas glömska."
+      }
+    },
+    {
+      "id": "rag",
+      "answer": 1,
+      "en": {
+        "q": "What does Retrieval-Augmented Generation (RAG) do?",
+        "options": [
+          "Retrains the model on each new question",
+          "Looks up relevant documents and puts them in front of the model as context",
+          "Compresses a model so it runs on a phone",
+          "Translates the prompt into English first"
+        ],
+        "why": "Rather than baking knowledge into the weights, you fetch the relevant passages at question time and let the model read them. It is how a system answers about your own documents without being retrained on them."
+      },
+      "sv": {
+        "q": "Vad gör Retrieval-Augmented Generation (RAG)?",
+        "options": [
+          "Tränar om modellen vid varje ny fråga",
+          "Hämtar relevanta dokument och lägger fram dem som kontext för modellen",
+          "Komprimerar modellen så att den kan köras på en telefon",
+          "Översätter först prompten till engelska"
+        ],
+        "why": "I stället för att baka in kunskapen i vikterna hämtar man relevanta avsnitt när frågan ställs och låter modellen läsa dem. Så kan ett system svara om dina egna dokument utan att ha tränats på dem."
+      }
+    },
+    {
+      "id": "turing-test",
+      "answer": 1,
+      "en": {
+        "q": "In which year did Alan Turing propose his famous test for machine intelligence?",
+        "options": [
+          "1936",
+          "1950",
+          "1969",
+          "1984"
+        ],
+        "why": "In the 1950 paper \"Computing Machinery and Intelligence\". Turing sidestepped the question \"can machines think?\" as too vague, and asked instead whether a machine could be told apart from a person in conversation."
+      },
+      "sv": {
+        "q": "Vilket år föreslog Alan Turing sitt berömda test för maskinintelligens?",
+        "options": [
+          "1936",
+          "1950",
+          "1969",
+          "1984"
+        ],
+        "why": "I artikeln \"Computing Machinery and Intelligence\" från 1950. Turing avfärdade frågan \"kan maskiner tänka?\" som för vag och frågade i stället om en maskin kunde skiljas från en människa i ett samtal."
+      }
+    },
+    {
+      "id": "eliza",
+      "answer": 0,
+      "en": {
+        "q": "ELIZA, written in the 1960s and one of the first chatbots, imitated which profession?",
+        "options": [
+          "A psychotherapist",
+          "A librarian",
+          "A schoolteacher",
+          "A medical doctor"
+        ],
+        "why": "Joseph Weizenbaum's program mostly reflected the user's own words back as questions. He was unsettled by how readily people confided in it — an early lesson in how little it takes for us to read understanding into a machine."
+      },
+      "sv": {
+        "q": "ELIZA, skriven på 1960-talet och en av de första chattbotarna, efterliknade vilket yrke?",
+        "options": [
+          "En psykoterapeut",
+          "En bibliotekarie",
+          "En lärare",
+          "En läkare"
+        ],
+        "why": "Joseph Weizenbaums program speglade mest tillbaka användarens egna ord som frågor. Han blev illa berörd av hur lätt människor anförtrodde sig åt det — en tidig läxa i hur lite som krävs för att vi ska läsa in förståelse i en maskin."
+      }
+    },
+    {
+      "id": "deep-blue",
+      "answer": 1,
+      "en": {
+        "q": "In 1997, IBM's Deep Blue defeated the reigning world champion at which game?",
+        "options": [
+          "Go",
+          "Chess",
+          "Poker",
+          "Backgammon"
+        ],
+        "why": "Deep Blue beat Garry Kasparov. It won mainly by searching enormous numbers of positions very fast — closer to brute force than to learning, and quite unlike how today's systems work."
+      },
+      "sv": {
+        "q": "År 1997 besegrade IBM:s Deep Blue den regerande världsmästaren i vilket spel?",
+        "options": [
+          "Go",
+          "Schack",
+          "Poker",
+          "Backgammon"
+        ],
+        "why": "Deep Blue slog Garry Kasparov. Den vann främst genom att söka igenom enorma mängder ställningar mycket snabbt — närmare rå beräkningskraft än inlärning, och ganska olikt hur dagens system fungerar."
+      }
+    },
+    {
+      "id": "alphago",
+      "answer": 1,
+      "en": {
+        "q": "AlphaGo's 2016 win over Lee Sedol mattered because Go, unlike chess,",
+        "options": [
+          "had never been programmed before",
+          "has so many possible positions that searching them all is hopeless",
+          "is played on an infinite board",
+          "has no agreed set of rules"
+        ],
+        "why": "Go's branching factor puts brute-force search out of reach, so AlphaGo learned positional judgement instead. Move 37 in game two was so unlike human play that commentators assumed it was a mistake."
+      },
+      "sv": {
+        "q": "AlphaGos seger över Lee Sedol 2016 var betydelsefull eftersom Go, till skillnad från schack,",
+        "options": [
+          "aldrig hade programmerats tidigare",
+          "har så många möjliga ställningar att det är hopplöst att söka igenom dem alla",
+          "spelas på ett oändligt bräde",
+          "saknar överenskomna regler"
+        ],
+        "why": "Gos förgreningsfaktor gör uttömmande sökning omöjlig, så AlphaGo lärde sig ställningsbedömning i stället. Drag 37 i den andra partiet var så olikt mänskligt spel att kommentatorerna antog att det var ett misstag."
+      }
+    },
+    {
+      "id": "data-bias",
+      "answer": 1,
+      "en": {
+        "q": "Why can an AI system end up reproducing discrimination?",
+        "options": [
+          "Because it forms its own opinions",
+          "Because it learns patterns from historical data that already contain bias",
+          "Because of faults in the hardware",
+          "Because it is always built in a single country"
+        ],
+        "why": "A model trained on past decisions learns the past, including its unfairness — and then applies it at scale and at speed, with the misleading authority of something that looks like arithmetic."
+      },
+      "sv": {
+        "q": "Varför kan ett AI-system komma att återskapa diskriminering?",
+        "options": [
+          "Därför att det bildar egna åsikter",
+          "Därför att det lär sig mönster ur historiska data som redan innehåller snedvridning",
+          "På grund av fel i hårdvaran",
+          "Därför att det alltid byggs i ett enda land"
+        ],
+        "why": "En modell som tränats på tidigare beslut lär sig det förflutna, orättvisorna inkluderade — och tillämpar dem sedan i stor skala och hög hastighet, med den vilseledande auktoritet som något räkneliknande har."
+      }
+    },
+    {
+      "id": "overfitting",
+      "answer": 0,
+      "en": {
+        "q": "A model that scores brilliantly on its training data but poorly on anything new is said to be:",
+        "options": [
+          "Overfitted",
+          "Quantised",
+          "Aligned",
+          "Distilled"
+        ],
+        "why": "It memorised the examples instead of learning the pattern behind them. This is why systems are always judged on data they were not trained on."
+      },
+      "sv": {
+        "q": "En modell som presterar lysande på sina träningsdata men dåligt på nytt material sägs vara:",
+        "options": [
+          "Överanpassad",
+          "Kvantiserad",
+          "Alignad",
+          "Destillerad"
+        ],
+        "why": "Den har memorerat exemplen i stället för att lära sig mönstret bakom dem. Därför bedöms system alltid på data de inte tränats på."
+      }
+    },
+    {
+      "id": "open-weights",
+      "answer": 0,
+      "en": {
+        "q": "When a model is released with \"open weights\", that means:",
+        "options": [
+          "The trained parameters can be downloaded and run yourself",
+          "The training data is published in full",
+          "Anyone may edit the model on the provider's website",
+          "It carries no copyright at all"
+        ],
+        "why": "Open weights and open source are not the same thing. You get the finished parameters, but usually not the training data, the code that produced them, or the freedom to use them for anything — the licence often sets limits."
+      },
+      "sv": {
+        "q": "När en modell släpps med \"öppna vikter\" innebär det att:",
+        "options": [
+          "De tränade parametrarna kan laddas ner och köras av dig själv",
+          "Träningsdatan publiceras i sin helhet",
+          "Vem som helst får redigera modellen på leverantörens webbplats",
+          "Den helt saknar upphovsrätt"
+        ],
+        "why": "Öppna vikter och öppen källkod är inte samma sak. Du får de färdiga parametrarna, men oftast varken träningsdatan, koden som skapade dem eller fri rätt att använda dem — licensen sätter ofta gränser."
+      }
+    },
+    {
+      "id": "diffusion",
+      "answer": 1,
+      "en": {
+        "q": "Most modern image generators create a picture by:",
+        "options": [
+          "Finding and blending existing photographs",
+          "Starting from random noise and repeatedly refining it toward the prompt",
+          "Searching the web for the closest match",
+          "Assembling it from a library of clip art"
+        ],
+        "why": "They are diffusion models. Training teaches them to undo noise; generation runs that process from pure static, steered by your prompt. No source image is being copied — which is a large part of why the copyright questions are hard."
+      },
+      "sv": {
+        "q": "De flesta moderna bildgeneratorer skapar en bild genom att:",
+        "options": [
+          "Hitta och blanda befintliga fotografier",
+          "Utgå från slumpmässigt brus och gradvis förfina det mot prompten",
+          "Söka på webben efter den närmaste träffen",
+          "Sätta ihop den från ett bibliotek med clipart"
+        ],
+        "why": "De är diffusionsmodeller. Träningen lär dem att ta bort brus; genereringen kör den processen från rent brus, styrd av din prompt. Ingen källbild kopieras — vilket är en stor del av varför upphovsrättsfrågorna är svåra."
+      }
+    },
+    {
+      "id": "gpu",
+      "answer": 1,
+      "en": {
+        "q": "Why are GPUs so central to modern AI?",
+        "options": [
+          "They can store far more data than other chips",
+          "They perform enormous numbers of simple calculations in parallel",
+          "They connect to the internet faster",
+          "They are the only chips that can run neural networks at all"
+        ],
+        "why": "Neural networks are mostly matrix multiplication — the same small operation, repeated astronomically often. Graphics chips were already built for exactly that shape of work, which is how a gaming component ended up underpinning an industry."
+      },
+      "sv": {
+        "q": "Varför är GPU:er så centrala för modern AI?",
+        "options": [
+          "De kan lagra betydligt mer data än andra kretsar",
+          "De utför enorma mängder enkla beräkningar parallellt",
+          "De ansluter snabbare till internet",
+          "De är de enda kretsar som överhuvudtaget kan köra neurala nätverk"
+        ],
+        "why": "Neurala nätverk är i huvudsak matrismultiplikation — samma lilla operation, upprepad astronomiskt många gånger. Grafikkretsar var redan byggda för just den sortens arbete, och så kom en spelkomponent att bära upp en hel industri."
+      }
+    },
+    {
+      "id": "eu-ai-act",
+      "answer": 1,
+      "en": {
+        "q": "The EU's AI Act sorts AI systems primarily according to:",
+        "options": [
+          "The size of the company deploying them",
+          "The level of risk their use poses",
+          "The language of the user interface",
+          "Where the model was trained"
+        ],
+        "why": "It is a risk-based law. A few uses are banned outright, \"high-risk\" ones — hiring, credit, medical devices — carry heavy obligations, and most everyday applications carry few. The same technology can fall in different tiers depending on what it is used for."
+      },
+      "sv": {
+        "q": "EU:s AI-förordning delar in AI-system främst efter:",
+        "options": [
+          "Storleken på företaget som använder dem",
+          "Hur stor risk användningen medför",
+          "Användargränssnittets språk",
+          "Var modellen tränades"
+        ],
+        "why": "Det är en riskbaserad lagstiftning. Några användningar är helt förbjudna, \"högrisk\"-användningar — rekrytering, kreditgivning, medicinteknik — har tunga krav, och de flesta vardagliga tillämpningar har få. Samma teknik kan hamna i olika nivåer beroende på vad den används till."
+      }
+    },
+    {
+      "id": "fine-tuning",
+      "answer": 0,
+      "en": {
+        "q": "What is \"fine-tuning\" a model?",
+        "options": [
+          "Training a pre-trained model further on a narrower, specific dataset",
+          "Rewording the prompt until the answer improves",
+          "Shrinking the model so it runs faster",
+          "Adjusting the creativity setting"
+        ],
+        "why": "You start from a general model and continue training on your own material, so it picks up a domain, a format or a house style — far cheaper than training from scratch, and a different thing from simply prompting well."
+      },
+      "sv": {
+        "q": "Vad innebär det att \"finjustera\" (fine-tune) en modell?",
+        "options": [
+          "Att träna en förtränad modell vidare på ett smalare, specifikt datamaterial",
+          "Att formulera om prompten tills svaret blir bättre",
+          "Att krympa modellen så att den går snabbare",
+          "Att justera inställningen för kreativitet"
+        ],
+        "why": "Man utgår från en allmän modell och fortsätter träna på eget material, så att den tar upp ett fackområde, ett format eller en stil — långt billigare än att träna från grunden, och något annat än att bara skriva bra prompter."
+      }
+    },
+    {
+      "id": "multimodal",
+      "answer": 1,
+      "en": {
+        "q": "A \"multimodal\" model is one that:",
+        "options": [
+          "Runs across several computers at once",
+          "Works with more than one kind of input, such as text and images together",
+          "Supports a large number of written languages",
+          "Can be used in several different apps"
+        ],
+        "why": "Text, images, audio and video are handled in one shared representation, so the model can answer questions about a photograph or read a chart — rather than passing the job to a separate specialised system."
+      },
+      "sv": {
+        "q": "En \"multimodal\" modell är en modell som:",
+        "options": [
+          "Körs på flera datorer samtidigt",
+          "Hanterar mer än en sorts indata, till exempel text och bild tillsammans",
+          "Stöder ett stort antal skriftspråk",
+          "Kan användas i flera olika appar"
+        ],
+        "why": "Text, bild, ljud och video hanteras i en gemensam representation, så att modellen kan svara på frågor om ett fotografi eller läsa ett diagram — i stället för att lämna över uppgiften till ett separat specialiserat system."
+      }
+    }
+  ],
+  "current": []
+}

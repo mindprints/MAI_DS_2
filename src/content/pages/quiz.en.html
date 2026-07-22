@@ -1,0 +1,58 @@
+<html><head></head><body><div class="container mx-auto px-4">
+      <h1 class="text-4xl font-bold mb-4">Test your AI knowledge</h1>
+      <p class="text-slate-400 text-sm md:text-base leading-relaxed max-w-2xl mb-10">Ten questions on how AI actually works, where it came from, and what the words everyone uses really mean. You get the answer and a short explanation as you go — the explanation is the point, the score is just for fun.</p>
+
+      <div id="quiz"
+           class="max-w-2xl"
+           data-src="/content/quiz.json"
+           data-count="10"
+           data-progress="Question {n} of {total}"
+           data-correct="Correct"
+           data-incorrect="Not quite"
+           data-next="Next question"
+           data-finish="See your result"
+           data-score="You answered {score} of {total} correctly.">
+
+        <section id="quiz-intro" class="glass-card p-6 rounded-xl">
+          <h2 class="text-2xl font-bold mb-2">Ready?</h2>
+          <p class="text-slate-400 text-sm md:text-base leading-relaxed mb-5">Ten questions, four options each, drawn at random from a larger set — so it is worth a second try. Nothing you answer leaves your browser, and no score is recorded anywhere.</p>
+          <button type="button" id="quiz-start" class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-lg font-semibold text-sm md:text-base transition duration-300 inline-flex items-center justify-center gap-2">
+            <i class="fa-solid fa-play"></i>
+            Start the quiz
+          </button>
+        </section>
+
+        <section id="quiz-play" class="glass-card p-6 rounded-xl" hidden>
+          <p id="quiz-progress" class="text-indigo-300 text-xs font-semibold uppercase tracking-wide mb-3"></p>
+          <h2 id="quiz-question" class="text-2xl font-bold mb-5"></h2>
+          <div id="quiz-options" class="space-y-3" role="group"></div>
+          <div id="quiz-feedback" class="mt-5" aria-live="polite"></div>
+          <button type="button" id="quiz-next" class="mt-5 bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-lg font-semibold text-sm md:text-base transition duration-300 inline-flex items-center justify-center gap-2" hidden></button>
+        </section>
+
+        <section id="quiz-results" class="glass-card p-6 rounded-xl" hidden>
+          <h2 id="quiz-tier-label" class="text-2xl font-bold mb-2"></h2>
+          <p id="quiz-score" class="text-indigo-300 font-semibold mb-2"></p>
+          <p id="quiz-tier-blurb" class="text-slate-400 text-sm md:text-base leading-relaxed mb-5"></p>
+          <div class="flex flex-wrap gap-3">
+            <button type="button" id="quiz-restart" class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-lg font-semibold text-sm md:text-base transition duration-300 inline-flex items-center justify-center gap-2">
+              <i class="fa-solid fa-rotate-right"></i>
+              Try another ten
+            </button>
+            <a href="explore.html" class="bg-slate-700 hover:bg-slate-600 text-white px-5 py-2.5 rounded-lg font-semibold text-sm md:text-base transition duration-300 inline-flex items-center justify-center gap-2">
+              <i class="fa-solid fa-compass"></i>
+              Explore the museum
+            </a>
+          </div>
+        </section>
+
+        <p id="quiz-error" class="text-slate-400 text-sm md:text-base leading-relaxed" hidden>The quiz could not be loaded just now. Please try again later.</p>
+
+        <ul id="quiz-tiers" hidden>
+          <li data-min="9" data-label="Genuinely well informed">You are not guessing. You could follow — or challenge — most of what is written about AI in the press this year.</li>
+          <li data-min="7" data-label="On solid ground">You have the shape of it and the vocabulary to go with it. The gaps that remain are the interesting ones.</li>
+          <li data-min="4" data-label="Getting your bearings">You know the landmarks. A little more and the headlines stop being noise and start being claims you can weigh.</li>
+          <li data-min="0" data-label="Everyone starts here">Worth knowing: most of these terms are less mysterious than they sound. Read the explanations and go again — that is the whole idea.</li>
+        </ul>
+      </div>
+    </div></body></html>
