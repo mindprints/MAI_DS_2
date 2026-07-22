@@ -271,8 +271,202 @@ async function runLlmUsage() {
   );
 }
 
+// ---------- Quiz ----------
+// The public quiz bank has a hand-verified "evergreen" half and a rotating
+// "current" half. Only the rotating half is generated, and it never goes
+// straight to the site: a draft lands in quiz-pending.json for the editor to
+// read in Telegram, and only an explicit publish promotes it. A wrong answer
+// under the museum's name is a credibility problem, not a bug, so the gate is
+// the point of the design rather than a precaution bolted on.
+
+const QUIZ_FILE = () => path.join(config.repoDir, 'src', 'site', 'content', 'quiz.json');
+const QUIZ_PENDING = () => path.join(config.repoDir, 'src', 'site', 'content', 'quiz-pending.json');
+
+const QUIZ_OPTION_COUNT = 4;
+const QUIZ_MAX_DRAFT = 6;
+
+function readQuizBank() {
+  const bank = JSON.parse(fs.readFileSync(QUIZ_FILE(), 'utf8'));
+  if (!Array.isArray(bank.evergreen)) throw new Error('quiz.json has no evergreen array');
+  if (!Array.isArray(bank.current)) bank.current = [];
+  return bank;
+}
+
+// Model output is untrusted until it passes this. The page renders options
+// with textContent, so the danger is not injection but malformed content: a
+// missing translation, five options in one language and four in the other, an
+// answer index pointing past the end. Any of those would reach visitors as a
+// quiz that marks the wrong option correct.
+function validateQuizQuestions(list, takenIds) {
+  if (!Array.isArray(list) || !list.length) throw new Error('Reply contained no questions');
+  if (list.length > QUIZ_MAX_DRAFT) throw new Error(`Reply had ${list.length} questions (max ${QUIZ_MAX_DRAFT})`);
+  const seen = new Set();
+
+  list.forEach((q, i) => {
+    const at = `question ${i + 1}`;
+    if (!q || typeof q !== 'object') throw new Error(`${at}: not an object`);
+    if (typeof q.id !== 'string' || !/^[a-z0-9]+(-[a-z0-9]+)*$/.test(q.id)) {
+      throw new Error(`${at}: id must be a kebab-case slug`);
+    }
+    if (seen.has(q.id)) throw new Error(`${at}: duplicate id "${q.id}"`);
+    if (takenIds.has(q.id)) throw new Error(`${at}: id "${q.id}" is already in the bank`);
+    seen.add(q.id);
+    if (!Number.isInteger(q.answer) || q.answer < 0 || q.answer >= QUIZ_OPTION_COUNT) {
+      throw new Error(`${at}: answer must be an integer 0-${QUIZ_OPTION_COUNT - 1}`);
+    }
+
+    for (const locale of ['en', 'sv']) {
+      const copy = q[locale];
+      if (!copy || typeof copy !== 'object') throw new Error(`${at}: missing "${locale}"`);
+      for (const field of ['q', 'why']) {
+        if (typeof copy[field] !== 'string' || !copy[field].trim()) {
+          throw new Error(`${at}: ${locale}.${field} is empty`);
+        }
+        if (/<[a-z/!]/i.test(copy[field])) throw new Error(`${at}: ${locale}.${field} contains markup`);
+      }
+      if (!Array.isArray(copy.options) || copy.options.length !== QUIZ_OPTION_COUNT) {
+        throw new Error(`${at}: ${locale} needs exactly ${QUIZ_OPTION_COUNT} options`);
+      }
+      const options = copy.options.map((o) => (typeof o === 'string' ? o.trim() : ''));
+      if (options.some((o) => !o)) throw new Error(`${at}: ${locale} has an empty option`);
+      if (options.some((o) => /<[a-z/!]/i.test(o))) throw new Error(`${at}: ${locale} option contains markup`);
+      if (new Set(options.map((o) => o.toLowerCase())).size !== QUIZ_OPTION_COUNT) {
+        throw new Error(`${at}: ${locale} repeats an option`);
+      }
+    }
+  });
+
+  return list;
+}
+
+// English-only rendering for the Telegram review message: the editor is
+// checking whether the facts and the marked answer are right, and doubling
+// the length with the Swedish makes that harder, not easier.
+function quizPreview(questions) {
+  return questions
+    .map((q, i) => {
+      const opts = q.en.options
+        .map((o, j) => `${j === q.answer ? '✓' : '·'} ${o}`)
+        .join('\n');
+      return `${i + 1}. ${q.en.q}\n${opts}\n→ ${q.en.why}`;
+    })
+    .join('\n\n');
+}
+
+// What "/quiz" with no subcommand reports: what is live, what is waiting.
+function quizStatus() {
+  const bank = readQuizBank();
+  const lines = [
+    `Evergreen questions (hand-written, untouched by me): ${bank.evergreen.length}`,
+    `Rotating questions live now: ${bank.current.length}${bank.updated ? ` — bank last updated ${bank.updated}` : ''}`,
+  ];
+  if (bank.current.length) {
+    lines.push('', bank.current.map((q, i) => `${i + 1}. ${q.en.q}`).join('\n'));
+  }
+  if (fs.existsSync(QUIZ_PENDING())) {
+    const pending = JSON.parse(fs.readFileSync(QUIZ_PENDING(), 'utf8'));
+    lines.push(
+      '',
+      `A draft from ${pending.drafted} is waiting, not yet on the site:`,
+      '',
+      quizPreview(pending.questions),
+      '',
+      'Send /quiz publish to put it up, or /quiz discard to bin it.',
+    );
+  } else {
+    lines.push('', 'No draft waiting — /quiz draft makes one.');
+  }
+  return lines.join('\n');
+}
+
+// topic: optional steering ("ask about X").
+async function runQuizDraft({ count = 4, topic = '' } = {}) {
+  const bank = readQuizBank();
+  const existing = bank.evergreen.concat(bank.current);
+  const taken = new Set(existing.map((q) => q.id));
+  const { iso, readable } = todayParts();
+
+  const steer = topic
+    ? `\nThe museum's editor has asked that these questions focus on: "${topic}".\n`
+    : '';
+  // Hand over the questions already asked so the model doesn't re-ask them in
+  // different words — ids alone are too terse to convey subject matter.
+  const asked = existing.map((q) => q.en.q);
+  const avoid = asked.length
+    ? `\n## Already asked\n\nThe quiz already contains these questions. Do not duplicate their subject matter:\n\n${asked.map((q) => `- ${q}`).join('\n')}\n`
+    : '';
+
+  const prompt = prompts.render('quiz', {
+    readable,
+    year: iso.slice(0, 4),
+    count: String(count),
+    steer,
+    avoid,
+  });
+
+  const text = await generate(prompt, { search: true, job: 'quiz' });
+  const questions = validateQuizQuestions(parseJsonReply(text).questions, taken);
+
+  fs.writeFileSync(
+    QUIZ_PENDING(),
+    JSON.stringify({ drafted: iso, questions }, null, 2) + '\n',
+    'utf8',
+  );
+  const commit = await gitrepo.commitAndPush(
+    `Quiz: draft ${questions.length} current-events question(s) for review (${iso})`,
+  );
+  return { count: questions.length, preview: quizPreview(questions), commit };
+}
+
+// Promotes the pending draft into the live bank, REPLACING the rotating set
+// rather than appending — "current" is meant to stay small and recent, and an
+// ever-growing pile of half-old questions is exactly what it exists to avoid.
+async function runQuizPublish() {
+  if (!fs.existsSync(QUIZ_PENDING())) {
+    return { skipped: true, reason: 'No draft is waiting. Run /quiz first.' };
+  }
+  const pending = JSON.parse(fs.readFileSync(QUIZ_PENDING(), 'utf8'));
+  const bank = readQuizBank();
+  // Check ids against the evergreen half only: the rotating half is what this
+  // is replacing, so a draft reusing one of its ids is fine.
+  const questions = validateQuizQuestions(pending.questions, new Set(bank.evergreen.map((q) => q.id)));
+
+  const replaced = bank.current.length;
+  bank.current = questions;
+  bank.updated = todayParts().iso;
+  fs.writeFileSync(QUIZ_FILE(), JSON.stringify(bank, null, 2) + '\n', 'utf8');
+  fs.unlinkSync(QUIZ_PENDING());
+
+  const commit = await gitrepo.commitAndPush(
+    `Quiz: publish ${questions.length} current-events question(s), replacing ${replaced}`,
+  );
+  return { skipped: false, published: questions.length, replaced, commit };
+}
+
+async function runQuizDiscard() {
+  if (!fs.existsSync(QUIZ_PENDING())) {
+    return { skipped: true, reason: 'No draft is waiting.' };
+  }
+  fs.unlinkSync(QUIZ_PENDING());
+  const commit = await gitrepo.commitAndPush('Quiz: discard the pending draft');
+  return { skipped: false, commit };
+}
+
 // recentPostTitles is exported for tests: it matches post filenames by
 // pattern, so if the naming convention in publishPost ever changes it would
 // quietly return nothing and the repeat-avoidance would stop working with no
-// visible symptom.
-module.exports = { runOnThisDay, runAiNews, runLlmIndex, runLlmUsage, todayParts, recentPostTitles };
+// visible symptom. validateQuizQuestions is exported for the same reason —
+// it is the only thing standing between model output and the public quiz.
+module.exports = {
+  runOnThisDay,
+  runAiNews,
+  runLlmIndex,
+  runLlmUsage,
+  runQuizDraft,
+  runQuizPublish,
+  runQuizDiscard,
+  quizStatus,
+  todayParts,
+  recentPostTitles,
+  validateQuizQuestions,
+};
