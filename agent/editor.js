@@ -8,6 +8,7 @@ const { config } = require('./config');
 const prompts = require('./prompts');
 const settings = require('./settings');
 const usage = require('./usage');
+const jobs = require('./jobs');
 
 const EDITABLE_PREFIXES = ['src/', 'docs/'];
 const MAX_TURNS = 30;
@@ -69,7 +70,44 @@ const TOOLS = [
     description: 'Run the site build (npm run build) and return the tail of its output. Use to validate changes.',
     input_schema: { type: 'object', properties: {} },
   },
+  {
+    name: 'run_daily_job',
+    description:
+      "Re-run one of the site's daily content jobs on demand — the same jobs that run automatically each morning. Use this when staff ask to run, retry, or refresh a job (for example after a morning run failed and they have fixed the cause). Each job generates its content and commits and pushes on its own; you do not need to write files or commit for it. Jobs:\n" +
+      '- "news": the AI news briefing (optional topic steers the lead story)\n' +
+      '- "onthisday": the "on this day" essay (optional topic steers which anniversary)\n' +
+      '- "llmindex": refresh the LLM intelligence leaderboard card\n' +
+      '- "llmusage": refresh the OpenRouter usage card\n' +
+      "news and onthisday skip if today's post already exists, unless you pass a topic (which forces a fresh generation).",
+    input_schema: {
+      type: 'object',
+      properties: {
+        job: {
+          type: 'string',
+          enum: ['news', 'onthisday', 'llmindex', 'llmusage'],
+          description: 'Which daily job to run.',
+        },
+        topic: {
+          type: 'string',
+          description:
+            "Optional steer for news/onthisday; forces regeneration even if today's post already exists. Ignored by llmindex/llmusage.",
+        },
+      },
+      required: ['job'],
+    },
+  },
 ];
+
+// Maps the run_daily_job "job" values to the runners in jobs.js. Quiz is
+// deliberately absent: its draft/publish split exists so unreviewed questions
+// never reach the site, and a free-form agent that could publish would defeat
+// that gate. Quiz stays on its own /quiz command flow.
+const DAILY_JOBS = {
+  news: jobs.runAiNews,
+  onthisday: jobs.runOnThisDay,
+  llmindex: jobs.runLlmIndex,
+  llmusage: jobs.runLlmUsage,
+};
 
 function listFilesRec(dirAbs, baseAbs, out) {
   for (const entry of fs.readdirSync(dirAbs, { withFileTypes: true })) {
@@ -127,6 +165,19 @@ async function execTool(name, input) {
     case 'run_build': {
       const { ok, output } = await runBuild();
       return `${ok ? 'BUILD OK' : 'BUILD FAILED'}\n${output}`;
+    }
+    case 'run_daily_job': {
+      const run = DAILY_JOBS[input.job];
+      if (!run) return `Unknown job "${input.job}". Choose one of: ${Object.keys(DAILY_JOBS).join(', ')}.`;
+      const topic = typeof input.topic === 'string' ? input.topic.trim() : '';
+      const result = await run({ force: false, topic });
+      if (result.skipped) {
+        return `Job "${input.job}" skipped: ${result.reason}. Pass a topic to regenerate today's post.`;
+      }
+      const parts = [`Job "${input.job}" done: ${result.title || 'updated'}`];
+      if (result.link) parts.push(result.link);
+      if (result.commit) parts.push(`commit ${result.commit}`);
+      return parts.join('\n');
     }
     default:
       return `Unknown tool: ${name}`;
@@ -187,4 +238,7 @@ async function runEditInstruction(instruction, { onProgress } = {}) {
   return { summary: summary || 'Stopped after reaching the tool-use turn limit.', turns: MAX_TURNS };
 }
 
-module.exports = { runEditInstruction, runBuild };
+// execTool and TOOLS are exported for tests: run_daily_job is the only tool
+// with a side effect the agent doesn't own (it triggers a real content job),
+// so a test pins that it routes to the right runner and surfaces skips.
+module.exports = { runEditInstruction, runBuild, execTool, TOOLS };
