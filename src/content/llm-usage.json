@@ -1,20 +1,20 @@
 {
-  "fetched_at": "2026-08-01",
-  "as_of": "2026-08-01T04:25:20.531Z",
-  "window_start": "2026-07-25",
-  "window_end": "2026-07-31",
+  "fetched_at": "2026-08-02",
+  "as_of": "2026-08-02T04:25:21.828Z",
+  "window_start": "2026-07-26",
+  "window_end": "2026-08-01",
   "source": "OpenRouter (openrouter.ai/rankings)",
   "source_url": "https://openrouter.ai/rankings",
   "models": [
     {
-      "name": "MiMo-V2.5",
-      "lab": "Xiaomi",
+      "name": "DeepSeek V4 Flash",
+      "lab": "DeepSeek",
       "share": 14.1
     },
     {
-      "name": "DeepSeek V4 Flash",
-      "lab": "DeepSeek",
-      "share": 13.4
+      "name": "MiMo-V2.5",
+      "lab": "Xiaomi",
+      "share": 12.7
     },
     {
       "name": "Hy3",
@@ -25,11 +25,11 @@
   "labs": [
     {
       "name": "DeepSeek",
-      "share": 20.4
+      "share": 20.9
     },
     {
       "name": "Xiaomi",
-      "share": 15.2
+      "share": 13.8
     },
     {
       "name": "Tencent",
