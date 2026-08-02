@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-07-22",
+  "updated": "2026-08-02",
   "note": "Question bank for /pages/quiz. 'answer' is the index into options and is shared by every language, so a translation edit can never desync which option is correct — keep the option order identical in en and sv. 'evergreen' is hand-verified and stable; 'current' is the rotating set (recent events) and may be refreshed by the agent, so nothing in it should be assumed permanent.",
   "evergreen": [
     {
@@ -484,5 +484,102 @@
       }
     }
   ],
-  "current": []
+  "current": [
+    {
+      "id": "us-ai-eo-voluntary-review",
+      "answer": 0,
+      "en": {
+        "q": "In June 2026 the US President signed an executive order called “Promoting Advanced Artificial Intelligence Innovation and Security.” What did it mainly set up for advanced AI models?",
+        "options": [
+          "A voluntary framework for government review of certain frontier models before wider release",
+          "A mandatory licence that every AI model above a set size must obtain",
+          "An immediate ban on exporting advanced AI models to a list of countries",
+          "A new federal tax on companies that train frontier AI systems"
+        ],
+        "why": "The order directed agencies to create a voluntary process to designate “covered frontier models” and give the government up to roughly 30 days of access before broader release. It explicitly avoided creating mandatory licensing or pre-clearance rules, while still giving Washington a formal way to examine powerful models for national-security risks."
+      },
+      "sv": {
+        "q": "I juni 2026 undertecknade den amerikanske presidenten en exekutiv order med namnet “Promoting Advanced Artificial Intelligence Innovation and Security”. Vad införde den främst för avancerade AI-modeller?",
+        "options": [
+          "Ett frivilligt ramverk för myndighetsgranskning av vissa frontier-modeller innan bredare lansering",
+          "En obligatorisk licens som varje AI-modell över en viss storlek måste ha",
+          "Ett omedelbart exportförbud för avancerade AI-modeller till en lista över länder",
+          "En ny federal skatt på företag som tränar frontier-AI-system"
+        ],
+        "why": "Ordern bad myndigheter skapa en frivillig process för att peka ut “covered frontier models” och ge regeringen tillgång i upp till ungefär 30 dagar före bredare release. Den undvek uttryckligen obligatorisk licensiering eller förhandsgodkännande, men gav ändå Washington ett formellt sätt att granska kraftfulla modeller ur nationell säkerhetssynpunkt."
+      }
+    },
+    {
+      "id": "claude-fable-5-export-controls",
+      "answer": 0,
+      "en": {
+        "q": "Shortly after Anthropic released Claude Fable 5 in June 2026, what happened to public access?",
+        "options": [
+          "It was temporarily suspended under US export controls over cybersecurity concerns, then restored after safeguard updates",
+          "It was immediately released as fully open-source weights",
+          "It was permanently restricted to a small group of US government partners only",
+          "It was merged into OpenAI’s model lineup under a new name"
+        ],
+        "why": "US authorities imposed export controls after reports that the model could identify software vulnerabilities. Anthropic suspended access for all users, strengthened its safety classifiers, and restored Fable 5 once the controls were lifted a few weeks later. The episode showed how dual-use cyber capabilities can trigger rapid government intervention even for models intended for general use."
+      },
+      "sv": {
+        "q": "Kort efter att Anthropic släppte Claude Fable 5 i juni 2026, vad hände med den offentliga tillgången?",
+        "options": [
+          "Den pausades tillfälligt under amerikanska exportkontroller på grund av cybersäkerhetsbekymmer, och återställdes sedan efter uppdaterade skyddsåtgärder",
+          "Den släpptes omedelbart som helt öppna vikter",
+          "Den begränsades permanent till en liten grupp amerikanska myndighetspartners",
+          "Den slogs ihop med OpenAI:s modellutbud under ett nytt namn"
+        ],
+        "why": "Amerikanska myndigheter införde exportkontroller efter rapporter om att modellen kunde identifiera mjukvarusårbarheter. Anthropic stängde av tillgången för alla användare, förstärkte sina säkerhetsklassificerare och återställde Fable 5 när kontrollerna hävdes några veckor senare. Händelsen visade hur dubbelanvändbara cyberförmågor snabbt kan leda till myndighetsingripande även för modeller avsedda för allmän användning."
+      }
+    },
+    {
+      "id": "gpt-5-6-sol-terra-luna",
+      "answer": 0,
+      "en": {
+        "q": "When OpenAI launched the GPT-5.6 family in July 2026, what did the names Sol, Terra and Luna stand for?",
+        "options": [
+          "Different capability and cost tiers within the same model generation",
+          "Three specialised models for astronomy, geology and space research",
+          "The three research teams that jointly trained the system",
+          "Versions tuned for different spoken languages"
+        ],
+        "why": "GPT-5.6 introduced a clearer naming scheme: the number marks the generation, while Sol (flagship), Terra (balanced everyday use) and Luna (fast and low-cost) are durable tiers that can be improved on their own schedules. Users can therefore choose the right balance of intelligence, speed and price for each task instead of treating every release as a single model."
+      },
+      "sv": {
+        "q": "När OpenAI lanserade GPT-5.6-familjen i juli 2026, vad stod namnen Sol, Terra och Luna för?",
+        "options": [
+          "Olika nivåer av kapacitet och kostnad inom samma modellgeneration",
+          "Tre specialiserade modeller för astronomi, geologi och rymdforskning",
+          "De tre forskargrupper som gemensamt tränade systemet",
+          "Versioner anpassade för olika talade språk"
+        ],
+        "why": "GPT-5.6 införde ett tydligare namnsystem: siffran anger generationen, medan Sol (flaggskepp), Terra (balanserad vardagsanvändning) och Luna (snabb och billig) är bestående nivåer som kan förbättras i egen takt. Användare kan därmed välja rätt balans mellan intelligens, hastighet och pris för varje uppgift i stället för att se varje lansering som en enda modell."
+      }
+    },
+    {
+      "id": "gemini-3-5-live-translate",
+      "answer": 0,
+      "en": {
+        "q": "What is the main new capability of Google’s Gemini 3.5 Live Translate, released in June 2026?",
+        "options": [
+          "Near real-time speech-to-speech translation that keeps the speaker’s natural intonation across more than 70 languages",
+          "Automatic creation of written subtitles for pre-recorded videos only",
+          "High-accuracy translation of text inside static images",
+          "Offline phrasebook lookup that works without an internet connection"
+        ],
+        "why": "The model streams continuous translated speech with low latency, automatically detects languages, and preserves pitch, pacing and tone. It enables more natural multilingual conversations in calls, meetings and travel and became available in the Google Translate app, Google Meet and developer APIs."
+      },
+      "sv": {
+        "q": "Vad är den främsta nya förmågan hos Googles Gemini 3.5 Live Translate, som släpptes i juni 2026?",
+        "options": [
+          "Nästan realtidsöversättning från tal till tal som behåller talarens naturliga intonation på mer än 70 språk",
+          "Automatisk skapande av skrivna undertexter enbart för förinspelade videor",
+          "Högprecisionsöversättning av text i statiska bilder",
+          "Offline-frasbok som fungerar utan internetuppkoppling"
+        ],
+        "why": "Modellen streamar kontinuerligt översatt tal med låg latens, upptäcker språk automatiskt och behåller tonhöjd, tempo och klang. Den gör flerspråkiga samtal mer naturliga i samtal, möten och resor och blev tillgänglig i Google Translate-appen, Google Meet och utvecklings-API:er."
+      }
+    }
+  ]
 }
