@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-08-12",
+  "fetched_at": "2026-08-13",
   "source": "Artificial Analysis Intelligence Index",
   "source_url": "https://artificialanalysis.ai/",
   "closed": [
@@ -26,14 +26,14 @@
       "score": 59.7
     },
     {
+      "name": "DeepSeek V4 Pro 0813",
+      "creator": "DeepSeek",
+      "score": 53
+    },
+    {
       "name": "GLM-5.2",
       "creator": "Z AI",
       "score": 52.6
-    },
-    {
-      "name": "DeepSeek V4 Flash 0731",
-      "creator": "DeepSeek",
-      "score": 51.8
     }
   ]
 }
