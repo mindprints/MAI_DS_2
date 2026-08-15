@@ -1,15 +1,15 @@
 {
-  "fetched_at": "2026-08-14",
-  "as_of": "2026-08-14T04:25:09.973Z",
-  "window_start": "2026-08-07",
-  "window_end": "2026-08-13",
+  "fetched_at": "2026-08-15",
+  "as_of": "2026-08-15T04:25:11.079Z",
+  "window_start": "2026-08-08",
+  "window_end": "2026-08-14",
   "source": "OpenRouter (openrouter.ai/rankings)",
   "source_url": "https://openrouter.ai/rankings",
   "models": [
     {
       "name": "DeepSeek V4 Flash 0423",
       "lab": "DeepSeek",
-      "share": 21.9
+      "share": 21.6
     },
     {
       "name": "Hy3",
@@ -19,13 +19,13 @@
     {
       "name": "GPT-5.6 Luna",
       "lab": "OpenAI",
-      "share": 7.2
+      "share": 7.1
     }
   ],
   "labs": [
     {
       "name": "DeepSeek",
-      "share": 26.5
+      "share": 26.4
     },
     {
       "name": "Tencent",
@@ -33,7 +33,7 @@
     },
     {
       "name": "OpenAI",
-      "share": 12
+      "share": 11.8
     }
   ]
 }
