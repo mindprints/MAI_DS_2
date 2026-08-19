@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-08-18",
+  "fetched_at": "2026-08-19",
   "source": "Artificial Analysis Intelligence Index",
   "source_url": "https://artificialanalysis.ai/",
   "closed": [
@@ -26,14 +26,14 @@
       "score": 59.7
     },
     {
+      "name": "GLM-5.3",
+      "creator": "Z AI",
+      "score": 59.5
+    },
+    {
       "name": "Qwen3.8 2.4T A95B",
       "creator": "Alibaba",
       "score": 57.7
-    },
-    {
-      "name": "DeepSeek V4 Pro 0813",
-      "creator": "DeepSeek",
-      "score": 53.2
     }
   ]
 }
