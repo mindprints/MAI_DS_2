@@ -1,8 +1,8 @@
 {
-  "fetched_at": "2026-09-05",
-  "as_of": "2026-09-05T04:25:11.106Z",
-  "window_start": "2026-08-29",
-  "window_end": "2026-09-04",
+  "fetched_at": "2026-09-06",
+  "as_of": "2026-09-06T04:25:12.436Z",
+  "window_start": "2026-08-30",
+  "window_end": "2026-09-05",
   "source": "OpenRouter (openrouter.ai/rankings)",
   "source_url": "https://openrouter.ai/rankings",
   "models": [
@@ -14,22 +14,22 @@
     {
       "name": "Hy4 preview",
       "lab": "Tencent",
-      "share": 12.1
+      "share": 12.3
     },
     {
       "name": "GLM 5.3 Flash",
       "lab": "Z.ai",
-      "share": 11
+      "share": 10.9
     }
   ],
   "labs": [
     {
       "name": "DeepSeek",
-      "share": 18.2
+      "share": 18.1
     },
     {
       "name": "Tencent",
-      "share": 16.3
+      "share": 16.2
     },
     {
       "name": "Z.ai",
