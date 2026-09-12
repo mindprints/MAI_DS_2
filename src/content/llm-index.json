@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-10",
+  "fetched_at": "2026-09-12",
   "source": "Artificial Analysis Intelligence Index",
   "source_url": "https://artificialanalysis.ai/",
   "closed": [
@@ -31,9 +31,9 @@
       "score": 43.8
     },
     {
-      "name": "Qwen3.8-Flash-Next",
-      "creator": "Alibaba",
-      "score": 42.2
+      "name": "GLM-5.3-Flash",
+      "creator": "Z AI",
+      "score": 41.9
     }
   ]
 }
