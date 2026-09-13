@@ -115,3 +115,4 @@
 {"ts":"2026-09-11T12:53:33.780Z","job":"edit","provider":"anthropic","model":"claude-sonnet-5","inputTokens":4619,"outputTokens":327,"turns":2,"costUsd":0.012508}
 {"ts":"2026-09-12T04:01:24.563Z","job":"ainews","provider":"openrouter","model":"x-ai/grok-4.5","inputTokens":115437,"outputTokens":2959,"costUsd":0.199988712}
 {"ts":"2026-09-12T04:10:45.102Z","job":"onthisday","provider":"openrouter","model":"x-ai/grok-4.5","inputTokens":712,"outputTokens":1417,"costUsd":0.009611316}
+{"ts":"2026-09-13T04:01:22.939Z","job":"ainews","provider":"openrouter","model":"x-ai/grok-4.5","inputTokens":114501,"outputTokens":3100,"costUsd":0.192945852}
