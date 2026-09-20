@@ -130,3 +130,4 @@
 {"ts":"2026-09-19T04:01:23.492Z","job":"ainews","provider":"openrouter","model":"x-ai/grok-4.5","inputTokens":106719,"outputTokens":2604,"costUsd":0.161244468}
 {"ts":"2026-09-19T04:11:46.612Z","job":"onthisday","provider":"openrouter","model":"x-ai/grok-4.5","inputTokens":712,"outputTokens":3672,"costUsd":0.02322144}
 {"ts":"2026-09-20T04:01:33.150Z","job":"ainews","provider":"openrouter","model":"x-ai/grok-4.5","inputTokens":114626,"outputTokens":3066,"costUsd":0.182440368}
+{"ts":"2026-09-20T04:13:30.988Z","job":"onthisday","provider":"openrouter","model":"x-ai/grok-4.5","inputTokens":712,"outputTokens":9130,"costUsd":0.055426536}
