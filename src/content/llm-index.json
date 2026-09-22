@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-21",
+  "fetched_at": "2026-09-22",
   "source": "Artificial Analysis Intelligence Index",
   "source_url": "https://artificialanalysis.ai/",
   "closed": [
@@ -21,6 +21,11 @@
   ],
   "open": [
     {
+      "name": "MiMo-V2.6-Pro",
+      "creator": "Xiaomi",
+      "score": 46.3
+    },
+    {
       "name": "GLM-5.3",
       "creator": "Z AI",
       "score": 44.8
@@ -29,11 +34,6 @@
       "name": "Kimi K3",
       "creator": "Kimi",
       "score": 43.6
-    },
-    {
-      "name": "GLM 5.3 Flash",
-      "creator": "Z AI",
-      "score": 41.8
     }
   ]
 }
