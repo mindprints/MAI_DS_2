@@ -1,25 +1,25 @@
 {
-  "fetched_at": "2026-10-02",
-  "as_of": "2026-10-02T04:25:13.591Z",
-  "window_start": "2026-09-25",
-  "window_end": "2026-10-01",
+  "fetched_at": "2026-10-03",
+  "as_of": "2026-10-03T04:25:14.605Z",
+  "window_start": "2026-09-26",
+  "window_end": "2026-10-02",
   "source": "OpenRouter (openrouter.ai/rankings)",
   "source_url": "https://openrouter.ai/rankings",
   "models": [
     {
       "name": "Space Bunny Alpha",
       "lab": "Space Bunny Alpha",
-      "share": 19.4
+      "share": 20.8
     },
     {
       "name": "DeepSeek V4.1 Flash",
       "lab": "DeepSeek",
-      "share": 14.7
+      "share": 15
     },
     {
-      "name": "GLM 5.3 Flash",
-      "lab": "Z.ai",
-      "share": 6.4
+      "name": "DeepSeek V4 Flash 0423",
+      "lab": "DeepSeek",
+      "share": 6
     }
   ],
   "labs": [
@@ -29,11 +29,11 @@
     },
     {
       "name": "Space Bunny Alpha",
-      "share": 19.4
+      "share": 20.8
     },
     {
       "name": "OpenAI",
-      "share": 11.3
+      "share": 11.2
     }
   ]
 }
