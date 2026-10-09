@@ -5,7 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Museum of Artificial Intelligence — Stockholm</title>
     <meta name="description" content="An independent non-profit museum in Stockholm. Lectures, seminars and hands-on workshops that educate about AI — its promise and its pitfalls.">
-    <script>document.documentElement.classList.remove('no-js');</script>
+    <script>
+    (function () {
+        var d = document.documentElement;
+        d.classList.remove('no-js');
+        /* Pre-paint: apply the stored theme and decide whether the entry
+           screen (language + appearance) still needs to be shown. */
+        try {
+            var t = localStorage.getItem('mai-theme');
+            if (t === 'light' || t === 'dark') d.setAttribute('data-theme', t);
+            if (!t || !localStorage.getItem('mai-lang')) d.setAttribute('data-entry', 'show');
+        } catch (e) { d.setAttribute('data-entry', 'show'); }
+    })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet">
@@ -22,6 +34,39 @@
     <link rel="icon" href="favicon/favicon.ico" sizes="any">
 </head>
 <body class="wall">
+
+    <div class="scroll-progress" aria-hidden="true"></div>
+
+    <!-- Entry screen: language + appearance choosers over the blurred page.
+         The head snippet shows it pre-paint when a choice is missing;
+         assets/js/home.js handles the clicks and the fade-out. -->
+    <div class="entry-veil" id="entry-veil">
+        <div class="entry-panel" role="dialog" aria-modal="true" aria-labelledby="entry-title">
+            <span class="brand-mark" aria-hidden="true">MAI</span>
+            <p class="entry-kicker">Museum of Artificial Intelligence</p>
+            <h2 class="entry-title" id="entry-title">Independent, not-for-profit <em>knowledge</em>.</h2>
+            <p class="entry-sub" lang="sv">Oberoende, ideell kunskap.</p>
+            <div class="entry-groups">
+                <fieldset class="entry-group" id="entry-lang">
+                    <legend class="entry-label">Language · <span lang="sv">Språk</span></legend>
+                    <div class="entry-options">
+                        <button type="button" class="entry-opt" data-lang="en" aria-pressed="false">English <span class="tick" aria-hidden="true">✓</span></button>
+                        <button type="button" class="entry-opt" data-lang="sv" lang="sv" aria-pressed="false">Svenska <span class="tick" aria-hidden="true">✓</span></button>
+                    </div>
+                </fieldset>
+                <fieldset class="entry-group" id="entry-theme">
+                    <legend class="entry-label">Appearance · <span lang="sv">Utseende</span></legend>
+                    <div class="entry-options">
+                        <button type="button" class="entry-opt" data-theme-choice="dark" aria-pressed="false">Dark · <span lang="sv">Mörkt</span> <span class="tick" aria-hidden="true">✓</span></button>
+                        <button type="button" class="entry-opt" data-theme-choice="light" aria-pressed="false">Light · <span lang="sv">Ljust</span> <span class="tick" aria-hidden="true">✓</span></button>
+                    </div>
+                </fieldset>
+            </div>
+            <p class="entry-foot">
+                <button type="button" class="entry-skip" id="entry-skip">Enter without choosing · <span lang="sv">Fortsätt utan att välja</span></button>
+            </p>
+        </div>
+    </div>
 
     <a href="#main" class="skip-link">Skip to content</a>
 
@@ -45,10 +90,17 @@
                 </nav>
                 <div class="flex items-center gap-5">
                     <a href="pages/plan-workshop.html" class="btn-primary btn-compact header-cta">Book a workshop</a>
-                    <div class="lang-toggle flex items-center gap-1.5" role="group" aria-label="Language selection">
-                        <span class="active" aria-current="true" lang="en">EN</span>
-                        <span aria-hidden="true">/</span>
-                        <a href="sv/index.html" lang="sv" title="Växla till svenska">SV</a>
+                    <div class="flex flex-col items-end gap-0.5">
+                        <div class="lang-toggle flex items-center gap-1.5" role="group" aria-label="Language selection">
+                            <span class="active" aria-current="true" lang="en">EN</span>
+                            <span aria-hidden="true">/</span>
+                            <a href="sv/index.html" lang="sv" title="Växla till svenska">SV</a>
+                        </div>
+                        <div class="mode-toggle flex items-center gap-1.5" role="group" aria-label="Appearance">
+                            <button type="button" data-set-theme="dark" aria-pressed="true" title="Dark appearance">Dark</button>
+                            <span aria-hidden="true">/</span>
+                            <button type="button" data-set-theme="light" aria-pressed="false" title="Light appearance">Light</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -104,7 +156,7 @@
                         <div class="artwork-frame">
                             <!-- DAILY_IMAGE -->
                         </div>
-                        <p class="artwork-plaque">From the collection · rotates daily</p>
+                        <p class="artwork-plaque">From the collection</p>
                     </div>
                 </div>
             </div>
