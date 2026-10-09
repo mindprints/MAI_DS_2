@@ -20,6 +20,26 @@
     --brand-end:   #b9853a;
 }
 
+/* Daylight gallery — chosen on the home page entry screen and stored in
+   localStorage('mai-theme'); a pre-paint snippet in every page head sets
+   data-theme on <html>. Tokens only; everything var-driven follows. */
+:root[data-theme="light"] {
+    --bg:          #ede7d8;   /* daylight wall, warm paper */
+    --bg-raise:    #f6f2e7;
+    --bg-plaque:   #f3eee1;
+    --ink:         #262013;   /* warm near-black */
+    --ink-dim:     #5d5443;
+    --ink-faint:   #8b8170;
+    --hairline:    rgba(38, 32, 19, 0.15);
+    --hairline-strong: rgba(38, 32, 19, 0.3);
+    --brass:       #8a6420;   /* deepened for contrast on paper */
+    --brass-bright:#6e4e15;   /* hover: deeper still, not lighter */
+    --brass-ink:   #fbf6ea;   /* text on brass */
+    --brand-start: #a4762a;
+    --brand-mid:   #8a6420;
+    --brand-end:   #6e4e15;
+}
+
 body {
     font-family: var(--sans);
     background-color: var(--bg);
@@ -360,3 +380,55 @@ textarea:focus-visible {
 .ring-indigo-500,
 .focus\:ring-indigo-500:focus { --tw-ring-color: rgba(212, 160, 79, 0.45); }
 .ring-indigo-400\/20 { --tw-ring-color: rgba(212, 160, 79, 0.2); }
+
+/* ------------------------------------------------------------------
+   Daylight overrides for surfaces that hard-code dark colors above.
+   ------------------------------------------------------------------ */
+:root[data-theme="light"] body {
+    background-image:
+        linear-gradient(rgba(38, 32, 19, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(38, 32, 19, 0.035) 1px, transparent 1px);
+}
+:root[data-theme="light"] .plan-workshop-page {
+    background-image: linear-gradient(135deg, rgba(237,231,216,0.96) 0%, rgba(246,242,231,0.93) 45%, rgba(237,231,216,0.92) 100%), url('../../images/slide/20-greg-lecture-narkesg.webp');
+    background-blend-mode: normal;
+}
+:root[data-theme="light"] .hero-bg {
+    background: linear-gradient(135deg,
+        rgba(237, 231, 216, 0.94) 0%,
+        rgba(246, 242, 231, 0.92) 55%,
+        rgba(237, 231, 216, 0.88) 100%
+    );
+}
+:root[data-theme="light"] .model-bg {
+    background: linear-gradient(rgba(237,231,216,0.9), rgba(237,231,216,0.9));
+}
+:root[data-theme="light"] .glass-card {
+    box-shadow: 0 30px 60px -35px rgba(70, 58, 34, 0.35);
+}
+:root[data-theme="light"] input[type="text"],
+:root[data-theme="light"] input[type="email"],
+:root[data-theme="light"] input[type="number"],
+:root[data-theme="light"] input[type="tel"],
+:root[data-theme="light"] input[type="url"],
+:root[data-theme="light"] select,
+:root[data-theme="light"] textarea {
+    background-color: rgba(255, 253, 247, 0.65);
+}
+:root[data-theme="light"] input,
+:root[data-theme="light"] select,
+:root[data-theme="light"] textarea {
+    color-scheme: light;
+}
+:root[data-theme="light"] .blog-card .cover {
+    background: radial-gradient(ellipse at top, #f3eee1aa, #ede7d8dd);
+}
+:root[data-theme="light"] .bg-slate-900\/50,
+:root[data-theme="light"] .bg-slate-900\/60 { background-color: rgba(246, 242, 231, 0.75); }
+:root[data-theme="light"] .cta-link {
+    background: rgba(38, 32, 19, 0.04);
+}
+:root[data-theme="light"] .cta-link:hover {
+    background: rgba(38, 32, 19, 0.08);
+    box-shadow: 0 8px 24px rgba(70, 58, 34, 0.25);
+}
