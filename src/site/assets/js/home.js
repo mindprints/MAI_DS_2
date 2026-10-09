@@ -138,11 +138,10 @@
         .then(function (r) { return r.ok ? r.json() : null; })
         .then(function (slides) {
           if (!slides) return;
-          var files = slides
-            .filter(function (s) { return s && s.filename; })
-            .map(function (s) { return s.filename; });
-          if (files.length < 2) return;
-          var idx = Math.max(0, files.indexOf(srcMatch[2]));
+          var entries = slides.filter(function (s) { return s && s.filename; });
+          if (entries.length < 2) return;
+          var idx = entries.findIndex(function (s) { return s.filename === srcMatch[2]; });
+          if (idx < 0) idx = 0;
 
           // Double-buffer inside the frame for seamless crossfades
           var stack = document.createElement('div');
@@ -160,14 +159,16 @@
           function advance() {
             if (busy) return;
             busy = true;
-            idx = (idx + 1) % files.length;
-            var next = srcMatch[1] + files[idx];
+            idx = (idx + 1) % entries.length;
+            var slide = entries[idx];
+            var next = srcMatch[1] + slide.filename;
             var pre = new Image();
             pre.onload = function () {
               top.src = next;
               top.classList.add('is-showing');
               setTimeout(function () {
                 art.src = next;
+                art.alt = slide.title || 'Museum of AI';
                 top.classList.remove('is-showing');
                 setTimeout(function () { busy = false; }, 100);
               }, 600);

@@ -425,6 +425,14 @@ textarea:focus-visible {
 }
 :root[data-theme="light"] .bg-slate-900\/50,
 :root[data-theme="light"] .bg-slate-900\/60 { background-color: rgba(246, 242, 231, 0.75); }
+/* Event-page navigation pills (bg-slate-700/50 links, colored active
+   pill): keep them readable once .text-white flips to dark ink. */
+:root[data-theme="light"] .bg-slate-700\/50 { background-color: rgba(38, 32, 19, 0.07); }
+:root[data-theme="light"] .bg-slate-600\/50,
+:root[data-theme="light"] .hover\:bg-slate-600\/50:hover { background-color: rgba(38, 32, 19, 0.13); }
+:root[data-theme="light"] .bg-cyan-600,
+:root[data-theme="light"] .bg-violet-600,
+:root[data-theme="light"] .bg-pink-600 { color: #ffffff; }
 :root[data-theme="light"] .cta-link {
     background: rgba(38, 32, 19, 0.04);
 }
