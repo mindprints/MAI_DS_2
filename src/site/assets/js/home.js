@@ -52,8 +52,16 @@
         markGroup('entry-lang', 'data-lang', lang);
         if (lang !== pageLang) {
           // Take them to the chosen language right away; the entry screen
-          // continues there if the appearance is still unchosen.
-          window.location.href = lang === 'sv' ? 'sv/index.html' : '../index.html';
+          // continues there if the appearance is still unchosen. Resolve
+          // against the pathname normalized as a directory so slashless
+          // URLs (e.g. /sv) can't escape the site root.
+          var link = document.querySelector('.lang-toggle a[lang="' + lang + '"]');
+          var base = new URL(window.location.href);
+          if (!base.pathname.endsWith('/') && !base.pathname.endsWith('.html')) base.pathname += '/';
+          window.location.href = new URL(
+            link ? link.getAttribute('href') : (lang === 'sv' ? 'sv/index.html' : '../index.html'),
+            base
+          ).href;
           return;
         }
         maybeDone(350);
