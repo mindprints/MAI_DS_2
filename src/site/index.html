@@ -35,6 +35,8 @@
 </head>
 <body class="wall">
 
+    <div class="scroll-progress" aria-hidden="true"></div>
+
     <!-- Entry screen: language + appearance choosers over the blurred page.
          The head snippet shows it pre-paint when a choice is missing;
          assets/js/home.js handles the clicks and the fade-out. -->
@@ -88,10 +90,17 @@
                 </nav>
                 <div class="flex items-center gap-5">
                     <a href="pages/plan-workshop.html" class="btn-primary btn-compact header-cta">Book a workshop</a>
-                    <div class="lang-toggle flex items-center gap-1.5" role="group" aria-label="Language selection">
-                        <span class="active" aria-current="true" lang="en">EN</span>
-                        <span aria-hidden="true">/</span>
-                        <a href="sv/index.html" lang="sv" title="Växla till svenska">SV</a>
+                    <div class="flex flex-col items-end gap-0.5">
+                        <div class="lang-toggle flex items-center gap-1.5" role="group" aria-label="Language selection">
+                            <span class="active" aria-current="true" lang="en">EN</span>
+                            <span aria-hidden="true">/</span>
+                            <a href="sv/index.html" lang="sv" title="Växla till svenska">SV</a>
+                        </div>
+                        <div class="mode-toggle flex items-center gap-1.5" role="group" aria-label="Appearance">
+                            <button type="button" data-set-theme="dark" aria-pressed="true" title="Dark appearance">Dark</button>
+                            <span aria-hidden="true">/</span>
+                            <button type="button" data-set-theme="light" aria-pressed="false" title="Light appearance">Light</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -147,7 +156,7 @@
                         <div class="artwork-frame">
                             <!-- DAILY_IMAGE -->
                         </div>
-                        <p class="artwork-plaque">From the collection · rotates daily</p>
+                        <p class="artwork-plaque">From the collection</p>
                     </div>
                 </div>
             </div>

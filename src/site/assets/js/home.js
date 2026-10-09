@@ -91,6 +91,104 @@
     });
   });
 
+  // ---- Header appearance toggle -------------------------------------
+  // Mirrors (and updates) the entry-screen choice.
+  var modeButtons = document.querySelectorAll('.mode-toggle [data-set-theme]');
+  function syncModeToggle() {
+    var current = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+    modeButtons.forEach(function (b) {
+      b.setAttribute('aria-pressed', b.getAttribute('data-set-theme') === current ? 'true' : 'false');
+    });
+  }
+  modeButtons.forEach(function (b) {
+    b.addEventListener('click', function () {
+      var theme = b.getAttribute('data-set-theme');
+      document.documentElement.setAttribute('data-theme', theme);
+      storeSet(THEME_KEY, theme);
+      syncModeToggle();
+    });
+  });
+  if (modeButtons.length) syncModeToggle();
+
+  // ---- Scroll progress hairline -------------------------------------
+  var progress = document.querySelector('.scroll-progress');
+  if (progress) {
+    var progressQueued = false;
+    var paintProgress = function () {
+      progressQueued = false;
+      var doc = document.documentElement;
+      var max = (doc.scrollHeight - window.innerHeight) || 1;
+      progress.style.transform = 'scaleX(' + Math.min(1, (window.scrollY || 0) / max) + ')';
+    };
+    window.addEventListener('scroll', function () {
+      if (!progressQueued) { progressQueued = true; requestAnimationFrame(paintProgress); }
+    }, { passive: true });
+    paintProgress();
+  }
+
+  // ---- Collection artwork: advances as you scroll --------------------
+  // The build still injects the slide of the day; scrolling then walks
+  // through the whole collection, one crossfade per ~420px travelled.
+  // Skipped under reduced motion (the day's image simply stays).
+  var art = document.querySelector('.artwork-frame .daily-artwork');
+  if (art && !prefersReducedMotion && window.fetch) {
+    var srcMatch = (art.getAttribute('src') || '').match(/^(.*\/slide\/)(.+)$/);
+    if (srcMatch) {
+      fetch(srcMatch[1] + 'slides.json')
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (slides) {
+          if (!slides) return;
+          var files = slides
+            .filter(function (s) { return s && s.filename; })
+            .map(function (s) { return s.filename; });
+          if (files.length < 2) return;
+          var idx = Math.max(0, files.indexOf(srcMatch[2]));
+
+          // Double-buffer inside the frame for seamless crossfades
+          var stack = document.createElement('div');
+          stack.className = 'artwork-stack';
+          art.parentNode.insertBefore(stack, art);
+          stack.appendChild(art);
+          var top = art.cloneNode(false);
+          top.removeAttribute('loading');
+          top.alt = '';
+          top.setAttribute('aria-hidden', 'true');
+          top.classList.remove('is-showing');
+          stack.appendChild(top);
+
+          var busy = false;
+          function advance() {
+            if (busy) return;
+            busy = true;
+            idx = (idx + 1) % files.length;
+            var next = srcMatch[1] + files[idx];
+            var pre = new Image();
+            pre.onload = function () {
+              top.src = next;
+              top.classList.add('is-showing');
+              setTimeout(function () {
+                art.src = next;
+                top.classList.remove('is-showing');
+                setTimeout(function () { busy = false; }, 100);
+              }, 600);
+            };
+            pre.onerror = function () { busy = false; };
+            pre.src = next;
+          }
+
+          var travelled = 0;
+          var lastY = window.scrollY || 0;
+          window.addEventListener('scroll', function () {
+            var y = window.scrollY || 0;
+            travelled += Math.abs(y - lastY);
+            lastY = y;
+            if (travelled >= 420) { travelled = 0; advance(); }
+          }, { passive: true });
+        })
+        .catch(function () {});
+    }
+  }
+
   // ---- Clients & Partners marquee -----------------------------------
   // Duplicate the track once so the CSS animation loops seamlessly.
   // Skipped under reduced motion, where the row stays statically

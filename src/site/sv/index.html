@@ -35,6 +35,8 @@
 </head>
 <body class="wall">
 
+    <div class="scroll-progress" aria-hidden="true"></div>
+
     <!-- Entry screen: language + appearance choosers over the blurred page.
          The head snippet shows it pre-paint when a choice is missing;
          assets/js/home.js handles the clicks and the fade-out. -->
@@ -88,10 +90,17 @@
                 </nav>
                 <div class="flex items-center gap-5">
                     <a href="/sv/pages/plan-workshop.html" class="btn-primary btn-compact header-cta">Boka en workshop</a>
-                    <div class="lang-toggle flex items-center gap-1.5" role="group" aria-label="Språkval">
-                        <a href="../index.html" lang="en" title="Switch to English">EN</a>
-                        <span aria-hidden="true">/</span>
-                        <span class="active" aria-current="true" lang="sv">SV</span>
+                    <div class="flex flex-col items-end gap-0.5">
+                        <div class="lang-toggle flex items-center gap-1.5" role="group" aria-label="Språkval">
+                            <a href="../index.html" lang="en" title="Switch to English">EN</a>
+                            <span aria-hidden="true">/</span>
+                            <span class="active" aria-current="true" lang="sv">SV</span>
+                        </div>
+                        <div class="mode-toggle flex items-center gap-1.5" role="group" aria-label="Utseende">
+                            <button type="button" data-set-theme="dark" aria-pressed="true" title="Mörkt utseende">Mörk</button>
+                            <span aria-hidden="true">/</span>
+                            <button type="button" data-set-theme="light" aria-pressed="false" title="Ljust utseende">Ljus</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -148,7 +157,7 @@
                         <div class="artwork-frame">
                             <!-- DAILY_IMAGE -->
                         </div>
-                        <p class="artwork-plaque">Ur samlingen · byts varje dag</p>
+                        <p class="artwork-plaque">Ur samlingen</p>
                     </div>
                 </div>
             </div>

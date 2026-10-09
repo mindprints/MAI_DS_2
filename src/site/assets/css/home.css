@@ -749,3 +749,74 @@ html[data-entry="show"]:not(.no-js) .entry-veil { display: flex; }
     transition: color 0.2s ease, border-color 0.2s ease;
 }
 .entry-skip:hover { color: var(--ink-dim); border-bottom-color: var(--ink-faint); }
+
+/* ---------- header appearance toggle (under the EN/SV chooser) ------- */
+
+.mode-toggle {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+}
+.mode-toggle button {
+    font: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+    color: var(--ink-dim);
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+.mode-toggle button:hover { color: var(--brass-bright); }
+.mode-toggle button[aria-pressed="true"] { color: var(--brass); }
+/* Dead without JS — hide it there */
+.no-js .mode-toggle { display: none; }
+
+/* ---------- daylight: the program plaques stay dark ------------------
+   The lecture/seminar/workshop cards hang like the daily cards do —
+   dark artworks on the paper wall. Re-pinning the tokens on the subtree
+   flips every var-driven rule inside the cards. */
+:root[data-theme="light"] #program .plaque,
+:root[data-theme="light"] #program .plaque-bar {
+    --bg-plaque: #14161c;
+    --ink: #eae4d6;
+    --ink-dim: #a9a08c;
+    --ink-faint: #736c5d;
+    --hairline: rgba(234, 228, 214, 0.14);
+    --hairline-strong: rgba(234, 228, 214, 0.28);
+    --brass: #d4a04f;
+    --brass-bright: #e8c583;
+    --brass-ink: #191204;
+    box-shadow: 0 24px 48px -28px rgba(70, 58, 34, 0.5);
+}
+
+/* ---------- collection artwork: advances as you scroll --------------- */
+
+.artwork-stack { position: relative; }
+.artwork-stack .daily-artwork + .daily-artwork {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.55s ease;
+}
+.artwork-stack .daily-artwork + .daily-artwork.is-showing { opacity: 1; }
+
+/* ---------- scroll progress hairline --------------------------------- */
+
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--brass);
+    transform: scaleX(0);
+    transform-origin: left;
+    z-index: 60;
+    pointer-events: none;
+}
