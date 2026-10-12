@@ -1,39 +1,39 @@
 {
-  "fetched_at": "2026-10-11",
-  "as_of": "2026-10-11T04:25:25.127Z",
-  "window_start": "2026-10-04",
-  "window_end": "2026-10-10",
+  "fetched_at": "2026-10-12",
+  "as_of": "2026-10-12T04:25:26.301Z",
+  "window_start": "2026-10-05",
+  "window_end": "2026-10-11",
   "source": "OpenRouter (openrouter.ai/rankings)",
   "source_url": "https://openrouter.ai/rankings",
   "models": [
     {
       "name": "DeepSeek V4.1 Flash",
       "lab": "DeepSeek",
-      "share": 22.6
+      "share": 23.8
     },
     {
       "name": "GLM 5.3 Flash",
       "lab": "Z.ai",
-      "share": 6.8
+      "share": 7.1
     },
     {
       "name": "MiMo-V2.6-Flash",
       "lab": "Xiaomi",
-      "share": 6.6
+      "share": 6.7
     }
   ],
   "labs": [
     {
       "name": "DeepSeek",
-      "share": 28.5
+      "share": 29.7
     },
     {
       "name": "Z.ai",
-      "share": 9.7
+      "share": 10.2
     },
     {
       "name": "OpenAI",
-      "share": 8.6
+      "share": 8.5
     }
   ]
 }
