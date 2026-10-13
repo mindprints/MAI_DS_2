@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-12",
+  "fetched_at": "2026-10-13",
   "source": "Artificial Analysis Intelligence Index",
   "source_url": "https://artificialanalysis.ai/",
   "closed": [
@@ -14,9 +14,9 @@
       "score": 56
     },
     {
-      "name": "Claude Fable 5.1",
-      "creator": "Anthropic",
-      "score": 53.4
+      "name": "Muse Wonder Full",
+      "creator": "Meta",
+      "score": 55.8
     }
   ],
   "open": [
