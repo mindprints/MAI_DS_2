@@ -1,20 +1,20 @@
 {
-  "fetched_at": "2026-10-14",
-  "as_of": "2026-10-14T04:25:28.760Z",
-  "window_start": "2026-10-07",
-  "window_end": "2026-10-13",
+  "fetched_at": "2026-10-15",
+  "as_of": "2026-10-15T04:25:30.660Z",
+  "window_start": "2026-10-08",
+  "window_end": "2026-10-14",
   "source": "OpenRouter (openrouter.ai/rankings)",
   "source_url": "https://openrouter.ai/rankings",
   "models": [
     {
       "name": "DeepSeek V4.1 Flash",
       "lab": "DeepSeek",
-      "share": 22.9
+      "share": 21
     },
     {
       "name": "Step 5 Preview",
       "lab": "StepFun",
-      "share": 8.5
+      "share": 10.5
     },
     {
       "name": "GLM 5.3 Flash",
@@ -25,15 +25,15 @@
   "labs": [
     {
       "name": "DeepSeek",
-      "share": 28.3
+      "share": 26.5
+    },
+    {
+      "name": "StepFun",
+      "share": 10.5
     },
     {
       "name": "Z.ai",
       "share": 10.4
-    },
-    {
-      "name": "StepFun",
-      "share": 8.5
     }
   ]
 }
