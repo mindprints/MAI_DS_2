@@ -1,39 +1,39 @@
 {
-  "fetched_at": "2026-10-17",
+  "fetched_at": "2026-11-03",
   "source": "Artificial Analysis Intelligence Index",
   "source_url": "https://artificialanalysis.ai/",
   "closed": [
     {
+      "name": "Gemini 4 Carbon",
+      "creator": "Google",
+      "score": 59.4
+    },
+    {
       "name": "Claude Opus 5.5",
       "creator": "Anthropic",
-      "score": 57.6
+      "score": 58.4
     },
     {
-      "name": "Claude Sonnet 5.5",
-      "creator": "Anthropic",
-      "score": 56
-    },
-    {
-      "name": "Muse Wonder Full",
-      "creator": "Meta",
-      "score": 55.8
+      "name": "GPT-6 Astra",
+      "creator": "OpenAI",
+      "score": 56.9
     }
   ],
   "open": [
     {
-      "name": "MiMo-V2.6-Pro",
-      "creator": "Xiaomi",
-      "score": 46.3
+      "name": "Kimi K3.1 Pro",
+      "creator": "Kimi",
+      "score": 46
+    },
+    {
+      "name": "DeepSeek V4.1 Flash 1017",
+      "creator": "DeepSeek",
+      "score": 32.5
     },
     {
       "name": "GLM-5.3",
       "creator": "Z AI",
-      "score": 44.8
-    },
-    {
-      "name": "Kimi K3",
-      "creator": "Kimi",
-      "score": 43.6
+      "score": 31.7
     }
   ]
 }
