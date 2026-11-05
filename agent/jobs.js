@@ -27,12 +27,16 @@ async function generate(prompt, { search = false, job } = {}) {
   const client = anthropic();
   // Adaptive thinking is on by default and counts against max_tokens,
   // so leave generous headroom or the reply is all thinking and no text.
-  const response = await client.messages.create({
-    model: gen.model,
-    max_tokens: 16000,
-    ...(search ? { tools: [{ type: 'web_search_20260209', name: 'web_search', max_uses: 8 }] } : {}),
-    messages: [{ role: 'user', content: prompt }],
-  });
+  // Streamed: a search-heavy reply can outlast the SDK's non-streaming
+  // request timeout, which fails the job after minutes of paid work.
+  const response = await client.messages
+    .stream({
+      model: gen.model,
+      max_tokens: 32000,
+      ...(search ? { tools: [{ type: 'web_search_20260209', name: 'web_search', max_uses: 8 }] } : {}),
+      messages: [{ role: 'user', content: prompt }],
+    })
+    .finalMessage();
   usage.record({
     job,
     provider: 'anthropic',
@@ -106,6 +110,17 @@ function todayParts() {
   return { iso, readable, readableSv };
 }
 
+// The same parts for a given YYYY-MM-DD, for backfilling missed days. Noon UTC
+// keeps the calendar day stable whatever zone formats it.
+function partsFor(iso) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(iso)) throw new Error(`Bad date "${iso}", expected YYYY-MM-DD`);
+  const d = new Date(`${iso}T12:00:00Z`);
+  if (Number.isNaN(d.getTime()) || d.toISOString().slice(0, 10) !== iso) throw new Error(`Bad date "${iso}"`);
+  const readable = new Intl.DateTimeFormat('en-GB', { timeZone: 'UTC', day: 'numeric', month: 'long' }).format(d);
+  const readableSv = new Intl.DateTimeFormat('sv-SE', { timeZone: 'UTC', day: 'numeric', month: 'long' }).format(d);
+  return { iso, readable, readableSv };
+}
+
 // Extract the last JSON object from a model response, tolerating code fences
 // and surrounding prose.
 function parseJsonReply(text) {
@@ -152,12 +167,15 @@ function recentPostTitles(type, { limit = 2, beforeIso } = {}) {
     .filter(Boolean);
 }
 
-async function publishPost(dateIso, type, post, commitMessage) {
+// publish: false writes the files and stops — the backfill script commits the
+// whole batch once, after review, instead of one push (and deploy) per post.
+async function publishPost(dateIso, type, post, commitMessage, { publish = true } = {}) {
   fs.mkdirSync(DAILY_DIR(), { recursive: true });
   fs.writeFileSync(postPath(dateIso, type, 'en'), post.html_en.trim() + '\n', 'utf8');
   if (post.html_sv) {
     fs.writeFileSync(postPath(dateIso, type, 'sv'), post.html_sv.trim() + '\n', 'utf8');
   }
+  if (!publish) return { commit: null, link: postPath(dateIso, type, 'en') };
   const commit = await gitrepo.commitAndPush(commitMessage);
   const pagePath = `pages/daily/${dateIso}-${type}.html`;
   const link = config.previewUrl ? `${config.previewUrl.replace(/\/$/, '')}/${pagePath}` : pagePath;
@@ -180,8 +198,9 @@ function parseBilingual(text) {
 }
 
 // topic: optional steering ("write about X") — forces regeneration.
-async function runOnThisDay({ force = false, topic = '' } = {}) {
-  const { iso, readable } = todayParts();
+// date: optional YYYY-MM-DD to write a missed day's post (backfill).
+async function runOnThisDay({ force = false, topic = '', date = '', publish = true } = {}) {
+  const { iso, readable } = date ? partsFor(date) : todayParts();
   if (!force && !topic && postExists(iso, 'onthisday')) {
     return { skipped: true, reason: `Post for ${iso} already exists` };
   }
@@ -194,12 +213,14 @@ async function runOnThisDay({ force = false, topic = '' } = {}) {
   const text = await generate(prompt, { job: 'onthisday' });
   const post = parseBilingual(text);
 
-  const { commit, link } = await publishPost(iso, 'onthisday', post, `Daily post: on this day (${iso})\n\n${post.title_en}`);
+  const { commit, link } = await publishPost(iso, 'onthisday', post, `Daily post: on this day (${iso})\n\n${post.title_en}`, { publish });
   return { skipped: false, title: post.title_en, link, commit };
 }
 
-async function runAiNews({ force = false, topic = '' } = {}) {
-  const { iso, readable, readableSv } = todayParts();
+// since: with date, write one catch-up roundup covering since..date instead
+// of a single day's briefing.
+async function runAiNews({ force = false, topic = '', date = '', since = '', publish = true } = {}) {
+  const { iso, readable, readableSv } = date ? partsFor(date) : todayParts();
   if (!force && !topic && postExists(iso, 'ainews')) {
     return { skipped: true, reason: `Post for ${iso} already exists` };
   }
@@ -207,6 +228,10 @@ async function runAiNews({ force = false, topic = '' } = {}) {
   const steer = topic
     ? `\nThe museum's editor has requested that the LEAD story of today's briefing be: "${topic}". Research it, make it the opening item with the most depth, and cover other significant AI news after it.`
     : '';
+
+  // A backfilled briefing is written later than its date, so web search will
+  // happily surface what happened afterwards. Pin it to its own window.
+  const backdate = date ? backdateSteer(iso, readable, since) : '';
 
   // Multi-day stories (a launch that keeps generating coverage) can look
   // like "today's top news" on consecutive mornings with no other signal.
@@ -220,7 +245,7 @@ async function runAiNews({ force = false, topic = '' } = {}) {
     readable,
     readableSv,
     year: iso.slice(0, 4),
-    steer,
+    steer: steer + backdate,
     recentLeads,
     ...sharedRules(),
   });
@@ -228,8 +253,22 @@ async function runAiNews({ force = false, topic = '' } = {}) {
   const text = await generate(prompt, { search: true, job: 'ainews' });
   const post = parseBilingual(text);
 
-  const { commit, link } = await publishPost(iso, 'ainews', post, `Daily post: AI news (${iso})\n\n${post.title_en}`);
+  const { commit, link } = await publishPost(iso, 'ainews', post, `Daily post: AI news (${iso})\n\n${post.title_en}`, { publish });
   return { skipped: false, title: post.title_en, link, commit };
+}
+
+function backdateSteer(iso, readable, since = '') {
+  if (since) {
+    const start = partsFor(since);
+    const { readableSv } = partsFor(iso);
+    return `
+IMPORTANT: the daily briefing was not published from ${start.readable} to ${readable} ${iso.slice(0, 4)}. Instead of the last 24-48 hours, this edition is a catch-up roundup of that whole period, published on ${readable}. Cover the 5-8 most significant AI stories first reported between ${since} and ${iso}, most important first, 500-750 words in total, and give each item its approximate date in the text (e.g. "On 22 October, ..."). Only include stories you can confirm were reported in that window, and nothing that happened after ${iso}. Title format: "AI news, ${start.readable} – ${readable}: " (English) / "AI-nytt, ${start.readableSv} – ${readableSv}: " (Swedish) followed by a short hook about the lead item. These instructions override the item count, word count and title format above.`;
+  }
+  const from = new Date(`${iso}T12:00:00Z`);
+  from.setUTCDate(from.getUTCDate() - 2);
+  const fromIso = from.toISOString().slice(0, 10);
+  return `
+IMPORTANT: this briefing fills a gap in the archive and is being written after the fact, but it must read exactly as if it had been published on the morning of ${readable} ${iso.slice(0, 4)}. Only include stories first reported between ${fromIso} and the morning of ${iso}. Check the publication date of every source you use; if you cannot confirm a story was reported in that window, leave it out. Never mention, hint at or foreshadow anything that happened after ${iso}, and do not say the briefing was written later.`;
 }
 
 // Runs one of the tools/fetch-*.js snapshot scripts and commits the result
@@ -467,6 +506,7 @@ module.exports = {
   runQuizDiscard,
   quizStatus,
   todayParts,
+  partsFor,
   recentPostTitles,
   validateQuizQuestions,
 };
