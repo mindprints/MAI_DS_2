@@ -1,8 +1,8 @@
 {
-  "fetched_at": "2026-11-06",
-  "as_of": "2026-11-06T05:25:06.032Z",
-  "window_start": "2026-10-30",
-  "window_end": "2026-11-05",
+  "fetched_at": "2026-11-07",
+  "as_of": "2026-11-07T05:25:07.501Z",
+  "window_start": "2026-10-31",
+  "window_end": "2026-11-06",
   "source": "OpenRouter (openrouter.ai/rankings)",
   "source_url": "https://openrouter.ai/rankings",
   "models": [
@@ -14,26 +14,26 @@
     {
       "name": "GLM 5.3 Flash",
       "lab": "Z.ai",
-      "share": 7.3
+      "share": 6.8
     },
     {
       "name": "GPT-6 Luna",
       "lab": "OpenAI",
-      "share": 3.6
+      "share": 3.5
     }
   ],
   "labs": [
     {
       "name": "DeepSeek",
-      "share": 39.3
+      "share": 39.2
     },
     {
       "name": "Z.ai",
-      "share": 9.5
+      "share": 9
     },
     {
       "name": "OpenAI",
-      "share": 8.8
+      "share": 8.3
     }
   ]
 }
