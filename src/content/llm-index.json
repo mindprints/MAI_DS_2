@@ -1,8 +1,13 @@
 {
-  "fetched_at": "2026-11-09",
+  "fetched_at": "2026-11-10",
   "source": "Artificial Analysis Intelligence Index",
   "source_url": "https://artificialanalysis.ai/",
   "closed": [
+    {
+      "name": "Claude Fable 5.2",
+      "creator": "Anthropic",
+      "score": 64.6
+    },
     {
       "name": "Gemini 4 Carbon",
       "creator": "Google",
@@ -12,11 +17,6 @@
       "name": "Claude Opus 5.5",
       "creator": "Anthropic",
       "score": 59.1
-    },
-    {
-      "name": "GPT-6 Astra",
-      "creator": "OpenAI",
-      "score": 56.9
     }
   ],
   "open": [
