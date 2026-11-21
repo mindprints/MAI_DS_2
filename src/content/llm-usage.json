@@ -1,39 +1,39 @@
 {
-  "fetched_at": "2026-11-20",
-  "as_of": "2026-11-20T05:25:25.105Z",
-  "window_start": "2026-11-13",
-  "window_end": "2026-11-19",
+  "fetched_at": "2026-11-21",
+  "as_of": "2026-11-21T05:25:26.273Z",
+  "window_start": "2026-11-14",
+  "window_end": "2026-11-20",
   "source": "OpenRouter (openrouter.ai/rankings)",
   "source_url": "https://openrouter.ai/rankings",
   "models": [
     {
-      "name": "DeepSeek V4.1 Flash",
-      "lab": "DeepSeek",
-      "share": 27.9
-    },
-    {
       "name": "Hy4 flash",
       "lab": "Tencent",
-      "share": 24.7
+      "share": 30.9
     },
     {
-      "name": "Hy4",
-      "lab": "Tencent",
-      "share": 4.2
+      "name": "DeepSeek V4.1 Flash",
+      "lab": "DeepSeek",
+      "share": 26
+    },
+    {
+      "name": "GLM 5.3 Flash",
+      "lab": "Z.ai",
+      "share": 3.6
     }
   ],
   "labs": [
     {
-      "name": "DeepSeek",
-      "share": 30
+      "name": "Tencent",
+      "share": 34.3
     },
     {
-      "name": "Tencent",
-      "share": 29.2
+      "name": "DeepSeek",
+      "share": 28
     },
     {
       "name": "OpenAI",
-      "share": 5.5
+      "share": 5.1
     }
   ]
 }
