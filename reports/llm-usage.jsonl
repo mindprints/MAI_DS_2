@@ -253,3 +253,4 @@
 {"ts":"2026-11-23T05:01:22.554Z","job":"ainews","provider":"openrouter","model":"x-ai/grok-4.5","inputTokens":115576,"outputTokens":3176,"costUsd":0.1834668}
 {"ts":"2026-11-23T05:12:11.396Z","job":"onthisday","provider":"openrouter","model":"x-ai/grok-4.5","inputTokens":712,"outputTokens":5003,"costUsd":0.030912156}
 {"ts":"2026-11-24T05:01:26.635Z","job":"ainews","provider":"openrouter","model":"x-ai/grok-4.5","inputTokens":115325,"outputTokens":2881,"costUsd":0.187890912}
+{"ts":"2026-11-24T05:11:19.328Z","job":"onthisday","provider":"openrouter","model":"x-ai/grok-4.5","inputTokens":712,"outputTokens":1972,"costUsd":0.012908016}
