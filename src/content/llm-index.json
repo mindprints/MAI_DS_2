@@ -1,39 +1,39 @@
 {
-  "fetched_at": "2026-11-24",
+  "fetched_at": "2026-11-25",
   "source": "Artificial Analysis Intelligence Index",
   "source_url": "https://artificialanalysis.ai/",
   "closed": [
     {
       "name": "Claude Fable 5.2",
       "creator": "Anthropic",
-      "score": 64.6
+      "score": 64.8
     },
     {
       "name": "GPT-6.2 Astra",
       "creator": "OpenAI",
-      "score": 62.1
+      "score": 62.2
     },
     {
       "name": "Gemini 4 Neon",
       "creator": "Google",
-      "score": 61.4
+      "score": 61.5
     }
   ],
   "open": [
     {
       "name": "Kimi K3.1 Pro",
       "creator": "Kimi",
-      "score": 46.5
+      "score": 46.6
     },
     {
       "name": "DeepSeek V4.1 Flash 1017",
       "creator": "DeepSeek",
-      "score": 32.6
+      "score": 32.4
     },
     {
       "name": "GLM-5.3",
       "creator": "Z AI",
-      "score": 31.7
+      "score": 31.6
     }
   ]
 }
